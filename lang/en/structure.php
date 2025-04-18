@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'director' => 'Director',
+    'deputy' => 'Deputy Director',
+    'macro' => 'Sector for Studying the Consistency of Macroeconomic Policy Parameters and Forecasting',
+    'bank' => 'Sector for Studying Activities in Banking, Finance and Capital Markets',
+    'competitiveness' => 'Sector for Studying the Competitiveness of Economic Sectors and Investment Activity',
+    'foreign_economic' => 'Sector for Studying Foreign Economic Activity and Integration Processes',
+    'cluster' => 'Sector for the Development of Industrial Clusters',
+    'regions' => 'Sector for Socio-Economic Development of Regions',
+    'information_tech' => 'Sector for IT Implementation and Database Integration',
+    'marketing' => 'Public Relations and Marketing Sector',
+    'accelerator' => 'Accelerator of Social and Economic Reforms',
+    'library' => 'Information and Resource Center',
+    'hr' => 'HR Specialist',
+    'chancellery' => 'Chancellery',
+    'accounting' => 'Accounting Department',
+    'legal_advisor' => 'Legal Advisor',
+    'ict' => 'ICT Specialist',
+    'magazine' => 'Editorial Office of Economic Review Magazine',
+    'karakalpakistan' => 'Karakalpakstan Branch',
+    'samarkand' => 'Samarkand Branch',
+    'jizzax' => 'Jizzakh Branch',
+    'namangan' => 'Namangan Branch',
+    'kashkadarya' => 'Kashkadarya Branch',
+];

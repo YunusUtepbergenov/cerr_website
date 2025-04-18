@@ -1,0 +1,27 @@
+<?php
+
+return [
+    'director' => 'Direktor',
+    'deputy' => 'Direktor o\'rinbosari',
+    'macro' => 'Makroiqtisodiy siyosat parametrlari mutanosibligini o\'rganish va prognozlash shu’basi',
+    'bank' => 'Bank-moliya va kapital bozori faoliyatni o\'rganish shu’basi',
+    'competitiveness' => 'Iqtisodiyot tarmoqlari raqobatbardoshligi va investitsion faollikni o\'rganish shu’basi',
+    'foreign_economic' => 'Tashqi iqtisodiy faoliyat va integratsiya jarayonlarini o\'rganish shu’basi',
+    'cluster' => 'Sanoat klasterlari faoliyatini rivojlantirish shu’basi',
+    'regions' => 'Hududlarni ijtimoiy-iqtisodiy rivojlantirish shu’basi',
+    'information_tech' => 'IT texnologiyalarni joriy etish va ma\'lumotlar bazasini integratsiyalash shu’basi',
+    'marketing' => 'Jamoatchilik bilan aloqalar va marketing shu’basi',
+    'accelerator' => 'Ijtimoiy-iqtisodiy islohotlar akseleratori',
+    'library' => 'Axborot-resurs markazi',
+    'hr' => 'Xodimlar bilan ishlash bo\'yicha mutaxassis',
+    'chancellery' => 'Devonxona',
+    'accounting' => 'Buxgalteriya',
+    'legal_advisor' => 'Yurisokonsult',
+    'ict' => 'AKT mutaxassisi',
+    'magazine' => '"Iqtisodiy sharh" jurnali tahririyati',
+    'karakalpakistan' => 'Qoraqalpog\'iston Respublikasi filiali',
+    'samarkand' => 'Samarqand viloyati filiali',
+    'jizzax' => 'Jizzax viloyati filiali',
+    'namangan' => 'Namangan viloyati filiali',
+    'kashkadarya' => 'Qashqadaryo viloyati filiali',
+];
