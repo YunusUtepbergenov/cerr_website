@@ -3,6 +3,8 @@
 use App\Livewire\About;
 use App\Livewire\Admin\Post;
 use App\Livewire\{Contact, History, Home, Leadership, ShowAllCategories, ShowCategory, ShowNews, Structure, Vacancies};
+use App\Livewire\Vides\VideoIndex;
+use App\Livewire\Vides\VideoShow;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
@@ -32,6 +34,8 @@ Route::get('/show-news/{slug}', ShowNews::class)->name('show.news');
 Route::get('/show-category/{slug}', ShowCategory::class)->name('show.category');
 Route::get('/show-all-category', ShowAllCategories::class)->name('show.all.category');
 
+Route::get('/videos', VideoIndex::class)->name('videos.index');
+Route::get('/videos/{id}', VideoShow::class)->name('videos.show');
 
 // Route::get('lang/{locale}', function ($locale) {
 //     if (in_array($locale, ['en', 'uz', 'ru'])) {

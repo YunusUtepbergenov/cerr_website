@@ -179,7 +179,7 @@
                                                 <ul class="echo-submenu list-unstyled menu-pages">
                                                     <li class="nav-item"><a href="{{route('show.category', 'atque-voluptatem')}}">@lang('messages.press_releases') </a></li>
                                                     <li class="nav-item"><a href="404.html">@lang('messages.photogallery')</a></li>
-                                                    <li class="nav-item"><a href="404.html">@lang('messages.videogallery')</a></li>
+                                                    <li class="nav-item"><a href="{{route('videos.index')}}">@lang('messages.videogallery')</a></li>
                                                 </ul>
                                             </li>
                                             <li class="menu-item"><a wire:navigate href="{{route('vacancies')}}" class="echo-dropdown-main-element">@lang('messages.vacancies')</a></li>

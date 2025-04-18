@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-inner text-center">
-                        <h1 class="title">{{$category->translation->name}}</h1>
+                        <h1 class="title">Videos</h1>
                     </div>
                 </div>
             </div>
@@ -17,30 +17,33 @@
                 <div class="echo-full-hero-content">
                     <div class="row gx-5 sticky-coloum-wrap">
                         <div class="col-xl-9 col-lg-9">
-                            @foreach ($category->news as $item)
+                            @foreach ($videos as $video)
                                 <div class="echo-hero-baner">
-                                    <div class="echo-inner-img-ct-1  img-transition-scale">
-                                        <a href="{{route('show.news', $item->slug)}}"><img src="{{Vite::asset('resources/images/news/'.$item->translation->image_url)}}" alt="Echo"></a>
+                                    <div class="echo-inner-img-ct-1 img-transition-scale">
+                                        <a href="{{ route('videos.show', $video->id) }}">
+                                            <img src="{{ Vite::asset('resources/images/video/' . $video->image) }}" alt="{{ $video->title }}">
+                                        </a>
                                     </div>
                                     <div class="echo-banner-texting">
-                                        <h3 class="echo-hero-title text-capitalize font-weight-bold"><a href="{{route('show.news', $item->slug)}}" class="title-hover">{{$item->translation->title}}</a></h3>
+                                        <h3 class="echo-hero-title text-capitalize font-weight-bold">
+                                            <a href="{{ route('videos.show', $video->id) }}" class="title-hover">{{ $video->title }}</a>
+                                        </h3>
                                         <div class="echo-hero-area-titlepost-post-like-comment-share">
                                             <div class="echo-hero-area-like-read-comment-share">
-                                                <a href="{{route('show.news', $item->slug)}}"><i class="fa-light fa-clock"></i> {{ date('d-m-Y', strtotime($item->created_at)) }}</a>
-                                            </div>
-                                            <div class="echo-hero-area-like-read-comment-share">
-                                                <a href="{{route('show.news', $item->slug)}}"><i class="fa-light fa-eye"></i> {{$item->view_count}}</a>
+                                                <a href="{{ route('videos.show', $video->id) }}">
+                                                    <i class="fa-light fa-clock"></i> {{ date('d-m-Y', strtotime($video->created_at)) }}
+                                                </a>
                                             </div>
                                         </div>
-                                        <hr>
-                                        <p class="echo-hero-discription">{{$item->translation->short_description}} </p>
                                     </div>
                                 </div>                                
                             @endforeach
-                            <div class="echo-de-category-show-more-btn text-center">
-                                <a href="post-details.html" class="text-capitalize echo-py-btn">Show more</a>
+                            
+                            <div class="d-flex justify-content-center mt-4">
+                                {{ $videos->links() }}
                             </div>
                         </div>
+
                         <div class="col-xl-3 col-lg-3 sticky-coloum-item">
                             <div class="echo-home-1-hero-area-top-story bg-right-side">
                                 <h5 class="text-center">@lang('messages.popular')</h5>
@@ -62,6 +65,7 @@
                                 @endforeach
                             </div>
                         </div>
+                        
                     </div>
                 </div>
             </div>
