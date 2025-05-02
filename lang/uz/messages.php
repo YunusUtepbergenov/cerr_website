@@ -19,4 +19,10 @@ return [
     'categories' => 'Kategoriyalar',
     'all_categories' => 'Barcha kategoriyalar',
     'show_more' => "Ko'proq ko'rsatish",
+    'gov_uz' => 'O‘zbekiston Respublikasining hukumat portali',
+    'president_uz' => 'O‘zbekiston Respublikasi Prezidentining rasmiy veb-sayti',
+    'parliament' => 'O‘zbekiston Respublikasi Oliy Majlisining Qonunchilik palatasi',
+    'senat' => 'O‘zbekiston Respublikasi Oliy Majlisining Senati',
+    'org_name' => 'O‘zbekiston Respublikasi Prezidenti Administratsiyasi huzuridagi <br>Iqtisodiy tadqiqotlar va islohotlar <br> markazi',
+    'useful_links' => 'Foydali havolalar',
 ];

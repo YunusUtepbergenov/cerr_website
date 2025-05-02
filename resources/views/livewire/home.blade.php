@@ -1,63 +1,17 @@
 <div>
-    <section class="echo-hero-section" data-aos="fade-up" data-aos-duration="1000">
-        <div class="echo-hero">
-            <div class="container">
-                <div class="echo-full-hero-content">
-                    <div class="row gx-5">
-                        <div class="col-xl-8 col-lg-7 col-md-12">
-                            <div class="echo-hero-baner">
-                                <div class="echo-hero-banner-main-img  img-transition-scale">
-                                    <a wire:navigate href="{{route('show.news', $main->slug)}}"><img class="banner-image-one img-hover" src="{{Vite::asset('resources/images/news/'.$main->translation->image_url)}}" alt="Echo"></a>
-                                </div>
-                                <h3 class="echo-hero-title text-capitalize font-weight-bold mt-3"><a href="{{route('show.news', $main->slug)}}" class="title-hover">{{$main->translation->title}}</h3>
-                                <hr>
-                                <p class="echo-hero-discription">{{$main->translation->short_description}}</p>
-                                <div class="echo-hero-area-titlepost-post-like-comment-share">
-                                    <div class="echo-hero-area-like-read-comment-share">
-                                        <a wire:navigate href="{{route('show.news', $main->slug)}}"><i class="fa-light fa-clock"></i> 06.03.2025</a>
-                                    </div>
-                                    <div class="echo-hero-area-like-read-comment-share">
-                                        <a wire:navigate href="{{route('show.news', $main->slug)}}"><i class="fa-light fa-eye"></i> {{$main->view_count}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-4 col-lg-5 col-md-12">
-                            <div class="echo-home-1-hero-area-top-story">
-                                <h6>@lang('messages.popular')</h6>
-                                @foreach ($popular_news as $key => $popular)
-                                    @php
-                                        $translation = $popular->translation;
-                                    @endphp
-                                    @if ($key == 0)
-                                        <div class="echo-top-story first">
-                                            <div class="echo-story-picture img-transition-scale">
-                                                <a wire:navigate href="{{route('show.news', $popular->slug)}}"><img src="{{Vite::asset('resources/images/news/'.$translation->image_url)}}" alt="Echo" class="img-hover"></a>
-                                            </div>
-                                            <div class="echo-story-text">
-                                                <h4><a wire:navigate href="{{route('show.news', $popular->slug)}}" class="title-hover">{{$translation->title}}</a></h4>
-                                                <div class="echo-trending-post-bottom-icons">
-                                                    <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
-                                                    <a href="#" class="pe-none"><i class="fa-light fa-eye"></i> {{$popular->view_count}}</a>
-                                                </div>
-                                            </div>
-                                        </div>                                
-                                    @else
-                                        <div class="echo-top-story">
-                                            <div class="echo-story-picture img-transition-scale">
-                                                <a wire:navigate href="{{route('show.news', $popular->slug)}}"><img src="{{Vite::asset('resources/images/news/'.$translation->image_url)}}" alt="Echo" class="img-hover"></a>
-                                            </div>
-                                            <div class="echo-story-text">
-                                                <h4><a wire:navigate href="{{route('show.news', $popular->slug)}}" class="title-hover">{{$translation->title}}</a></h4>
-                                                <a wire:navigate href="{{route('show.news', $popular->slug)}}" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
-                                            </div>
-                                        </div>
-                                    @endif
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
+    <section class="custom-hero-section py-5">
+        <div class="container">
+            <div class="position-relative overflow-hidden custom-hero-inner p-5 d-flex justify-content-center align-items-center">
+    
+                <!-- Background Image -->
+                <img src="{{Vite::asset('resources/images/main_image/hero.png')}}" alt="Decorative background"
+                     class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover z-n1" />
+    
+                <!-- Centered Text Content -->
+                <div class="text-center position-relative z-1">
+                    <h1 class="display-4 fw-bold hero-title text-white mb-4">@lang('messages.org_name')</h1>
                 </div>
+    
             </div>
         </div>
     </section>
@@ -282,6 +236,35 @@
             </div>
         </div>
     </section>
+
+    <section class="py-5 text-center bg-light">
+        <div class="container">
+          <h2 class="fw-bold mb-5">BIZNING HAMKORLARIMIZ</h2>
+          <div class="row justify-content-center g-4">
+            <!-- British Council -->
+            <div class="col-6 col-sm-4 col-md-3">
+              <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FAbdul_Latif_Jameel_Poverty_Action_Lab&psig=AOvVaw1fHbSInUjoWro_lpL_5DSf&ust=1746252442330000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMjLkrqPhI0DFQAAAAAdAAAAABAJ" alt="British Council" class="img-fluid mb-3" style="max-height: 50px;">
+              <h6 class="fw-bold">Britaniya Kengashi</h6>
+            </div>
+            <!-- Oxford -->
+            <div class="col-6 col-sm-4 col-md-3">
+              <img src="/images/partners/oxford.png" alt="Oxford University" class="img-fluid mb-3" style="max-height: 50px;">
+              <h6 class="fw-bold">Oksford universiteti</h6>
+            </div>
+            <!-- UNDP -->
+            <div class="col-6 col-sm-4 col-md-3">
+              <img src="/images/partners/undp.png" alt="UNDP" class="img-fluid mb-3" style="max-height: 50px;">
+              <h6 class="fw-bold">Birlashgan Millatlar Tashkiloti<br>Taraqqiyot dasturi</h6>
+            </div>
+            <!-- Glasgow -->
+            <div class="col-6 col-sm-4 col-md-3">
+              <img src="/images/partners/glasgow.png" alt="University of Glasgow" class="img-fluid mb-3" style="max-height: 50px;">
+              <h6 class="fw-bold">Glazgo universiteti</h6>
+            </div>
+          </div>
+        </div>
+    </section>
+    </div>
 </div>
 
 @push('scripts')

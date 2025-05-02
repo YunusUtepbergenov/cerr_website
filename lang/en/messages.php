@@ -21,10 +21,10 @@ return [
     'show_more' => 'Show more',
     'useful_links' => 'Useful Links',
     'gov_uz' => 'Government portal',
-    'finance' => 'Ministry of Economy and Finance',
-    'poverty' => 'Ministry of Poverty Reduction and Employment',
-    'investment' => 'Ministry of Investment, Industry and Trade',
-
+    'president_uz' => 'Official website of the President of the Republic of Uzbekistan',
+    'parliament' => 'Legislative Chamber of the Oliy Majlis of the Republic of Uzbekistan',
+    'senat' => 'Senate of the Oliy Majlis of the Republic of Uzbekistan',
+    'org_name' => 'Center for Economic Research and <br> Reforms under the Administration <br> of the President of the Republic<br> of Uzbekistan',
 
 
 ];

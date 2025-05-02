@@ -16,9 +16,9 @@ class Home extends Component
     public $categories;
     public function render()
     {
-        $this->main = News::where('is_main', true)->whereHas('translation')->latest()->first();
+        // $this->main = News::where('is_main', true)->whereHas('translation')->latest()->first();
 
-        $this->popular_news = News::whereHas('translations', fn($query) => $query->where('lang', app()->getLocale()))->orderBy('view_count', 'DESC')->limit(4)->get();
+        // $this->popular_news = News::whereHas('translations', fn($query) => $query->where('lang', app()->getLocale()))->orderBy('view_count', 'DESC')->limit(4)->get();
 
         $this->latest_news = News::with('translation')->whereHas('translation')->latest()->limit(10)->get();
 

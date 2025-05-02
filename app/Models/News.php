@@ -14,11 +14,6 @@ class News extends Model
         return $this->hasMany(NewsTranslation::class, 'news_id', 'id');
     }
 
-    // public function translation()
-    // {
-    //     return $this->translations()->where('lang', app()->getLocale())->first();
-    // }
-
     public function translation()
     {
         return $this->hasOne(NewsTranslation::class, 'news_id', 'id')

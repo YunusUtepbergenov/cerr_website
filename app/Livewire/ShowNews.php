@@ -12,6 +12,11 @@ class ShowNews extends Component
 
     public function mount($slug){
         $this->news = News::with('translation')->where('slug', $slug)->first();
+
+        if(!$this->news->translation){
+            return redirect('/');
+        }
+
         $this->popular_news = News::whereHas('translations', fn($query) => $query->where('lang', app()->getLocale()))->orderBy('view_count', 'DESC')->limit(8)->get();
     }
 

@@ -12,8 +12,15 @@
 <div>
     <section class="echo-hero-section">
         <div class="echo-hero">
-            <div class="container">
-                <style>
+            <div class="container" style="text-align: center;">
+                <img src="https://lex.uz/files/5577769" alt="">
+            </div>
+        </div>
+    </section>
+</div>
+
+
+                {{-- <style>
                     ol li {
                         margin: 0;
                         padding: 0px;
@@ -164,8 +171,4 @@
                         </ol>
                     </div>
                 </div>
-                <br>
-            </div>
-        </div>
-    </section>
-</div>
+                <br> --}}

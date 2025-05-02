@@ -13,6 +13,7 @@ class VideoIndex extends Component
 
     public $popular_news;    
 
+
     public function render()
     {
         $videos = Video::latest()->paginate(10);

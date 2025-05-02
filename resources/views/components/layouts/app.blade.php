@@ -263,19 +263,16 @@
                         <span class="text-capitalize"><i class="fa-sharp fa-regular fa-envelope"></i>
                             info@cerr.uz</span>
                         <div class="echo-footer-social-media">
-                            <a href="#">
+                            <a href="https://www.facebook.com/CERR.Uzbekistan">
                                 <i class="fa-brands fa-facebook-f"></i>
                             </a>
-                            <a href="#">
-                                <i class="fa-brands fa-twitter"></i>
+                            <a href="https://t.me/cerruz">
+                                <i class="fa-brands fa-telegram"></i>
                             </a>
-                            <a href="#">
-                                <i class="fa-brands fa-linkedin-in"></i>
-                            </a>
-                            <a href="#">
+                            <a href="https://www.instagram.com/cerr.uz/">
                                 <i class="fa-brands fa-instagram"></i>
                             </a>
-                            <a href="#">
+                            <a href="https://www.youtube.com/@centerforeconomicresearcha1331/featured">
                                 <i class="fa-brands fa-youtube"></i>
                             </a>
                         </div>
@@ -290,9 +287,9 @@
                             <li><a href="{{route('about')}}">@lang('messages.objectives')</a></li>
                             <li><a href="{{route('leadership')}}">@lang('messages.leadership')</a></li>
                             <li><a href="{{route('structure')}}">@lang('messages.structure')</a></li>
-                            <li><a href="#">Сектора центра</a></li>
+                            {{-- <li><a href="#">Сектора центра</a></li>
                             <li><a href="#">Международное сотрудничество</a></li>
-                            <li><a href="#">Нормативно-правовая база </a></li>
+                            <li><a href="#">Нормативно-правовая база </a></li> --}}
                         </ul>
                     </div>
                 </div>
@@ -302,9 +299,9 @@
                     </div>
                     <div class="echo-footer-help">
                         <ul class="list-unstyled">
-                            <li><a href="#">Исследования </a></li>
+                            {{-- <li><a href="#">Исследования </a></li> --}}
                             <li><a href="#">@lang('messages.press')</a></li>
-                            <li><a href="#">События</a></li>
+                            {{-- <li><a href="#">События</a></li> --}}
                             <li><a href="#">@lang('messages.vacancies')</a></li>
                             <li><a href="#">@lang('messages.contacts')</a></li>
                         </ul>
@@ -316,10 +313,10 @@
                     </div>
                     <div class="echo-footer-help">
                         <ul class="list-unstyled">
-                            <li><a href="http://www.gov.uz" target="_blank">@lang('messages.gov_uz')</a></li>
-                            <li><a href="https://gov.uz/oz/bv" target="_blank">@lang('messages.poverty')</a></li>
-                            <li><a href="https://www.imv.uz" target="_blank">@lang('messages.poverty')</a></li>
-                            <li><a href="https://gov.uz/oz/miit" target="_blank">@lang('messages.investment')</a></li>
+                            <li><a href="https://president.uz/uz" target="_blank">@lang('messages.president_uz')</a></li>
+                            <li><a href="https://parliament.gov.uz/" target="_blank">@lang('messages.parliament')</a></li>
+                            <li><a href="https://www.senat.uz" target="_blank">@lang('messages.senat')</a></li>
+                            <li><a href="https://gov.uz/" target="_blank">@lang('messages.gov_uz')</a></li>
                         </ul>
                     </div>
                 </div>
