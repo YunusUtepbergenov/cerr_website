@@ -14,7 +14,11 @@ return [
     'vacancies' => 'Ish o`rinlari',
     'contacts' => 'Aloqa',
     'popular' => 'Ommabop',
-    'latest_news' => 'Oxirgi Yangiliklar',
+    
+    'our_research' => 'Tadqiqotlar',
+    'events' => 'Tadbirlar',
+    'infographics' => 'Infografikalar',
+
     'address' => 'Toshkent shahri, Novza koʻchasi, 6',
     'categories' => 'Kategoriyalar',
     'all_categories' => 'Barcha kategoriyalar',

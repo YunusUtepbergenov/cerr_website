@@ -11,10 +11,14 @@ return [
     'press_releases' => 'Пресс релизы',
     'photogallery' => 'Фотогаллерея',
     'videogallery' => 'Видео',
-    'vacancies' => 'Ваканции',
+    'vacancies' => 'Ваканcии',
     'contacts' => 'Контакты',
     'popular' => 'Популярное',
-    'latest_news' => 'Последние новости',
+
+    'our_research' => 'Наши исследования',
+    'events' => 'Cобытия',
+    'infographics' => 'Инфографики',
+
     'address' => 'Ташкент, ул. Новза, 6',
     'categories' => 'Категории',
     'all_categories' => 'Все категории',

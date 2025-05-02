@@ -14,7 +14,11 @@ return [
     'vacancies' => 'Vacancies',
     'contacts' => 'Contacts',
     'popular' => 'Popular',
-    'latest_news' => 'Latest News',
+
+    'our_research' => 'Our Research',
+    'events' => 'Events',
+    'infographics' => 'Infographics',
+
     'address' => '6 Novza street, Tashkent, Uzbekistan',
     'categories' => 'Categories',
     'all_categories' => 'All Categories',

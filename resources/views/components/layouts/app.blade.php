@@ -177,7 +177,7 @@
                                             <li class="menu-item echo-has-dropdown">
                                                 <a href="#" class="echo-dropdown-main-element">@lang('messages.press')</a>
                                                 <ul class="echo-submenu list-unstyled menu-pages">
-                                                    <li class="nav-item"><a href="{{route('show.category', 'atque-voluptatem')}}">@lang('messages.press_releases') </a></li>
+                                                    <li class="nav-item"><a href="{{route('show.category', 'research')}}">@lang('messages.press_releases') </a></li>
                                                     <li class="nav-item"><a href="404.html">@lang('messages.photogallery')</a></li>
                                                     <li class="nav-item"><a href="{{route('videos.index')}}">@lang('messages.videogallery')</a></li>
                                                 </ul>

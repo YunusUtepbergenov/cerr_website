@@ -34356,3 +34356,15 @@ html[data-theme=dark] body.home-two .echo-footer-area.footer-2 .echo-get-in-tuch
       font-size: 2.2rem;
   }
 }
+
+#partnersCarousel button {
+  border: 2px solid #000;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: #193a51;
+}
+
+.mt-40{
+  margin-top: 40px;
+}

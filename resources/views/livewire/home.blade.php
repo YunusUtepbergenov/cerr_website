@@ -21,7 +21,7 @@
             <div class="container">
                 <div class="echo-be-slider-btn">
                     <div class="echo-latest-nw-title">
-                        <h4>@lang('messages.latest_news')</h4>
+                        <h4>@lang('messages.our_research')</h4>
                     </div>
                     <div class="echo-latest-news-next-prev-btn">
                         <div class="swiper-button-next"></div>
@@ -40,8 +40,8 @@
                                                 <img src="{{Vite::asset('resources/images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
                                             </a>
                                         </div>
-                                        <div class="echo-latest-news-single-title">
-                                            <h5><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{ Str::limit($news->translation->title, 40, '...')}}</a></h5>
+                                        <div class="echo-latest-news-single-title mt-5">
+                                            <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
                                         </div>
                                         <div class="echo-latest-news-time-views">
                                             <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
@@ -57,6 +57,89 @@
         </div>
     </section>
 
+    <section class="echo-latest-news-area">
+        <div class="echo-latest-news-content">
+            <div class="container">
+                <div class="echo-be-slider-btn">
+                    <div class="echo-latest-nw-title">
+                        <h4>@lang('messages.events')</h4>
+                    </div>
+                    <div class="echo-latest-news-next-prev-btn">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+
+                <div class="echo-latest-news-full-content">
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            @foreach ($events as $news)
+                                <div class="swiper-slide" wire:key={{$news->id}}>
+                                    <div class="echo-latest-news-main-content">
+                                        <div class="echo-latest-news-img img-transition-scale">
+                                            <a href="{{route('show.news', $news->slug)}}">
+                                                <img src="{{Vite::asset('resources/images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
+                                            </a>
+                                        </div>
+                                        <div class="echo-latest-news-single-title mt-5">
+                                            <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
+                                        </div>
+                                        <div class="echo-latest-news-time-views">
+                                            <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
+                                            <a href="#" class="pe-none"><i class="fa-light fa-eye"></i> {{$news->view_count}}</a>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="echo-latest-news-area">
+        <div class="echo-latest-news-content">
+            <div class="container">
+                <div class="echo-be-slider-btn">
+                    <div class="echo-latest-nw-title">
+                        <h4>@lang('messages.infographics')</h4>
+                    </div>
+                    <div class="echo-latest-news-next-prev-btn">
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                </div>
+
+                <div class="echo-latest-news-full-content">
+                    <div class="swiper mySwiper">
+                        <div class="swiper-wrapper">
+                            @foreach ($infographics as $news)
+                                <div class="swiper-slide" wire:key={{$news->id}}>
+                                    <div class="echo-latest-news-main-content">
+                                        <div class="echo-latest-news-img img-transition-scale">
+                                            <a href="{{route('show.news', $news->slug)}}">
+                                                <img src="{{Vite::asset('resources/images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
+                                            </a>
+                                        </div>
+                                        <div class="echo-latest-news-single-title mt-5">
+                                            <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
+                                        </div>
+                                        <div class="echo-latest-news-time-views">
+                                            <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
+                                            <a href="#" class="pe-none"><i class="fa-light fa-eye"></i> {{$news->view_count}}</a>
+                                        </div>
+                                    </div>
+                                </div>                                
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <br>
+{{-- 
     <section class="echo-de-category-area">
         <div class="echo-de-category-area-content">
             <div class="container">
@@ -97,7 +180,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
     <!-- Start Video Area-->
     <section class="echo-video-area">
@@ -237,34 +320,73 @@
         </div>
     </section>
 
-    <section class="py-5 text-center bg-light">
+    <section class="py-5 mb-20 bg-light">
         <div class="container">
-          <h2 class="fw-bold mb-5">BIZNING HAMKORLARIMIZ</h2>
-          <div class="row justify-content-center g-4">
-            <!-- British Council -->
-            <div class="col-6 col-sm-4 col-md-3">
-              <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fen.wikipedia.org%2Fwiki%2FAbdul_Latif_Jameel_Poverty_Action_Lab&psig=AOvVaw1fHbSInUjoWro_lpL_5DSf&ust=1746252442330000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCMjLkrqPhI0DFQAAAAAdAAAAABAJ" alt="British Council" class="img-fluid mb-3" style="max-height: 50px;">
-              <h6 class="fw-bold">Britaniya Kengashi</h6>
+          <h2 class="fw-bold text-center mb-4">Bizning hamkorlarimiz</h2>
+      
+          <div id="partnersCarousel" class="carousel slide mt-40" data-bs-ride="carousel">
+            <div class="carousel-inner">
+              <!-- Slide 1 -->
+              <div class="carousel-item active">
+                <div class="d-flex justify-content-center gap-4 flex-wrap">
+                  <!-- Partner 1 -->
+                  <div class="text-center" style="width: 250px;">
+                    <img src="https://www.undp.org/sites/g/files/zskgke326/files/2025-04/undp-logo-blue.4f32e17f.svg" class="img-fluid mb-2" style="max-height: 150px;" alt="British Council">
+                  </div>
+                  <!-- Partner 2 -->
+                  <div class="text-center" style="width: 250px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/en/a/ab/J-PAL_Logo.png" class="img-fluid mb-2" style="max-height: 150px;" alt="Oxford">
+                  </div>
+                  <!-- Partner 3 -->
+                  <div class="text-center" style="width: 250px;">
+                    <img src="https://www.cesd.az/y/newlogo.jpg" class="img-fluid mb-2" style="max-height: 150px;" alt="UNDP">
+                  </div>
+                  <!-- Partner 4 -->
+                  <div class="text-center" style="width: 250px;">
+                    <img src="https://www.iddri.org/themes/custom/iddri/images/logo.svg" class="img-fluid mb-2" style="max-height: 150px;" alt="Glasgow">
+                  </div>
+                </div>
+              </div>
+      
+              <!-- Slide 2 -->
+              <div class="carousel-item">
+                <div class="d-flex justify-content-center gap-4 flex-wrap">
+                  <!-- Partner 5 -->
+                  <div class="text-center" style="width: 150px;">
+                    <img src="/images/partners/partner5.png" class="img-fluid mb-2" style="max-height: 50px;" alt="Partner 5">
+                    <h6 class="fw-bold small">Hamkor 5</h6>
+                  </div>
+                  <!-- Partner 6 -->
+                  <div class="text-center" style="width: 150px;">
+                    <img src="/images/partners/partner6.png" class="img-fluid mb-2" style="max-height: 50px;" alt="Partner 6">
+                    <h6 class="fw-bold small">Hamkor 6</h6>
+                  </div>
+                  <!-- Partner 7 -->
+                  <div class="text-center" style="width: 150px;">
+                    <img src="/images/partners/partner7.png" class="img-fluid mb-2" style="max-height: 50px;" alt="Partner 7">
+                    <h6 class="fw-bold small">Hamkor 7</h6>
+                  </div>
+                  <!-- Partner 8 -->
+                  <div class="text-center" style="width: 150px;">
+                    <img src="/images/partners/partner8.png" class="img-fluid mb-2" style="max-height: 50px;" alt="Partner 8">
+                    <h6 class="fw-bold small">Hamkor 8</h6>
+                  </div>
+                </div>
+              </div>
             </div>
-            <!-- Oxford -->
-            <div class="col-6 col-sm-4 col-md-3">
-              <img src="/images/partners/oxford.png" alt="Oxford University" class="img-fluid mb-3" style="max-height: 50px;">
-              <h6 class="fw-bold">Oksford universiteti</h6>
-            </div>
-            <!-- UNDP -->
-            <div class="col-6 col-sm-4 col-md-3">
-              <img src="/images/partners/undp.png" alt="UNDP" class="img-fluid mb-3" style="max-height: 50px;">
-              <h6 class="fw-bold">Birlashgan Millatlar Tashkiloti<br>Taraqqiyot dasturi</h6>
-            </div>
-            <!-- Glasgow -->
-            <div class="col-6 col-sm-4 col-md-3">
-              <img src="/images/partners/glasgow.png" alt="University of Glasgow" class="img-fluid mb-3" style="max-height: 50px;">
-              <h6 class="fw-bold">Glazgo universiteti</h6>
-            </div>
+      
+            <!-- Carousel controls -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#partnersCarousel" data-bs-slide="prev">
+              <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#partnersCarousel" data-bs-slide="next">
+              <span class="carousel-control-next-icon"></span>
+            </button>
           </div>
         </div>
-    </section>
-    </div>
+      </section>
+      
+
 </div>
 
 @push('scripts')

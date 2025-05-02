@@ -37,9 +37,9 @@
                                     </div>
                                 </div>                                
                             @endforeach
-                            <div class="echo-de-category-show-more-btn text-center">
+                            {{-- <div class="echo-de-category-show-more-btn text-center">
                                 <a href="post-details.html" class="text-capitalize echo-py-btn">Show more</a>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="col-xl-3 col-lg-3 sticky-coloum-item">
                             <div class="echo-home-1-hero-area-top-story bg-right-side">

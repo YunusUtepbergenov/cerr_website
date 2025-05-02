@@ -14,7 +14,11 @@ return [
     'vacancies' => 'Иш ўринлари',
     'contacts' => 'Алоқа',
     'popular' => 'Оммабоп',
-    'latest_news' => 'Охирги янгиликлар',
+    
+    'our_research' => 'Тадқиқотлар',
+    'events' => 'Тадбирлар',
+    'infographics' => 'Инфографикалар',
+
     'address' => 'Тошкент шаҳри, Новза кўчаси, 6',
     'categories' => 'Категориялар',
     'all_categories' => 'Барча категориялар',
