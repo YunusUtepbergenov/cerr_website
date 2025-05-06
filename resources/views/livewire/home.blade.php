@@ -21,16 +21,16 @@
             <div class="container">
                 <div class="echo-be-slider-btn">
                     <div class="echo-latest-nw-title">
-                        <h4>@lang('messages.our_research')</h4>
+                        <h4 lang="{{ app()->getLocale() }}">@lang('messages.our_research')</h4>
                     </div>
                     <div class="echo-latest-news-next-prev-btn">
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next" id="researchNext"></div>
+                        <div class="swiper-button-prev" id="researchPrev"></div>
                     </div>
                 </div>
 
                 <div class="echo-latest-news-full-content">
-                    <div class="swiper mySwiper">
+                    <div class="swiper" id="research">
                         <div class="swiper-wrapper">
                             @foreach ($latest_news as $news)
                                 <div class="swiper-slide" wire:key={{$news->id}}>
@@ -41,7 +41,7 @@
                                             </a>
                                         </div>
                                         <div class="echo-latest-news-single-title mt-5">
-                                            <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
+                                            <h6 lang="{{ app()->getLocale() }}"><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
                                         </div>
                                         <div class="echo-latest-news-time-views">
                                             <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
@@ -65,13 +65,13 @@
                         <h4>@lang('messages.events')</h4>
                     </div>
                     <div class="echo-latest-news-next-prev-btn">
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next" id="eventsNext"></div>
+                        <div class="swiper-button-prev" id="eventsPrev"></div>
                     </div>
                 </div>
 
                 <div class="echo-latest-news-full-content">
-                    <div class="swiper mySwiper">
+                    <div class="swiper" id="eventsSwiper">
                         <div class="swiper-wrapper">
                             @foreach ($events as $news)
                                 <div class="swiper-slide" wire:key={{$news->id}}>
@@ -106,13 +106,13 @@
                         <h4>@lang('messages.infographics')</h4>
                     </div>
                     <div class="echo-latest-news-next-prev-btn">
-                        <div class="swiper-button-next"></div>
-                        <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next" id="infoNext"></div>
+                        <div class="swiper-button-prev" id="infoPrev"></div>
                     </div>
                 </div>
 
                 <div class="echo-latest-news-full-content">
-                    <div class="swiper mySwiper">
+                    <div class="swiper" id="infoSwiper">
                         <div class="swiper-wrapper">
                             @foreach ($infographics as $news)
                                 <div class="swiper-slide" wire:key={{$news->id}}>
@@ -339,11 +339,11 @@
                   </div>
                   <!-- Partner 3 -->
                   <div class="text-center" style="width: 250px;">
-                    <img src="https://www.cesd.az/y/newlogo.jpg" class="img-fluid mb-2" style="max-height: 150px;" alt="UNDP">
+                    <img src="https://ereforms.gov.az/image/iitkm_logo_en.png" class="img-fluid mb-2" style="max-height: 150px;" alt="UNDP">
                   </div>
                   <!-- Partner 4 -->
                   <div class="text-center" style="width: 250px;">
-                    <img src="https://www.iddri.org/themes/custom/iddri/images/logo.svg" class="img-fluid mb-2" style="max-height: 150px;" alt="Glasgow">
+                    <img src="https://www.german-economic-team.com/wp-content/uploads/2021/09/logo-get.svg" class="img-fluid mb-2" style="max-height: 150px;" alt="Glasgow">
                   </div>
                 </div>
               </div>
@@ -352,24 +352,20 @@
               <div class="carousel-item">
                 <div class="d-flex justify-content-center gap-4 flex-wrap">
                   <!-- Partner 5 -->
-                  <div class="text-center" style="width: 150px;">
-                    <img src="/images/partners/partner5.png" class="img-fluid mb-2" style="max-height: 50px;" alt="Partner 5">
-                    <h6 class="fw-bold small">Hamkor 5</h6>
+                  <div class="text-center" style="width: 200px;">
+                    <img src="https://www.iddri.org/themes/custom/iddri/images/logo.svg" class="img-fluid mb-2" style="max-height: 100px;" alt="Partner 5">
                   </div>
                   <!-- Partner 6 -->
-                  <div class="text-center" style="width: 150px;">
-                    <img src="/images/partners/partner6.png" class="img-fluid mb-2" style="max-height: 50px;" alt="Partner 6">
-                    <h6 class="fw-bold small">Hamkor 6</h6>
+                  <div class="text-center" style="width: 250px;">
+                    <img src="https://www.ankasam.org/wp-content/uploads/2021/09/LOGO-THEMEPANEL-RETINA.png" class="img-fluid mb-2" style="max-height: 100px;" alt="Partner 6">
                   </div>
                   <!-- Partner 7 -->
-                  <div class="text-center" style="width: 150px;">
-                    <img src="/images/partners/partner7.png" class="img-fluid mb-2" style="max-height: 50px;" alt="Partner 7">
-                    <h6 class="fw-bold small">Hamkor 7</h6>
+                  <div class="text-center" style="width: 250px;">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Emblem_of_the_Organization_of_Turkic_States.svg/250px-Emblem_of_the_Organization_of_Turkic_States.svg.png" class="img-fluid mb-2" style="max-height: 100px;" alt="Partner 7">
                   </div>
                   <!-- Partner 8 -->
-                  <div class="text-center" style="width: 150px;">
-                    <img src="/images/partners/partner8.png" class="img-fluid mb-2" style="max-height: 50px;" alt="Partner 8">
-                    <h6 class="fw-bold small">Hamkor 8</h6>
+                  <div class="text-center" style="width: 250px;">
+                    <img src="https://www.eurasian-research.org/wp-content/uploads/2023/06/ERI_logo.png" class="img-fluid mb-2" style="max-height: 100px;" alt="Partner 8">
                   </div>
                 </div>
               </div>

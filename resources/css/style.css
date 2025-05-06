@@ -21479,6 +21479,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 50px;
   font-weight: 700;
   margin-bottom: 30px;
+  color: #000;
 }
 .echo-hero-section.inner .echo-hero-baner p {
   font-size: 16px;
@@ -34367,4 +34368,27 @@ html[data-theme=dark] body.home-two .echo-footer-area.footer-2 .echo-get-in-tuch
 
 .mt-40{
   margin-top: 40px;
+}
+
+
+html[lang="en"] body, [lang="en"] {
+  font-family: "Inter", sans-serif;
+}
+
+html[lang="ru"] body, [lang="ru"] {
+  font-family: "PT Sans", sans-serif;
+}
+
+html[lang="uz"] body, [lang="uz"] {
+  font-family: "Inter", sans-serif;
+}
+
+.post-content h1{
+  font-size: 28px !important;
+  color: #000;
+}
+
+.post-content h2{
+  font-size: 22px;
+  color: #000;
 }
