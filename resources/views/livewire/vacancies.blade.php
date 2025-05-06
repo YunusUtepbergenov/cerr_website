@@ -25,7 +25,7 @@
                                     @foreach($popular_news as $news)
                                         <div class="echo-top-story">
                                             <div class="echo-story-picture img-transition-scale">
-                                                <a href="{{route('show.news', $news->slug)}}"><img src="{{Vite::asset('resources/images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover"></a>
+                                                <a href="{{route('show.news', $news->slug)}}"><img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover"></a>
                                             </div>
                                             <div class="echo-story-text">
                                                 <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>

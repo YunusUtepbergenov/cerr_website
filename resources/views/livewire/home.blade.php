@@ -4,7 +4,7 @@
             <div class="position-relative overflow-hidden custom-hero-inner p-5 d-flex justify-content-center align-items-center">
     
                 <!-- Background Image -->
-                <img src="{{Vite::asset('resources/images/main_image/hero.png')}}" alt="Decorative background"
+                <img src="{{asset('images/main_image/hero.png')}}" alt="Decorative background"
                      class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover z-n1" />
     
                 <!-- Centered Text Content -->
@@ -37,7 +37,7 @@
                                     <div class="echo-latest-news-main-content">
                                         <div class="echo-latest-news-img img-transition-scale">
                                             <a href="{{route('show.news', $news->slug)}}">
-                                                <img src="{{Vite::asset('resources/images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
+                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
                                             </a>
                                         </div>
                                         <div class="echo-latest-news-single-title mt-5">
@@ -78,7 +78,7 @@
                                     <div class="echo-latest-news-main-content">
                                         <div class="echo-latest-news-img img-transition-scale">
                                             <a href="{{route('show.news', $news->slug)}}">
-                                                <img src="{{Vite::asset('resources/images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
+                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
                                             </a>
                                         </div>
                                         <div class="echo-latest-news-single-title mt-5">
@@ -119,7 +119,7 @@
                                     <div class="echo-latest-news-main-content">
                                         <div class="echo-latest-news-img img-transition-scale">
                                             <a href="{{route('show.news', $news->slug)}}">
-                                                <img src="{{Vite::asset('resources/images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
+                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
                                             </a>
                                         </div>
                                         <div class="echo-latest-news-single-title mt-5">
@@ -158,7 +158,7 @@
                                         <div class="echo-de-category-content-img-title">
                                             <div class="echo-de-category-content-img img-transition-scale">
                                                 <a wire:navigate href="{{route('show.news', $item->slug)}}">
-                                                    <img src="{{Vite::asset('resources/images/news/'.$item->translation->image_url)}}" alt="Echo" class="img-hover">
+                                                    <img src="{{asset('images/news/'.$item->translation->image_url)}}" alt="Echo" class="img-hover">
                                                 </a>
                                             </div>
                                             <div class="echo-de-category-content-title">
@@ -193,7 +193,7 @@
                     <div class="row gx-6">
                         <div class="col-xl-8 col-lg-8 col-md-12">
                             <div class="echo-video-left-site">
-                                <a href="https://www.youtube.com/watch?v=Ukn0u0WBpyo" class="play-video popup-youtube"><img src="{{Vite::asset('resources/images/video/image1.jpg')}}" alt="Echo"></a>
+                                <a href="https://www.youtube.com/watch?v=Ukn0u0WBpyo" class="play-video popup-youtube"><img src="{{asset('images/video/image1.jpg')}}" alt="Echo"></a>
                                 <div class="vedio-icone">
                                     <a class="play-video popup-youtube video-play-button" href="https://www.youtube.com/watch?v=Ukn0u0WBpyo">
                                         <span></span>
@@ -220,7 +220,7 @@
                                         <hr>
                                     </div>
                                     <div class="echo-video-right-site-content-video">
-                                        <a href="https://www.youtube.com/watch?v=ucgRqEvtgH4" class="play-video popup-youtube"><img src="{{Vite::asset('resources/images/video/image2.jpg')}}" alt="Echo"></a>
+                                        <a href="https://www.youtube.com/watch?v=ucgRqEvtgH4" class="play-video popup-youtube"><img src="{{asset('images/video/image2.jpg')}}" alt="Echo"></a>
                                         <div class="vedio-icone">
                                             <a class="play-video popup-youtube video-play-button" href="https://www.youtube.com/watch?v=ucgRqEvtgH4">
                                                 <span></span>
@@ -238,7 +238,7 @@
                                         <hr>
                                     </div>
                                     <div class="echo-video-right-site-content-video">
-                                        <a href="https://www.youtube.com/watch?v=6IAnGeZXXDA" class="play-video popup-youtube"><img src="{{Vite::asset('resources/images/video/image3.jpg')}}" alt="Echo"></a>
+                                        <a href="https://www.youtube.com/watch?v=6IAnGeZXXDA" class="play-video popup-youtube"><img src="{{asset('images/video/image3.jpg')}}" alt="Echo"></a>
                                         <div class="vedio-icone">
                                             <a class="play-video popup-youtube video-play-button" href="https://www.youtube.com/watch?v=6IAnGeZXXDA">
                                                 <span></span>
@@ -255,7 +255,7 @@
                                         <hr>
                                     </div>
                                     <div class="echo-video-right-site-content-video">
-                                        <a href="https://www.youtube.com/watch?v=ty76zXe7pz4" class="play-video popup-youtube"><img src="{{Vite::asset('resources/images/video/image4.jpg')}}" alt="Echo"></a>
+                                        <a href="https://www.youtube.com/watch?v=ty76zXe7pz4" class="play-video popup-youtube"><img src="{{asset('images/video/image4.jpg')}}" alt="Echo"></a>
                                         <div class="vedio-icone">
                                             <a class="play-video popup-youtube video-play-button" href="https://www.youtube.com/watch?v=ty76zXe7pz4">
                                                 <span></span>

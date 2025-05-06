@@ -21,7 +21,7 @@
                                 <div class="echo-hero-baner">
                                     <div class="echo-inner-img-ct-1 img-transition-scale">
                                         <a href="{{ route('videos.show', $video->id) }}">
-                                            <img src="{{ Vite::asset('resources/images/video/' . $video->image) }}" alt="{{ $video->title }}">
+                                            <img src="{{ asset('images/video/' . $video->image) }}" alt="{{ $video->title }}">
                                         </a>
                                     </div>
                                     <div class="echo-banner-texting">
@@ -51,7 +51,7 @@
                                 @foreach ($popular_news as $news)
                                     <div class="echo-top-story first">
                                         <div class="echo-story-picture img-transition-scale">
-                                            <a href="{{route('show.news', $news->slug)}}"><img src="{{Vite::asset('resources/images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover"></a>
+                                            <a href="{{route('show.news', $news->slug)}}"><img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover"></a>
                                         </div>
                                         <div class="echo-story-text">
                                             <h4><a href="#" class="title-hover">{{$news->translation->title}}</a></h4>

@@ -5,7 +5,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="banner-image top">
-                            <img src="{{Vite::asset('resources/images/cerr.jpg')}}" alt="Echo">
+                            <img src="{{asset('images/cerr.jpg')}}" alt="Echo">
                         </div>
                     </div>
                 </div>

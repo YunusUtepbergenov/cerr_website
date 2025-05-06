@@ -88,7 +88,7 @@
                 <div class="row mb-5">
                   <div class="col-12">
                     <div class="team-card d-flex align-items-center p-4 shadow rounded-5 glass-card">
-                      <img src="{{Vite::asset('resources/images/leadership/obidarzikulovich.jpg')}}" class="team-img me-4" alt="@lang('obid_arzikulovich')">
+                      <img src="{{asset('images/leadership/obidarzikulovich.jpg')}}" class="team-img me-4" alt="@lang('obid_arzikulovich')">
                       <div class="ps-lg-5">
                         <h2 class="fw-bold mb-1">@lang('leadership.obid_arzikulovich')</h2>
                         <div class="mt-3">
@@ -106,7 +106,7 @@
                 <div class="row mb-5">
                   <div class="col-12">
                     <div class="team-card d-flex align-items-center p-4 shadow rounded-5 glass-card">
-                      <img src="{{Vite::asset('resources/images/leadership/asadov.JPG')}}" class="team-img me-4" alt="Асадов Хуршед Саъдуллаевич">
+                      <img src="{{asset('images/leadership/asadov.JPG')}}" class="team-img me-4" alt="Асадов Хуршед Саъдуллаевич">
                       <div class="ps-lg-5">
                         <h2 class="fw-bold mb-1">@lang('leadership.khurshed_saadullaevich')</h2>
                         <div class="mt-3">
@@ -123,7 +123,7 @@
                 <div class="row mb-5">
                     <div class="col-12">
                       <div class="team-card d-flex align-items-center p-4 shadow rounded-5 glass-card">
-                        <img src="{{Vite::asset('resources/images/leadership/ortiqov.jpg')}}" class="team-img me-4" alt="Асадов Хуршед Саъдуллаевич">
+                        <img src="{{asset('images/leadership/ortiqov.jpg')}}" class="team-img me-4" alt="Асадов Хуршед Саъдуллаевич">
                         <div class="ps-lg-5">
                           <h2 class="fw-bold mb-1">@lang('leadership.nozimjon_kozimjonovich')</h2>
                           <div class="mt-3">

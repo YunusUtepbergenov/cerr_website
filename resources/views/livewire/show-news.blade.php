@@ -8,7 +8,7 @@
                             <div class="echo-hero-baner">
                                 {{-- @dd($news) --}}
                                 <div class="echo-inner-img-ct-1  img-transition-scale">
-                                    <a href="post-details.html"><img src="{{Vite::asset('resources/images/news/'.$news->translation->image_url)}}" alt="Echo" class="post-style-1-frist-hero-img"></a>
+                                    <a href="post-details.html"><img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="post-style-1-frist-hero-img"></a>
                                 </div>
                                 <h2 class="echo-hero-title text-capitalize font-weight-bold"><a href="post-details.html" class="title-hover">{{$news->translation->title}}</a></h2>
                                 {{-- <div class="echo-hero-area-titlepost-post-like-comment-share">
@@ -68,7 +68,7 @@
                                     @foreach($popular_news as $news)
                                         <div class="echo-top-story">
                                             <div class="echo-story-picture img-transition-scale">
-                                                <a href="{{route('show.news', $news->slug)}}"><img src="{{Vite::asset('resources/images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover"></a>
+                                                <a href="{{route('show.news', $news->slug)}}"><img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover"></a>
                                             </div>
                                             <div class="echo-story-text">
                                                 <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>

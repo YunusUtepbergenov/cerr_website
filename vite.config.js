@@ -1,6 +1,4 @@
-import {
-    defineConfig
-} from 'vite';
+import {defineConfig} from 'vite';
 import laravel from 'laravel-vite-plugin';
 import dotenv from 'dotenv';
 
@@ -29,13 +27,4 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    server: {
-        host: '0.0.0.0',
-        port: 5173,
-        hmr: {
-            host: process.env.VITE_HOST,
-            port: 5173,
-        },
-        cors: true,
-    },
 });
