@@ -75,6 +75,7 @@
                                                 <a href="{{route('show.news', $news->slug)}}" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
                                             </div>
                                         </div>
+                                        <hr>
                                     @endforeach
                                 </div>
                             </div>

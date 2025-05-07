@@ -21566,25 +21566,25 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   }
 }
 .echo-hero-section.inner .echo-right-ct-1 .echo-home-1-hero-area-top-story .echo-top-story {
-  display: flex;
+  display: block;
   margin: 18px 0;
-  gap: 15px;
   align-items: center;
 }
-.echo-hero-section.inner .echo-right-ct-1 .echo-home-1-hero-area-top-story .echo-top-story .echo-story-picture {
-  flex-basis: 40%;
+
+.echo-story-picture{
+  margin-bottom: 0.5rem;
 }
+
 .echo-hero-section.inner .echo-right-ct-1 .echo-home-1-hero-area-top-story .echo-top-story .echo-story-picture a img {
   width: 100%;
   height: 100%;
 }
-.echo-hero-section.inner .echo-right-ct-1 .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text {
-  flex-basis: 60%;
-}
+
 .echo-hero-section.inner .echo-right-ct-1 .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text h6 {
-  font-size: 20px;
+  font-size: 18px;
   line-height: 30px;
   margin-bottom: 10px;
+  text-align: justify;
 }
 .echo-hero-section.inner .echo-right-ct-1 .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text a.pe-none {
   font-size: 14px;

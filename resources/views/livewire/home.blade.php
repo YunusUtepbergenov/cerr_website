@@ -387,13 +387,13 @@
 
 @push('scripts')
 <script>
-    var swiper = new Swiper(".mySwiper", {
+    var swiper = new Swiper("#research", {
         slidesPerView: 4,
         spaceBetween: 30,
         grabCursor: true,
         navigation: {
-            nextEl: ".swiper-button-next",
-            prevEl: ".swiper-button-prev",
+            nextEl: "#researchNext",
+            prevEl: "#researchPrev",
         },
         breakpoints:{
             1168:{
@@ -413,5 +413,61 @@
             },
         },
     });
+
+    var eventSwiper = new Swiper("#eventsSwiper", {
+            slidesPerView: 4,
+            spaceBetween: 30,
+            grabCursor: true,
+            navigation: {
+              nextEl: "#eventsNext",
+              prevEl: "#eventsPrev",
+            },
+            breakpoints:{
+              1168:{
+                slidesPerView: 4,
+              },
+              992:{
+                slidesPerView: 3,
+              },
+              768:{
+                slidesPerView: 2,
+              },
+              576:{
+                slidesPerView: 1,
+              },
+              0:{
+                slidesPerView: 1,
+              },
+            },
+    });
+
+    var eventSwiper = new Swiper("#infoSwiper", {
+            slidesPerView: 4,
+            spaceBetween: 30,
+            grabCursor: true,
+            navigation: {
+              nextEl: "#infoNext",
+              prevEl: "#infoPrev",            
+            },
+            breakpoints:{
+              1168:{
+                slidesPerView: 4,
+              },
+              992:{
+                slidesPerView: 3,
+              },
+              768:{
+                slidesPerView: 2,
+              },
+              576:{
+                slidesPerView: 1,
+              },
+              0:{
+                slidesPerView: 1,
+              },
+            },
+    });
+
+        
 </script>
 @endpush
