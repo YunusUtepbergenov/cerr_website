@@ -65,8 +65,8 @@
                         <h4>@lang('messages.events')</h4>
                     </div>
                     <div class="echo-latest-news-next-prev-btn">
-                        <div class="swiper-button-next" id="eventsNext"></div>
-                        <div class="swiper-button-prev" id="eventsPrev"></div>
+                        <div class="swiper-button-next eventsNext"></div>
+                        <div class="swiper-button-prev eventsPrev"></div>
                     </div>
                 </div>
 
@@ -139,48 +139,6 @@
         </div>
     </section>
     <br>
-{{-- 
-    <section class="echo-de-category-area">
-        <div class="echo-de-category-area-content">
-            <div class="container">
-                <div class="echo-de-category-full-content">
-                    <div class="echo-de-category-title-btn">
-                        <h4 class="text-capitalize">@lang('messages.categories')</h4>
-                        <a wire:navigate href="{{route('show.all.category')}}" class="text-capitalize echo-py-btn">@lang('messages.all_categories')</a>
-                    </div>
-                    <div class="row gx-5">
-                        @foreach ($categories as $category)
-                            <div class="col-xl-4 col-lg-4 col-md-6">
-                                <div class="echo-de-category-content echo-responsive-wd">
-                                    <h5 class="text-capitalize">{{$category->translation->name}}</h5>
-                                    <hr style="background-color: currentcolor;">
-                                    @foreach ($category->getLatestNews as $item)
-                                        <div class="echo-de-category-content-img-title">
-                                            <div class="echo-de-category-content-img img-transition-scale">
-                                                <a wire:navigate href="{{route('show.news', $item->slug)}}">
-                                                    <img src="{{asset('images/news/'.$item->translation->image_url)}}" alt="Echo" class="img-hover">
-                                                </a>
-                                            </div>
-                                            <div class="echo-de-category-content-title">
-                                                <h6><a wire:navigate href="{{route('show.news', $item->slug)}}" class="title-hover">{{ Str::limit($item->translation->title, 37, '...')}}</a></h6>
-                                                <div class="echo-de-category-read">
-                                                    <a wire:navigate href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06 minute
-                                                        read</a>
-                                                </div>
-                                            </div>
-                                        </div>                                        
-                                    @endforeach
-                                    <div class="echo-de-category-show-more-btn">
-                                        <a wire:navigate href="{{route('show.category', $category->slug)}}" class="text-capitalize echo-py-btn">@lang('messages.show_more')</a>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> --}}
 
     <!-- Start Video Area-->
     <section class="echo-video-area">
@@ -381,93 +339,6 @@
           </div>
         </div>
       </section>
-      
-
 </div>
 
-@push('scripts')
-<script>
-    var swiper = new Swiper("#research", {
-        slidesPerView: 4,
-        spaceBetween: 30,
-        grabCursor: true,
-        navigation: {
-            nextEl: "#researchNext",
-            prevEl: "#researchPrev",
-        },
-        breakpoints:{
-            1168:{
-            slidesPerView: 4,
-            },
-            992:{
-            slidesPerView: 3,
-            },
-            768:{
-            slidesPerView: 2,
-            },
-            576:{
-            slidesPerView: 1,
-            },
-            0:{
-            slidesPerView: 1,
-            },
-        },
-    });
 
-    var eventSwiper = new Swiper("#eventsSwiper", {
-            slidesPerView: 4,
-            spaceBetween: 30,
-            grabCursor: true,
-            navigation: {
-              nextEl: "#eventsNext",
-              prevEl: "#eventsPrev",
-            },
-            breakpoints:{
-              1168:{
-                slidesPerView: 4,
-              },
-              992:{
-                slidesPerView: 3,
-              },
-              768:{
-                slidesPerView: 2,
-              },
-              576:{
-                slidesPerView: 1,
-              },
-              0:{
-                slidesPerView: 1,
-              },
-            },
-    });
-
-    var eventSwiper = new Swiper("#infoSwiper", {
-            slidesPerView: 4,
-            spaceBetween: 30,
-            grabCursor: true,
-            navigation: {
-              nextEl: "#infoNext",
-              prevEl: "#infoPrev",            
-            },
-            breakpoints:{
-              1168:{
-                slidesPerView: 4,
-              },
-              992:{
-                slidesPerView: 3,
-              },
-              768:{
-                slidesPerView: 2,
-              },
-              576:{
-                slidesPerView: 1,
-              },
-              0:{
-                slidesPerView: 1,
-              },
-            },
-    });
-
-        
-</script>
-@endpush
