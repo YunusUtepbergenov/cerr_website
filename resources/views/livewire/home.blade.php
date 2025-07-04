@@ -44,7 +44,7 @@
                                             <h6 lang="{{ app()->getLocale() }}"><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
                                         </div>
                                         <div class="echo-latest-news-time-views">
-                                            <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
+                                            <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> {{ \Carbon\Carbon::parse($news->created_at)->format('d-m-Y') }}</a>
                                             <a href="#" class="pe-none"><i class="fa-light fa-eye"></i> {{$news->view_count}}</a>
                                         </div>
                                     </div>
@@ -85,7 +85,7 @@
                                             <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
                                         </div>
                                         <div class="echo-latest-news-time-views">
-                                            <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
+                                            <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> {{ \Carbon\Carbon::parse($news->created_at)->format('d-m-Y') }}</a>
                                             <a href="#" class="pe-none"><i class="fa-light fa-eye"></i> {{$news->view_count}}</a>
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@
                                             <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
                                         </div>
                                         <div class="echo-latest-news-time-views">
-                                            <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
+                                            <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> {{ \Carbon\Carbon::parse($news->created_at)->format('d-m-Y') }}</a>
                                             <a href="#" class="pe-none"><i class="fa-light fa-eye"></i> {{$news->view_count}}</a>
                                         </div>
                                     </div>

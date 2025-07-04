@@ -24,7 +24,7 @@
                                                 </td>
                                                 <td>
                                                     <div>
-                                                        <h6 class="contact-td"><a href="tel:+99871 238-41-07" style="text-decoration: none;">+99878 150-02-02;</a></h6>
+                                                        <h6 class="contact-td"><a href="tel:+99878 150-02-02" style="text-decoration: none;">+99878 150-02-02 (400);</a></h6>
                                                     </div>
                                                 </td>
                                             </tr>
