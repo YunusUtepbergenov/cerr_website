@@ -17,7 +17,7 @@ class ShowNews extends Component
             return redirect('/');
         }
 
-        $this->popular_news = News::whereHas('translations', fn($query) => $query->where('lang', app()->getLocale()))->orderBy('view_count', 'DESC')->limit(8)->get();
+        $this->popular_news = News::whereHas('translations', fn($query) => $query->where('lang', app()->getLocale()))->orderBy('view_count', 'DESC')->limit(6)->get();
     }
 
     public function render()

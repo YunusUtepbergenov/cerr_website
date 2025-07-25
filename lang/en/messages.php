@@ -29,6 +29,6 @@ return [
     'parliament' => 'Legislative Chamber of the Oliy Majlis of the Republic of Uzbekistan',
     'senat' => 'Senate of the Oliy Majlis of the Republic of Uzbekistan',
     'org_name' => 'Center for Economic Research and <br> Reforms under the Administration <br> of the President of the Republic<br> of Uzbekistan',
-
+    'test_mode' => 'This website is currently in <strong>test mode</strong>. Features may not be stable.',
 
 ];

@@ -40,7 +40,7 @@
                                                 <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
                                             </a>
                                         </div>
-                                        <div class="echo-latest-news-single-title mt-5">
+                                        <div class="echo-latest-news-single-title mt-4">
                                             <h6 lang="{{ app()->getLocale() }}"><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
                                         </div>
                                         <div class="echo-latest-news-time-views">
@@ -81,7 +81,7 @@
                                                 <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
                                             </a>
                                         </div>
-                                        <div class="echo-latest-news-single-title mt-5">
+                                        <div class="echo-latest-news-single-title mt-4">
                                             <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
                                         </div>
                                         <div class="echo-latest-news-time-views">
@@ -122,7 +122,7 @@
                                                 <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
                                             </a>
                                         </div>
-                                        <div class="echo-latest-news-single-title mt-5">
+                                        <div class="echo-latest-news-single-title mt-4">
                                             <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
                                         </div>
                                         <div class="echo-latest-news-time-views">

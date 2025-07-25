@@ -29,4 +29,6 @@ return [
     'senat' => 'O‘zbekiston Respublikasi Oliy Majlisining Senati',
     'org_name' => 'O‘zbekiston Respublikasi Prezidenti Administratsiyasi huzuridagi <br>Iqtisodiy tadqiqotlar va islohotlar <br> markazi',
     'useful_links' => 'Foydali havolalar',
+
+    'test_mode' => 'Sayt hozirda <strong>test rejimida</strong> ishlamoqda.',
 ];

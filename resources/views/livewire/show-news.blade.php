@@ -6,11 +6,13 @@
                     <div class="row gx-5 sticky-coloum-wrap">
                         <div class="col-xl-8 col-lg-8">
                             <div class="echo-hero-baner">
-                                {{-- @dd($news) --}}
-                                <div class="echo-inner-img-ct-1  img-transition-scale">
-                                    <a href="post-details.html"><img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="post-style-1-frist-hero-img"></a>
+                                <h2 class="echo-hero-title text-capitalize font-weight-bold">{{$news->translation->title}}</h2>
+                                <div class="entry-content post-info">
+                                    {{$news->translation->short_description}}                                         
                                 </div>
-                                <h2 class="echo-hero-title text-capitalize font-weight-bold"><a href="post-details.html" class="title-hover">{{$news->translation->title}}</a></h2>
+                                <div class="echo-inner-img-ct-1 img-transition-scale mb-5">
+                                    <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="{{$news->translation->title}}" class="post-style-1-frist-hero-img">
+                                </div>
                                 {{-- <div class="echo-hero-area-titlepost-post-like-comment-share">
                                     <div class="echo-hero-area-like-read-comment-share">
                                         <a href="#"><i class="fa-light fa-clock"></i> 06.03.2025</a>

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="light">
+<html lang="{{ app()->getLocale() }}" data-theme="light">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ardet предлагает высококачественные строительные материалы, включая краски, клеи и промышленные решения, разработанные специально для рынка Узбекистана.">
+    <meta name="keywords" content="Ardet, строительные материалы Узбекистан, клеи, краски, строительные материалы, промышленные решения">
+    <link rel="canonical" href="https://ardet.uz" />
+
     <title>Center for Economic Research and Reforms</title>
     <link rel="shortcut icon" href="https://cer.uz/themes/cer/icon/favicon.ico" type="image/x-icon">
     
@@ -14,7 +18,10 @@
 </head>
 
 <body class="home-one">
-    <!-- Start Top Header Area  #495981 -->
+    <div class="alert alert-warning text-center mb-0" role="alert">
+        @lang('messages.test_mode')
+    </div>
+
     <header class="echo-header-area">
         <div class="echo-header-top">
             <div class="container">
@@ -116,8 +123,8 @@
                             
                             <div class="col-xl-2 col-lg-2 col-md-7 col-sm-7 col-7">
                                 <div class="echo-site-logo">
-                                    <a class="logo-light" wire:navigate href="{{route('home')}}"><img src="https://cer.uz/themes/cer/img/logo.svg" alt="Echo"></a>
-                                    <a class="logo-dark" wire:navigate href="{{route('home')}}"><img src="https://cer.uz/themes/cer/img/logo.svg" alt="Echo"></a>
+                                    <a class="logo-light" wire:navigate href="{{route('home')}}"><img src="{{asset('images/logo.svg')}}" alt="Echo"></a>
+                                    <a class="logo-dark" wire:navigate href="{{route('home')}}"><img src="{{asset('images/logo.svg')}}" alt="Echo"></a>
                                 </div>
                             </div>
 
@@ -169,7 +176,7 @@
                                                 <a href="#" class="echo-dropdown-main-element">@lang('messages.press')</a>
                                                 <ul class="echo-submenu list-unstyled menu-pages">
                                                     <li class="nav-item"><a href="{{route('show.category', 'research')}}">@lang('messages.press_releases') </a></li>
-                                                    <li class="nav-item"><a href="404.html">@lang('messages.photogallery')</a></li>
+                                                    {{-- <li class="nav-item"><a href="404.html">@lang('messages.photogallery')</a></li> --}}
                                                     <li class="nav-item"><a href="{{route('videos.index')}}">@lang('messages.videogallery')</a></li>
                                                 </ul>
                                             </li>
