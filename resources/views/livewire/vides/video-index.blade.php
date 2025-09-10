@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="breadcrumb-inner text-center">
-                        <h1 class="title">Videos</h1>
+                        <h1 class="title">@lang('messages.videogallery')</h1>
                     </div>
                 </div>
             </div>
@@ -17,42 +17,50 @@
                 <div class="echo-full-hero-content">
                     <div class="row gx-5 sticky-coloum-wrap">
                         <div class="col-xl-9 col-lg-9">
-                            @foreach ($videos as $video)
-                                <div class="echo-hero-baner">
-                                    <div class="echo-inner-img-ct-1 img-transition-scale">
-                                        <a href="{{ route('videos.show', $video->id) }}">
-                                            <img src="{{ asset('images/video/' . $video->image) }}" alt="{{ $video->title }}">
-                                        </a>
-                                    </div>
-                                    <div class="echo-banner-texting">
-                                        <h3 class="echo-hero-title text-capitalize font-weight-bold">
-                                            <a href="{{ route('videos.show', $video->id) }}" class="title-hover">{{ $video->title }}</a>
-                                        </h3>
-                                        <div class="echo-hero-area-titlepost-post-like-comment-share">
-                                            <div class="echo-hero-area-like-read-comment-share">
-                                                <a href="{{ route('videos.show', $video->id) }}">
-                                                    <i class="fa-light fa-clock"></i> {{ date('d-m-Y', strtotime($video->created_at)) }}
-                                                </a>
+                            <div class="row" wire:ignore.self>
+                                @foreach ($videos as $video)
+                                        <div class="col-lg-6">
+                                            <div class="echo-hero-baner my-5">
+                                                <div class="echo-inner-img-ct-1 img-transition-scale">
+                                                    <a href="{{ $video->url }}"><img src="{{asset('images/video/' . $video->image)}}" alt="Echo"></a>
+                                                    <div class="echo-hm2-video-icons">
+                                                        <div class="vedio-icone">
+                                                            <a class="play-video popup-youtube video-play-button" href="{{ $video->url }}">
+                                                                <span></span>
+                                                            </a>
+                                                            <div class="video-overlay">
+                                                                <a class="video-overlay-close">×</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="echo-banner-texting my-3">
+                                                    <h5 class="echo-hero-title font-weight-bold text-center">
+                                                        <a href="{{ $video->url }}" class="title-hover play-video popup-youtube">{{$video->title}}</a>
+                                                    </h5>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>                                
-                            @endforeach
-                            
-                            <div class="d-flex justify-content-center mt-4">
-                                {{ $videos->links() }}
+                                @endforeach
                             </div>
-                        </div>
-
+                            @if($perPage < $totalCount)
+                                <div class="echo-de-category-show-more-btn text-center">
+                                    <a href="#" wire:click.prevent="loadMore" class="echo-py-btn">@lang('messages.load_more')</a>
+                                </div>
+                            @endif
+                            </div>
                         <div class="col-xl-3 col-lg-3 sticky-coloum-item">
                             <div class="echo-home-1-hero-area-top-story bg-right-side">
                                 <h5 class="text-center">@lang('messages.popular')</h5>
+
                                 <hr style="background-color: #4c0505; margin-top: 10px;"> 
+                                
                                 @foreach ($popular_news as $news)
                                     <div class="echo-top-story first">
                                         <div class="echo-story-picture img-transition-scale">
                                             <a href="{{route('show.news', $news->slug)}}"><img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover"></a>
                                         </div>
+
                                         <div class="echo-story-text">
                                             <h4><a href="#" class="title-hover">{{$news->translation->title}}</a></h4>
                                             <div class="echo-trending-post-bottom-icons">
@@ -63,9 +71,9 @@
                                     </div>
                                     <hr style="background-color: #4c0505;">                                    
                                 @endforeach
+
                             </div>
                         </div>
-                        
                     </div>
                 </div>
             </div>

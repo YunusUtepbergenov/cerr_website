@@ -8,7 +8,7 @@
                             <div class="echo-hero-baner">
                                 <h2 class="echo-hero-title text-capitalize font-weight-bold">{{$news->translation->title}}</h2>
                                 <div class="entry-content post-info">
-                                    {{$news->translation->short_description}}                                         
+                                    <p class="news-short-desc">{{$news->translation->short_description}}</p>
                                 </div>
                                 <div class="echo-inner-img-ct-1 img-transition-scale mb-5">
                                     <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="{{$news->translation->title}}" class="post-style-1-frist-hero-img">

@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ardet предлагает высококачественные строительные материалы, включая краски, клеи и промышленные решения, разработанные специально для рынка Узбекистана.">
-    <meta name="keywords" content="Ardet, строительные материалы Узбекистан, клеи, краски, строительные материалы, промышленные решения">
-    <link rel="canonical" href="https://ardet.uz" />
+    <meta name="description" content="Center for Economic Research and Reforms">
+    <meta name="keywords" content="Center for Economic Research and Reforms">
+    <link rel="canonical" href="https://cerr.uz" />
 
     <title>Center for Economic Research and Reforms</title>
     <link rel="shortcut icon" href="https://cer.uz/themes/cer/icon/favicon.ico" type="image/x-icon">
@@ -251,15 +251,14 @@
                     <div class="echo-get-in-tuch">
                         <!-- <h4 class="text-capitalize">CERR</h4> -->
                         <div class="echo-site-logo">
-                            <a class="logo-light" href="index.html"><img src="https://cer.uz/themes/cer/img/logo.svg" alt="Echo"></a>
-                            <a class="logo-dark" href="index.html"><img src="https://cer.uz/themes/cer/img/logo.svg" alt="Echo"></a>
+                            <a class="logo-light" href="index.html"><img src="{{asset('images/logo.svg')}}" alt="Echo"></a>
+                            <a class="logo-dark" href="index.html"><img src="{{asset('images/logo.svg')}}" alt="Echo"></a>
                         </div>
                     </div>
                     <div class="echo-footer-address">
-                        <span class="text-capitalize"><i class="fa-regular fa-map"></i> @lang('messages.address')</span>
-                        <span class="text-capitalize"><i class="fa-regular fa-phone"></i> +78 150 02 02</span>
-                        <span class="text-capitalize"><i class="fa-sharp fa-regular fa-envelope"></i>
-                            info@cerr.uz</span>
+                        <span><i class="fa-regular fa-map"></i> @lang('messages.address')</span>
+                        <span><i class="fa-regular fa-phone"></i> +998 78 150 02 02</span>
+                        <span><i class="fa-sharp fa-regular fa-envelope"></i>info@cerr.uz</span>
                         <div class="echo-footer-social-media">
                             <a href="https://www.facebook.com/CERR.Uzbekistan">
                                 <i class="fa-brands fa-facebook-f"></i>
@@ -334,10 +333,13 @@
     <div id="anywhere-home"></div>
 
     @vite([
+        'resources/css/vendor/metismenu.css',
         'resources/css/plugins/fontawesome-5.css',
-        'resources/js/app.js',
+        'resources/css/vendor/magnific-popup.css',
         'resources/css/style.css',
+        'resources/js/app.js',
         ])
+
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init();

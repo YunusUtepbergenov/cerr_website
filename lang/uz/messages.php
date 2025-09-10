@@ -31,4 +31,6 @@ return [
     'useful_links' => 'Foydali havolalar',
 
     'test_mode' => 'Sayt hozirda <strong>test rejimida</strong> ishlamoqda.',
+    'load_more' => 'Ko‘proq yuklash',
+
 ];

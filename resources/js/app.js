@@ -1,23 +1,23 @@
-import $ from 'jquery';
-window.$ = $;
-window.jQuery = $;
+// import $ from 'jquery';
+// window.$ = $;
+// window.jQuery = $;
 
+import '../js/vendor/jquery.min.js';
 import '../css/vendor/bootstrap.min.css';
-import '../css/style.css';
-import '../css/plugins/fontawesome-5.css';
+import '../js/plugins/audio.js';
+import '../js/plugins/magnific-popup.js';
+import '../js/helper.js';
 
 import swiperInit from './main.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   swiperInit.initSwipers();
 
-  // Re-run after any Livewire component update
   if (window.Livewire) {
     window.Livewire.hook('message.processed', () => {
       swiperInit.initSwipers();
     });
 
-    // ✅ This is CRUCIAL for full-page Livewire components
     window.addEventListener('livewire:navigated', () => {
       swiperInit.initSwipers();
     });

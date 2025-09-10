@@ -3,11 +3,9 @@
         <div class="container">
             <div class="position-relative overflow-hidden custom-hero-inner p-5 d-flex justify-content-center align-items-center">
     
-                <!-- Background Image -->
                 <img src="{{asset('images/main_image/hero.png')}}" alt="Decorative background"
                      class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover z-n1" />
     
-                <!-- Centered Text Content -->
                 <div class="text-center position-relative z-1">
                     <h1 class="display-4 fw-bold hero-title text-white mb-4">@lang('messages.org_name')</h1>
                 </div>
@@ -140,97 +138,89 @@
     </section>
     <br>
 
-    <!-- Start Video Area-->
     <section class="echo-video-area">
         <div class="echo-video-content">
             <div class="container">
                 <div class="echo-video-area-title-row text-center">
                     <h6>@lang('messages.videogallery')</h6>
                 </div>
+
                 <div class="echo-full-video-content">
                     <div class="row gx-6">
+
                         <div class="col-xl-8 col-lg-8 col-md-12">
-                            <div class="echo-video-left-site">
-                                <a href="https://www.youtube.com/watch?v=Ukn0u0WBpyo" class="play-video popup-youtube"><img src="{{asset('images/video/image1.jpg')}}" alt="Echo"></a>
-                                <div class="vedio-icone">
-                                    <a class="play-video popup-youtube video-play-button" href="https://www.youtube.com/watch?v=Ukn0u0WBpyo">
-                                        <span></span>
+                            @if($videos->first())
+                                <div class="echo-video-left-site">
+                                    <a href="{{ $videos->first()->url }}" class="play-video popup-youtube">
+                                        <img src="{{asset('images/video/'.$videos->first()->image)}}" alt="Video">
                                     </a>
-                                    <div class="video-overlay">
-                                        <a class="video-overlay-close">×</a>
+
+                                    <div class="vedio-icone">
+                                        <a class="play-video popup-youtube video-play-button" href="{{ $videos->first()->url }}">
+                                            <span></span>
+                                        </a>
+                                        <div class="video-overlay">
+                                            <a class="video-overlay-close">×</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="echo-video-left-site-text-box">
+                                        <h5>
+                                            <a href="{{ $videos->first()->url }}" class="play-video popup-youtube title-hover">
+                                                {{ $videos->first()->title }}
+                                            </a>
+                                            <div class="video-overlay">
+                                                <a class="video-overlay-close">×</a>
+                                            </div>
+                                        </h5>
+                                        <hr>
+                                        <div class="echo-video-left-site-read-views">
+                                            <a href="#" class="pe-none">
+                                                <i class="fa-light fa-clock"></i> {{ $videos->first()->created_at->format('d.m.Y') }}
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="echo-video-left-site-text-box">
-                                    <h5><a href="https://www.youtube.com/watch?v=Ukn0u0WBpyo" class="play-video popup-youtube title-hover">Ўзбекистоннинг кейинги 5 йилдаги мақсадлари</a></h5>
-                                    <hr>
-                                    <div class="echo-video-left-site-read-views">
-                                        <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
-                                    </div>
-                                </div>
-                            </div>
+                            @endif
                         </div>
+
                         <div class="col-xl-4 col-lg-4 col-md-12">
                             <div class="echo-video-area-home-1-right-content-responsive">
-                                <div class="echo-video-right-site-content">
-                                    <div class="echo-video-right-site-content-text">
-                                        <h5 class="text-capitalize"><a href="https://www.youtube.com/watch?v=ucgRqEvtgH4" class="play-video popup-youtube title-hover text-white">Ўзбекистон-Озарбайжон ҳамкорлиги ...</a>
-                                        </h5>
-                                        <hr>
-                                    </div>
-                                    <div class="echo-video-right-site-content-video">
-                                        <a href="https://www.youtube.com/watch?v=ucgRqEvtgH4" class="play-video popup-youtube"><img src="{{asset('images/video/image2.jpg')}}" alt="Echo"></a>
-                                        <div class="vedio-icone">
-                                            <a class="play-video popup-youtube video-play-button" href="https://www.youtube.com/watch?v=ucgRqEvtgH4">
-                                                <span></span>
+                                @foreach($videos->skip(1) as $video)
+                                    <div class="echo-video-right-site-content">
+                                        <div class="echo-video-right-site-content-text">
+                                            <h5 class="text-capitalize">
+                                                <a href="{{ $video->url }}" class="play-video popup-youtube title-hover text-white">
+                                                    {{ $video->title }}
+                                                </a>
+                                            </h5>
+                                            <hr>
+                                        </div>
+                                        <div class="echo-video-right-site-content-video">
+                                            <a href="{{ $video->url }}" class="play-video popup-youtube">
+                                                <img src="{{asset('images/video/'.$video->image)}}" alt="Video">
                                             </a>
-                                            <div class="video-overlay">
-                                                <a class="video-overlay-close">×</a>
+                                            <div class="vedio-icone">
+                                                <a class="play-video popup-youtube video-play-button" href="{{ $video->url }}">
+                                                    <span></span>
+                                                </a>
+                                                <div class="video-overlay">
+                                                    <a class="video-overlay-close">×</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="echo-video-right-site-content">
-                                    <div class="echo-video-right-site-content-text">
-                                        <h5 class="text-capitalize"><a href="https://www.youtube.com/watch?v=6IAnGeZXXDA" class="play-video popup-youtube title-hover text-white">Ишбилармонлик фаоллиги индекси ...</a>
-                                        </h5>
-                                        <hr>
-                                    </div>
-                                    <div class="echo-video-right-site-content-video">
-                                        <a href="https://www.youtube.com/watch?v=6IAnGeZXXDA" class="play-video popup-youtube"><img src="{{asset('images/video/image3.jpg')}}" alt="Echo"></a>
-                                        <div class="vedio-icone">
-                                            <a class="play-video popup-youtube video-play-button" href="https://www.youtube.com/watch?v=6IAnGeZXXDA">
-                                                <span></span>
-                                            </a>
-                                            <div class="video-overlay">
-                                                <a class="video-overlay-close">×</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="echo-video-right-site-content">
-                                    <div class="echo-video-right-site-content-text">
-                                        <h5 class="text-capitalize"><a href="https://www.youtube.com/watch?v=ty76zXe7pz4" class="play-video popup-youtube title-hover text-white">Interview of the Director of the CERR ...</a></h5>
-                                        <hr>
-                                    </div>
-                                    <div class="echo-video-right-site-content-video">
-                                        <a href="https://www.youtube.com/watch?v=ty76zXe7pz4" class="play-video popup-youtube"><img src="{{asset('images/video/image4.jpg')}}" alt="Echo"></a>
-                                        <div class="vedio-icone">
-                                            <a class="play-video popup-youtube video-play-button" href="https://www.youtube.com/watch?v=ty76zXe7pz4">
-                                                <span></span>
-                                            </a>
-                                            <div class="video-overlay">
-                                                <a class="video-overlay-close">×</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
+
                     </div>
                 </div>
+
             </div>
         </div>
     </section>
+
 
     <section class="echo-popular-news-area">
         <div class="echo-popular-news-area-content">
@@ -247,28 +237,28 @@
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                             <div class="echo-popular-area-single-item">
                                 <div class="echo-popular-area-img img-transition-scale">
-                                    <a href="https://review.uz/journals/view/1-03-2025" target="_blank"><img src="https://static.review.uz/crop/8/0/200_265_95_807101001.jpg?v=1741943966" alt="Echo" class="img-hover"></a>
+                                    <a href="https://review.uz/journals/view/8-44-2025" target="_blank"><img src="https://static.review.uz/crop/1/8/200_265_95_1879944794.jpg?v=1757314135" alt="Echo" class="img-hover"></a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                             <div class="echo-popular-area-single-item">
                                 <div class="echo-popular-area-img img-transition-scale">
-                                    <a href="https://review.uz/journals/view/2-38-2025" target="_blank"><img src="https://static.review.uz/crop/2/4/200_265_95_2400471251.jpg?v=1741754941" alt="Echo" class="img-hover"></a>
+                                    <a href="https://review.uz/journals/view/8-307-2025" target="_blank"><img src="https://static.review.uz/crop/1/4/200_265_95_1409325190.jpg?v=1756985379" alt="Echo" class="img-hover"></a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                             <div class="echo-popular-area-single-item echo-popular-news-responsive-home-1">
                                 <div class="echo-popular-area-img img-transition-scale">
-                                    <a href="https://review.uz/journals/view/2-301-2025" target="_blank"><img src="https://static.review.uz/crop/3/3/200_265_95_3357547324.jpg?v=1741754866" alt="Echo" class="img-hover"></a>
+                                    <a href="https://review.uz/journals/view/1-08-2025" target="_blank"><img src="https://static.review.uz/crop/9/5/200_265_95_958738944.jpg?v=1756189246" alt="Echo" class="img-hover"></a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                             <div class="echo-popular-area-single-item echo-popular-news-responsive-home-1">
                                 <div class="echo-popular-area-img img-transition-scale">
-                                    <a href="https://review.uz/journals/view/1-37-2025" target="_blank"><img src="https://static.review.uz/crop/9/3/200_265_95_93454726.jpg?v=1739517864" alt="Echo" class="img-hover"></a>
+                                    <a href="https://review.uz/journals/view/7-43-2025" target="_blank"><img src="https://static.review.uz/crop/1/4/360__95_1417567118.jpg?v=1755058724" alt="Echo" class="img-hover"></a>
                                 </div>
                             </div>
                         </div>
