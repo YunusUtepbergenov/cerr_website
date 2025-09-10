@@ -1,14 +1,5 @@
-// import $ from 'jquery';
-// window.$ = $;
-// window.jQuery = $;
-
-import '../js/vendor/jquery.min.js';
-import '../css/vendor/bootstrap.min.css';
-import '../js/plugins/audio.js';
-import '../js/plugins/magnific-popup.js';
-import '../js/helper.js';
-
 import swiperInit from './main.js';
+import '../js/helper.js';
 
 document.addEventListener('DOMContentLoaded', () => {
   swiperInit.initSwipers();

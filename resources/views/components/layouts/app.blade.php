@@ -12,7 +12,13 @@
     <title>Center for Economic Research and Reforms</title>
     <link rel="shortcut icon" href="https://cer.uz/themes/cer/icon/favicon.ico" type="image/x-icon">
     
+    <link rel="stylesheet" href="{{asset('css/vendor/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/vendor/metismenu.css')}}">
+    <link rel="stylesheet" href="{{asset('css/plugins/fontawesome-5.css')}}">
+    <link rel="stylesheet" href="{{asset('css/vendor/magnific-popup.css')}}">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+
+    <link rel="stylesheet" href="{{asset('css/style.css')}}">
     @stack('styles')
 
 </head>
@@ -331,9 +337,13 @@
     <!--scroll top button end-->
 
     <div id="anywhere-home"></div>
+    <script src="{{ asset('js/vendor/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/audio.js') }}"></script>
+    <script src="{{ asset('js/plugins/magnific-popup.js') }}"></script>
+    <script src="{{ asset('js/helper.js') }}"></script>
 
     @vite([
-        'resources/css/app.css',
+        // 'resources/css/app.css',
         'resources/js/app.js',
         ])
 
