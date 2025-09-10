@@ -333,10 +333,7 @@
     <div id="anywhere-home"></div>
 
     @vite([
-        'resources/css/vendor/metismenu.css',
-        'resources/css/plugins/fontawesome-5.css',
-        'resources/css/vendor/magnific-popup.css',
-        'resources/css/style.css',
+        'resources/css/app.css',
         'resources/js/app.js',
         ])
 

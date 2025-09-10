@@ -8,10 +8,10 @@ use Livewire\Component;
 
 class VideoIndex extends Component
 {
-    public $perPage = 2;
+    public $perPage = 8;
 
     public function loadMore(){
-        $this->perPage += 2;
+        $this->perPage += 8;
     }
 
     public function render(){

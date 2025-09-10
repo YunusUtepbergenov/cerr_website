@@ -1,1 +1,6 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+
+@import '../css/vendor/metismenu.css';
+@import '../css/plugins/fontawesome-5.css';
+@import '../css/vendor/magnific-popup.css';
+@import '../css/style.css';
