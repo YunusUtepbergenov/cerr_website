@@ -9,10 +9,17 @@ class History extends Component
 {
     public $page;
 
-    public function render()
+    public function mount()
     {
         $this->page = Page::with('translation')->where('slug', 'history')->first();
 
+        if (! $this->page || ! $this->page->translation) {
+            abort(404);
+        }
+    }
+
+    public function render()
+    {
         return view('livewire.history');
     }
 }

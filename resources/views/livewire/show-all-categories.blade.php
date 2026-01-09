@@ -20,7 +20,7 @@
                     <div class="row gx-5 sticky-coloum-wrap">
                         <div class="col-xl-9 col-lg-9">
                             @foreach ($category->news as $item)
-                                <div class="echo-hero-baner">
+                                <div class="echo-hero-baner" wire:key="category-news-{{ $item->id }}">
                                     <div class="echo-inner-img-ct-1  img-transition-scale">
                                         <a href="{{route('show.news', $item->slug)}}"><img src="{{asset('images/news/'.$item->translation->image_url)}}" alt="Echo"></a>
                                     </div>
@@ -48,14 +48,14 @@
                                     <h5 class="text-center">@lang('messages.popular')</h5>
                                     <hr style="background-color: #4c0505; margin-top: 10px;"> 
                                     @foreach ($popular_news as $news)
-                                        <div class="echo-top-story first">
+                                        <div class="echo-top-story first" wire:key="popular-news-{{ $news->id }}">
                                             <div class="echo-story-picture img-transition-scale">
                                                 <a href="{{route('show.news', $news->slug)}}"><img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover"></a>
                                             </div>
                                             <div class="echo-story-text">
                                                 <h4><a href="#" class="title-hover">{{$news->translation->title}}</a></h4>
                                                 <div class="echo-trending-post-bottom-icons">
-                                                    <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
+                                                    <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> {{ \Carbon\Carbon::parse($news->created_at)->format('d.m.Y') }}</a>
                                                     <a href="#" class="pe-none"><i class="fa-light fa-eye"></i> {{$news->view_count}}</a>
                                                 </div>
                                             </div>

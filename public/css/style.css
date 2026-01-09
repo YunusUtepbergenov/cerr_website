@@ -19005,9 +19005,9 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   color: #fff;
 }
 .home-one .echo-video-area .echo-full-video-content .echo-video-right-site-content .echo-video-right-site-content-text h5 {
-  font-size: 20px;
-  line-height: 30px;
-  margin-bottom: 15px;
+  font-size: 16px;
+  line-height: 24px;
+  margin-bottom: 10px;
 }
 @media (max-width: 1200px) and (min-width: 992px) {
   .home-one .echo-video-area .echo-full-video-content .echo-video-right-site-content .echo-video-right-site-content-text h5 {

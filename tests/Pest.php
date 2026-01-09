@@ -15,6 +15,10 @@ pest()->extend(Tests\TestCase::class)
     ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
     ->in('Feature');
 
+pest()->extend(Tests\TestCase::class)
+    ->use(Illuminate\Foundation\Testing\RefreshDatabase::class)
+    ->in('Unit');
+
 /*
 |--------------------------------------------------------------------------
 | Expectations
@@ -41,7 +45,56 @@ expect()->extend('toBeOne', function () {
 |
 */
 
-function something()
+/*
+|--------------------------------------------------------------------------
+| Test Helpers
+|--------------------------------------------------------------------------
+*/
+
+// Helper to set application locale in tests
+function setAppLocale(string $locale = 'uz'): void
 {
-    // ..
+    session(['locale' => $locale]);
+    app()->setLocale($locale);
+}
+
+// Helper to create news with translations
+function createNewsWithTranslation(array $newsAttrs = [], array $translationAttrs = []): \App\Models\News
+{
+    $news = \App\Models\News::factory()->create($newsAttrs);
+    $news->translations()->create(array_merge([
+        'lang' => app()->getLocale(),
+        'title' => fake()->sentence(),
+        'short_description' => fake()->paragraph(),
+        'content' => fake()->text(800),
+        'image_url' => '1.jpg',
+    ], $translationAttrs));
+
+    return $news->fresh(['translation']);
+}
+
+// Helper to create category with translation
+function createCategoryWithTranslation(array $categoryAttrs = [], array $translationAttrs = []): \App\Models\Category
+{
+    $category = \App\Models\Category::factory()->create($categoryAttrs);
+    $category->translations()->create(array_merge([
+        'language' => app()->getLocale(),
+        'name' => fake()->word(),
+    ], $translationAttrs));
+
+    return $category->fresh(['translation']);
+}
+
+// Helper to create page with translation
+function createPageWithTranslation(array $pageAttrs = [], array $translationAttrs = []): \App\Models\Page
+{
+    $page = \App\Models\Page::factory()->create($pageAttrs);
+    $page->translations()->create(array_merge([
+        'language' => app()->getLocale(),
+        'title' => fake()->sentence(),
+        'content' => fake()->paragraphs(3, true),
+        'image' => fake()->imageUrl(),
+    ], $translationAttrs));
+
+    return $page->fresh(['translation']);
 }

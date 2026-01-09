@@ -31,11 +31,11 @@
                     <div class="swiper" id="research">
                         <div class="swiper-wrapper">
                             @foreach ($latest_news as $news)
-                                <div class="swiper-slide" wire:key={{$news->id}}>
+                                <div class="swiper-slide" wire:key="research-{{ $news->id }}">
                                     <div class="echo-latest-news-main-content">
                                         <div class="echo-latest-news-img img-transition-scale">
                                             <a href="{{route('show.news', $news->slug)}}">
-                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
+                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover" loading="lazy">
                                             </a>
                                         </div>
                                         <div class="echo-latest-news-single-title mt-4">
@@ -72,11 +72,11 @@
                     <div class="swiper" id="eventsSwiper">
                         <div class="swiper-wrapper">
                             @foreach ($events as $news)
-                                <div class="swiper-slide" wire:key={{$news->id}}>
+                                <div class="swiper-slide" wire:key="event-{{ $news->id }}">
                                     <div class="echo-latest-news-main-content">
                                         <div class="echo-latest-news-img img-transition-scale">
                                             <a href="{{route('show.news', $news->slug)}}">
-                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
+                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover" loading="lazy">
                                             </a>
                                         </div>
                                         <div class="echo-latest-news-single-title mt-4">
@@ -113,11 +113,11 @@
                     <div class="swiper" id="infoSwiper">
                         <div class="swiper-wrapper">
                             @foreach ($infographics as $news)
-                                <div class="swiper-slide" wire:key={{$news->id}}>
+                                <div class="swiper-slide" wire:key="infographic-{{ $news->id }}">
                                     <div class="echo-latest-news-main-content">
                                         <div class="echo-latest-news-img img-transition-scale">
                                             <a href="{{route('show.news', $news->slug)}}">
-                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover">
+                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover" loading="lazy">
                                             </a>
                                         </div>
                                         <div class="echo-latest-news-single-title mt-4">
@@ -187,9 +187,9 @@
                         <div class="col-xl-4 col-lg-4 col-md-12">
                             <div class="echo-video-area-home-1-right-content-responsive">
                                 @foreach($videos->skip(1) as $video)
-                                    <div class="echo-video-right-site-content">
+                                    <div class="echo-video-right-site-content" wire:key="video-{{ $video->id }}">
                                         <div class="echo-video-right-site-content-text">
-                                            <h5 class="text-capitalize">
+                                            <h5>
                                                 <a href="{{ $video->url }}" class="play-video popup-youtube title-hover text-white">
                                                     {{ $video->title }}
                                                 </a>
@@ -229,7 +229,7 @@
                     <div class="row">
                         <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
                             <div class="echo-popular-area-title">
-                                <h4 class="text-center text-capitalize">Журналы</h4>
+                                <h4 class="text-center">Журналы</h4>
                             </div>
                         </div>
                     </div>

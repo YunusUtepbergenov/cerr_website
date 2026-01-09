@@ -12,7 +12,7 @@
                                 <h2 class="echo-hero-title text-capitalize font-weight-bold"><a href="post-details.html" class="title-hover">{{$video->title}}</a></h2>
                                 <div class="echo-hero-area-titlepost-post-like-comment-share">
                                     <div class="echo-hero-area-like-read-comment-share">
-                                        <a href="#"><i class="fa-light fa-clock"></i> 06.03.2025</a>
+                                        <a href="#"><i class="fa-light fa-clock"></i> {{ $video->created_at->format('d.m.Y') }}</a>
                                     </div>
                                     <div class="echo-hero-area-like-read-comment-share">
                                         <a href="#"><i class="fa-light fa-eye"></i> 3.5k Views</a>
@@ -32,13 +32,13 @@
                                 <div class="echo-home-1-hero-area-top-story">
                                     <h5 class="text-center">@lang('messages.popular')</h5>
                                     @foreach($popular_news as $news)
-                                        <div class="echo-top-story">
+                                        <div class="echo-top-story" wire:key="popular-news-{{ $news->id }}">
                                             <div class="echo-story-picture img-transition-scale">
                                                 <a href="{{route('show.news', $news->slug)}}"><img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover"></a>
                                             </div>
                                             <div class="echo-story-text">
                                                 <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
-                                                <a href="{{route('show.news', $news->slug)}}" class="pe-none"><i class="fa-light fa-clock"></i> 06.03.2025</a>
+                                                <a href="{{route('show.news', $news->slug)}}" class="pe-none"><i class="fa-light fa-clock"></i> {{ \Carbon\Carbon::parse($news->created_at)->format('d.m.Y') }}</a>
                                             </div>
                                         </div>
                                     @endforeach
