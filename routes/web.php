@@ -13,7 +13,6 @@ use App\Livewire\Vacancies;
 use App\Livewire\Videos\VideoIndex;
 use App\Livewire\Videos\VideoShow;
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
 
 Route::get('/', Home::class)->name('home');
 
@@ -35,19 +34,5 @@ Route::get('/show-all-category', ShowAllCategories::class)->name('show.all.categ
 
 Route::get('/videos', VideoIndex::class)->name('videos.index');
 Route::get('/videos/{id}', VideoShow::class)->name('videos.show');
-
-// Route::view('/admin', 'dashboard')
-//     ->middleware(['auth', 'verified'])
-//     ->name('dashboard');
-
-// Route::get('/admin/posts', Post::class);
-
-Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
-
-    Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
-    Volt::route('settings/password', 'settings.password')->name('settings.password');
-    Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
-});
 
 require __DIR__.'/auth.php';
