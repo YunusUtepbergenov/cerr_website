@@ -257,8 +257,8 @@
                     <div class="echo-get-in-tuch">
                         <!-- <h4 class="text-capitalize">CERR</h4> -->
                         <div class="echo-site-logo">
-                            <a class="logo-light" href="index.html"><img src="{{asset('images/logo.svg')}}" alt="Echo"></a>
-                            <a class="logo-dark" href="index.html"><img src="{{asset('images/logo.svg')}}" alt="Echo"></a>
+                            <a class="logo-light" wire:navigate href="{{route('home')}}"><img src="{{asset('images/logo.svg')}}" alt="Echo"></a>
+                            <a class="logo-dark" wire:navigate href="{{route('home')}}"><img src="{{asset('images/logo.svg')}}" alt="Echo"></a>
                         </div>
                     </div>
                     <div class="echo-footer-address">
@@ -303,10 +303,10 @@
                     <div class="echo-footer-help">
                         <ul class="list-unstyled">
                             {{-- <li><a href="#">Исследования </a></li> --}}
-                            <li><a href="#">@lang('messages.press')</a></li>
+                            <li><a href="{{route('show.category', 'research')}}">@lang('messages.press')</a></li>
                             {{-- <li><a href="#">События</a></li> --}}
-                            <li><a href="#">@lang('messages.vacancies')</a></li>
-                            <li><a href="#">@lang('messages.contacts')</a></li>
+                            <li><a wire:navigate href="{{route('vacancies')}}">@lang('messages.vacancies')</a></li>
+                            <li><a wire:navigate href="{{route('contact')}}">@lang('messages.contacts')</a></li>
                         </ul>
                     </div>
                 </div>
