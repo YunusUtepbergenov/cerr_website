@@ -263,7 +263,7 @@
                     </div>
                     <div class="echo-footer-address">
                         <span><i class="fa-regular fa-map"></i> @lang('messages.address')</span>
-                        <span><i class="fa-regular fa-phone"></i> +998 78 150 02 02</span>
+                        <span><i class="fa-regular fa-phone"></i> +998 78 150 02 02 (425, 426)</span>
                         <span><i class="fa-sharp fa-regular fa-envelope"></i>info@cerr.uz</span>
                         <div class="echo-footer-social-media">
                             <a href="https://www.facebook.com/CERR.Uzbekistan">
