@@ -2,11 +2,17 @@
 
 use App\Livewire\ShowNews;
 use App\Models\News;
+use App\Models\NewsTranslation;
+use Illuminate\Support\Facades\Redis;
 use Livewire\Livewire;
 
 describe('ShowNews Component', function () {
     beforeEach(function () {
         setAppLocale('uz');
+    });
+
+    afterEach(function () {
+        Redis::del('news:views');
     });
 
     it('displays news by slug', function () {
@@ -68,11 +74,28 @@ describe('ShowNews Component', function () {
 
         // News with only EN translation (should not appear)
         $enNewsOnly = News::factory()->create(['view_count' => 200]);
-        \App\Models\NewsTranslation::factory()->create(['news_id' => $enNewsOnly->id, 'lang' => 'en']);
+        NewsTranslation::factory()->create(['news_id' => $enNewsOnly->id, 'lang' => 'en']);
 
         Livewire::test(ShowNews::class, ['slug' => 'main-news'])
             ->assertSet('popular_news', fn ($val) => ! $val->contains('id', $enNewsOnly->id));
     })->group('feature', 'livewire', 'critical');
+
+    it('increments redis counter on first visit', function () {
+        $news = createNewsWithTranslation(['slug' => 'counted-news']);
+
+        Livewire::test(ShowNews::class, ['slug' => 'counted-news']);
+
+        expect((int) Redis::hget('news:views', $news->id))->toBe(1);
+    })->group('feature', 'livewire');
+
+    it('does not increment redis counter on repeated visit in same session', function () {
+        $news = createNewsWithTranslation(['slug' => 'repeated-news']);
+
+        Livewire::test(ShowNews::class, ['slug' => 'repeated-news']);
+        Livewire::test(ShowNews::class, ['slug' => 'repeated-news']);
+
+        expect((int) Redis::hget('news:views', $news->id))->toBe(1);
+    })->group('feature', 'livewire');
 
     it('popular news ordered by view count descending', function () {
         setAppLocale('uz');
@@ -83,7 +106,7 @@ describe('ShowNews Component', function () {
         $news3 = createNewsWithTranslation(['view_count' => 75]);
 
         Livewire::test(ShowNews::class, ['slug' => 'main-news'])
-            ->assertSet('popular_news', function ($val) use ($news2, $news1, $news) {
+            ->assertSet('popular_news', function ($val) use ($news2, $news) {
                 return $val->count() === 4
                     && $val->first()->id === $news2->id
                     && $val->last()->id === $news->id;
