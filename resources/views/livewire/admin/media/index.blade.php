@@ -6,6 +6,40 @@
         </div>
     </div>
 
+    @if (session('status'))
+        <div class="alert alert-success alert-dismissible mb-3">{{ session('status') }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
+    @endif
+
+    <div class="card mb-3">
+        <div class="card-header">{{ __('admin.media.upload') }}</div>
+        <div class="card-body">
+            <div class="row g-2 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label">{{ __('admin.media.upload_to') }}</label>
+                    <select wire:model="uploadFolder" class="form-select">
+                        <option value="news/covers">{{ __('admin.media.covers') }}</option>
+                        <option value="news/inline">{{ __('admin.media.inline') }}</option>
+                        <option value="pages">{{ __('admin.media.pages') }}</option>
+                        <option value="videos">{{ __('admin.media.videos') }}</option>
+                    </select>
+                    @error('uploadFolder') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">{{ __('admin.media.select_files') }}</label>
+                    <input type="file" wire:model="uploads" accept="image/*" multiple class="form-control @error('uploads.*') is-invalid @enderror">
+                    @error('uploads.*') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                    <div wire:loading wire:target="uploads" class="text-muted small mt-1">{{ __('admin.common.uploading') }}</div>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="btn btn-primary w-100" wire:click="save" wire:loading.attr="disabled" wire:target="save">
+                        <span wire:loading.remove wire:target="save"><i class="fa-solid fa-upload me-1"></i> {{ __('admin.media.upload') }}</span>
+                        <span wire:loading wire:target="save"><i class="fa-solid fa-spinner fa-spin me-1"></i> {{ __('admin.common.uploading') }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="card mb-3">
         <div class="card-body">
             <div class="row g-2">

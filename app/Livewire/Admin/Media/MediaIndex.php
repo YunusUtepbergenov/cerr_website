@@ -2,21 +2,52 @@
 
 namespace App\Livewire\Admin\Media;
 
+use App\Livewire\Concerns\HandlesImageUploads;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 #[Layout('components.layouts.admin')]
 #[Title('Медиатека')]
 class MediaIndex extends Component
 {
+    use HandlesImageUploads, WithFileUploads;
+
     #[Url(except: '')]
     public string $search = '';
 
     #[Url(except: '')]
     public string $folder = '';
+
+    public array $uploads = [];
+
+    public string $uploadFolder = 'news/covers';
+
+    protected function rules(): array
+    {
+        return [
+            'uploads.*' => ['image', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
+            'uploadFolder' => [Rule::in(['news/covers', 'news/inline', 'pages', 'videos'])],
+        ];
+    }
+
+    public function save(): void
+    {
+        $this->validate();
+
+        $count = 0;
+        foreach ($this->uploads as $upload) {
+            $this->storeUploadedImage($upload, $this->uploadFolder);
+            $count++;
+        }
+
+        $this->uploads = [];
+        session()->flash('status', __('admin.media.upload_success', ['count' => $count]));
+    }
 
     public function delete(string $path): void
     {

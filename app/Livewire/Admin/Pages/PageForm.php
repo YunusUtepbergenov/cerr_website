@@ -97,6 +97,8 @@ class PageForm extends Component
             $newImage = $this->storeUploadedImage($this->imageUpload, 'pages');
             $this->deleteStoredImage($page->image);
             $page->image = $newImage;
+        } elseif ($this->image !== $page->image) {
+            $page->image = $this->image;
         }
         $page->save();
 

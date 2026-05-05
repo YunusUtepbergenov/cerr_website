@@ -1,4 +1,6 @@
 <div>
+    <livewire:admin.media.media-picker />
+
     <div class="page-header">
         <div>
             <h1>{{ __('admin.videos.title_section') }}</h1>
@@ -32,8 +34,11 @@
                             @if ($image)
                                 <div class="mb-2"><img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($image) }}" alt="" style="max-width: 220px; border-radius: 6px; border: 1px solid var(--admin-border-soft);"></div>
                             @endif
-                            <input type="file" wire:model="imageUpload" accept="image/*" class="form-control @error('imageUpload') is-invalid @enderror">
-                            @error('imageUpload') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <div x-data x-on:media-picked.window="(e) => $wire.set('image', e.detail.path)">
+                                <button type="button" class="btn btn-sm btn-outline-secondary mb-2" @click="$dispatch('show-picker', { folder: 'videos' })"><i class="fa-regular fa-images me-1"></i> {{ __('admin.media.choose_existing') }}</button>
+                                <input type="file" wire:model="imageUpload" accept="image/*" class="form-control @error('imageUpload') is-invalid @enderror">
+                                @error('imageUpload') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
                         </div>
                     </div>
                     <div class="sticky-action-bar">

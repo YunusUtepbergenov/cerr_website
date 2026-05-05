@@ -64,6 +64,9 @@ class VideoIndex extends Component
             $newImage = $this->storeUploadedImage($this->imageUpload, 'videos');
             $this->deleteStoredImage($v->image);
             $v->image = $newImage;
+        } elseif ($this->image !== $v->image) {
+            // Picked from media library; $this->image is already a managed path
+            $v->image = $this->image;
         }
         $v->save();
 

@@ -229,6 +229,10 @@ return [
         'no_files' => '',
         'confirm_delete' => '',
         'choose_existing' => '',
+        'upload_to' => '',
+        'upload' => '',
+        'upload_success' => '',
+        'select_files' => '',
     ],
     'activity' => [
         'title_section' => '',

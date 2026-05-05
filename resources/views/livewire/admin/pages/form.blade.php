@@ -1,4 +1,6 @@
 <div>
+    <livewire:admin.media.media-picker />
+
     <div class="page-header">
         <div>
             <h1>{{ $page?->exists ? __('admin.pages.edit_page') : __('admin.pages.create_page') }}</h1>
@@ -78,8 +80,11 @@
                             @if ($image)
                                 <div class="mb-2"><img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($image) }}" alt="" style="max-width: 100%; border-radius: 6px; border: 1px solid var(--admin-border-soft);"></div>
                             @endif
-                            <input type="file" wire:model="imageUpload" accept="image/*" class="form-control @error('imageUpload') is-invalid @enderror">
-                            @error('imageUpload') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            <div x-data x-on:media-picked.window="(e) => $wire.set('image', e.detail.path)">
+                                <button type="button" class="btn btn-sm btn-outline-secondary mb-2" @click="$dispatch('show-picker', { folder: 'pages' })"><i class="fa-regular fa-images me-1"></i> {{ __('admin.media.choose_existing') }}</button>
+                                <input type="file" wire:model="imageUpload" accept="image/*" class="form-control @error('imageUpload') is-invalid @enderror">
+                                @error('imageUpload') <div class="invalid-feedback">{{ $message }}</div> @enderror
+                            </div>
                         </div>
 
                         <button type="submit" class="btn btn-primary w-100">
