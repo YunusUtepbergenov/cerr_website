@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class News extends Model
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $fillable = [
         'category_id',
@@ -51,5 +53,10 @@ class News extends Model
     public function tags(): BelongsToMany
     {
         return $this->belongsToMany(Tag::class, 'news_tags');
+    }
+
+    public function activity(): MorphMany
+    {
+        return $this->morphMany(Activity::class, 'subject', 'subject_type', 'subject_id');
     }
 }

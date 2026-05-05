@@ -218,6 +218,48 @@ return [
         'deleted_flash' => 'Видео удалено.',
     ],
 
+    'bulk' => [
+        'selected' => 'Выбрано: :count',
+        'publish' => 'Опубликовать',
+        'unpublish' => 'Снять с публикации',
+        'delete' => 'Удалить',
+        'published_count' => 'Опубликовано: :count',
+        'unpublished_count' => 'Снято с публикации: :count',
+        'confirm_delete' => 'Удалить :count выбранных статей?',
+    ],
+
+    'media' => [
+        'title_section' => 'Медиатека',
+        'subtitle' => 'Загруженные изображения. Источник истины — диск, не БД.',
+        'all_folders' => 'Все папки',
+        'covers' => 'Обложки',
+        'inline' => 'Внутри статей',
+        'pages' => 'Страницы',
+        'videos' => 'Видео',
+        'search' => 'Поиск по имени файла…',
+        'no_files' => 'Файлов пока нет.',
+        'confirm_delete' => 'Удалить файл? Статьи, использующие его, покажут битое изображение.',
+        'choose_existing' => 'Выбрать из библиотеки',
+    ],
+
+    'activity' => [
+        'title_section' => 'Журнал действий',
+        'subtitle' => 'История изменений в админ-панели.',
+        'when' => 'Время',
+        'who' => 'Кто',
+        'what' => 'Действие',
+        'subject' => 'Объект',
+        'changes' => 'Изменения',
+        'no_activity' => 'Записей пока нет.',
+        'action_created' => 'создал',
+        'action_updated' => 'изменил',
+        'action_deleted' => 'удалил',
+        'action_published' => 'опубликовал',
+        'action_unpublished' => 'снял с публикации',
+        'action_reset_password' => 'сбросил пароль',
+        'system' => 'Система',
+    ],
+
     'validation' => [
         'required' => 'Поле обязательно.',
         'string' => 'Должна быть строка.',

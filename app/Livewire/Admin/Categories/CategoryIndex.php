@@ -68,6 +68,7 @@ class CategoryIndex extends Component
         $this->validate();
 
         $category = $this->editingId ? Category::findOrFail($this->editingId) : new Category;
+        $isNew = ! $category->exists;
         $category->slug = Str::slug($this->slug);
         $category->status = $this->status;
         $category->save();
@@ -85,6 +86,9 @@ class CategoryIndex extends Component
             );
         }
 
+        $changes = array_filter(['slug' => $category->getChanges()['slug'] ?? null]);
+        $category->logActivity($isNew ? 'created' : 'updated', $changes);
+
         session()->flash('status', __('admin.categories.saved_flash'));
         $this->resetForm();
         $this->showForm = false;
@@ -92,7 +96,9 @@ class CategoryIndex extends Component
 
     public function delete(int $id): void
     {
-        Category::findOrFail($id)->delete();
+        $category = Category::findOrFail($id);
+        $category->logActivity('deleted', ['slug' => $category->slug]);
+        $category->delete();
         session()->flash('status', __('admin.categories.deleted_flash'));
     }
 

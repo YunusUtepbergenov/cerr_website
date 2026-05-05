@@ -16,6 +16,8 @@ class PageIndex extends Component
     {
         $page = Page::with('translations')->findOrFail($id);
 
+        $page->logActivity('deleted', ['slug' => $page->slug]);
+
         if ($page->image) {
             Storage::disk('public')->delete($page->image);
         }

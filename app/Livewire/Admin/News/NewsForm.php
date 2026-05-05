@@ -130,6 +130,7 @@ class NewsForm extends Component
         $news->is_main = $this->is_main;
         $news->scheduled_at = $this->scheduled_at ?: null;
         $news->user_id = $news->user_id ?: auth()->id();
+        $isNew = ! $news->exists;
         $news->save();
 
         foreach (self::LOCALES as $locale) {
@@ -170,9 +171,30 @@ class NewsForm extends Component
         $this->cover_uploads = [];
         $this->news = $news->fresh(['translations', 'tags']);
 
+        $news->logActivity($isNew ? 'created' : 'updated', $this->summarizeChanges($news));
+
         session()->flash('status', __('admin.news.saved_flash'));
 
         $this->redirectRoute('admin.news.edit', ['news' => $news->id], navigate: false);
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private function summarizeChanges(News $news): array
+    {
+        $tracked = ['slug', 'category_id', 'status', 'is_main', 'scheduled_at'];
+        $diff = [];
+        foreach ($news->getChanges() as $key => $value) {
+            if (in_array($key, $tracked, true)) {
+                $diff[$key] = $value;
+            }
+        }
+        if ($news->translations->isNotEmpty()) {
+            $diff['translations'] = 'changed';
+        }
+
+        return $diff;
     }
 
     public function clearCover(string $locale): void

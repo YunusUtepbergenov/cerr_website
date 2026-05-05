@@ -26,6 +26,11 @@ class NewsIndex extends Component
     #[Url(except: '')]
     public string $category = '';
 
+    /** @var array<int> */
+    public array $selected = [];
+
+    public bool $selectAll = false;
+
     public function updatingSearch(): void
     {
         $this->resetPage();
@@ -41,26 +46,19 @@ class NewsIndex extends Component
         $this->resetPage();
     }
 
-    public function delete(int $id): void
+    public function updatedSelectAll(bool $value): void
     {
-        $news = News::with('translations')->findOrFail($id);
-
-        foreach ($news->translations as $translation) {
-            if ($translation->image_url && str_starts_with($translation->image_url, 'news/')) {
-                Storage::disk('public')->delete($translation->image_url);
-            }
-        }
-
-        $news->delete();
-
-        session()->flash('status', __('admin.news.deleted_flash'));
+        $this->selected = $value ? $this->currentPageIds() : [];
     }
 
-    public function render()
+    private function currentPageIds(): array
     {
-        $query = News::query()
-            ->with(['translations', 'category.translations'])
-            ->latest();
+        return $this->renderedQuery()->paginate(15)->pluck('id')->all();
+    }
+
+    private function renderedQuery()
+    {
+        $query = News::query()->latest();
 
         if ($this->status !== '') {
             $query->where('status', $this->status);
@@ -77,8 +75,78 @@ class NewsIndex extends Component
             });
         }
 
+        return $query;
+    }
+
+    public function delete(int $id): void
+    {
+        $news = News::with('translations')->findOrFail($id);
+
+        $news->logActivity('deleted', ['slug' => $news->slug]);
+
+        foreach ($news->translations as $translation) {
+            if ($translation->image_url && str_starts_with($translation->image_url, 'news/')) {
+                Storage::disk('public')->delete($translation->image_url);
+            }
+        }
+
+        $news->delete();
+
+        session()->flash('status', __('admin.news.deleted_flash'));
+    }
+
+    public function bulkPublish(): void
+    {
+        if (! $this->selected) {
+            return;
+        }
+
+        News::whereIn('id', $this->selected)->update(['status' => 'published']);
+
+        foreach (News::whereIn('id', $this->selected)->get() as $n) {
+            $n->logActivity('published', ['status' => $n->status]);
+        }
+
+        session()->flash('status', __('admin.bulk.published_count', ['count' => count($this->selected)]));
+        $this->selected = [];
+        $this->selectAll = false;
+    }
+
+    public function bulkUnpublish(): void
+    {
+        if (! $this->selected) {
+            return;
+        }
+
+        News::whereIn('id', $this->selected)->update(['status' => 'draft']);
+
+        foreach (News::whereIn('id', $this->selected)->get() as $n) {
+            $n->logActivity('unpublished', ['status' => $n->status]);
+        }
+
+        session()->flash('status', __('admin.bulk.unpublished_count', ['count' => count($this->selected)]));
+        $this->selected = [];
+        $this->selectAll = false;
+    }
+
+    public function bulkDelete(): void
+    {
+        if (! $this->selected) {
+            return;
+        }
+
+        foreach ($this->selected as $id) {
+            $this->delete($id);
+        }
+
+        $this->selected = [];
+        $this->selectAll = false;
+    }
+
+    public function render()
+    {
         return view('livewire.admin.news.index', [
-            'newsList' => $query->paginate(15),
+            'newsList' => $this->renderedQuery()->with(['translations', 'category.translations'])->paginate(15),
             'categories' => Category::with('translations')->get(),
         ]);
     }

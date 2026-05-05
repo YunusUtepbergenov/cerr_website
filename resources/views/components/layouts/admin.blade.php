@@ -223,10 +223,16 @@
             <a href="{{ route('admin.videos.index') }}" class="{{ request()->routeIs('admin.videos.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-video"></i> {{ __('admin.nav.videos') }}
             </a>
+            <a href="{{ route('admin.media.index') }}" class="{{ request()->routeIs('admin.media.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-photo-film"></i> {{ __('admin.nav.media') }}
+            </a>
 
             <div class="nav-label">{{ __('admin.nav.administration') }}</div>
             <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-users"></i> {{ __('admin.nav.users') }}
+            </a>
+            <a href="{{ route('admin.activity.index') }}" class="{{ request()->routeIs('admin.activity.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-clock-rotate-left"></i> {{ __('admin.nav.activity') }}
             </a>
 
             <div class="sidebar-footer">

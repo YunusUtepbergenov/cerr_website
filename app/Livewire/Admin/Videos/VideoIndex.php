@@ -57,6 +57,7 @@ class VideoIndex extends Component
         $this->validate();
 
         $v = $this->editingId ? Video::findOrFail($this->editingId) : new Video;
+        $isNew = ! $v->exists;
         $v->title = $this->title;
         $v->url = $this->url;
         if ($this->imageUpload) {
@@ -66,6 +67,9 @@ class VideoIndex extends Component
         }
         $v->save();
 
+        $changes = array_filter(['title' => $v->getChanges()['title'] ?? null, 'url' => $v->getChanges()['url'] ?? null]);
+        $v->logActivity($isNew ? 'created' : 'updated', $changes);
+
         session()->flash('status', __('admin.videos.saved_flash'));
         $this->resetForm();
         $this->showForm = false;
@@ -74,6 +78,7 @@ class VideoIndex extends Component
     public function delete(int $id): void
     {
         $v = Video::findOrFail($id);
+        $v->logActivity('deleted', ['title' => $v->title]);
         $this->deleteStoredImage($v->image);
         $v->delete();
         session()->flash('status', __('admin.videos.deleted_flash'));

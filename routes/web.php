@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Admin\InlineImageController;
 use App\Livewire\About;
+use App\Livewire\Admin\Activity\ActivityIndex;
 use App\Livewire\Admin\Categories\CategoryIndex;
 use App\Livewire\Admin\Dashboard as AdminDashboard;
+use App\Livewire\Admin\Media\MediaIndex;
 use App\Livewire\Admin\News\NewsForm;
 use App\Livewire\Admin\News\NewsIndex;
 use App\Livewire\Admin\Pages\PageForm;
@@ -67,6 +69,9 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/pages/{page}/edit', PageForm::class)->name('pages.edit');
 
     Route::get('/videos', AdminVideoIndex::class)->name('videos.index');
+
+    Route::get('/media', MediaIndex::class)->name('media.index');
+    Route::get('/activity', ActivityIndex::class)->name('activity.index');
 
     Route::post('/inline-image', [InlineImageController::class, 'store'])->name('inline-image.store');
 });

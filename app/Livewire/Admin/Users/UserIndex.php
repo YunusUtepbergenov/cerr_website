@@ -76,6 +76,7 @@ class UserIndex extends Component
         $this->validate();
 
         $user = $this->editingId ? User::findOrFail($this->editingId) : new User;
+        $isNew = ! $user->exists;
         $user->name = $this->name;
         $user->email = $this->email;
         $user->role = $this->role;
@@ -83,6 +84,9 @@ class UserIndex extends Component
             $user->password = Hash::make($this->password);
         }
         $user->save();
+
+        $changes = array_filter(['name' => $user->getChanges()['name'] ?? null, 'email' => $user->getChanges()['email'] ?? null, 'role' => $user->getChanges()['role'] ?? null]);
+        $user->logActivity($isNew ? 'created' : 'updated', $changes);
 
         session()->flash('status', __('admin.users.saved_flash'));
         $this->resetForm();
@@ -96,6 +100,8 @@ class UserIndex extends Component
         $user->password = Hash::make($plain);
         $user->save();
 
+        $user->logActivity('reset_password');
+
         $this->generatedPassword = $plain;
     }
 
@@ -107,7 +113,9 @@ class UserIndex extends Component
             return;
         }
 
-        User::findOrFail($id)->delete();
+        $user = User::findOrFail($id);
+        $user->logActivity('deleted', ['email' => $user->email]);
+        $user->delete();
         session()->flash('status', __('admin.users.deleted_flash'));
     }
 

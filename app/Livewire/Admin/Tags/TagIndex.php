@@ -46,8 +46,12 @@ class TagIndex extends Component
         $this->validate();
 
         $tag = $this->editingId ? Tag::findOrFail($this->editingId) : new Tag;
+        $isNew = ! $tag->exists;
         $tag->name = $this->name;
         $tag->save();
+
+        $changes = array_filter(['name' => $tag->getChanges()['name'] ?? null]);
+        $tag->logActivity($isNew ? 'created' : 'updated', $changes);
 
         session()->flash('status', __('admin.tags.saved_flash'));
         $this->showForm = false;
@@ -57,7 +61,9 @@ class TagIndex extends Component
 
     public function delete(int $id): void
     {
-        Tag::findOrFail($id)->delete();
+        $tag = Tag::findOrFail($id);
+        $tag->logActivity('deleted', ['name' => $tag->name]);
+        $tag->delete();
         session()->flash('status', __('admin.tags.deleted_flash'));
     }
 

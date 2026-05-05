@@ -91,6 +91,7 @@ class PageForm extends Component
         $this->validate();
 
         $page = $this->page ?? new Page;
+        $isNew = ! $page->exists;
         $page->slug = Str::slug($this->slug);
         if ($this->imageUpload) {
             $newImage = $this->storeUploadedImage($this->imageUpload, 'pages');
@@ -122,6 +123,17 @@ class PageForm extends Component
         $this->page = $page->fresh('translations');
         $this->image = $page->image;
         $this->imageUpload = null;
+
+        $changes = [];
+        foreach ($page->getChanges() as $key => $value) {
+            if (in_array($key, ['slug'], true)) {
+                $changes[$key] = $value;
+            }
+        }
+        if ($page->translations->isNotEmpty()) {
+            $changes['translations'] = 'changed';
+        }
+        $page->logActivity($isNew ? 'created' : 'updated', $changes);
 
         session()->flash('status', __('admin.pages.saved_flash'));
 

@@ -1,4 +1,6 @@
 <div>
+    <livewire:admin.media.media-picker />
+
     <div class="page-header">
         <div>
             <h1>{{ $news?->exists ? __('admin.news.edit_article') : __('admin.news.new_article') }}</h1>
@@ -85,11 +87,17 @@
                                     </div>
                                 </details>
 
-                                <div class="mt-3 pt-3" style="border-top: 1px solid var(--admin-border-soft);">
+                                <div class="mt-3 pt-3" style="border-top: 1px solid var(--admin-border-soft);"
+                                     x-data
+                                     x-on:media-picked.window="(e) => { if ($wire.activeLocale === '{{ $locale }}') { $wire.set('translations.{{ $locale }}.image_url', e.detail.path); } }">
                                     <label class="form-label d-flex justify-content-between align-items-center">
                                         <span>{{ __('admin.news.cover_image', ['locale' => strtoupper($locale)]) }}</span>
                                         <span class="text-muted small fw-normal">{{ __('admin.news.cover_specs') }}</span>
                                     </label>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary mb-2"
+                                            @click="$dispatch('show-picker', { folder: 'news/covers' })">
+                                        <i class="fa-regular fa-images me-1"></i> {{ __('admin.media.choose_existing') }}
+                                    </button>
                                     @php
                                         $existingImage = $translations[$locale]['image_url'] ?? null;
                                         $previewUrl = null;
@@ -230,6 +238,28 @@
                         @endforelse
                     </div>
                 </div>
+
+                @if ($news?->exists)
+                    <div class="card mt-3">
+                        <div class="card-header">{{ __('admin.activity.title_section') }}</div>
+                        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                            @forelse ($news->activity()->with('user')->latest()->limit(10)->get() as $a)
+                                <div class="d-flex gap-2 align-items-start mb-2 pb-2 border-bottom">
+                                    <i class="fa-solid fa-clock-rotate-left text-muted small mt-1"></i>
+                                    <div class="flex-grow-1">
+                                        <div class="small">
+                                            <strong>{{ $a->user->name ?? __('admin.activity.system') }}</strong>
+                                            {{ __('admin.activity.action_'.$a->action) }}
+                                        </div>
+                                        <div class="text-muted small">{{ $a->created_at->diffForHumans() }}</div>
+                                    </div>
+                                </div>
+                            @empty
+                                <div class="text-muted small">{{ __('admin.activity.no_activity') }}</div>
+                            @endforelse
+                        </div>
+                    </div>
+                @endif
             </div>
         </div>
     </form>
@@ -254,6 +284,14 @@
                         toolbar: 'undo redo | styles | bold italic underline | bullist numlist | link image media table | alignleft aligncenter alignright | code',
                         paste_data_images: false,
                         automatic_uploads: true,
+                        file_picker_types: 'image',
+                        file_picker_callback: function (callback, value, meta) {
+                            window.dispatchEvent(new CustomEvent('show-picker', { detail: { folder: 'news/inline' } }));
+                            window.addEventListener('media-picked', function handler(e) {
+                                callback(e.detail.url, { alt: '' });
+                                window.removeEventListener('media-picked', handler);
+                            }, { once: true });
+                        },
                         images_upload_url: '{{ route('admin.inline-image.store') }}',
                         images_upload_handler: function (blobInfo, progress) {
                             return new Promise((resolve, reject) => {
