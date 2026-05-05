@@ -49,7 +49,7 @@ class TagIndex extends Component
         $tag->name = $this->name;
         $tag->save();
 
-        session()->flash('status', 'Tag saved.');
+        session()->flash('status', __('admin.tags.saved_flash'));
         $this->showForm = false;
         $this->editingId = null;
         $this->name = '';
@@ -58,7 +58,7 @@ class TagIndex extends Component
     public function delete(int $id): void
     {
         Tag::findOrFail($id)->delete();
-        session()->flash('status', 'Tag deleted.');
+        session()->flash('status', __('admin.tags.deleted_flash'));
     }
 
     public function cancel(): void

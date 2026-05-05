@@ -53,7 +53,7 @@ class NewsIndex extends Component
 
         $news->delete();
 
-        session()->flash('status', 'News deleted.');
+        session()->flash('status', __('admin.news.deleted_flash'));
     }
 
     public function render()

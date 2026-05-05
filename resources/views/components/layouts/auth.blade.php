@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Sign in' }} — CERR</title>
+    <title>{{ $title ?? __('admin.auth.sign_in') }} — CERR</title>
     <link rel="stylesheet" href="{{ asset('css/vendor/bootstrap.min.css') }}">
     <style>
         body { background: #f5f6fa; min-height: 100vh; display: flex; align-items: center; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; }

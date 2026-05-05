@@ -11,7 +11,7 @@ use Livewire\Volt\Component;
 
 new
 #[Layout('components.layouts.auth')]
-#[Title('Sign in')]
+#[Title('Вход')]
 class extends Component
 {
     #[Validate('required|string|email')]
@@ -31,14 +31,14 @@ class extends Component
         if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
             $seconds = RateLimiter::availableIn($throttleKey);
             throw ValidationException::withMessages([
-                'email' => "Too many attempts. Try again in {$seconds} seconds.",
+                'email' => __('admin.auth.too_many_attempts', ['seconds' => $seconds]),
             ]);
         }
 
         if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
             RateLimiter::hit($throttleKey);
             throw ValidationException::withMessages([
-                'email' => 'These credentials do not match our records.',
+                'email' => __('admin.auth.invalid_credentials'),
             ]);
         }
 
@@ -54,29 +54,29 @@ class extends Component
 }; ?>
 
 <div>
-    <h1>Sign in</h1>
+    <h1>{{ __('admin.auth.sign_in') }}</h1>
 
     <form wire:submit.prevent="login">
         <div class="mb-3">
-            <label class="form-label">Email</label>
+            <label class="form-label">{{ __('admin.auth.email') }}</label>
             <input type="email" wire:model="email" class="form-control @error('email') is-invalid @enderror" autofocus required>
             @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
         <div class="mb-3">
-            <label class="form-label">Password</label>
+            <label class="form-label">{{ __('admin.auth.password') }}</label>
             <input type="password" wire:model="password" class="form-control @error('password') is-invalid @enderror" required>
             @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
         <div class="form-check mb-3">
             <input type="checkbox" wire:model="remember" id="remember" class="form-check-input">
-            <label for="remember" class="form-check-label">Remember me</label>
+            <label for="remember" class="form-check-label">{{ __('admin.auth.remember_me') }}</label>
         </div>
 
         <button type="submit" class="btn btn-primary w-100">
-            <span wire:loading.remove wire:target="login">Sign in</span>
-            <span wire:loading wire:target="login">Signing in…</span>
+            <span wire:loading.remove wire:target="login">{{ __('admin.auth.sign_in_button') }}</span>
+            <span wire:loading wire:target="login">{{ __('admin.auth.signing_in') }}</span>
         </button>
     </form>
 </div>

@@ -5,8 +5,12 @@ use Illuminate\Support\Facades\Hash;
 use Livewire\Volt\Volt;
 
 describe('Login flow', function () {
+    beforeEach(function () {
+        app()->setLocale('ru');
+    });
+
     it('renders the login page', function () {
-        $this->get('/login')->assertOk()->assertSee('Sign in');
+        $this->get('/login')->assertOk()->assertSee(__('admin.auth.sign_in'));
     })->group('feature', 'admin');
 
     it('logs in an admin and redirects to /admin', function () {

@@ -1,11 +1,11 @@
 <div>
     <div class="page-header">
         <div>
-            <h1>News</h1>
-            <div class="subtitle">Manage articles, translations, and publishing status</div>
+            <h1>{{ __('admin.news.title_section') }}</h1>
+            <div class="subtitle">{{ __('admin.news.subtitle') }}</div>
         </div>
         <a href="{{ route('admin.news.create') }}" class="btn btn-primary">
-            <i class="fa-solid fa-plus me-1"></i> New article
+            <i class="fa-solid fa-plus me-1"></i> {{ __('admin.news.new_article') }}
         </a>
     </div>
 
@@ -15,21 +15,21 @@
                 <div class="col-md-5">
                     <div class="position-relative">
                         <i class="fa-solid fa-magnifying-glass position-absolute" style="left: .8rem; top: 50%; transform: translateY(-50%); color: var(--admin-text-muted);"></i>
-                        <input type="text" wire:model.live.debounce.300ms="search" class="form-control ps-5" placeholder="Search by title or slug…">
+                        <input type="text" wire:model.live.debounce.300ms="search" class="form-control ps-5" placeholder="{{ __('admin.news.search_placeholder') }}">
                     </div>
                 </div>
                 <div class="col-md-3">
                     <select wire:model.live="status" class="form-select">
-                        <option value="">All statuses</option>
-                        <option value="draft">Draft</option>
-                        <option value="published">Published</option>
-                        <option value="auto_publish">Auto publish</option>
-                        <option value="disabled">Disabled</option>
+                        <option value="">{{ __('admin.news.all_statuses') }}</option>
+                        <option value="draft">{{ __('admin.news.status_short_draft') }}</option>
+                        <option value="published">{{ __('admin.news.status_short_published') }}</option>
+                        <option value="auto_publish">{{ __('admin.news.status_short_auto_publish') }}</option>
+                        <option value="disabled">{{ __('admin.news.status_short_disabled') }}</option>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <select wire:model.live="category" class="form-select">
-                        <option value="">All categories</option>
+                        <option value="">{{ __('admin.news.all_categories') }}</option>
                         @foreach ($categories as $cat)
                             <option value="{{ $cat->id }}">{{ optional($cat->translations->firstWhere('language', app()->getLocale()))->name ?? optional($cat->translations->first())->name ?? $cat->slug }}</option>
                         @endforeach
@@ -45,12 +45,12 @@
                 <thead>
                     <tr>
                         <th style="width: 60px;"></th>
-                        <th>Title</th>
-                        <th style="width: 130px;">Status</th>
-                        <th style="width: 160px;">Languages</th>
-                        <th style="width: 160px;">Category</th>
-                        <th style="width: 90px;">Views</th>
-                        <th style="width: 130px;">Updated</th>
+                        <th>{{ __('admin.news.title') }}</th>
+                        <th style="width: 130px;">{{ __('admin.common.status') }}</th>
+                        <th style="width: 160px;">{{ __('admin.common.languages') }}</th>
+                        <th style="width: 160px;">{{ __('admin.news.category_label') }}</th>
+                        <th style="width: 90px;">{{ __('admin.news.views') }}</th>
+                        <th style="width: 130px;">{{ __('admin.common.updated') }}</th>
                         <th style="width: 130px;"></th>
                     </tr>
                 </thead>
@@ -87,11 +87,11 @@
                             <td><span class="text-muted small">{{ $item->updated_at?->diffForHumans() }}</span></td>
                             <td class="text-end">
                                 <div class="btn-group btn-group-sm">
-                                    <a href="{{ route('show.news', $item->slug) }}" target="_blank" class="btn btn-outline-secondary" title="View"><i class="fa-solid fa-eye"></i></a>
-                                    <a href="{{ route('admin.news.edit', $item) }}" class="btn btn-outline-primary" title="Edit"><i class="fa-solid fa-pen"></i></a>
-                                    <button type="button" class="btn btn-outline-danger" title="Delete"
+                                    <a href="{{ route('show.news', $item->slug) }}" target="_blank" class="btn btn-outline-secondary" title="{{ __('admin.common.view') }}"><i class="fa-solid fa-eye"></i></a>
+                                    <a href="{{ route('admin.news.edit', $item) }}" class="btn btn-outline-primary" title="{{ __('admin.common.edit') }}"><i class="fa-solid fa-pen"></i></a>
+                                    <button type="button" class="btn btn-outline-danger" title="{{ __('admin.common.delete') }}"
                                         wire:click="delete({{ $item->id }})"
-                                        wire:confirm="Delete this news item and all its translations?">
+                                        wire:confirm="{{ __('admin.news.confirm_delete') }}">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
@@ -102,8 +102,8 @@
                             <td colspan="8">
                                 <div class="empty-state">
                                     <i class="fa-regular fa-newspaper d-block"></i>
-                                    <div class="fw-semibold">No news matches the current filters.</div>
-                                    <div class="small mt-1">Try clearing search and filter criteria, or <a href="{{ route('admin.news.create') }}">create a new article</a>.</div>
+                                    <div class="fw-semibold">{{ __('admin.news.no_news_match') }}</div>
+                                    <div class="small mt-1">{{ __('admin.news.try_clear_filters') }} <a href="{{ route('admin.news.create') }}">{{ __('admin.news.create_new_article') }}</a>.</div>
                                 </div>
                             </td>
                         </tr>
@@ -114,7 +114,7 @@
         @if ($newsList->hasPages())
             <div class="card-footer d-flex justify-content-between align-items-center flex-wrap gap-2">
                 <div class="text-muted small">
-                    Showing {{ $newsList->firstItem() }}–{{ $newsList->lastItem() }} of {{ $newsList->total() }}
+                    {{ __('admin.common.showing_range', ['from' => $newsList->firstItem(), 'to' => $newsList->lastItem(), 'total' => $newsList->total()]) }}
                 </div>
                 <div>{{ $newsList->onEachSide(1)->links() }}</div>
             </div>

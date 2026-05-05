@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $title ?? 'Admin' }} — CERR Admin</title>
+    <title>{{ $title ?? __('admin.dashboard.title') }} — CERR Admin</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -202,20 +202,20 @@
                 <span>CERR Admin</span>
             </div>
 
-            <div class="nav-label">Overview</div>
+            <div class="nav-label">{{ __('admin.nav.overview') }}</div>
             <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
-                <i class="fa-solid fa-gauge-high"></i> Dashboard
+                <i class="fa-solid fa-gauge-high"></i> {{ __('admin.nav.dashboard') }}
             </a>
 
-            <div class="nav-label">Content</div>
+            <div class="nav-label">{{ __('admin.nav.content') }}</div>
             <a href="{{ route('admin.news.index') }}" class="{{ request()->routeIs('admin.news.*') ? 'active' : '' }}">
-                <i class="fa-solid fa-newspaper"></i> News
+                <i class="fa-solid fa-newspaper"></i> {{ __('admin.nav.news') }}
             </a>
             <a href="{{ route('admin.categories.index') }}" class="{{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
-                <i class="fa-solid fa-folder-open"></i> Categories
+                <i class="fa-solid fa-folder-open"></i> {{ __('admin.nav.categories') }}
             </a>
             <a href="{{ route('admin.tags.index') }}" class="{{ request()->routeIs('admin.tags.*') ? 'active' : '' }}">
-                <i class="fa-solid fa-tags"></i> Tags
+                <i class="fa-solid fa-tags"></i> {{ __('admin.nav.tags') }}
             </a>
 
             <div class="sidebar-footer">
@@ -238,7 +238,7 @@
                     </nav>
                 </div>
                 <div class="d-flex align-items-center gap-2">
-                    <a href="{{ route('home') }}" target="_blank" class="icon-btn" title="View site">
+                    <a href="{{ route('home') }}" target="_blank" class="icon-btn" title="{{ __('admin.nav.view_site') }}">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
                     <div class="user-chip">
@@ -247,7 +247,7 @@
                     </div>
                     <form method="POST" action="{{ route('logout') }}" class="m-0">
                         @csrf
-                        <button type="submit" class="icon-btn" title="Sign out">
+                        <button type="submit" class="icon-btn" title="{{ __('admin.nav.sign_out') }}">
                             <i class="fa-solid fa-right-from-bracket"></i>
                         </button>
                     </form>

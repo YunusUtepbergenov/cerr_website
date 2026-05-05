@@ -85,7 +85,7 @@ class CategoryIndex extends Component
             );
         }
 
-        session()->flash('status', 'Category saved.');
+        session()->flash('status', __('admin.categories.saved_flash'));
         $this->resetForm();
         $this->showForm = false;
     }
@@ -93,7 +93,7 @@ class CategoryIndex extends Component
     public function delete(int $id): void
     {
         Category::findOrFail($id)->delete();
-        session()->flash('status', 'Category deleted.');
+        session()->flash('status', __('admin.categories.deleted_flash'));
     }
 
     public function cancel(): void

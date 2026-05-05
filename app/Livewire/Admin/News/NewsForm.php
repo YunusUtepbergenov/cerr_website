@@ -173,7 +173,7 @@ class NewsForm extends Component
         $this->cover_uploads = [];
         $this->news = $news->fresh(['translations', 'tags']);
 
-        session()->flash('status', 'News saved.');
+        session()->flash('status', __('admin.news.saved_flash'));
 
         $this->redirectRoute('admin.news.edit', ['news' => $news->id], navigate: false);
     }
