@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\Auth\VerifyEmailController;
+use App\Http\Middleware\SetAdminLocale;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
-Route::middleware('guest')->group(function () {
+Route::middleware(['guest', SetAdminLocale::class])->group(function () {
     Volt::route('login', 'auth.login')
         ->name('login');
 
@@ -19,7 +20,7 @@ Route::middleware('guest')->group(function () {
 
 });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', SetAdminLocale::class])->group(function () {
     Volt::route('verify-email', 'auth.verify-email')
         ->name('verification.notice');
 
