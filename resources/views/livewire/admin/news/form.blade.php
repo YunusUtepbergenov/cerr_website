@@ -104,13 +104,34 @@
                                             <img src="{{ $previewUrl }}" alt="" style="width: 140px; height: 96px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);">
                                             <div class="flex-grow-1">
                                                 <div class="small text-muted text-truncate">{{ basename($existingImage) }}</div>
-                                                <button type="button" class="btn btn-sm btn-outline-danger mt-2" wire:click="clearCover('{{ $locale }}')" wire:confirm="{{ __('admin.news.confirm_remove_cover') }}">
+                                                <button type="button" class="btn btn-sm btn-outline-danger mt-2"
+                                                    x-data
+                                                    @click="$dispatch('open-confirm', { message: @js(__('admin.news.confirm_remove_cover')), onConfirm: () => $wire.clearCover('{{ $locale }}') })">
                                                     <i class="fa-solid fa-trash me-1"></i> {{ __('admin.common.remove') }}
                                                 </button>
                                             </div>
                                         </div>
                                     @endif
-                                    <input type="file" wire:model="cover_uploads.{{ $locale }}" accept="image/*" class="form-control @error('cover_uploads.'.$locale) is-invalid @enderror">
+                                    <div x-data="{ dragging: false }"
+                                         class="position-relative"
+                                         :class="{ 'is-dragging': dragging }"
+                                         @dragover.prevent="dragging = true"
+                                         @dragleave.prevent="dragging = false"
+                                         @drop.prevent="
+                                            dragging = false;
+                                            if ($event.dataTransfer.files.length) {
+                                                const input = $el.querySelector('input[type=file]');
+                                                input.files = $event.dataTransfer.files;
+                                                input.dispatchEvent(new Event('change'));
+                                            }
+                                         "
+                                         style="border: 2px dashed transparent; border-radius: 8px; padding: 4px; transition: all .15s;">
+                                        <div x-show="dragging" x-cloak style="position: absolute; inset: 0; background: rgba(37,99,235,.08); border: 2px dashed #2563eb; border-radius: 8px; display: flex; align-items: center; justify-content: center; pointer-events: none; font-weight: 600; color: #2563eb;">
+                                            <i class="fa-solid fa-cloud-arrow-up me-2"></i> {{ __('admin.news.drop_here') }}
+                                        </div>
+                                        <input type="file" wire:model="cover_uploads.{{ $locale }}" accept="image/*"
+                                               class="form-control @error('cover_uploads.'.$locale) is-invalid @enderror">
+                                    </div>
                                     @error("cover_uploads.$locale") <div class="invalid-feedback">{{ $message }}</div> @enderror
                                     <div wire:loading wire:target="cover_uploads.{{ $locale }}" class="text-muted small mt-1">
                                         <i class="fa-solid fa-spinner fa-spin me-1"></i> {{ __('admin.common.uploading') }}
@@ -126,9 +147,23 @@
                 <div class="card mb-3" style="position: sticky; top: 80px;">
                     <div class="card-header">{{ __('admin.news.publishing') }}</div>
                     <div class="card-body">
-                        <div class="mb-3">
+                        <div class="mb-3"
+                             x-data="{ manuallyEdited: @js((bool) ($news?->exists)) }"
+                             x-init="
+                                $watch(() => $wire.translations.kr.title, (title) => {
+                                    if (manuallyEdited) return;
+                                    if (typeof title !== 'string') return;
+                                    const slug = title.toLowerCase()
+                                        .replace(/[^\wЀ-ӿ\s-]/g, '')
+                                        .trim()
+                                        .replace(/[\s_]+/g, '-')
+                                        .replace(/^-+|-+$/g, '');
+                                    $wire.set('slug', slug, false);
+                                });
+                             ">
                             <label class="form-label">Slug <span class="text-danger">*</span></label>
-                            <input type="text" wire:model="slug" class="form-control @error('slug') is-invalid @enderror" placeholder="my-article-url">
+                            <input type="text" wire:model="slug" @input="manuallyEdited = true"
+                                   class="form-control @error('slug') is-invalid @enderror" placeholder="my-article-url">
                             @error('slug') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             <div class="form-text small">{{ __('admin.news.slug_help') }}</div>
                         </div>

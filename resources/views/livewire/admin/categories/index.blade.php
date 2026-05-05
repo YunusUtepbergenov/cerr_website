@@ -88,7 +88,9 @@
                             <td class="text-end">
                                 <div class="btn-group btn-group-sm">
                                     <button class="btn btn-outline-primary" wire:click="edit({{ $cat->id }})" title="{{ __('admin.common.edit') }}"><i class="fa-solid fa-pen"></i></button>
-                                    <button class="btn btn-outline-danger" wire:click="delete({{ $cat->id }})" wire:confirm="{{ __('admin.categories.confirm_delete') }}" title="{{ __('admin.common.delete') }}">
+                                    <button class="btn btn-outline-danger" type="button" title="{{ __('admin.common.delete') }}"
+                                        x-data
+                                        @click="$dispatch('open-confirm', { message: @js(__('admin.categories.confirm_delete')), onConfirm: () => $wire.delete({{ $cat->id }}) })">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>

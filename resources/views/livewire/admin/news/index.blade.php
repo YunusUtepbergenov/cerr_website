@@ -90,8 +90,8 @@
                                     <a href="{{ route('show.news', $item->slug) }}" target="_blank" class="btn btn-outline-secondary" title="{{ __('admin.common.view') }}"><i class="fa-solid fa-eye"></i></a>
                                     <a href="{{ route('admin.news.edit', $item) }}" class="btn btn-outline-primary" title="{{ __('admin.common.edit') }}"><i class="fa-solid fa-pen"></i></a>
                                     <button type="button" class="btn btn-outline-danger" title="{{ __('admin.common.delete') }}"
-                                        wire:click="delete({{ $item->id }})"
-                                        wire:confirm="{{ __('admin.news.confirm_delete') }}">
+                                        x-data
+                                        @click="$dispatch('open-confirm', { message: @js(__('admin.news.confirm_delete')), onConfirm: () => $wire.delete({{ $item->id }}) })">
                                         <i class="fa-solid fa-trash"></i>
                                     </button>
                                 </div>
