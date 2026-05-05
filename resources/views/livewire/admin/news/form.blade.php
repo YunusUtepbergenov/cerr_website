@@ -178,12 +178,18 @@
 
                         <div class="mb-3">
                             <label class="form-label">{{ __('admin.common.status') }}</label>
+                            @if (auth()->user()->canPublishNews())
                             <select wire:model="status" class="form-select">
                                 <option value="draft">{{ __('admin.news.status_draft') }}</option>
                                 <option value="published">{{ __('admin.news.status_published') }}</option>
                                 <option value="auto_publish">{{ __('admin.news.status_auto_publish') }}</option>
                                 <option value="disabled">{{ __('admin.news.status_disabled') }}</option>
                             </select>
+                            @else
+                            <div class="form-control-plaintext">
+                                <span class="pill status-draft">{{ __('admin.news.draft_only_writer') }}</span>
+                            </div>
+                            @endif
                         </div>
 
                         <div class="mb-3">

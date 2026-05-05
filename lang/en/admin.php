@@ -123,6 +123,7 @@ return [
         'deleted_flash' => '',
         'saved_flash' => '',
         'drop_here' => '',
+        'draft_only_writer' => '',
     ],
     'categories' => [
         'title_section' => '',

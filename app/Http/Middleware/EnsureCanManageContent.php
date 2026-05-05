@@ -6,17 +6,13 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class EnsureAdmin
+class EnsureCanManageContent
 {
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
 
-        if (! $user) {
-            return redirect()->route('login');
-        }
-
-        if (! $user->canAccessAdmin()) {
+        if (! $user || ! $user->canManageContent()) {
             abort(403);
         }
 

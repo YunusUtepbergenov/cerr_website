@@ -60,6 +60,50 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
 
+    public function isEditor(): bool
+    {
+        return $this->role === 'editor';
+    }
+
+    public function isWriter(): bool
+    {
+        return $this->role === 'writer';
+    }
+
+    public function canAccessAdmin(): bool
+    {
+        return in_array($this->role, ['admin', 'editor', 'writer'], true);
+    }
+
+    public function canManageContent(): bool
+    {
+        return $this->isAdmin() || $this->isEditor();
+    }
+
+    public function canManageUsers(): bool
+    {
+        return $this->isAdmin();
+    }
+
+    public function canViewActivity(): bool
+    {
+        return $this->isAdmin() || $this->isEditor();
+    }
+
+    public function canPublishNews(): bool
+    {
+        return $this->isAdmin() || $this->isEditor();
+    }
+
+    public function canEditNews(News $news): bool
+    {
+        if ($this->isAdmin() || $this->isEditor()) {
+            return true;
+        }
+
+        return $this->isWriter() && $news->user_id === $this->id;
+    }
+
     public function initials(): string
     {
         return Str::of($this->name)

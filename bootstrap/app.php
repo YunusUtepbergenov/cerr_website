@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Middleware\EnsureAdmin;
+use App\Http\Middleware\EnsureAdminOnly;
+use App\Http\Middleware\EnsureCanManageContent;
 use App\Http\Middleware\SetAdminLocale;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
@@ -17,6 +19,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('admin', [
             SetAdminLocale::class,
             EnsureAdmin::class,
+        ]);
+        $middleware->alias([
+            'admin-only' => EnsureAdminOnly::class,
+            'manage-content' => EnsureCanManageContent::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

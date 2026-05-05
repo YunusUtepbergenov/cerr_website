@@ -50,6 +50,8 @@ class NewsForm extends Component
     public function mount(?News $news = null): void
     {
         if ($news && $news->exists) {
+            abort_if(! auth()->user()->canEditNews($news), 403);
+
             $news->load(['translations', 'tags']);
             $this->news = $news;
             $this->slug = $news->slug;
@@ -153,6 +155,10 @@ class NewsForm extends Component
 
     public function save(): void
     {
+        if (! auth()->user()->canPublishNews()) {
+            $this->status = 'draft';
+        }
+
         $this->validate();
 
         $news = $this->news ?? new News;

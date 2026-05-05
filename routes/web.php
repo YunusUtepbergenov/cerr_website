@@ -60,19 +60,19 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/news/create', NewsForm::class)->name('news.create');
     Route::get('/news/{news}/edit', NewsForm::class)->name('news.edit');
 
-    Route::get('/categories', CategoryIndex::class)->name('categories.index');
-    Route::get('/tags', TagIndex::class)->name('tags.index');
+    Route::get('/categories', CategoryIndex::class)->name('categories.index')->middleware('manage-content');
+    Route::get('/tags', TagIndex::class)->name('tags.index')->middleware('manage-content');
 
-    Route::get('/users', UserIndex::class)->name('users.index');
+    Route::get('/users', UserIndex::class)->name('users.index')->middleware('admin-only');
 
-    Route::get('/pages', PageIndex::class)->name('pages.index');
-    Route::get('/pages/create', PageForm::class)->name('pages.create');
-    Route::get('/pages/{page}/edit', PageForm::class)->name('pages.edit');
+    Route::get('/pages', PageIndex::class)->name('pages.index')->middleware('manage-content');
+    Route::get('/pages/create', PageForm::class)->name('pages.create')->middleware('manage-content');
+    Route::get('/pages/{page}/edit', PageForm::class)->name('pages.edit')->middleware('manage-content');
 
-    Route::get('/videos', AdminVideoIndex::class)->name('videos.index');
+    Route::get('/videos', AdminVideoIndex::class)->name('videos.index')->middleware('manage-content');
 
     Route::get('/media', MediaIndex::class)->name('media.index');
-    Route::get('/activity', ActivityIndex::class)->name('activity.index');
+    Route::get('/activity', ActivityIndex::class)->name('activity.index')->middleware('manage-content');
 
     Route::post('/inline-image', [InlineImageController::class, 'store'])->name('inline-image.store');
     Route::post('/media/upload', [MediaUploadController::class, 'store'])->name('media.upload');

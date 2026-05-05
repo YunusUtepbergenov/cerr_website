@@ -39,6 +39,7 @@
         </div>
     </div>
 
+    @if (auth()->user()->canPublishNews())
     <div x-data x-show="$wire.selected.length > 0" x-cloak class="card mb-3 p-3 d-flex flex-row gap-2 align-items-center" style="background: #fff7ed; border-color: #fed7aa;">
         <span class="fw-semibold flex-grow-1">{{ __('admin.bulk.selected', ['count' => count($selected)]) }}</span>
         <button class="btn btn-sm btn-success" wire:click="bulkPublish"><i class="fa-solid fa-circle-check me-1"></i> {{ __('admin.bulk.publish') }}</button>
@@ -48,6 +49,7 @@
             <i class="fa-solid fa-trash me-1"></i> {{ __('admin.bulk.delete') }}
         </button>
     </div>
+    @endif
 
     <div class="card">
         <div class="table-responsive">

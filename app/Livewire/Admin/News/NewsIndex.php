@@ -60,6 +60,10 @@ class NewsIndex extends Component
     {
         $query = News::query()->latest();
 
+        if (auth()->user()->isWriter()) {
+            $query->where('user_id', auth()->id());
+        }
+
         if ($this->status !== '') {
             $query->where('status', $this->status);
         }
@@ -82,6 +86,8 @@ class NewsIndex extends Component
     {
         $news = News::with('translations')->findOrFail($id);
 
+        abort_if(! auth()->user()->canEditNews($news), 403);
+
         $news->logActivity('deleted', ['slug' => $news->slug]);
 
         foreach ($news->translations as $translation) {
@@ -97,6 +103,8 @@ class NewsIndex extends Component
 
     public function bulkPublish(): void
     {
+        abort_if(! auth()->user()->canPublishNews(), 403);
+
         if (! $this->selected) {
             return;
         }
@@ -114,6 +122,8 @@ class NewsIndex extends Component
 
     public function bulkUnpublish(): void
     {
+        abort_if(! auth()->user()->canPublishNews(), 403);
+
         if (! $this->selected) {
             return;
         }
@@ -131,6 +141,8 @@ class NewsIndex extends Component
 
     public function bulkDelete(): void
     {
+        abort_if(! auth()->user()->canPublishNews(), 403);
+
         if (! $this->selected) {
             return;
         }

@@ -257,6 +257,7 @@
             <a href="{{ route('admin.news.index') }}" class="{{ request()->routeIs('admin.news.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-newspaper"></i> {{ __('admin.nav.news') }}
             </a>
+            @if (auth()->user()?->canManageContent())
             <a href="{{ route('admin.categories.index') }}" class="{{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-folder-open"></i> {{ __('admin.nav.categories') }}
             </a>
@@ -269,17 +270,22 @@
             <a href="{{ route('admin.videos.index') }}" class="{{ request()->routeIs('admin.videos.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-video"></i> {{ __('admin.nav.videos') }}
             </a>
+            @endif
             <a href="{{ route('admin.media.index') }}" class="{{ request()->routeIs('admin.media.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-photo-film"></i> {{ __('admin.nav.media') }}
             </a>
 
             <div class="nav-label">{{ __('admin.nav.administration') }}</div>
+            @if (auth()->user()?->canManageUsers())
             <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-users"></i> {{ __('admin.nav.users') }}
             </a>
+            @endif
+            @if (auth()->user()?->canViewActivity())
             <a href="{{ route('admin.activity.index') }}" class="{{ request()->routeIs('admin.activity.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-clock-rotate-left"></i> {{ __('admin.nav.activity') }}
             </a>
+            @endif
 
             <div class="sidebar-footer">
                 v1.0 · {{ now()->format('Y') }} CERR
