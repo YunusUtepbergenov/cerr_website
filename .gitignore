@@ -24,4 +24,4 @@ yarn-error.log
 /.zed
 .agents
 .claude
-.junie
+.juniestorage/backups/*.dump
