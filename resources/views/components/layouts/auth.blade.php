@@ -11,10 +11,10 @@
         .auth-card h1 { font-size: 1.4rem; margin-bottom: 1.25rem; text-align: center; color: #111827; }
         .auth-card .form-label { color: #374151; font-weight: 500; font-size: .9rem; margin-bottom: .35rem; }
         .auth-card .form-control { color: #111827; border-color: #e5e7eb; }
-        .auth-card .form-control:focus { border-color: #2563eb; box-shadow: 0 0 0 3px rgba(37, 99, 235, .15); }
+        .auth-card .form-control:focus { border-color: #5e6ad2; box-shadow: 0 0 0 3px rgba(37, 99, 235, .15); }
         .auth-card .form-check-label { color: #374151; }
-        .auth-card .btn-primary { background: #2563eb; border-color: #2563eb; color: #fff; font-weight: 500; }
-        .auth-card .btn-primary:hover, .auth-card .btn-primary:focus { background: #1d4ed8; border-color: #1d4ed8; color: #fff; }
+        .auth-card .btn-primary { background: #5e6ad2; border-color: #5e6ad2; color: #fff; font-weight: 500; }
+        .auth-card .btn-primary:hover, .auth-card .btn-primary:focus { background: #4f5bc7; border-color: #4f5bc7; color: #fff; }
         .auth-card .invalid-feedback { color: #b91c1c; font-size: .85rem; }
         .auth-brand { text-align: center; margin-bottom: 1rem; font-weight: 700; color: #1f2937; }
     </style>
