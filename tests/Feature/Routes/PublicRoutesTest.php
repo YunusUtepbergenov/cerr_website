@@ -23,9 +23,9 @@ describe('Public Routes', function () {
             ->assertStatus(200);
     })->group('feature', 'routes');
 
-    it('show news route redirects with invalid slug', function () {
+    it('show news route returns 404 with invalid slug', function () {
         $this->get(route('show.news', ['slug' => 'non-existent']))
-            ->assertRedirect('/');
+            ->assertNotFound();
     })->group('feature', 'routes');
 
     it('show category route works with valid slug', function () {

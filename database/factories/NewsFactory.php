@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\News>
+ * @extends Factory<News>
  */
 class NewsFactory extends Factory
 {
@@ -27,8 +27,8 @@ class NewsFactory extends Factory
             'user_id' => User::where('role', 'editor')->inRandomOrder()->first()->id ?? User::factory(),
             'slug' => Str::slug($this->faker->sentence),
             'is_main' => $this->faker->randomElement([true, false]),
-            'status' => $this->faker->randomElement(['draft', 'published', 'auto_publish', 'disabled']),
-            'scheduled_at' => $this->faker->optional()->dateTimeBetween('now', '+1 month'),
+            'status' => 'published',
+            'scheduled_at' => null,
         ];
     }
 }

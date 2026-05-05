@@ -23,19 +23,19 @@ describe('ShowNews Component', function () {
             ->assertStatus(200);
     })->group('feature', 'livewire', 'critical');
 
-    it('redirects when news not found', function () {
+    it('returns 404 when news not found', function () {
         $response = $this->get(route('show.news', ['slug' => 'non-existent']));
 
-        $response->assertRedirect('/');
+        $response->assertNotFound();
     })->group('feature', 'livewire', 'critical');
 
-    it('redirects when news has no translation', function () {
+    it('returns 404 when news has no translation', function () {
         setAppLocale('uz');
         $news = News::factory()->create(['slug' => 'no-translation']);
 
         $response = $this->get(route('show.news', ['slug' => 'no-translation']));
 
-        $response->assertRedirect('/');
+        $response->assertNotFound();
     })->group('feature', 'livewire', 'critical');
 
     it('loads popular news by view count', function () {
