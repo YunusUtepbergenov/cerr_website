@@ -78,3 +78,20 @@ describe('Page form picker integration', function () {
         expect(Page::where('slug', 'about')->first()->image)->toBe('pages/existing.jpg');
     })->group('feature', 'admin');
 });
+
+describe('Picker show event', function () {
+    it('opens when show-picker is dispatched with a folder', function () {
+        Livewire::test(\App\Livewire\Admin\Media\MediaPicker::class)
+            ->assertSet('open', false)
+            ->dispatch('show-picker', folder: 'videos')
+            ->assertSet('open', true)
+            ->assertSet('folder', 'videos');
+    })->group('feature', 'admin');
+
+    it('falls back to news/covers when an unknown folder is dispatched', function () {
+        Livewire::test(\App\Livewire\Admin\Media\MediaPicker::class)
+            ->dispatch('show-picker', folder: 'something/else')
+            ->assertSet('open', true)
+            ->assertSet('folder', 'news/covers');
+    })->group('feature', 'admin');
+});

@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Media;
 
 use Illuminate\Support\Facades\Storage;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class MediaPicker extends Component
@@ -15,18 +16,19 @@ class MediaPicker extends Component
 
     public string $contextEvent = 'media-picked';
 
-    protected $listeners = ['show-picker' => 'showFromEvent'];
-
     public function show(string $folder = 'news/covers', string $contextEvent = 'media-picked'): void
     {
-        $this->folder = $folder;
+        $this->folder = in_array($folder, ['news/covers', 'news/inline', 'pages', 'videos'], true)
+            ? $folder
+            : 'news/covers';
         $this->contextEvent = $contextEvent;
         $this->open = true;
     }
 
-    public function showFromEvent(array $detail = []): void
+    #[On('show-picker')]
+    public function showFromEvent(string $folder = 'news/covers'): void
     {
-        $this->show($detail['folder'] ?? 'news/covers');
+        $this->show($folder);
     }
 
     public function pick(string $path): void
