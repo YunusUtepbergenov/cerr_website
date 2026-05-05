@@ -70,6 +70,25 @@ describe('VideoIndex Component', function () {
             ->assertViewHas('videos', fn ($val) => $val->count() === 10);
     })->group('feature', 'livewire', 'critical');
 
+    it('loadMore is bounded by PER_PAGE_MAX', function () {
+        $component = Livewire::test(VideoIndex::class);
+        $expectedCalls = (int) ceil(VideoIndex::PER_PAGE_MAX / VideoIndex::PER_PAGE_STEP) + 5;
+
+        for ($i = 0; $i < $expectedCalls; $i++) {
+            $component->call('loadMore');
+        }
+
+        $component->assertSet('perPage', VideoIndex::PER_PAGE_MAX);
+    })->group('feature', 'livewire', 'security');
+
+    it('clamps client-supplied perPage at render time', function () {
+        Video::factory()->count(5)->create();
+
+        Livewire::test(VideoIndex::class)
+            ->set('perPage', 1_000_000)
+            ->assertViewHas('videos', fn ($val) => $val->count() <= VideoIndex::PER_PAGE_MAX);
+    })->group('feature', 'livewire', 'security');
+
     it('videos ordered by latest', function () {
         $older = Video::factory()->create(['created_at' => now()->subDay()]);
         $newer = Video::factory()->create(['created_at' => now()]);

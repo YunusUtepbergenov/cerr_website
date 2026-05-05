@@ -13,6 +13,16 @@ class News extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'category_id',
+        'user_id',
+        'slug',
+        'is_main',
+        'view_count',
+        'status',
+        'scheduled_at',
+    ];
+
     protected $attributes = [
         'view_count' => 0,
     ];

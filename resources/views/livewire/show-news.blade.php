@@ -28,7 +28,7 @@
                                     </div>
                                 </div> --}}
                                 {{-- <p class="echo-hero-discription"> --}}
-                                    {!!$news->translation->content!!}
+                                    @sanitized($news->translation->content)
                                 {{-- </p> --}}
                             </div>
 {{-- 

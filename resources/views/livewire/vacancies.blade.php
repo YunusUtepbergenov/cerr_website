@@ -11,9 +11,9 @@
                                 </div>
                                 <h3 class="echo-hero-title text-capitalize font-weight-bold"><a href="#" class="title-hover">{{$page->translation->title}}</a></h3>
 
-                                <p>
-                                    {!!$page->translation->content!!}
-                                </p>                            
+                                <div>
+                                    @sanitized($page->translation->content)
+                                </div>
                             </div>
                         </div>
 

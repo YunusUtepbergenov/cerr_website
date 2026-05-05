@@ -11,6 +11,11 @@ class Category extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'slug',
+        'status',
+    ];
+
     public function translations(): HasMany
     {
         return $this->hasMany(CategoryTranslation::class);

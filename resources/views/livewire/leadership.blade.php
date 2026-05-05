@@ -96,7 +96,7 @@
                         </div>
                         <div class="mt-5">
                           <p class="d-inline mb-1 p-2"><i class="fas fa-phone-alt me-2"></i>+998 78 150-02-02</p>
-                          <p class="d-inline p-2"><i class="fas fa-envelope icon-gradient me-2"></i>info@cerr.uz</p>  
+                          <p class="d-inline p-2"><i class="fas fa-envelope icon-gradient me-2"></i>o.khakimov@cerr.uz</p>  
                         </div>
                       </div>
                     </div>

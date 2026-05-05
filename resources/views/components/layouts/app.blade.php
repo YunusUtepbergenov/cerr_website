@@ -16,7 +16,11 @@
     <link rel="stylesheet" href="{{asset('css/vendor/metismenu.css')}}">
     <link rel="stylesheet" href="{{asset('css/plugins/fontawesome-5.css')}}">
     <link rel="stylesheet" href="{{asset('css/vendor/magnific-popup.css')}}">
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css">
+    <link rel="stylesheet"
+          href="https://unpkg.com/aos@2.3.4/dist/aos.css"
+          integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9"
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer">
 
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     @stack('styles')
@@ -76,10 +80,10 @@
                                 <div class="echo-header-top-subs-social">
                                     <div class="echo-home-1-social-media-icons">
                                         <ul class="list-unstyled social-area list-group list-group-horizontal">
-                                            <li class="list-group-item"><a href="https://www.facebook.com/CERR.Uzbekistan" target="_blank"><i class="fa-brands fa-facebook-f"></i></a></li>
-                                            <li class="list-group-item"><a href="https://t.me/cerruz" target="_blank"><i class="fa-brands fa-telegram"></i></a></li>
-                                            <li class="list-group-item"><a href="https://www.instagram.com/cerr.uz/" target="_blank"><i class="fa-brands fa-instagram"></i></a></li>
-                                            <li class="list-group-item"><a href="https://www.youtube.com/@centerforeconomicresearcha1331/featured" target="_blank"><i class="fa-brands fa-youtube"></i></a></li>
+                                            <li class="list-group-item"><a href="https://www.facebook.com/CERR.Uzbekistan" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-facebook-f"></i></a></li>
+                                            <li class="list-group-item"><a href="https://t.me/cerruz" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-telegram"></i></a></li>
+                                            <li class="list-group-item"><a href="https://www.instagram.com/cerr.uz/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram"></i></a></li>
+                                            <li class="list-group-item"><a href="https://www.youtube.com/@centerforeconomicresearcha1331/featured" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-youtube"></i></a></li>
                                         </ul>
                                     </div>
                                     <div class="echo-header-top-social-media">
@@ -316,10 +320,10 @@
                     </div>
                     <div class="echo-footer-help">
                         <ul class="list-unstyled">
-                            <li><a href="https://president.uz/uz" target="_blank">@lang('messages.president_uz')</a></li>
-                            <li><a href="https://parliament.gov.uz/" target="_blank">@lang('messages.parliament')</a></li>
-                            <li><a href="https://www.senat.uz" target="_blank">@lang('messages.senat')</a></li>
-                            <li><a href="https://gov.uz/" target="_blank">@lang('messages.gov_uz')</a></li>
+                            <li><a href="https://president.uz/uz" target="_blank" rel="noopener noreferrer">@lang('messages.president_uz')</a></li>
+                            <li><a href="https://parliament.gov.uz/" target="_blank" rel="noopener noreferrer">@lang('messages.parliament')</a></li>
+                            <li><a href="https://www.senat.uz" target="_blank" rel="noopener noreferrer">@lang('messages.senat')</a></li>
+                            <li><a href="https://gov.uz/" target="_blank" rel="noopener noreferrer">@lang('messages.gov_uz')</a></li>
                         </ul>
                     </div>
                 </div>
@@ -347,7 +351,10 @@
         'resources/js/app.js',
         ])
 
-    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"
+            integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
     <script>
         AOS.init();
         document.addEventListener('DOMContentLoaded', function() {

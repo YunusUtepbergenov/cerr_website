@@ -16,10 +16,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', Home::class)->name('home');
 
-Route::get('lang/{locale}', function ($locale) {
-session(['locale' => $locale]);
+Route::get('lang/{locale}', function (string $locale) {
+    if (in_array($locale, ['kr', 'uz', 'ru', 'en'], true)) {
+        session(['locale' => $locale]);
+    }
 
-return redirect()->back();
+    $previous = url()->previous();
+    $sameHost = parse_url($previous, PHP_URL_HOST) === request()->getHost();
+
+    return redirect($sameHost ? $previous : route('home'));
 })->name('lang.switch');
 
 Route::get('/history', History::class)->name('history');

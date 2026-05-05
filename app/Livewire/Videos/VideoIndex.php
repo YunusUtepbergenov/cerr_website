@@ -8,7 +8,11 @@ use Livewire\Component;
 
 class VideoIndex extends Component
 {
-    public $perPage = 8;
+    public const PER_PAGE_STEP = 8;
+
+    public const PER_PAGE_MAX = 200;
+
+    public $perPage = self::PER_PAGE_STEP;
 
     public $popular_news;
 
@@ -22,13 +26,15 @@ class VideoIndex extends Component
 
     public function loadMore()
     {
-        $this->perPage += 8;
+        $this->perPage = min((int) $this->perPage + self::PER_PAGE_STEP, self::PER_PAGE_MAX);
     }
 
     public function render()
     {
+        $perPage = max(1, min((int) $this->perPage, self::PER_PAGE_MAX));
+
         return view('livewire.videos.video-index', [
-            'videos' => Video::latest()->take($this->perPage)->get(),
+            'videos' => Video::latest()->take($perPage)->get(),
             'totalCount' => Video::count(),
             'popular_news' => $this->popular_news,
         ]);

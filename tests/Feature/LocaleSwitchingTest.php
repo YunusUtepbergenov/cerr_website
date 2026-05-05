@@ -58,6 +58,19 @@ describe('Locale Switching', function () {
     })->with(['uz', 'kr', 'en', 'ru'])
         ->group('integration', 'locale');
 
+    it('rejects invalid locale values', function () {
+        $this->get(route('lang.switch', ['locale' => 'xx']));
+
+        expect(session('locale'))->not->toBe('xx');
+    })->group('integration', 'locale', 'security');
+
+    it('redirects to home when referer is off-site', function () {
+        $response = $this->withHeaders(['Referer' => 'https://evil.example.com/path'])
+            ->get(route('lang.switch', ['locale' => 'en']));
+
+        $response->assertRedirect(route('home'));
+    })->group('integration', 'locale', 'security');
+
     it('falls back to default locale when session not set', function () {
         $this->get('/');
 

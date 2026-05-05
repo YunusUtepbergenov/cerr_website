@@ -23,7 +23,7 @@
                                 <div class="echo-hero-area-titlepost-post-like-comment-share">
                                 </div>
                                 <hr>
-                                {!!$page->translation->content!!}
+                                @sanitized($page->translation->content)
                             </div>
                         </div>
                     </div>
