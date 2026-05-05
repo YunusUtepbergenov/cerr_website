@@ -27,16 +27,39 @@
                 <div class="col-md-6">
                     <label class="form-label">{{ __('admin.media.select_files') }}</label>
                     <input type="file" wire:model="uploads" accept="image/*" multiple class="form-control @error('uploads.*') is-invalid @enderror">
+                    <div class="form-text small">{{ __('admin.media.multi_hint') }}</div>
                     @error('uploads.*') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                    <div wire:loading wire:target="uploads" class="text-muted small mt-1">{{ __('admin.common.uploading') }}</div>
+                    <div wire:loading wire:target="uploads" class="text-muted small mt-1"><i class="fa-solid fa-spinner fa-spin me-1"></i> {{ __('admin.common.uploading') }}</div>
                 </div>
                 <div class="col-md-3">
-                    <button type="button" class="btn btn-primary w-100" wire:click="save" wire:loading.attr="disabled" wire:target="save">
-                        <span wire:loading.remove wire:target="save"><i class="fa-solid fa-upload me-1"></i> {{ __('admin.media.upload') }}</span>
+                    <button type="button" class="btn btn-primary w-100" wire:click="save" wire:loading.attr="disabled" wire:target="save,uploads" @disabled(empty($uploads))>
+                        <span wire:loading.remove wire:target="save"><i class="fa-solid fa-upload me-1"></i> {{ __('admin.media.upload') }}@if (count($uploads) > 0) ({{ count($uploads) }})@endif</span>
                         <span wire:loading wire:target="save"><i class="fa-solid fa-spinner fa-spin me-1"></i> {{ __('admin.common.uploading') }}</span>
                     </button>
                 </div>
             </div>
+
+            @if (! empty($uploads))
+                <div class="mt-3 pt-3" style="border-top: 1px solid var(--admin-border-soft);">
+                    <div class="text-muted small mb-2">{{ __('admin.media.selected_count', ['count' => count($uploads)]) }}</div>
+                    <div class="d-flex flex-wrap gap-2">
+                        @foreach ($uploads as $upload)
+                            @php
+                                $thumb = null;
+                                try { $thumb = $upload->temporaryUrl(); } catch (\Throwable $e) { $thumb = null; }
+                            @endphp
+                            <div style="width: 84px;">
+                                @if ($thumb)
+                                    <img src="{{ $thumb }}" alt="" style="width: 84px; height: 64px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);">
+                                @else
+                                    <div style="width: 84px; height: 64px; border-radius: 6px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #94a3b8;"><i class="fa-regular fa-image"></i></div>
+                                @endif
+                                <div class="text-truncate small mt-1" title="{{ $upload->getClientOriginalName() }}">{{ $upload->getClientOriginalName() }}</div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
         </div>
     </div>
 

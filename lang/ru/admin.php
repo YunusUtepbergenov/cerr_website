@@ -244,6 +244,8 @@ return [
         'upload' => 'Загрузить',
         'upload_success' => 'Загружено: :count файлов',
         'select_files' => 'Выберите файлы',
+        'multi_hint' => 'Удерживайте Ctrl (Cmd на Mac), чтобы выбрать несколько файлов.',
+        'selected_count' => 'Выбрано файлов: :count',
     ],
 
     'activity' => [

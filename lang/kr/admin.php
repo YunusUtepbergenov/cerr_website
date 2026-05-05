@@ -233,6 +233,8 @@ return [
         'upload' => '',
         'upload_success' => '',
         'select_files' => '',
+        'multi_hint' => '',
+        'selected_count' => '',
     ],
     'activity' => [
         'title_section' => '',
