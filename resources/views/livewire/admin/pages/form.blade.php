@@ -77,8 +77,17 @@
 
                         <div class="mb-3">
                             <label class="form-label">{{ __('admin.pages.image') }}</label>
-                            @if ($image)
-                                <div class="mb-2"><img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($image) }}" alt="" style="max-width: 100%; border-radius: 6px; border: 1px solid var(--admin-border-soft);"></div>
+                            @php
+                                $pagePreviewUrl = null;
+                                if ($imageUpload) {
+                                    try { $pagePreviewUrl = $imageUpload->temporaryUrl(); } catch (\Throwable $e) { $pagePreviewUrl = null; }
+                                }
+                                if (! $pagePreviewUrl && $image) {
+                                    $pagePreviewUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($image);
+                                }
+                            @endphp
+                            @if ($pagePreviewUrl)
+                                <div class="mb-2"><img src="{{ $pagePreviewUrl }}" alt="" style="max-width: 100%; border-radius: 6px; border: 1px solid var(--admin-border-soft);"></div>
                             @endif
                             <div x-data x-on:media-picked.window="(e) => $wire.set('image', e.detail.path)">
                                 <button type="button" class="btn btn-sm btn-outline-secondary mb-2" @click="$dispatch('show-picker', { folder: 'pages' })"><i class="fa-regular fa-images me-1"></i> {{ __('admin.media.choose_existing') }}</button>

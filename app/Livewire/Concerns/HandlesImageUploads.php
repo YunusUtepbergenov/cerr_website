@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Concerns;
 
+use App\Support\ImageOptimizer;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -9,15 +10,25 @@ use Illuminate\Support\Str;
 trait HandlesImageUploads
 {
     /**
-     * Store an uploaded image on the public disk in the given folder.
+     * Store an uploaded image on the public disk in the given folder, after
+     * passing it through ImageOptimizer (resize, re-encode, strip EXIF).
      * Returns the storage path (e.g. "news/covers/{uuid}.jpg").
      */
     protected function storeUploadedImage(UploadedFile $file, string $folder): string
     {
         $extension = strtolower($file->getClientOriginalExtension() ?: $file->extension());
         $filename = Str::uuid()->toString().'.'.$extension;
+        $relativePath = $folder.'/'.$filename;
+        $absolutePath = Storage::disk('public')->path($relativePath);
 
-        return $file->storeAs($folder, $filename, 'public');
+        $dir = dirname($absolutePath);
+        if (! is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        app(ImageOptimizer::class)->optimize($file, $absolutePath);
+
+        return $relativePath;
     }
 
     /**

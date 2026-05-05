@@ -31,8 +31,17 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label">{{ __('admin.videos.image') }}</label>
-                            @if ($image)
-                                <div class="mb-2"><img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($image) }}" alt="" style="max-width: 220px; border-radius: 6px; border: 1px solid var(--admin-border-soft);"></div>
+                            @php
+                                $videoPreviewUrl = null;
+                                if ($imageUpload) {
+                                    try { $videoPreviewUrl = $imageUpload->temporaryUrl(); } catch (\Throwable $e) { $videoPreviewUrl = null; }
+                                }
+                                if (! $videoPreviewUrl && $image) {
+                                    $videoPreviewUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($image);
+                                }
+                            @endphp
+                            @if ($videoPreviewUrl)
+                                <div class="mb-2"><img src="{{ $videoPreviewUrl }}" alt="" style="width: 140px; height: 96px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);"></div>
                             @endif
                             <div x-data x-on:media-picked.window="(e) => $wire.set('image', e.detail.path)">
                                 <button type="button" class="btn btn-sm btn-outline-secondary mb-2" @click="$dispatch('show-picker', { folder: 'videos' })"><i class="fa-regular fa-images me-1"></i> {{ __('admin.media.choose_existing') }}</button>

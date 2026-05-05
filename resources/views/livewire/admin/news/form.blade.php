@@ -100,8 +100,12 @@
                                     </button>
                                     @php
                                         $existingImage = $translations[$locale]['image_url'] ?? null;
+                                        $stagedUpload = $cover_uploads[$locale] ?? null;
                                         $previewUrl = null;
-                                        if ($existingImage) {
+                                        if ($stagedUpload) {
+                                            try { $previewUrl = $stagedUpload->temporaryUrl(); } catch (\Throwable $e) { $previewUrl = null; }
+                                        }
+                                        if (! $previewUrl && $existingImage) {
                                             $previewUrl = str_starts_with($existingImage, 'news/')
                                                 ? \Illuminate\Support\Facades\Storage::disk('public')->url($existingImage)
                                                 : asset('images/news/'.$existingImage);

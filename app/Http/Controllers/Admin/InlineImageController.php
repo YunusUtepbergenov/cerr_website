@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Support\ImageOptimizer;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -22,13 +23,20 @@ class InlineImageController
         ]);
 
         $file = $request->file('file');
-
         $extension = strtolower($file->getClientOriginalExtension() ?: $file->extension());
         $filename = Str::uuid()->toString().'.'.$extension;
-        $path = $file->storeAs('news/inline', $filename, 'public');
+        $relativePath = 'news/inline/'.$filename;
+        $absolutePath = Storage::disk('public')->path($relativePath);
+
+        $dir = dirname($absolutePath);
+        if (! is_dir($dir)) {
+            mkdir($dir, 0755, true);
+        }
+
+        app(ImageOptimizer::class)->optimize($file, $absolutePath);
 
         return response()->json([
-            'location' => Storage::disk('public')->url($path),
+            'location' => Storage::disk('public')->url($relativePath),
         ]);
     }
 }
