@@ -265,7 +265,7 @@
     </form>
 
     @push('scripts')
-        <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
+        <script src="https://cdn.tiny.cloud/1/{{ config('services.tinymce.api_key') }}/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>
         <script>
             (function () {
                 const initEditor = (textarea) => {
@@ -280,7 +280,7 @@
                         menubar: false,
                         promotion: false,
                         branding: false,
-                        plugins: 'lists link image table code paste autolink media',
+                        plugins: 'lists link image table code autolink media',
                         toolbar: 'undo redo | styles | bold italic underline | bullist numlist | link image media table | alignleft aligncenter alignright | code',
                         paste_data_images: false,
                         automatic_uploads: true,

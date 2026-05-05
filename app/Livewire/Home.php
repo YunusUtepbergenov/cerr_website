@@ -31,15 +31,15 @@ class Home extends Component
         $infographicsCategory = Category::where('slug', 'infografikalar')->first();
 
         $this->latest_news = $researchCategory
-            ? News::with('translation')->whereHas('translation')->where('category_id', $researchCategory->id)->latest()->limit(10)->get()
+            ? News::published()->with('translation')->whereHas('translation')->where('category_id', $researchCategory->id)->latest()->limit(10)->get()
             : collect();
 
         $this->events = $eventsCategory
-            ? News::with('translation')->whereHas('translation')->where('category_id', $eventsCategory->id)->latest()->limit(10)->get()
+            ? News::published()->with('translation')->whereHas('translation')->where('category_id', $eventsCategory->id)->latest()->limit(10)->get()
             : collect();
 
         $this->infographics = $infographicsCategory
-            ? News::with('translation')->whereHas('translation')->where('category_id', $infographicsCategory->id)->latest()->limit(10)->get()
+            ? News::published()->with('translation')->whereHas('translation')->where('category_id', $infographicsCategory->id)->latest()->limit(10)->get()
             : collect();
 
         $this->videos = Video::latest()->take(4)->get();

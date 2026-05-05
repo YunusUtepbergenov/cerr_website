@@ -21,7 +21,7 @@ class ShowAllCategories extends Component
         }
 
         $locale = app()->getLocale();
-        $this->popular_news = News::whereHas('translations', fn ($query) => $query->where('lang', $locale))->orderBy('view_count', 'DESC')->limit(6)->get();
+        $this->popular_news = News::published()->whereHas('translations', fn ($query) => $query->where('lang', $locale))->orderBy('view_count', 'DESC')->limit(6)->get();
     }
 
     public function render()

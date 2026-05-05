@@ -14,18 +14,16 @@ class ShowNews extends Component
 
     public function mount($slug): void
     {
-        $this->news = News::with('translation')->where('slug', $slug)->first();
+        $this->news = News::published()->with('translation')->where('slug', $slug)->first();
 
         if (! $this->news || ! $this->news->translation) {
-            $this->redirect('/');
-
-            return;
+            abort(404);
         }
 
         $this->trackView();
 
         $locale = app()->getLocale();
-        $this->popular_news = News::whereHas('translations', fn ($query) => $query->where('lang', $locale))->orderBy('view_count', 'DESC')->limit(6)->get();
+        $this->popular_news = News::published()->whereHas('translations', fn ($query) => $query->where('lang', $locale))->orderBy('view_count', 'DESC')->limit(6)->get();
     }
 
     private function trackView(): void

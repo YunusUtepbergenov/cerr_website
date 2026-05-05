@@ -59,4 +59,21 @@ class News extends Model
     {
         return $this->morphMany(Activity::class, 'subject', 'subject_type', 'subject_id');
     }
+
+    /**
+     * Restrict to news that should be visible publicly:
+     * - status = 'published', or
+     * - status = 'auto_publish' and scheduled_at has passed.
+     */
+    public function scopePublished($query)
+    {
+        return $query->where(function ($q) {
+            $q->where('status', 'published')
+                ->orWhere(function ($q2) {
+                    $q2->where('status', 'auto_publish')
+                        ->whereNotNull('scheduled_at')
+                        ->where('scheduled_at', '<=', now());
+                });
+        });
+    }
 }

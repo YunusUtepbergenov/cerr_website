@@ -29,11 +29,11 @@ class Category extends Model
 
     public function news(): HasMany
     {
-        return $this->hasMany(News::class)->whereHas('translation')->latest();
+        return $this->hasMany(News::class)->published()->whereHas('translation')->latest();
     }
 
     public function getLatestNews(): HasMany
     {
-        return $this->hasMany(News::class)->whereHas('translation')->latest()->limit(3);
+        return $this->hasMany(News::class)->published()->whereHas('translation')->latest()->limit(3);
     }
 }
