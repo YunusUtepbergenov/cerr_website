@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\InlineImageController;
+use App\Http\Controllers\Admin\MediaUploadController;
 use App\Livewire\About;
 use App\Livewire\Admin\Activity\ActivityIndex;
 use App\Livewire\Admin\Categories\CategoryIndex;
@@ -74,6 +75,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/activity', ActivityIndex::class)->name('activity.index');
 
     Route::post('/inline-image', [InlineImageController::class, 'store'])->name('inline-image.store');
+    Route::post('/media/upload', [MediaUploadController::class, 'store'])->name('media.upload');
 });
 
 require __DIR__.'/auth.php';

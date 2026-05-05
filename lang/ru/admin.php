@@ -246,6 +246,13 @@ return [
         'select_files' => 'Выберите файлы',
         'multi_hint' => 'Удерживайте Ctrl (Cmd на Mac), чтобы выбрать несколько файлов.',
         'selected_count' => 'Выбрано файлов: :count',
+        'filepond_idle' => 'Перетащите изображения сюда или <span class="filepond--label-action">выберите</span>',
+        'filepond_loading' => 'Загрузка…',
+        'filepond_uploading' => 'Загрузка…',
+        'filepond_done' => 'Готово',
+        'filepond_error' => 'Ошибка загрузки',
+        'filepond_bad_type' => 'Неподдерживаемый формат файла',
+        'filepond_max_size' => 'Файл слишком большой',
     ],
 
     'activity' => [

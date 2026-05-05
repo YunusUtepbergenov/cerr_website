@@ -10,58 +10,119 @@
         <div class="alert alert-success alert-dismissible mb-3">{{ session('status') }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
     @endif
 
-    <div class="card mb-3">
-        <div class="card-header">{{ __('admin.media.upload') }}</div>
-        <div class="card-body">
-            <div class="row g-2 align-items-end">
-                <div class="col-md-3">
-                    <label class="form-label">{{ __('admin.media.upload_to') }}</label>
-                    <select wire:model="uploadFolder" class="form-select">
-                        <option value="news/covers">{{ __('admin.media.covers') }}</option>
-                        <option value="news/inline">{{ __('admin.media.inline') }}</option>
-                        <option value="pages">{{ __('admin.media.pages') }}</option>
-                        <option value="videos">{{ __('admin.media.videos') }}</option>
-                    </select>
-                    @error('uploadFolder') <div class="text-danger small mt-1">{{ $message }}</div> @enderror
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">{{ __('admin.media.select_files') }}</label>
-                    <input type="file" wire:model="uploads" accept="image/*" multiple class="form-control @error('uploads.*') is-invalid @enderror">
-                    <div class="form-text small">{{ __('admin.media.multi_hint') }}</div>
-                    @error('uploads.*') <div class="invalid-feedback">{{ $message }}</div> @enderror
-                    <div wire:loading wire:target="uploads" class="text-muted small mt-1"><i class="fa-solid fa-spinner fa-spin me-1"></i> {{ __('admin.common.uploading') }}</div>
-                </div>
-                <div class="col-md-3">
-                    <button type="button" class="btn btn-primary w-100" wire:click="save" wire:loading.attr="disabled" wire:target="save,uploads" @disabled(empty($uploads))>
-                        <span wire:loading.remove wire:target="save"><i class="fa-solid fa-upload me-1"></i> {{ __('admin.media.upload') }}@if (count($uploads) > 0) ({{ count($uploads) }})@endif</span>
-                        <span wire:loading wire:target="save"><i class="fa-solid fa-spinner fa-spin me-1"></i> {{ __('admin.common.uploading') }}</span>
-                    </button>
-                </div>
-            </div>
+    <link rel="stylesheet" href="https://unpkg.com/filepond@4/dist/filepond.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/filepond-plugin-image-preview@4/dist/filepond-plugin-image-preview.min.css">
+    <style>
+        .filepond--root { font-family: inherit; }
+        .filepond--panel-root { background: #fafbfc; border: 1px dashed var(--admin-border); }
+        .filepond--drop-label { color: var(--admin-text-muted); font-size: .95rem; }
+        .filepond--label-action { color: var(--admin-primary); text-decoration: underline; }
+    </style>
 
-            @if (! empty($uploads))
-                <div class="mt-3 pt-3" style="border-top: 1px solid var(--admin-border-soft);">
-                    <div class="text-muted small mb-2">{{ __('admin.media.selected_count', ['count' => count($uploads)]) }}</div>
-                    <div class="d-flex flex-wrap gap-2">
-                        @foreach ($uploads as $upload)
-                            @php
-                                $thumb = null;
-                                try { $thumb = $upload->temporaryUrl(); } catch (\Throwable $e) { $thumb = null; }
-                            @endphp
-                            <div style="width: 84px;">
-                                @if ($thumb)
-                                    <img src="{{ $thumb }}" alt="" style="width: 84px; height: 64px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);">
-                                @else
-                                    <div style="width: 84px; height: 64px; border-radius: 6px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #94a3b8;"><i class="fa-regular fa-image"></i></div>
-                                @endif
-                                <div class="text-truncate small mt-1" title="{{ $upload->getClientOriginalName() }}">{{ $upload->getClientOriginalName() }}</div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
-            @endif
+    <div class="card mb-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <span>{{ __('admin.media.upload') }}</span>
+            <div style="min-width: 220px;">
+                <select id="filepond-folder" class="form-select form-select-sm">
+                    <option value="news/covers">{{ __('admin.media.covers') }}</option>
+                    <option value="news/inline">{{ __('admin.media.inline') }}</option>
+                    <option value="pages">{{ __('admin.media.pages') }}</option>
+                    <option value="videos">{{ __('admin.media.videos') }}</option>
+                </select>
+            </div>
+        </div>
+        <div class="card-body">
+            <input type="file" id="filepond-input" multiple>
         </div>
     </div>
+
+    @push('scripts')
+        <script src="https://unpkg.com/filepond@4/dist/filepond.min.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-image-preview@4/dist/filepond-plugin-image-preview.min.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-file-validate-type@1/dist/filepond-plugin-file-validate-type.min.js"></script>
+        <script src="https://unpkg.com/filepond-plugin-file-validate-size@2/dist/filepond-plugin-file-validate-size.min.js"></script>
+        <script>
+            (function () {
+                if (window.FilePond) {
+                    FilePond.registerPlugin(
+                        FilePondPluginImagePreview,
+                        FilePondPluginFileValidateType,
+                        FilePondPluginFileValidateSize,
+                    );
+                }
+
+                const init = () => {
+                    const input = document.getElementById('filepond-input');
+                    if (! input || input.dataset.filepondInitialized === '1') return;
+                    if (! window.FilePond) return;
+                    input.dataset.filepondInitialized = '1';
+
+                    const folderSelect = document.getElementById('filepond-folder');
+                    const csrf = '{{ csrf_token() }}';
+
+                    FilePond.create(input, {
+                        allowMultiple: true,
+                        allowReorder: true,
+                        acceptedFileTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
+                        maxFileSize: '5MB',
+                        labelIdle: '{{ __('admin.media.filepond_idle') }}',
+                        labelFileLoading: '{{ __('admin.media.filepond_loading') }}',
+                        labelFileProcessing: '{{ __('admin.media.filepond_uploading') }}',
+                        labelFileProcessingComplete: '{{ __('admin.media.filepond_done') }}',
+                        labelFileProcessingError: '{{ __('admin.media.filepond_error') }}',
+                        labelFileTypeNotAllowed: '{{ __('admin.media.filepond_bad_type') }}',
+                        fileValidateTypeLabelExpectedTypes: 'JPG, PNG, WebP, GIF',
+                        labelMaxFileSize: '{{ __('admin.media.filepond_max_size') }}',
+                        server: {
+                            process: (fieldName, file, metadata, load, error, progress, abort) => {
+                                const formData = new FormData();
+                                formData.append('file', file, file.name);
+                                formData.append('folder', folderSelect.value);
+
+                                const xhr = new XMLHttpRequest();
+                                xhr.open('POST', '{{ route('admin.media.upload') }}');
+                                xhr.setRequestHeader('X-CSRF-TOKEN', csrf);
+                                xhr.setRequestHeader('Accept', 'application/json');
+
+                                xhr.upload.onprogress = (e) => {
+                                    if (e.lengthComputable) progress(true, e.loaded, e.total);
+                                };
+
+                                xhr.onload = () => {
+                                    if (xhr.status >= 200 && xhr.status < 300) {
+                                        let body;
+                                        try { body = JSON.parse(xhr.responseText); } catch (e) { body = {}; }
+                                        load(body.path || file.name);
+                                        if (window.Livewire) {
+                                            const cmp = Livewire.find('{{ $this->getId() }}');
+                                            if (cmp) cmp.call('$refresh');
+                                        }
+                                    } else {
+                                        let msg = '{{ __('admin.media.filepond_error') }}';
+                                        try {
+                                            const body = JSON.parse(xhr.responseText);
+                                            if (body && body.message) msg = body.message;
+                                        } catch (e) {}
+                                        error(msg);
+                                    }
+                                };
+
+                                xhr.onerror = () => error('{{ __('admin.media.filepond_error') }}');
+                                xhr.send(formData);
+
+                                return { abort: () => { xhr.abort(); abort(); } };
+                            },
+                            revert: null,
+                        },
+                    });
+                };
+
+                if (document.readyState !== 'loading') init();
+                else document.addEventListener('DOMContentLoaded', init);
+                document.addEventListener('livewire:navigated', init);
+            })();
+        </script>
+    @endpush
 
     <div class="card mb-3">
         <div class="card-body">

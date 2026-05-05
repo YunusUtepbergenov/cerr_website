@@ -235,6 +235,13 @@ return [
         'select_files' => '',
         'multi_hint' => '',
         'selected_count' => '',
+        'filepond_idle' => '',
+        'filepond_loading' => '',
+        'filepond_uploading' => '',
+        'filepond_done' => '',
+        'filepond_error' => '',
+        'filepond_bad_type' => '',
+        'filepond_max_size' => '',
     ],
     'activity' => [
         'title_section' => '',
