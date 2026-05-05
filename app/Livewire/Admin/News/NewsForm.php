@@ -2,11 +2,11 @@
 
 namespace App\Livewire\Admin\News;
 
+use App\Livewire\Concerns\HandlesImageUploads;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Tag;
 use App\Support\HtmlSanitizer;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
@@ -18,7 +18,7 @@ use Livewire\WithFileUploads;
 #[Title('News form')]
 class NewsForm extends Component
 {
-    use WithFileUploads;
+    use HandlesImageUploads, WithFileUploads;
 
     public const LOCALES = ['kr', 'uz', 'ru', 'en'];
 
@@ -142,12 +142,9 @@ class NewsForm extends Component
             $imagePath = $existing?->image_url;
 
             if ($upload) {
-                $extension = strtolower($upload->getClientOriginalExtension() ?: $upload->extension());
-                $filename = Str::uuid()->toString().'.'.$extension;
-                $imagePath = $upload->storeAs('news/covers', $filename, 'public');
-
-                if ($existing && $existing->image_url && str_starts_with($existing->image_url, 'news/') && $existing->image_url !== $imagePath) {
-                    Storage::disk('public')->delete($existing->image_url);
+                $imagePath = $this->storeUploadedImage($upload, 'news/covers');
+                if ($existing && $existing->image_url !== $imagePath) {
+                    $this->deleteStoredImage($existing->image_url);
                 }
             }
 
@@ -185,9 +182,7 @@ class NewsForm extends Component
         }
 
         $existing = $this->news?->translations()->where('lang', $locale)->first();
-        if ($existing && $existing->image_url && str_starts_with($existing->image_url, 'news/')) {
-            Storage::disk('public')->delete($existing->image_url);
-        }
+        $this->deleteStoredImage($existing?->image_url);
         if ($existing) {
             $existing->update(['image_url' => '']);
         }

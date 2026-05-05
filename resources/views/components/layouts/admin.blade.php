@@ -217,6 +217,17 @@
             <a href="{{ route('admin.tags.index') }}" class="{{ request()->routeIs('admin.tags.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-tags"></i> {{ __('admin.nav.tags') }}
             </a>
+            <a href="{{ route('admin.pages.index') }}" class="{{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-file-lines"></i> {{ __('admin.nav.pages') }}
+            </a>
+            <a href="{{ route('admin.videos.index') }}" class="{{ request()->routeIs('admin.videos.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-video"></i> {{ __('admin.nav.videos') }}
+            </a>
+
+            <div class="nav-label">{{ __('admin.nav.administration') }}</div>
+            <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-users"></i> {{ __('admin.nav.users') }}
+            </a>
 
             <div class="sidebar-footer">
                 v1.0 · {{ now()->format('Y') }} CERR

@@ -11,7 +11,7 @@ class Page extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['slug'];
+    protected $fillable = ['slug', 'image'];
 
     public function translations(): HasMany
     {

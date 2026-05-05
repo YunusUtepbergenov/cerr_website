@@ -6,7 +6,11 @@ use App\Livewire\Admin\Categories\CategoryIndex;
 use App\Livewire\Admin\Dashboard as AdminDashboard;
 use App\Livewire\Admin\News\NewsForm;
 use App\Livewire\Admin\News\NewsIndex;
+use App\Livewire\Admin\Pages\PageForm;
+use App\Livewire\Admin\Pages\PageIndex;
 use App\Livewire\Admin\Tags\TagIndex;
+use App\Livewire\Admin\Users\UserIndex;
+use App\Livewire\Admin\Videos\VideoIndex as AdminVideoIndex;
 use App\Livewire\Contact;
 use App\Livewire\History;
 use App\Livewire\Home;
@@ -55,6 +59,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::get('/categories', CategoryIndex::class)->name('categories.index');
     Route::get('/tags', TagIndex::class)->name('tags.index');
+
+    Route::get('/users', UserIndex::class)->name('users.index');
+
+    Route::get('/pages', PageIndex::class)->name('pages.index');
+    Route::get('/pages/create', PageForm::class)->name('pages.create');
+    Route::get('/pages/{page}/edit', PageForm::class)->name('pages.edit');
+
+    Route::get('/videos', AdminVideoIndex::class)->name('videos.index');
 
     Route::post('/inline-image', [InlineImageController::class, 'store'])->name('inline-image.store');
 });

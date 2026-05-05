@@ -44,11 +44,13 @@ class extends Component
 
         RateLimiter::clear($throttleKey);
 
+        $user = Auth::user();
+        $user->forceFill(['last_login_at' => now()])->save();
+
         if (request()->hasSession()) {
             request()->session()->regenerate();
         }
 
-        $user = Auth::user();
         $this->redirectIntended($user && $user->isAdmin() ? route('admin.dashboard') : '/', navigate: false);
     }
 }; ?>
