@@ -20,7 +20,9 @@ class NewsForm extends Component
 {
     use HandlesImageUploads, WithFileUploads;
 
-    public const LOCALES = ['kr', 'uz', 'ru', 'en'];
+    public const LOCALES = ['uz', 'kr', 'ru', 'en'];
+
+    public const PRIMARY_LOCALE = 'uz';
 
     public ?News $news = null;
 
@@ -43,7 +45,7 @@ class NewsForm extends Component
     /** @var array<string, mixed> */
     public array $cover_uploads = [];
 
-    public string $activeLocale = 'kr';
+    public string $activeLocale = 'uz';
 
     public function mount(?News $news = null): void
     {
@@ -90,6 +92,36 @@ class NewsForm extends Component
     }
 
     /**
+     * Generate a URL-safe slug from the supplied title and ensure it's unique
+     * across the news table. If a clash is detected, suffix with -2, -3, etc.
+     * Used by the Alpine watcher in the form to auto-fill the slug field.
+     */
+    public function regenerateSlug(?string $title): void
+    {
+        if ($this->news?->exists) {
+            return;
+        }
+
+        $base = Str::slug((string) $title);
+
+        if ($base === '') {
+            $this->slug = '';
+
+            return;
+        }
+
+        $candidate = $base;
+        $i = 2;
+
+        while (News::where('slug', $candidate)->exists()) {
+            $candidate = $base.'-'.$i;
+            $i++;
+        }
+
+        $this->slug = $candidate;
+    }
+
+    /**
      * @return array<string, mixed>
      */
     protected function rules(): array
@@ -107,7 +139,7 @@ class NewsForm extends Component
         ];
 
         foreach (self::LOCALES as $locale) {
-            $required = $locale === 'kr' ? 'required' : 'nullable';
+            $required = $locale === self::PRIMARY_LOCALE ? 'required' : 'nullable';
             $rules["translations.$locale.title"] = [$required, 'string', 'max:255'];
             $rules["translations.$locale.short_description"] = [$required, 'string', 'max:1000'];
             $rules["translations.$locale.content"] = [$required, 'string'];

@@ -16,9 +16,9 @@ describe('Activity log', function () {
     it('records a row when news is created', function () {
         Livewire::test(NewsForm::class)
             ->set('slug', 'logged')
-            ->set('translations.kr.title', 't')
-            ->set('translations.kr.short_description', 's')
-            ->set('translations.kr.content', '<p>c</p>')
+            ->set('translations.uz.title', 't')
+            ->set('translations.uz.short_description', 's')
+            ->set('translations.uz.content', '<p>c</p>')
             ->call('save');
 
         $log = Activity::where('subject_type', News::class)->latest()->first();

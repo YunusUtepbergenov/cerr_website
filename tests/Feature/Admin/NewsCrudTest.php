@@ -26,19 +26,19 @@ describe('News CRUD', function () {
             ->set('category_id', $category->id)
             ->set('status', 'published')
             ->set('tag_ids', [$tag->id])
-            ->set('translations.kr.title', 'KR Title')
-            ->set('translations.kr.short_description', 'KR short')
-            ->set('translations.kr.content', '<p>KR body</p>')
             ->set('translations.uz.title', 'UZ Title')
             ->set('translations.uz.short_description', 'UZ short')
             ->set('translations.uz.content', '<p>UZ body</p>')
+            ->set('translations.kr.title', 'KR Title')
+            ->set('translations.kr.short_description', 'KR short')
+            ->set('translations.kr.content', '<p>KR body</p>')
             ->set('translations.ru.title', 'RU Title')
             ->set('translations.ru.short_description', 'RU short')
             ->set('translations.ru.content', '<p>RU body</p>')
             ->set('translations.en.title', 'EN Title')
             ->set('translations.en.short_description', 'EN short')
             ->set('translations.en.content', '<p>EN body</p>')
-            ->set('cover_uploads.kr', UploadedFile::fake()->image('cover.jpg'))
+            ->set('cover_uploads.uz', UploadedFile::fake()->image('cover.jpg'))
             ->call('save')
             ->assertHasNoErrors();
 
@@ -49,19 +49,19 @@ describe('News CRUD', function () {
             ->and($news->translations()->count())->toBe(4)
             ->and($news->tags->pluck('id')->all())->toContain($tag->id);
 
-        $kr = $news->translations()->where('lang', 'kr')->first();
-        expect($kr->title)->toBe('KR Title');
-        expect($kr->image_url)->toStartWith('news/covers/');
-        Storage::disk('public')->assertExists($kr->image_url);
+        $primary = $news->translations()->where('lang', 'uz')->first();
+        expect($primary->title)->toBe('UZ Title');
+        expect($primary->image_url)->toStartWith('news/covers/');
+        Storage::disk('public')->assertExists($primary->image_url);
     })->group('feature', 'admin');
 
-    it('requires kr title', function () {
+    it('requires uz title', function () {
         Livewire::test(NewsForm::class)
             ->set('slug', 'partial')
-            ->set('translations.kr.short_description', 'x')
-            ->set('translations.kr.content', '<p>x</p>')
+            ->set('translations.uz.short_description', 'x')
+            ->set('translations.uz.content', '<p>x</p>')
             ->call('save')
-            ->assertHasErrors(['translations.kr.title']);
+            ->assertHasErrors(['translations.uz.title']);
     })->group('feature', 'admin');
 
     it('rejects duplicate slug', function () {
@@ -69,9 +69,9 @@ describe('News CRUD', function () {
 
         Livewire::test(NewsForm::class)
             ->set('slug', 'taken')
-            ->set('translations.kr.title', 'x')
-            ->set('translations.kr.short_description', 'x')
-            ->set('translations.kr.content', '<p>x</p>')
+            ->set('translations.uz.title', 'x')
+            ->set('translations.uz.short_description', 'x')
+            ->set('translations.uz.content', '<p>x</p>')
             ->call('save')
             ->assertHasErrors(['slug']);
     })->group('feature', 'admin');
@@ -79,7 +79,7 @@ describe('News CRUD', function () {
     it('updates an existing news item', function () {
         $news = News::factory()->create(['slug' => 'old-slug']);
         $news->translations()->create([
-            'lang' => 'kr',
+            'lang' => 'uz',
             'title' => 'Old',
             'short_description' => 'Old',
             'content' => '<p>Old</p>',
@@ -88,23 +88,23 @@ describe('News CRUD', function () {
 
         Livewire::test(NewsForm::class, ['news' => $news])
             ->assertSet('slug', 'old-slug')
-            ->set('translations.kr.title', 'Updated')
+            ->set('translations.uz.title', 'Updated')
             ->call('save')
             ->assertHasNoErrors();
 
-        expect($news->fresh()->translations()->where('lang', 'kr')->first()->title)->toBe('Updated');
+        expect($news->fresh()->translations()->where('lang', 'uz')->first()->title)->toBe('Updated');
     })->group('feature', 'admin');
 
     it('sanitizes script tags from content', function () {
         Livewire::test(NewsForm::class)
             ->set('slug', 'sanitized')
-            ->set('translations.kr.title', 't')
-            ->set('translations.kr.short_description', 's')
-            ->set('translations.kr.content', '<p>safe</p><script>alert(1)</script>')
+            ->set('translations.uz.title', 't')
+            ->set('translations.uz.short_description', 's')
+            ->set('translations.uz.content', '<p>safe</p><script>alert(1)</script>')
             ->call('save')
             ->assertHasNoErrors();
 
-        $content = News::where('slug', 'sanitized')->first()->translations()->where('lang', 'kr')->first()->content;
+        $content = News::where('slug', 'sanitized')->first()->translations()->where('lang', 'uz')->first()->content;
         expect($content)->not->toContain('<script>');
         expect($content)->toContain('safe');
     })->group('feature', 'admin');
@@ -112,7 +112,7 @@ describe('News CRUD', function () {
     it('lists news and supports search filter', function () {
         $news = News::factory()->create(['slug' => 'findme-slug']);
         $news->translations()->create([
-            'lang' => 'kr',
+            'lang' => 'uz',
             'title' => 'Findme Title',
             'short_description' => 's',
             'content' => '<p>c</p>',
@@ -131,7 +131,7 @@ describe('News CRUD', function () {
         $news = News::factory()->create();
         Storage::disk('public')->put('news/covers/will-die.jpg', 'fake');
         $news->translations()->create([
-            'lang' => 'kr',
+            'lang' => 'uz',
             'title' => 't',
             'short_description' => 's',
             'content' => '<p>c</p>',
