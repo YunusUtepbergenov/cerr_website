@@ -1,0 +1,41 @@
+<?php
+
+use App\Models\User;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
+
+describe('Inline image upload', function () {
+    it('returns location for an uploaded image', function () {
+        Storage::fake('public');
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->post(route('admin.inline-image.store'), [
+            'file' => UploadedFile::fake()->image('inline.png'),
+        ]);
+
+        $response->assertOk()
+            ->assertJsonStructure(['location']);
+
+        $stored = Storage::disk('public')->files('news/inline');
+        expect($stored)->not->toBeEmpty();
+    })->group('feature', 'admin');
+
+    it('rejects non-image uploads', function () {
+        Storage::fake('public');
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->post(route('admin.inline-image.store'), [
+            'file' => UploadedFile::fake()->create('doc.pdf', 10, 'application/pdf'),
+        ]);
+
+        $response->assertStatus(302); // redirected back with validation errors
+    })->group('feature', 'admin');
+
+    it('blocks non-admins', function () {
+        $user = User::factory()->create(['role' => 'viewer']);
+
+        $this->actingAs($user)
+            ->post(route('admin.inline-image.store'), ['file' => UploadedFile::fake()->image('x.png')])
+            ->assertForbidden();
+    })->group('feature', 'admin');
+});

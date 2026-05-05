@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Storage;
 
 class NewsTranslation extends Model
 {
@@ -22,8 +24,33 @@ class NewsTranslation extends Model
         'seo_description',
     ];
 
-    public function news()
+    public function news(): BelongsTo
     {
         return $this->belongsTo(News::class);
+    }
+
+    /**
+     * Resolve the cover image URL.
+     *
+     * Legacy values are bare filenames stored under public/images/news/.
+     * New uploads live on the public storage disk under news/covers/.
+     */
+    public function coverUrl(): ?string
+    {
+        $value = $this->image_url;
+
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        if (preg_match('#^https?://#i', $value) === 1) {
+            return $value;
+        }
+
+        if (str_starts_with($value, 'news/')) {
+            return Storage::disk('public')->url($value);
+        }
+
+        return asset('images/news/'.$value);
     }
 }

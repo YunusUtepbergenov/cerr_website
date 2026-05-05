@@ -11,7 +11,7 @@
                                     <p class="news-short-desc">{{$news->translation->short_description}}</p>
                                 </div>
                                 <div class="echo-inner-img-ct-1 img-transition-scale mb-5">
-                                    <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="{{$news->translation->title}}" class="post-style-1-frist-hero-img">
+                                    <img src="{{$news->translation->coverUrl()}}" alt="{{$news->translation->title}}" class="post-style-1-frist-hero-img">
                                 </div>
                                 {{-- <div class="echo-hero-area-titlepost-post-like-comment-share">
                                     <div class="echo-hero-area-like-read-comment-share">
@@ -70,7 +70,7 @@
                                     @foreach($popular_news as $news)
                                         <div class="echo-top-story" wire:key="popular-news-{{ $news->id }}">
                                             <div class="echo-story-picture img-transition-scale">
-                                                <a href="{{route('show.news', $news->slug)}}"><img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover"></a>
+                                                <a href="{{route('show.news', $news->slug)}}"><img src="{{$news->translation->coverUrl()}}" alt="Echo" class="img-hover"></a>
                                             </div>
                                             <div class="echo-story-text">
                                                 <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>

@@ -35,7 +35,7 @@
                                     <div class="echo-latest-news-main-content">
                                         <div class="echo-latest-news-img img-transition-scale">
                                             <a href="{{route('show.news', $news->slug)}}">
-                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover" loading="lazy">
+                                                <img src="{{$news->translation->coverUrl()}}" alt="Echo" class="img-hover" loading="lazy">
                                             </a>
                                         </div>
                                         <div class="echo-latest-news-single-title mt-4">
@@ -76,7 +76,7 @@
                                     <div class="echo-latest-news-main-content">
                                         <div class="echo-latest-news-img img-transition-scale">
                                             <a href="{{route('show.news', $news->slug)}}">
-                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover" loading="lazy">
+                                                <img src="{{$news->translation->coverUrl()}}" alt="Echo" class="img-hover" loading="lazy">
                                             </a>
                                         </div>
                                         <div class="echo-latest-news-single-title mt-4">
@@ -117,7 +117,7 @@
                                     <div class="echo-latest-news-main-content">
                                         <div class="echo-latest-news-img img-transition-scale">
                                             <a href="{{route('show.news', $news->slug)}}">
-                                                <img src="{{asset('images/news/'.$news->translation->image_url)}}" alt="Echo" class="img-hover" loading="lazy">
+                                                <img src="{{$news->translation->coverUrl()}}" alt="Echo" class="img-hover" loading="lazy">
                                             </a>
                                         </div>
                                         <div class="echo-latest-news-single-title mt-4">

@@ -1,0 +1,206 @@
+<?php
+
+namespace App\Livewire\Admin\News;
+
+use App\Models\Category;
+use App\Models\News;
+use App\Models\Tag;
+use App\Support\HtmlSanitizer;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
+use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
+use Livewire\Component;
+use Livewire\WithFileUploads;
+
+#[Layout('components.layouts.admin')]
+#[Title('News form')]
+class NewsForm extends Component
+{
+    use WithFileUploads;
+
+    public const LOCALES = ['kr', 'uz', 'ru', 'en'];
+
+    public ?News $news = null;
+
+    public string $slug = '';
+
+    public ?int $category_id = null;
+
+    public string $status = 'draft';
+
+    public bool $is_main = false;
+
+    public ?string $scheduled_at = null;
+
+    /** @var array<int> */
+    public array $tag_ids = [];
+
+    /** @var array<string, array{title: string, short_description: string, content: string, seo_title: ?string, seo_description: ?string, image_url: ?string}> */
+    public array $translations = [];
+
+    /** @var array<string, mixed> */
+    public array $cover_uploads = [];
+
+    public string $activeLocale = 'kr';
+
+    public function mount(?News $news = null): void
+    {
+        if ($news && $news->exists) {
+            $news->load(['translations', 'tags']);
+            $this->news = $news;
+            $this->slug = $news->slug;
+            $this->category_id = $news->category_id;
+            $this->status = $news->status;
+            $this->is_main = (bool) $news->is_main;
+            $this->scheduled_at = $news->scheduled_at?->format('Y-m-d\TH:i');
+            $this->tag_ids = $news->tags->pluck('id')->all();
+
+            foreach (self::LOCALES as $locale) {
+                $t = $news->translations->firstWhere('lang', $locale);
+                $this->translations[$locale] = [
+                    'title' => $t->title ?? '',
+                    'short_description' => $t->short_description ?? '',
+                    'content' => $t->content ?? '',
+                    'seo_title' => $t->seo_title ?? null,
+                    'seo_description' => $t->seo_description ?? null,
+                    'image_url' => $t->image_url ?? null,
+                ];
+            }
+        } else {
+            foreach (self::LOCALES as $locale) {
+                $this->translations[$locale] = [
+                    'title' => '',
+                    'short_description' => '',
+                    'content' => '',
+                    'seo_title' => null,
+                    'seo_description' => null,
+                    'image_url' => null,
+                ];
+            }
+        }
+    }
+
+    public function setLocale(string $locale): void
+    {
+        if (in_array($locale, self::LOCALES, true)) {
+            $this->activeLocale = $locale;
+        }
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    protected function rules(): array
+    {
+        $newsId = $this->news?->id;
+
+        $rules = [
+            'slug' => ['required', 'string', 'max:255', Rule::unique('news', 'slug')->ignore($newsId)],
+            'category_id' => ['nullable', 'integer', 'exists:categories,id'],
+            'status' => ['required', Rule::in(['draft', 'published', 'auto_publish', 'disabled'])],
+            'is_main' => ['boolean'],
+            'scheduled_at' => ['nullable', 'date'],
+            'tag_ids' => ['array'],
+            'tag_ids.*' => ['integer', 'exists:tags,id'],
+        ];
+
+        foreach (self::LOCALES as $locale) {
+            $required = $locale === 'kr' ? 'required' : 'nullable';
+            $rules["translations.$locale.title"] = [$required, 'string', 'max:255'];
+            $rules["translations.$locale.short_description"] = [$required, 'string', 'max:1000'];
+            $rules["translations.$locale.content"] = [$required, 'string'];
+            $rules["translations.$locale.seo_title"] = ['nullable', 'string', 'max:255'];
+            $rules["translations.$locale.seo_description"] = ['nullable', 'string', 'max:500'];
+            $rules["cover_uploads.$locale"] = ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'];
+        }
+
+        return $rules;
+    }
+
+    public function save(): void
+    {
+        $this->validate();
+
+        $news = $this->news ?? new News;
+        $news->slug = Str::slug($this->slug);
+        $news->category_id = $this->category_id;
+        $news->status = $this->status;
+        $news->is_main = $this->is_main;
+        $news->scheduled_at = $this->scheduled_at ?: null;
+        $news->user_id = $news->user_id ?: auth()->id();
+        $news->save();
+
+        foreach (self::LOCALES as $locale) {
+            $data = $this->translations[$locale];
+            $hasContent = trim((string) ($data['title'] ?? '')) !== ''
+                || trim((string) ($data['content'] ?? '')) !== '';
+
+            $upload = $this->cover_uploads[$locale] ?? null;
+            $existing = $news->translations()->where('lang', $locale)->first();
+            $imagePath = $existing?->image_url;
+
+            if ($upload) {
+                $extension = strtolower($upload->getClientOriginalExtension() ?: $upload->extension());
+                $filename = Str::uuid()->toString().'.'.$extension;
+                $imagePath = $upload->storeAs('news/covers', $filename, 'public');
+
+                if ($existing && $existing->image_url && str_starts_with($existing->image_url, 'news/') && $existing->image_url !== $imagePath) {
+                    Storage::disk('public')->delete($existing->image_url);
+                }
+            }
+
+            if (! $hasContent && ! $existing) {
+                continue;
+            }
+
+            $news->translations()->updateOrCreate(
+                ['lang' => $locale],
+                [
+                    'title' => $data['title'] ?? '',
+                    'short_description' => $data['short_description'] ?? '',
+                    'content' => HtmlSanitizer::sanitize($data['content'] ?? ''),
+                    'image_url' => $imagePath ?? '',
+                    'seo_title' => $data['seo_title'] ?? null,
+                    'seo_description' => $data['seo_description'] ?? null,
+                ]
+            );
+        }
+
+        $news->tags()->sync($this->tag_ids);
+
+        $this->cover_uploads = [];
+        $this->news = $news->fresh(['translations', 'tags']);
+
+        session()->flash('status', 'News saved.');
+
+        $this->redirectRoute('admin.news.edit', ['news' => $news->id], navigate: false);
+    }
+
+    public function clearCover(string $locale): void
+    {
+        if (! in_array($locale, self::LOCALES, true)) {
+            return;
+        }
+
+        $existing = $this->news?->translations()->where('lang', $locale)->first();
+        if ($existing && $existing->image_url && str_starts_with($existing->image_url, 'news/')) {
+            Storage::disk('public')->delete($existing->image_url);
+        }
+        if ($existing) {
+            $existing->update(['image_url' => '']);
+        }
+
+        $this->translations[$locale]['image_url'] = null;
+        $this->cover_uploads[$locale] = null;
+    }
+
+    public function render()
+    {
+        return view('livewire.admin.news.form', [
+            'categories' => Category::with('translations')->get(),
+            'allTags' => Tag::orderBy('name')->get(),
+        ]);
+    }
+}

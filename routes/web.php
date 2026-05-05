@@ -1,6 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\InlineImageController;
 use App\Livewire\About;
+use App\Livewire\Admin\Categories\CategoryIndex;
+use App\Livewire\Admin\Dashboard as AdminDashboard;
+use App\Livewire\Admin\News\NewsForm;
+use App\Livewire\Admin\News\NewsIndex;
+use App\Livewire\Admin\Tags\TagIndex;
 use App\Livewire\Contact;
 use App\Livewire\History;
 use App\Livewire\Home;
@@ -39,5 +45,18 @@ Route::get('/show-all-category', ShowAllCategories::class)->name('show.all.categ
 
 Route::get('/videos', VideoIndex::class)->name('videos.index');
 Route::get('/videos/{id}', VideoShow::class)->name('videos.show');
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', AdminDashboard::class)->name('dashboard');
+
+    Route::get('/news', NewsIndex::class)->name('news.index');
+    Route::get('/news/create', NewsForm::class)->name('news.create');
+    Route::get('/news/{news}/edit', NewsForm::class)->name('news.edit');
+
+    Route::get('/categories', CategoryIndex::class)->name('categories.index');
+    Route::get('/tags', TagIndex::class)->name('tags.index');
+
+    Route::post('/inline-image', [InlineImageController::class, 'store'])->name('inline-image.store');
+});
 
 require __DIR__.'/auth.php';
