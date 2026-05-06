@@ -100,7 +100,7 @@
         }
         .admin-topbar .icon-btn:hover { background: rgba(0, 0, 0, .04); color: var(--admin-text); }
 
-        .admin-content { padding: 2rem 2rem 4rem; flex: 1; max-width: 1400px; width: 100%; }
+        .admin-content { padding: 2rem 2rem 4rem; flex: 1; width: 100%; min-width: 0; }
         .page-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5rem; gap: 1rem; flex-wrap: wrap; }
         .page-header h1 { font-size: 1.55rem; margin: 0; font-weight: 600; }
         .page-header .subtitle { color: var(--admin-text-muted); font-size: .9rem; margin-top: .25rem; font-weight: 400; }
