@@ -78,34 +78,6 @@ describe('writer role', function () {
         expect($news->fresh()->status)->toBe('draft');
     })->group('feature', 'admin');
 
-    it('cannot bulkPublish (aborts 403)', function () {
-        $writer = User::factory()->create(['role' => 'writer']);
-        $news = News::factory()->create(['user_id' => $writer->id, 'status' => 'draft']);
-
-        $this->actingAs($writer);
-
-        Livewire::test(NewsIndex::class)
-            ->set('selected', [$news->id])
-            ->call('bulkPublish')
-            ->assertForbidden();
-
-        expect($news->fresh()->status)->toBe('draft');
-    })->group('feature', 'admin');
-
-    it('cannot bulkUnpublish (aborts 403)', function () {
-        $writer = User::factory()->create(['role' => 'writer']);
-        $news = News::factory()->create(['user_id' => $writer->id, 'status' => 'published']);
-
-        $this->actingAs($writer);
-
-        Livewire::test(NewsIndex::class)
-            ->set('selected', [$news->id])
-            ->call('bulkUnpublish')
-            ->assertForbidden();
-
-        expect($news->fresh()->status)->toBe('published');
-    })->group('feature', 'admin');
-
     it('cannot delete someone elses news via delete action', function () {
         $writer = User::factory()->create(['role' => 'writer']);
         $other = User::factory()->create(['role' => 'admin']);

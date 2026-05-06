@@ -39,24 +39,11 @@
         </div>
     </div>
 
-    @if (auth()->user()->canPublishNews())
-    <div x-data x-show="$wire.selected.length > 0" x-cloak class="card mb-3 p-3 d-flex flex-row gap-2 align-items-center" style="background: #fff7ed; border-color: #fed7aa;">
-        <span class="fw-semibold flex-grow-1">{{ __('admin.bulk.selected', ['count' => count($selected)]) }}</span>
-        <button class="btn btn-sm btn-success" wire:click="bulkPublish"><i class="fa-solid fa-circle-check me-1"></i> {{ __('admin.bulk.publish') }}</button>
-        <button class="btn btn-sm btn-secondary" wire:click="bulkUnpublish"><i class="fa-solid fa-eye-slash me-1"></i> {{ __('admin.bulk.unpublish') }}</button>
-        <button class="btn btn-sm btn-danger" type="button" x-data
-                @click="$dispatch('open-confirm', { message: @js(__('admin.bulk.confirm_delete', ['count' => count($selected)])), onConfirm: () => $wire.bulkDelete() })">
-            <i class="fa-solid fa-trash me-1"></i> {{ __('admin.bulk.delete') }}
-        </button>
-    </div>
-    @endif
-
     <div class="card">
         <div class="table-responsive">
             <table class="table mb-0">
                 <thead>
                     <tr>
-                        <th style="width: 36px;"><input type="checkbox" wire:model.live="selectAll"></th>
                         <th style="width: 60px;"></th>
                         <th>{{ __('admin.news.title') }}</th>
                         <th style="width: 130px;">{{ __('admin.common.status') }}</th>
@@ -78,7 +65,6 @@
                             $availableLocales = $item->translations->pluck('lang')->all();
                         @endphp
                         <tr wire:key="news-{{ $item->id }}">
-                            <td><input type="checkbox" wire:model.live="selected" value="{{ $item->id }}"></td>
                             <td>
                                 @if ($thumbUrl)
                                     <img src="{{ $thumbUrl }}" alt="" style="width: 44px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border-soft);">
@@ -113,7 +99,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="9">
+                            <td colspan="8">
                                 <div class="empty-state">
                                     <i class="fa-regular fa-newspaper d-block"></i>
                                     <div class="fw-semibold">{{ __('admin.news.no_news_match') }}</div>

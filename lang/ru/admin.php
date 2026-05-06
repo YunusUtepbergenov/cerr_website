@@ -219,16 +219,6 @@ return [
         'deleted_flash' => 'Видео удалено.',
     ],
 
-    'bulk' => [
-        'selected' => 'Выбрано: :count',
-        'publish' => 'Опубликовать',
-        'unpublish' => 'Снять с публикации',
-        'delete' => 'Удалить',
-        'published_count' => 'Опубликовано: :count',
-        'unpublished_count' => 'Снято с публикации: :count',
-        'confirm_delete' => 'Удалить :count выбранных статей?',
-    ],
-
     'media' => [
         'title_section' => 'Медиатека',
         'subtitle' => 'Загруженные изображения. Источник истины — диск, не БД.',

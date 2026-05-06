@@ -209,15 +209,6 @@ return [
         'saved_flash' => '',
         'deleted_flash' => '',
     ],
-    'bulk' => [
-        'selected' => '',
-        'publish' => '',
-        'unpublish' => '',
-        'delete' => '',
-        'published_count' => '',
-        'unpublished_count' => '',
-        'confirm_delete' => '',
-    ],
     'media' => [
         'title_section' => '',
         'subtitle' => '',

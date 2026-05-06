@@ -33,17 +33,6 @@ describe('Activity log', function () {
         expect(Activity::where('action', 'deleted')->where('subject_id', $n->id)->exists())->toBeTrue();
     })->group('feature', 'admin');
 
-    it('records published action on bulk publish', function () {
-        $a = News::factory()->create(['status' => 'draft']);
-        $b = News::factory()->create(['status' => 'draft']);
-
-        Livewire::test(NewsIndex::class)
-            ->set('selected', [$a->id, $b->id])
-            ->call('bulkPublish');
-
-        expect(Activity::where('action', 'published')->count())->toBe(2);
-    })->group('feature', 'admin');
-
     it('does not store password fields in changes', function () {
         $other = User::factory()->create();
 

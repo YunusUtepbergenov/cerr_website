@@ -26,11 +26,6 @@ class NewsIndex extends Component
     #[Url(except: '')]
     public string $category = '';
 
-    /** @var array<int> */
-    public array $selected = [];
-
-    public bool $selectAll = false;
-
     public function updatingSearch(): void
     {
         $this->resetPage();
@@ -44,16 +39,6 @@ class NewsIndex extends Component
     public function updatingCategory(): void
     {
         $this->resetPage();
-    }
-
-    public function updatedSelectAll(bool $value): void
-    {
-        $this->selected = $value ? $this->currentPageIds() : [];
-    }
-
-    private function currentPageIds(): array
-    {
-        return $this->renderedQuery()->paginate(15)->pluck('id')->all();
     }
 
     private function renderedQuery()
@@ -99,60 +84,6 @@ class NewsIndex extends Component
         $news->delete();
 
         session()->flash('status', __('admin.news.deleted_flash'));
-    }
-
-    public function bulkPublish(): void
-    {
-        abort_if(! auth()->user()->canPublishNews(), 403);
-
-        if (! $this->selected) {
-            return;
-        }
-
-        News::whereIn('id', $this->selected)->update(['status' => 'published']);
-
-        foreach (News::whereIn('id', $this->selected)->get() as $n) {
-            $n->logActivity('published', ['status' => $n->status]);
-        }
-
-        session()->flash('status', __('admin.bulk.published_count', ['count' => count($this->selected)]));
-        $this->selected = [];
-        $this->selectAll = false;
-    }
-
-    public function bulkUnpublish(): void
-    {
-        abort_if(! auth()->user()->canPublishNews(), 403);
-
-        if (! $this->selected) {
-            return;
-        }
-
-        News::whereIn('id', $this->selected)->update(['status' => 'draft']);
-
-        foreach (News::whereIn('id', $this->selected)->get() as $n) {
-            $n->logActivity('unpublished', ['status' => $n->status]);
-        }
-
-        session()->flash('status', __('admin.bulk.unpublished_count', ['count' => count($this->selected)]));
-        $this->selected = [];
-        $this->selectAll = false;
-    }
-
-    public function bulkDelete(): void
-    {
-        abort_if(! auth()->user()->canPublishNews(), 403);
-
-        if (! $this->selected) {
-            return;
-        }
-
-        foreach ($this->selected as $id) {
-            $this->delete($id);
-        }
-
-        $this->selected = [];
-        $this->selectAll = false;
     }
 
     public function render()
