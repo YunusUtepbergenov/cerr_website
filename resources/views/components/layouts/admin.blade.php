@@ -226,15 +226,18 @@
         details > summary { color: var(--admin-text-muted); }
         details[open] > summary { color: var(--admin-text); }
 
-        @media (max-width: 991px) {
-            .admin-sidebar { position: fixed; left: -260px; transition: left .2s; z-index: 1050; box-shadow: 0 0 30px rgba(0,0,0,.1); }
-            .admin-sidebar.is-open { left: 0; }
-            .sidebar-toggle { display: inline-flex !important; }
-            .admin-content { padding: 1.25rem; }
-        }
-        .sidebar-toggle { display: none; }
+        .admin-sidebar { transition: margin-left .2s ease, transform .2s ease; }
+        .admin-sidebar.is-collapsed { margin-left: -232px; }
+        .sidebar-toggle { display: inline-flex; }
         .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, .35); z-index: 1049; }
-        .sidebar-backdrop.is-open { display: block; }
+
+        @media (max-width: 991px) {
+            .admin-sidebar { position: fixed; left: 0; margin-left: -260px; z-index: 1050; box-shadow: 0 0 30px rgba(0,0,0,.1); }
+            .admin-sidebar.is-open { margin-left: 0; }
+            .admin-sidebar.is-collapsed { margin-left: -260px; }
+            .admin-content { padding: 1.25rem; }
+            .sidebar-backdrop.is-open { display: block; }
+        }
     </style>
     @stack('styles')
 </head>
@@ -344,6 +347,9 @@
     @livewireScripts
     <script>
         (function () {
+            const STORAGE_KEY = 'cerr-admin-sidebar-collapsed';
+            const isMobile = () => window.innerWidth < 992;
+
             const setup = () => {
                 const toggle = document.getElementById('sidebar-toggle');
                 const sidebar = document.getElementById('admin-sidebar');
@@ -351,14 +357,38 @@
                 if (!toggle || !sidebar || !backdrop || toggle.dataset.bound === '1') return;
                 toggle.dataset.bound = '1';
 
-                const close = () => { sidebar.classList.remove('is-open'); backdrop.classList.remove('is-open'); };
-                const open = () => { sidebar.classList.add('is-open'); backdrop.classList.add('is-open'); };
-                const toggleFn = () => sidebar.classList.contains('is-open') ? close() : open();
+                if (! isMobile() && localStorage.getItem(STORAGE_KEY) === '1') {
+                    sidebar.classList.add('is-collapsed');
+                }
 
-                toggle.addEventListener('click', toggleFn);
-                backdrop.addEventListener('click', close);
-                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
-                window.addEventListener('resize', () => { if (window.innerWidth >= 992) close(); });
+                const closeMobile = () => {
+                    sidebar.classList.remove('is-open');
+                    backdrop.classList.remove('is-open');
+                };
+
+                const handleToggle = () => {
+                    if (isMobile()) {
+                        const opening = ! sidebar.classList.contains('is-open');
+                        sidebar.classList.toggle('is-open', opening);
+                        backdrop.classList.toggle('is-open', opening);
+                    } else {
+                        const collapsing = ! sidebar.classList.contains('is-collapsed');
+                        sidebar.classList.toggle('is-collapsed', collapsing);
+                        localStorage.setItem(STORAGE_KEY, collapsing ? '1' : '0');
+                    }
+                };
+
+                toggle.addEventListener('click', handleToggle);
+                backdrop.addEventListener('click', closeMobile);
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeMobile(); });
+                window.addEventListener('resize', () => {
+                    if (! isMobile()) {
+                        closeMobile();
+                        sidebar.classList.toggle('is-collapsed', localStorage.getItem(STORAGE_KEY) === '1');
+                    } else {
+                        sidebar.classList.remove('is-collapsed');
+                    }
+                });
             };
             if (document.readyState !== 'loading') setup();
             else document.addEventListener('DOMContentLoaded', setup);
