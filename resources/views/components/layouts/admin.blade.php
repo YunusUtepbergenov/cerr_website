@@ -238,11 +238,11 @@
     </style>
     @stack('styles')
 </head>
-<body x-data="{ sidebar: false }">
-    <div class="sidebar-backdrop" :class="{ 'is-open': sidebar }" @click="sidebar = false"></div>
+<body>
+    <div class="sidebar-backdrop" id="sidebar-backdrop"></div>
 
     <div class="admin-shell">
-        <aside class="admin-sidebar" :class="{ 'is-open': sidebar }">
+        <aside class="admin-sidebar" id="admin-sidebar">
             <div class="brand">
                 <span class="brand-mark">C</span>
                 <span>CERR Admin</span>
@@ -295,7 +295,7 @@
         <div class="admin-main">
             <div class="admin-topbar">
                 <div class="d-flex align-items-center gap-3">
-                    <button type="button" class="icon-btn sidebar-toggle" @click="sidebar = !sidebar" aria-label="Toggle navigation">
+                    <button type="button" class="icon-btn sidebar-toggle" id="sidebar-toggle" aria-label="Toggle navigation">
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <nav class="breadcrumb-trail" aria-label="breadcrumb">
@@ -342,6 +342,29 @@
     <script src="{{ asset('js/vendor/jquery.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     @livewireScripts
+    <script>
+        (function () {
+            const setup = () => {
+                const toggle = document.getElementById('sidebar-toggle');
+                const sidebar = document.getElementById('admin-sidebar');
+                const backdrop = document.getElementById('sidebar-backdrop');
+                if (!toggle || !sidebar || !backdrop || toggle.dataset.bound === '1') return;
+                toggle.dataset.bound = '1';
+
+                const close = () => { sidebar.classList.remove('is-open'); backdrop.classList.remove('is-open'); };
+                const open = () => { sidebar.classList.add('is-open'); backdrop.classList.add('is-open'); };
+                const toggleFn = () => sidebar.classList.contains('is-open') ? close() : open();
+
+                toggle.addEventListener('click', toggleFn);
+                backdrop.addEventListener('click', close);
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') close(); });
+                window.addEventListener('resize', () => { if (window.innerWidth >= 992) close(); });
+            };
+            if (document.readyState !== 'loading') setup();
+            else document.addEventListener('DOMContentLoaded', setup);
+            document.addEventListener('livewire:navigated', setup);
+        })();
+    </script>
     @stack('scripts')
 </body>
 </html>
