@@ -73,6 +73,8 @@ class NewsForm extends Component
                 ];
             }
         } else {
+            $this->scheduled_at = now()->format('Y-m-d\TH:i');
+
             foreach (self::LOCALES as $locale) {
                 $this->translations[$locale] = [
                     'title' => '',
