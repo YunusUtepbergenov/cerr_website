@@ -2,6 +2,8 @@
 
 use App\Livewire\Home;
 use App\Models\News;
+use App\Models\User;
+use Illuminate\Support\Facades\Redis;
 use Livewire\Livewire;
 
 beforeEach(function () {
@@ -71,6 +73,41 @@ describe('News status visibility', function () {
         ]);
 
         $this->get('/show-news/public-article')->assertOk();
+    })->group('feature', 'public');
+
+    it('lets admins preview a draft directly', function () {
+        $admin = User::factory()->create(['role' => 'admin']);
+        createNewsWithTranslation([
+            'category_id' => $this->researchCategory->id,
+            'status' => 'draft',
+            'slug' => 'admin-preview-draft',
+        ]);
+
+        $this->actingAs($admin)->get('/show-news/admin-preview-draft')->assertOk();
+    })->group('feature', 'public');
+
+    it('still hides drafts from users without edit rights', function () {
+        $viewer = User::factory()->create(['role' => 'viewer']);
+        createNewsWithTranslation([
+            'category_id' => $this->researchCategory->id,
+            'status' => 'draft',
+            'slug' => 'viewer-blocked-draft',
+        ]);
+
+        $this->actingAs($viewer)->get('/show-news/viewer-blocked-draft')->assertNotFound();
+    })->group('feature', 'public');
+
+    it('does not count views for unpublished previews', function () {
+        $admin = User::factory()->create(['role' => 'admin']);
+        createNewsWithTranslation([
+            'category_id' => $this->researchCategory->id,
+            'status' => 'draft',
+            'slug' => 'untracked-draft',
+        ]);
+
+        Redis::shouldReceive('hincrby')->never();
+
+        $this->actingAs($admin)->get('/show-news/untracked-draft')->assertOk();
     })->group('feature', 'public');
 });
 

@@ -14,13 +14,23 @@ class ShowNews extends Component
 
     public function mount($slug): void
     {
-        $this->news = News::published()->with('translation')->where('slug', $slug)->first();
+        $news = News::with('translation')->where('slug', $slug)->first();
 
-        if (! $this->news || ! $this->news->translation) {
+        if (! $news || ! $news->translation) {
             abort(404);
         }
 
-        $this->trackView();
+        $isPubliclyVisible = News::published()->whereKey($news->id)->exists();
+
+        if (! $isPubliclyVisible && ! auth()->user()?->canEditNews($news)) {
+            abort(404);
+        }
+
+        $this->news = $news;
+
+        if ($isPubliclyVisible) {
+            $this->trackView();
+        }
 
         $locale = app()->getLocale();
         $this->popular_news = News::published()->whereHas('translations', fn ($query) => $query->where('lang', $locale))->orderBy('view_count', 'DESC')->limit(6)->get();
