@@ -16,7 +16,7 @@
                     <div class="row g-2">
                         @foreach ($files as $f)
                             <div class="col-md-3" wire:key="picker-{{ $f['path'] }}">
-                                <button type="button" wire:click="pick('{{ $f['path'] }}')" class="btn p-0 w-100" style="border: 1px solid var(--admin-border); border-radius: 8px; overflow: hidden; background: var(--admin-surface);">
+                                <button type="button" wire:click="pick('{{ $f['path'] }}')" class="btn p-0 w-100" style="border: 1px solid var(--admin-border); border-radius: 8px; overflow: hidden; background: var(--admin-surface); color: var(--admin-text);">
                                     <img src="{{ $f['url'] }}" alt="" style="width: 100%; height: 110px; object-fit: cover;">
                                     <div class="p-2 text-truncate small">{{ $f['name'] }}</div>
                                 </button>
