@@ -295,6 +295,7 @@ details[open] > summary { color: var(--admin-text); }
     background-repeat: no-repeat;
     background-position: right .7rem center;
     background-size: 14px;
+    padding-right: 2rem;
 }
 
 input[type="datetime-local"].form-control { font-feature-settings: "tnum"; }
@@ -307,8 +308,13 @@ input[type="datetime-local"].form-control { font-feature-settings: "tnum"; }
     border: 1px solid var(--admin-border); border-radius: 999px;
     font-size: .82rem; cursor: pointer; color: var(--admin-text-muted);
     transition: background .1s, border-color .1s, color .1s;
+    max-width: 100%; overflow-wrap: anywhere;
 }
 .tag-chip-list .form-check-label:hover { border-color: var(--admin-primary); color: var(--admin-text); }
 .tag-chip-list .form-check-input:checked + .form-check-label {
     background: var(--admin-primary-soft); border-color: var(--admin-primary); color: var(--admin-primary);
+}
+.tag-chip-list .form-check-input:focus-visible + .form-check-label {
+    border-color: var(--admin-primary);
+    box-shadow: 0 0 0 3px var(--admin-primary-soft);
 }
