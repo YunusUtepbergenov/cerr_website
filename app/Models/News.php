@@ -29,6 +29,15 @@ class News extends Model
         'view_count' => 0,
     ];
 
+    /** @return array<string, string> */
+    protected function casts(): array
+    {
+        return [
+            'scheduled_at' => 'datetime',
+            'is_main' => 'boolean',
+        ];
+    }
+
     public function translations(): HasMany
     {
         return $this->hasMany(NewsTranslation::class, 'news_id', 'id');

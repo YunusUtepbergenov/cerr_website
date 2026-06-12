@@ -37,4 +37,16 @@ describe('News form UI', function () {
             ->assertOk()
             ->assertSee('form-action-bar', false);
     })->group('feature', 'admin');
+
+    it('opens the edit page of an article with a scheduled publish time', function () {
+        $admin = User::factory()->create(['role' => 'admin']);
+        $news = createNewsWithTranslation([
+            'status' => 'auto_publish',
+            'scheduled_at' => now()->addDay(),
+        ]);
+
+        $this->actingAs($admin)->get(route('admin.news.edit', $news))
+            ->assertOk()
+            ->assertSee('wire:model="scheduled_at"', false);
+    })->group('feature', 'admin');
 });
