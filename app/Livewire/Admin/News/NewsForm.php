@@ -10,12 +10,10 @@ use App\Support\HtmlSanitizer;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 #[Layout('components.layouts.admin')]
-#[Title('News form')]
 class NewsForm extends Component
 {
     use HandlesImageUploads, WithFileUploads;
@@ -258,6 +256,6 @@ class NewsForm extends Component
         return view('livewire.admin.news.form', [
             'categories' => Category::with('translations')->get(),
             'allTags' => Tag::orderBy('name')->get(),
-        ]);
+        ])->title($this->news?->exists ? __('admin.news.edit_article') : __('admin.news.new_article'));
     }
 }

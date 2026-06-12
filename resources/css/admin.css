@@ -111,7 +111,7 @@ code { font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; font-size: .8
 .form-text { color: var(--admin-text-faint); font-size: .8rem; }
 .form-control, .form-select {
     font-size: .9rem; padding: .5rem .7rem; border-radius: var(--radius-sm);
-    border-color: var(--admin-border); color: var(--admin-text); background: var(--admin-surface);
+    border-color: var(--admin-border); color: var(--admin-text); background-color: var(--admin-surface);
     box-shadow: none; transition: border-color .1s, box-shadow .1s;
 }
 .form-control:focus, .form-select:focus { border-color: var(--admin-primary); box-shadow: 0 0 0 3px var(--admin-primary-soft); }
@@ -286,4 +286,29 @@ details[open] > summary { color: var(--admin-text); }
 .thumb-placeholder {
     width: 44px; height: 44px; border-radius: 6px; background: var(--admin-chip-bg);
     display: flex; align-items: center; justify-content: center; color: var(--admin-text-faint);
+}
+
+/* ---------- Form controls ---------- */
+.form-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right .7rem center;
+    background-size: 14px;
+}
+
+input[type="datetime-local"].form-control { font-feature-settings: "tnum"; }
+
+.tag-chip-list { display: flex; flex-wrap: wrap; gap: .35rem; }
+.tag-chip-list .form-check { padding: 0; margin: 0; min-height: 0; }
+.tag-chip-list .form-check-input { position: absolute; opacity: 0; pointer-events: none; }
+.tag-chip-list .form-check-label {
+    display: inline-flex; align-items: center; padding: .25rem .65rem;
+    border: 1px solid var(--admin-border); border-radius: 999px;
+    font-size: .82rem; cursor: pointer; color: var(--admin-text-muted);
+    transition: background .1s, border-color .1s, color .1s;
+}
+.tag-chip-list .form-check-label:hover { border-color: var(--admin-primary); color: var(--admin-text); }
+.tag-chip-list .form-check-input:checked + .form-check-label {
+    background: var(--admin-primary-soft); border-color: var(--admin-primary); color: var(--admin-primary);
 }

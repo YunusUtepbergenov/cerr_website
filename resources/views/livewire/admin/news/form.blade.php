@@ -1,21 +1,15 @@
 <div>
     <livewire:admin.media.media-picker />
 
-    <div class="page-header">
-        <div>
-            <h1>{{ $news?->exists ? __('admin.news.edit_article') : __('admin.news.new_article') }}</h1>
-            <div class="subtitle">
-                @if ($news?->exists)
-                    #{{ $news->id }} · {{ __('admin.news.last_saved', ['time' => $news->updated_at?->diffForHumans() ?? '—']) }}
-                @else
-                    {{ __('admin.news.create_article') }}
-                @endif
-            </div>
-        </div>
+    <x-admin.page-header
+        :title="$news?->exists ? __('admin.news.edit_article') : __('admin.news.new_article')"
+        :subtitle="$news?->exists
+            ? '#'.$news->id.' · '.__('admin.news.last_saved', ['time' => $news->updated_at?->diffForHumans() ?? '—'])
+            : __('admin.news.create_article')">
         <a href="{{ route('admin.news.index') }}" class="btn btn-outline-secondary">
             <i class="fa-solid fa-arrow-left me-1"></i> {{ __('admin.news.back_to_list') }}
         </a>
-    </div>
+    </x-admin.page-header>
 
     <form wire:submit.prevent="save">
         <div class="row g-3">
@@ -112,7 +106,7 @@
                                         }
                                     @endphp
                                     @if ($previewUrl)
-                                        <div class="d-flex align-items-start gap-3 mb-2 p-2" style="background: #fafbfc; border: 1px solid var(--admin-border-soft); border-radius: 8px;">
+                                        <div class="d-flex align-items-start gap-3 mb-2 p-2" style="background: var(--admin-surface-soft); border: 1px solid var(--admin-border-soft); border-radius: 8px;">
                                             <img src="{{ $previewUrl }}" alt="" style="width: 140px; height: 96px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);">
                                             <div class="flex-grow-1">
                                                 <div class="small text-muted text-truncate">{{ basename($existingImage) }}</div>
@@ -232,6 +226,7 @@
                         <span class="text-muted small">{{ __('admin.news.tags_selected', ['count' => count($tag_ids)]) }}</span>
                     </div>
                     <div class="card-body" style="max-height: 280px; overflow-y: auto;">
+                        <div class="tag-chip-list">
                         @forelse ($allTags as $tag)
                             <div class="form-check">
                                 <input type="checkbox" id="tag-{{ $tag->id }}" value="{{ $tag->id }}" wire:model="tag_ids" class="form-check-input">
@@ -242,6 +237,7 @@
                                 <div class="small">{{ __('admin.news.no_tags_yet') }} <a href="{{ route('admin.tags.index') }}">{{ __('admin.news.create_one') }}</a>.</div>
                             </div>
                         @endforelse
+                        </div>
                     </div>
                 </div>
 
