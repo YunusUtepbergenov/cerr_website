@@ -264,6 +264,14 @@
                 @endif
             </div>
         </div>
+
+        <div class="form-action-bar d-lg-none">
+            <a href="{{ route('admin.news.index') }}" class="btn btn-outline-secondary">{{ __('admin.news.back_to_list') }}</a>
+            <button type="submit" class="btn btn-primary">
+                <span wire:loading.remove wire:target="save"><i class="fa-solid fa-floppy-disk me-1"></i> {{ __('admin.news.save_article') }}</span>
+                <span wire:loading wire:target="save"><i class="fa-solid fa-spinner fa-spin me-1"></i> {{ __('admin.common.saving') }}</span>
+            </button>
+        </div>
     </form>
 
     @push('scripts')

@@ -28,4 +28,13 @@ describe('News form UI', function () {
             ->assertOk()
             ->assertSee('tag-chip-list', false);
     })->group('feature', 'admin');
+
+    it('renders the sticky form action bar', function () {
+        app()->setLocale('ru');
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)->get(route('admin.news.create'))
+            ->assertOk()
+            ->assertSee('form-action-bar', false);
+    })->group('feature', 'admin');
 });

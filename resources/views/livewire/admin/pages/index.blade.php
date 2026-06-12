@@ -9,7 +9,7 @@
                 <tbody>
                     @forelse ($pages as $p)
                         @php $available = $p->translations->pluck('language')->all(); @endphp
-                        <tr wire:key="page-{{ $p->id }}">
+                        <tr wire:key="page-{{ $p->id }}" data-href="{{ route('admin.pages.edit', $p) }}">
                             <td class="text-muted small">#{{ $p->id }}</td>
                             <td><code>{{ $p->slug }}</code></td>
                             <td><x-admin.lang-chips :available="$available" /></td>

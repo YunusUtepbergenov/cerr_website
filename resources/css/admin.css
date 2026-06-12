@@ -111,7 +111,7 @@ code { font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; font-size: .8
 .card .card-body { padding: 1.1rem; }
 .card .card-footer { background: var(--admin-surface); border-top: 1px solid var(--admin-border-soft); padding: .75rem 1.1rem; }
 
-.stat-card { display: flex; align-items: center; gap: .9rem; padding: 1.05rem 1.15rem; }
+.stat-card { display: flex; flex-direction: row; align-items: center; gap: .9rem; padding: 1.05rem 1.15rem; }
 .stat-icon {
     width: 44px; height: 44px; border-radius: 12px; flex-shrink: 0;
     display: inline-flex; align-items: center; justify-content: center;
@@ -332,4 +332,16 @@ input[type="datetime-local"].form-control { font-feature-settings: "tnum"; }
 .tag-chip-list .form-check-input:focus-visible + .form-check-label {
     border-color: var(--admin-primary);
     box-shadow: 0 0 0 3px var(--admin-primary-soft);
+}
+
+tr[data-href] { cursor: pointer; }
+
+.form-action-bar {
+    position: sticky; bottom: 0; z-index: 40;
+    display: flex; justify-content: flex-end; gap: .5rem;
+    padding: .75rem 1rem; margin-top: 1rem;
+    background: var(--admin-topbar-bg);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid var(--admin-border-soft);
+    border-radius: var(--radius) var(--radius) 0 0;
 }

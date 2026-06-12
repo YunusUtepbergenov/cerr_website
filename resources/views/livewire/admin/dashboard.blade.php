@@ -47,7 +47,7 @@
                 </thead>
                 <tbody>
                     @forelse ($recentNews as $item)
-                        <tr>
+                        <tr data-href="{{ route('admin.news.edit', $item) }}">
                             <td class="text-muted small">#{{ $item->id }}</td>
                             <td><div class="fw-semibold">{{ optional($item->translations->first())->title ?? '—' }}</div></td>
                             <td><x-admin.status-pill :status="$item->status" /></td>

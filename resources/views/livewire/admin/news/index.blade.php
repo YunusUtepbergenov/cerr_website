@@ -60,7 +60,7 @@
                             $thumbUrl = $translation?->coverUrl();
                             $availableLocales = $item->translations->pluck('lang')->all();
                         @endphp
-                        <tr wire:key="news-{{ $item->id }}">
+                        <tr wire:key="news-{{ $item->id }}" data-href="{{ route('admin.news.edit', $item) }}">
                             <td>
                                 @if ($thumbUrl)
                                     <img src="{{ $thumbUrl }}" alt="" style="width: 44px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border-soft);">

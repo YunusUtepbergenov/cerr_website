@@ -29,4 +29,14 @@ describe('News index UI', function () {
         $response->assertOk();
         $response->assertSee('cat-badge', false);
     })->group('feature', 'admin');
+
+    it('makes rows clickable via data-href', function () {
+        app()->setLocale('ru');
+        $admin = User::factory()->create(['role' => 'admin']);
+        $news = createNewsWithTranslation();
+
+        $this->actingAs($admin)->get(route('admin.news.index'))
+            ->assertOk()
+            ->assertSee('data-href="'.route('admin.news.edit', $news).'"', false);
+    })->group('feature', 'admin');
 });
