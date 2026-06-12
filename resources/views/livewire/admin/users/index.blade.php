@@ -10,7 +10,7 @@
     @if ($generatedPassword)
         <div class="alert alert-success d-flex justify-content-between align-items-center">
             <span><i class="fa-solid fa-key me-1"></i> {{ __('admin.users.reset_password_done', ['password' => $generatedPassword]) }}</span>
-            <button class="btn btn-sm btn-light" onclick="navigator.clipboard.writeText('{{ $generatedPassword }}')">
+            <button class="btn btn-sm btn-light" onclick="navigator.clipboard.writeText({{ \Illuminate\Support\Js::from($generatedPassword) }})">
                 <i class="fa-regular fa-copy"></i>
             </button>
         </div>

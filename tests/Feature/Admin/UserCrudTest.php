@@ -69,4 +69,12 @@ describe('User CRUD', function () {
 
         expect($other->fresh()->password)->not->toBe($oldHash);
     })->group('feature', 'admin');
+
+    it('escapes the generated password for the clipboard copy button', function () {
+        $nasty = 'a\\b\'c"d>e';
+
+        Livewire::test(UserIndex::class)
+            ->set('generatedPassword', $nasty)
+            ->assertSee('writeText('.\Illuminate\Support\Js::from($nasty)->toHtml().')', false);
+    })->group('feature', 'admin');
 });
