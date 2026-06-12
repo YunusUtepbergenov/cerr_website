@@ -1,11 +1,7 @@
 <div>
-    <div class="page-header">
-        <div>
-            <h1>{{ __('admin.pages.title_section') }}</h1>
-            <div class="subtitle">{{ __('admin.pages.subtitle') }}</div>
-        </div>
+    <x-admin.page-header :title="__('admin.pages.title_section')" :subtitle="__('admin.pages.subtitle')">
         <a href="{{ route('admin.pages.create') }}" class="btn btn-primary"><i class="fa-solid fa-plus me-1"></i> {{ __('admin.pages.new_page') }}</a>
-    </div>
+    </x-admin.page-header>
     <div class="card">
         <div class="table-responsive">
             <table class="table mb-0">
@@ -16,7 +12,7 @@
                         <tr wire:key="page-{{ $p->id }}">
                             <td class="text-muted small">#{{ $p->id }}</td>
                             <td><code>{{ $p->slug }}</code></td>
-                            <td>@foreach (['kr','uz','ru','en'] as $loc)<span class="lang-chip {{ in_array($loc, $available, true) ? '' : 'missing' }}">{{ $loc }}</span>@endforeach</td>
+                            <td><x-admin.lang-chips :available="$available" /></td>
                             <td class="text-end">
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{ route('admin.pages.edit', $p) }}" class="btn btn-outline-primary"><i class="fa-solid fa-pen"></i></a>
@@ -28,7 +24,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="4"><div class="empty-state"><i class="fa-regular fa-file d-block"></i><div class="fw-semibold">{{ __('admin.pages.no_pages') }}</div></div></td></tr>
+                        <tr><td colspan="4"><x-admin.empty-state icon="fa-regular fa-file" :title="__('admin.pages.no_pages')" /></td></tr>
                     @endforelse
                 </tbody>
             </table>

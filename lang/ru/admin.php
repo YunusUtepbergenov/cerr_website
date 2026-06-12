@@ -70,7 +70,6 @@ return [
         'drafts' => 'Черновики',
         'categories' => 'Категории',
         'tags' => 'Теги',
-        'quick_actions' => 'Быстрые действия',
         'upload_media' => 'Загрузить изображения',
         'recent_activity' => 'Последние действия',
         'all_activity' => 'Весь журнал',

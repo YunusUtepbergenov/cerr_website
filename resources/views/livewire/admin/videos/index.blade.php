@@ -1,17 +1,13 @@
 <div>
     <livewire:admin.media.media-picker />
 
-    <div class="page-header">
-        <div>
-            <h1>{{ __('admin.videos.title_section') }}</h1>
-            <div class="subtitle">{{ __('admin.videos.subtitle') }}</div>
-        </div>
+    <x-admin.page-header :title="__('admin.videos.title_section')" :subtitle="__('admin.videos.subtitle')">
         @if (! $showForm)
             <button type="button" class="btn btn-primary" wire:click="startCreate">
                 <i class="fa-solid fa-plus me-1"></i> {{ __('admin.videos.new_video') }}
             </button>
         @endif
-    </div>
+    </x-admin.page-header>
 
     @if ($showForm)
         <div class="card mb-3">
@@ -89,7 +85,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="5"><div class="empty-state"><i class="fa-solid fa-video d-block"></i><div class="fw-semibold">{{ __('admin.videos.no_videos') }}</div></div></td></tr>
+                        <tr><td colspan="5"><x-admin.empty-state icon="fa-solid fa-video" :title="__('admin.videos.no_videos')" /></td></tr>
                     @endforelse
                 </tbody>
             </table>

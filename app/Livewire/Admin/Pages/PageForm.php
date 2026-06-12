@@ -8,12 +8,10 @@ use App\Support\HtmlSanitizer;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 #[Layout('components.layouts.admin')]
-#[Title('Редактирование страницы')]
 class PageForm extends Component
 {
     use HandlesImageUploads, WithFileUploads;
@@ -144,6 +142,7 @@ class PageForm extends Component
 
     public function render()
     {
-        return view('livewire.admin.pages.form');
+        return view('livewire.admin.pages.form')
+            ->title($this->page?->exists ? __('admin.pages.edit_page') : __('admin.pages.create_page'));
     }
 }

@@ -1,15 +1,11 @@
 <div>
-    <div class="page-header">
-        <div>
-            <h1>{{ __('admin.categories.title_section') }}</h1>
-            <div class="subtitle">{{ __('admin.categories.subtitle') }}</div>
-        </div>
+    <x-admin.page-header :title="__('admin.categories.title_section')" :subtitle="__('admin.categories.subtitle')">
         @if (! $showForm)
             <button type="button" class="btn btn-primary" wire:click="startCreate">
                 <i class="fa-solid fa-plus me-1"></i> {{ __('admin.categories.new_category') }}
             </button>
         @endif
-    </div>
+    </x-admin.page-header>
 
     @if ($showForm)
         <div class="card mb-3">
@@ -99,11 +95,9 @@
                     @empty
                         <tr>
                             <td colspan="8">
-                                <div class="empty-state">
-                                    <i class="fa-regular fa-folder-open d-block"></i>
-                                    <div class="fw-semibold">{{ __('admin.categories.no_categories') }}</div>
-                                    <div class="small mt-1">{{ __('admin.categories.no_categories_help') }}</div>
-                                </div>
+                                <x-admin.empty-state icon="fa-regular fa-folder-open" :title="__('admin.categories.no_categories')">
+                                    {{ __('admin.categories.no_categories_help') }}
+                                </x-admin.empty-state>
                             </td>
                         </tr>
                     @endforelse

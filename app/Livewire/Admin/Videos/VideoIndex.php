@@ -5,12 +5,10 @@ namespace App\Livewire\Admin\Videos;
 use App\Livewire\Concerns\HandlesImageUploads;
 use App\Models\Video;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 #[Layout('components.layouts.admin')]
-#[Title('Видео')]
 class VideoIndex extends Component
 {
     use HandlesImageUploads, WithFileUploads;
@@ -107,6 +105,6 @@ class VideoIndex extends Component
     {
         return view('livewire.admin.videos.index', [
             'videos' => Video::orderBy('id', 'desc')->get(),
-        ]);
+        ])->title(__('admin.videos.title_section'));
     }
 }

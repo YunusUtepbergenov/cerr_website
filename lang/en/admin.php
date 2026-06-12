@@ -67,7 +67,6 @@ return [
         'drafts' => '',
         'categories' => '',
         'tags' => '',
-        'quick_actions' => '',
         'upload_media' => '',
         'recent_activity' => '',
         'all_activity' => '',

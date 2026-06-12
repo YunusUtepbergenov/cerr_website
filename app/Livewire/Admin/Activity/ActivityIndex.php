@@ -4,13 +4,11 @@ namespace App\Livewire\Admin\Activity;
 
 use App\Models\Activity;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
-#[Title('Журнал действий')]
 class ActivityIndex extends Component
 {
     use WithPagination;
@@ -35,6 +33,6 @@ class ActivityIndex extends Component
 
         return view('livewire.admin.activity.index', [
             'activities' => $query->paginate(30),
-        ]);
+        ])->title(__('admin.activity.title_section'));
     }
 }

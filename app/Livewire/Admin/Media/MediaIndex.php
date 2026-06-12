@@ -6,13 +6,11 @@ use App\Livewire\Concerns\HandlesImageUploads;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
 #[Layout('components.layouts.admin')]
-#[Title('Медиатека')]
 class MediaIndex extends Component
 {
     use HandlesImageUploads, WithFileUploads;
@@ -97,6 +95,6 @@ class MediaIndex extends Component
 
         return view('livewire.admin.media.index', [
             'files' => $files,
-        ]);
+        ])->title(__('admin.media.title_section'));
     }
 }

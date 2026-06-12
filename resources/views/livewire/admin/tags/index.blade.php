@@ -1,15 +1,11 @@
 <div>
-    <div class="page-header">
-        <div>
-            <h1>{{ __('admin.tags.title_section') }}</h1>
-            <div class="subtitle">{{ __('admin.tags.subtitle') }}</div>
-        </div>
+    <x-admin.page-header :title="__('admin.tags.title_section')" :subtitle="__('admin.tags.subtitle')">
         @if (! $showForm)
             <button type="button" class="btn btn-primary" wire:click="startCreate">
                 <i class="fa-solid fa-plus me-1"></i> {{ __('admin.tags.new_tag') }}
             </button>
         @endif
-    </div>
+    </x-admin.page-header>
 
     @if ($showForm)
         <div class="card mb-3">
@@ -50,7 +46,7 @@
                         <tr wire:key="tag-{{ $tag->id }}">
                             <td class="text-muted small">#{{ $tag->id }}</td>
                             <td>
-                                <span class="lang-chip" style="background:#fef3c7;color:#92400e;">{{ $tag->name }}</span>
+                                <span class="lang-chip" style="background: var(--admin-warning-soft); color: var(--admin-warning);">{{ $tag->name }}</span>
                             </td>
                             <td><span class="text-muted small">{{ $tag->news_count }}</span></td>
                             <td class="text-end">
@@ -67,11 +63,9 @@
                     @empty
                         <tr>
                             <td colspan="4">
-                                <div class="empty-state">
-                                    <i class="fa-solid fa-tag d-block"></i>
-                                    <div class="fw-semibold">{{ __('admin.tags.no_tags') }}</div>
-                                    <div class="small mt-1">{{ __('admin.tags.no_tags_help') }}</div>
-                                </div>
+                                <x-admin.empty-state icon="fa-solid fa-tag" :title="__('admin.tags.no_tags')">
+                                    {{ __('admin.tags.no_tags_help') }}
+                                </x-admin.empty-state>
                             </td>
                         </tr>
                     @endforelse

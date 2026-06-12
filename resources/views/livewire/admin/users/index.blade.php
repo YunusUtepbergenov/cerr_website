@@ -1,15 +1,11 @@
 <div>
-    <div class="page-header">
-        <div>
-            <h1>{{ __('admin.users.title_section') }}</h1>
-            <div class="subtitle">{{ __('admin.users.subtitle') }}</div>
-        </div>
+    <x-admin.page-header :title="__('admin.users.title_section')" :subtitle="__('admin.users.subtitle')">
         @if (! $showForm)
             <button type="button" class="btn btn-primary" wire:click="startCreate">
                 <i class="fa-solid fa-plus me-1"></i> {{ __('admin.users.new_user') }}
             </button>
         @endif
-    </div>
+    </x-admin.page-header>
 
     @if ($generatedPassword)
         <div class="alert alert-success d-flex justify-content-between align-items-center">
@@ -98,7 +94,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr><td colspan="6"><div class="empty-state"><i class="fa-regular fa-user d-block"></i><div class="fw-semibold">{{ __('admin.users.no_users') }}</div></div></td></tr>
+                        <tr><td colspan="6"><x-admin.empty-state icon="fa-regular fa-user" :title="__('admin.users.no_users')" /></td></tr>
                     @endforelse
                 </tbody>
             </table>

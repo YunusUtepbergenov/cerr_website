@@ -7,11 +7,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.layouts.admin')]
-#[Title('Пользователи')]
 class UserIndex extends Component
 {
     public ?int $editingId = null;
@@ -144,6 +142,6 @@ class UserIndex extends Component
 
         return view('livewire.admin.users.index', [
             'users' => $query->get(),
-        ]);
+        ])->title(__('admin.users.title_section'));
     }
 }

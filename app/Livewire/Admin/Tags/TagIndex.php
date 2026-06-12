@@ -5,11 +5,9 @@ namespace App\Livewire\Admin\Tags;
 use App\Models\Tag;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.layouts.admin')]
-#[Title('Tags')]
 class TagIndex extends Component
 {
     public ?int $editingId = null;
@@ -79,6 +77,6 @@ class TagIndex extends Component
     {
         return view('livewire.admin.tags.index', [
             'tags' => Tag::withCount('news')->orderBy('name')->get(),
-        ]);
+        ])->title(__('admin.tags.title_section'));
     }
 }

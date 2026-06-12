@@ -1,10 +1,5 @@
 <div>
-    <div class="page-header">
-        <div>
-            <h1>{{ __('admin.activity.title_section') }}</h1>
-            <div class="subtitle">{{ __('admin.activity.subtitle') }}</div>
-        </div>
-    </div>
+    <x-admin.page-header :title="__('admin.activity.title_section')" :subtitle="__('admin.activity.subtitle')" />
 
     <div class="card mb-3">
         <div class="card-body">
@@ -54,7 +49,7 @@
                             <td><code class="small">{{ json_encode($a->changes ?? [], JSON_UNESCAPED_UNICODE) }}</code></td>
                         </tr>
                     @empty
-                        <tr><td colspan="5"><div class="empty-state"><i class="fa-solid fa-clock-rotate-left d-block"></i><div class="fw-semibold">{{ __('admin.activity.no_activity') }}</div></div></td></tr>
+                        <tr><td colspan="5"><x-admin.empty-state icon="fa-solid fa-clock-rotate-left" :title="__('admin.activity.no_activity')" /></td></tr>
                     @endforelse
                 </tbody>
             </table>

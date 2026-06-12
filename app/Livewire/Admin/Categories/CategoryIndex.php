@@ -6,11 +6,9 @@ use App\Models\Category;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.layouts.admin')]
-#[Title('Categories')]
 class CategoryIndex extends Component
 {
     public const LOCALES = ['kr', 'uz', 'ru', 'en'];
@@ -121,6 +119,6 @@ class CategoryIndex extends Component
     {
         return view('livewire.admin.categories.index', [
             'categories' => Category::with('translations')->orderBy('id', 'desc')->get(),
-        ]);
+        ])->title(__('admin.categories.title_section'));
     }
 }

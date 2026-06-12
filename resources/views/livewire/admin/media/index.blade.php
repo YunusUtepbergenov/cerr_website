@@ -1,10 +1,5 @@
 <div>
-    <div class="page-header">
-        <div>
-            <h1>{{ __('admin.media.title_section') }}</h1>
-            <div class="subtitle">{{ __('admin.media.subtitle') }}</div>
-        </div>
-    </div>
+    <x-admin.page-header :title="__('admin.media.title_section')" :subtitle="__('admin.media.subtitle')" />
 
     @if (session('status'))
         <div class="alert alert-success alert-dismissible mb-3">{{ session('status') }}<button type="button" class="btn-close" data-bs-dismiss="alert"></button></div>
@@ -144,7 +139,7 @@
     </div>
 
     @if ($files->isEmpty())
-        <div class="card"><div class="empty-state"><i class="fa-regular fa-image d-block"></i><div class="fw-semibold">{{ __('admin.media.no_files') }}</div></div></div>
+        <div class="card"><x-admin.empty-state icon="fa-regular fa-image" :title="__('admin.media.no_files')" /></div>
     @else
         <div class="row g-3">
             @foreach ($files as $f)
