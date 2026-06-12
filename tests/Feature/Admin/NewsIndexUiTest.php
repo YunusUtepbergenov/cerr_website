@@ -30,6 +30,17 @@ describe('News index UI', function () {
         $response->assertSee('cat-badge', false);
     })->group('feature', 'admin');
 
+    it('falls back to the category slug when it has no translations', function () {
+        app()->setLocale('ru');
+        $admin = User::factory()->create(['role' => 'admin']);
+        $category = \App\Models\Category::factory()->create(['slug' => 'untranslated-cat']);
+        createNewsWithTranslation(['category_id' => $category->id]);
+
+        $this->actingAs($admin)->get(route('admin.news.index'))
+            ->assertOk()
+            ->assertSee('cat-badge" title="untranslated-cat"', false);
+    })->group('feature', 'admin');
+
     it('makes rows clickable via data-href', function () {
         app()->setLocale('ru');
         $admin = User::factory()->create(['role' => 'admin']);

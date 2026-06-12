@@ -56,7 +56,7 @@
                             $translation = $item->translations->firstWhere('lang', app()->getLocale()) ?? $item->translations->first();
                             $catName = optional(optional($item->category)->translations->firstWhere('language', app()->getLocale()))->name
                                 ?? optional(optional($item->category)->translations->first())->name
-                                ?? null;
+                                ?? optional($item->category)->slug;
                             $thumbUrl = $translation?->coverUrl();
                             $availableLocales = $item->translations->pluck('lang')->all();
                         @endphp
