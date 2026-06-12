@@ -92,7 +92,7 @@
                     </nav>
                 </div>
                 <div class="d-flex align-items-center gap-2">
-                    <button type="button" class="icon-btn" id="theme-toggle" title="{{ __('admin.nav.toggle_theme') }}">
+                    <button type="button" class="icon-btn" id="theme-toggle" title="{{ __('admin.nav.toggle_theme') }}" aria-label="{{ __('admin.nav.toggle_theme') }}">
                         <i class="fa-solid fa-moon theme-icon-dark"></i>
                         <i class="fa-solid fa-sun theme-icon-light"></i>
                     </button>
