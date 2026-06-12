@@ -165,7 +165,7 @@ code { font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; font-size: .8
 .pill.status-auto_publish { background: var(--admin-primary-soft); color: var(--admin-primary); }
 .pill.status-disabled { background: var(--admin-danger-soft); color: var(--admin-danger); }
 
-.lang-chip { display: inline-flex; padding: .12rem .42rem; font-size: .72rem; font-weight: 500; border-radius: 3px; background: var(--admin-chip-bg); color: var(--admin-text-muted); text-transform: uppercase; letter-spacing: .03em; margin-right: .2rem; font-feature-settings: "tnum"; }
+.lang-chip { display: inline-flex; padding: .1rem .3rem; font-size: .68rem; font-weight: 500; border-radius: 3px; background: var(--admin-chip-bg); color: var(--admin-text-muted); text-transform: uppercase; letter-spacing: .03em; margin-right: .2rem; font-feature-settings: "tnum"; }
 .lang-chip.missing { background: transparent; color: var(--admin-text-faint); border: 1px dashed var(--admin-border); }
 
 .lang-tabs { border-bottom: 1px solid var(--admin-border); margin-bottom: 1.25rem; gap: 0; }
@@ -264,3 +264,18 @@ details[open] > summary { color: var(--admin-text); }
 #theme-toggle .theme-icon-light { display: none; }
 [data-admin-theme="dark"] #theme-toggle .theme-icon-dark { display: none; }
 [data-admin-theme="dark"] #theme-toggle .theme-icon-light { display: inline-block; }
+
+/* ---------- Components ---------- */
+.lang-chips { display: inline-flex; gap: .15rem; white-space: nowrap; }
+.lang-chips .lang-chip { margin-right: 0; }
+
+.stat-card .label i { color: var(--admin-text-faint); }
+.stat-card.accent-success .value { color: var(--admin-success); }
+.stat-card.accent-warning .value { color: var(--admin-warning); }
+.stat-card.accent-primary .value { color: var(--admin-primary); }
+
+.cat-badge {
+    display: inline-flex; padding: .2rem .55rem; font-size: .78rem; font-weight: 500;
+    border-radius: var(--radius-sm); background: var(--admin-primary-soft); color: var(--admin-primary);
+    max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
