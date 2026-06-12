@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://unpkg.com/filepond-plugin-image-preview@4/dist/filepond-plugin-image-preview.min.css">
     <style>
         .filepond--root { font-family: inherit; }
-        .filepond--panel-root { background: #fafbfc; border: 1px dashed var(--admin-border); }
+        .filepond--panel-root { background: var(--admin-surface-soft); border: 1px dashed var(--admin-border); }
         .filepond--drop-label { color: var(--admin-text-muted); font-size: .95rem; }
         .filepond--label-action { color: var(--admin-primary); text-decoration: underline; }
     </style>
