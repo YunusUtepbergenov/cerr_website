@@ -22,7 +22,7 @@
     --sidebar-bg: #1c1f33;
     --sidebar-text: #9aa0bf;
     --sidebar-text-hover: #e7e9f4;
-    --sidebar-label: #5d6383;
+    --sidebar-label: #8087ab;
     --sidebar-hover: rgba(255, 255, 255, .05);
     --sidebar-active-bg: rgba(94, 106, 210, .22);
     --sidebar-active-text: #ffffff;
@@ -243,12 +243,12 @@ details[open] > summary { color: var(--admin-text); }
 .sidebar-backdrop { display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, .35); z-index: 1049; }
 
 @media (max-width: 991px) {
-    .admin-sidebar { position: fixed; left: 0; margin-left: -260px; z-index: 1050; box-shadow: 0 0 30px rgba(0,0,0,.1); }
-    .admin-sidebar.is-open { margin-left: 0; }
+    .admin-sidebar { position: fixed; left: 0; margin-left: -260px; z-index: 1050; }
+    .admin-sidebar.is-open { margin-left: 0; box-shadow: 0 0 30px rgba(0, 0, 0, .1); }
     .admin-sidebar.is-collapsed { margin-left: -260px; }
     .admin-content { padding: 1.25rem; }
     .sidebar-backdrop.is-open { display: block; }
-    [data-admin-theme="dark"] .admin-sidebar { box-shadow: 0 0 30px rgba(0, 0, 0, .5); }
+    [data-admin-theme="dark"] .admin-sidebar.is-open { box-shadow: 0 0 30px rgba(0, 0, 0, .5); }
 }
 
 /* ---------- Dark theme ---------- */

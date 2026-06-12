@@ -68,6 +68,7 @@
     document.addEventListener('click', (e) => {
         const row = e.target.closest('tr[data-href]');
         if (!row || e.target.closest('a, button, input, select, label')) return;
+        if (window.getSelection && String(window.getSelection())) return;
         window.location.href = row.dataset.href;
     });
 })();
