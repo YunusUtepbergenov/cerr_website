@@ -1,13 +1,9 @@
 <div>
-    <div class="page-header">
-        <div>
-            <h1>{{ __('admin.news.title_section') }}</h1>
-            <div class="subtitle">{{ __('admin.news.subtitle') }}</div>
-        </div>
+    <x-admin.page-header :title="__('admin.news.title_section')" :subtitle="__('admin.news.subtitle')">
         <a href="{{ route('admin.news.create') }}" class="btn btn-primary">
             <i class="fa-solid fa-plus me-1"></i> {{ __('admin.news.new_article') }}
         </a>
-    </div>
+    </x-admin.page-header>
 
     <div class="card mb-3">
         <div class="card-body">
@@ -60,7 +56,7 @@
                             $translation = $item->translations->firstWhere('lang', app()->getLocale()) ?? $item->translations->first();
                             $catName = optional(optional($item->category)->translations->firstWhere('language', app()->getLocale()))->name
                                 ?? optional(optional($item->category)->translations->first())->name
-                                ?? '—';
+                                ?? null;
                             $thumbUrl = $translation?->coverUrl();
                             $availableLocales = $item->translations->pluck('lang')->all();
                         @endphp
@@ -69,22 +65,24 @@
                                 @if ($thumbUrl)
                                     <img src="{{ $thumbUrl }}" alt="" style="width: 44px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border-soft);">
                                 @else
-                                    <div style="width: 44px; height: 44px; border-radius: 6px; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #cbd5e1;"><i class="fa-regular fa-image"></i></div>
+                                    <div class="thumb-placeholder"><i class="fa-regular fa-image"></i></div>
                                 @endif
                             </td>
                             <td>
                                 <div class="fw-semibold">{{ $translation->title ?? '—' }}</div>
                                 <div class="text-muted small text-truncate" style="max-width: 360px;">{{ $item->slug }}</div>
                             </td>
-                            <td><span class="pill status-{{ $item->status }}">{{ str_replace('_', ' ', $item->status) }}</span></td>
+                            <td><x-admin.status-pill :status="$item->status" /></td>
+                            <td><x-admin.lang-chips :available="$availableLocales" /></td>
                             <td>
-                                @foreach (['kr', 'uz', 'ru', 'en'] as $loc)
-                                    <span class="lang-chip {{ in_array($loc, $availableLocales, true) ? '' : 'missing' }}">{{ $loc }}</span>
-                                @endforeach
+                                @if ($catName)
+                                    <span class="cat-badge" title="{{ $catName }}">{{ $catName }}</span>
+                                @else
+                                    <span class="text-muted">—</span>
+                                @endif
                             </td>
-                            <td><span class="text-truncate d-inline-block" style="max-width: 140px;">{{ $catName }}</span></td>
                             <td><span class="text-muted small"><i class="fa-regular fa-eye me-1"></i>{{ number_format($item->view_count) }}</span></td>
-                            <td><span class="text-muted small">{{ $item->updated_at?->diffForHumans() }}</span></td>
+                            <td><span class="text-muted small">{{ ($item->updated_at ?? $item->created_at)?->diffForHumans() ?? '—' }}</span></td>
                             <td class="text-end">
                                 <div class="btn-group btn-group-sm">
                                     <a href="{{ route('show.news', $item->slug) }}" target="_blank" class="btn btn-outline-secondary" title="{{ __('admin.common.view') }}"><i class="fa-solid fa-eye"></i></a>
@@ -100,11 +98,9 @@
                     @empty
                         <tr>
                             <td colspan="8">
-                                <div class="empty-state">
-                                    <i class="fa-regular fa-newspaper d-block"></i>
-                                    <div class="fw-semibold">{{ __('admin.news.no_news_match') }}</div>
-                                    <div class="small mt-1">{{ __('admin.news.try_clear_filters') }} <a href="{{ route('admin.news.create') }}">{{ __('admin.news.create_new_article') }}</a>.</div>
-                                </div>
+                                <x-admin.empty-state icon="fa-regular fa-newspaper" :title="__('admin.news.no_news_match')">
+                                    {{ __('admin.news.try_clear_filters') }} <a href="{{ route('admin.news.create') }}">{{ __('admin.news.create_new_article') }}</a>.
+                                </x-admin.empty-state>
                             </td>
                         </tr>
                     @endforelse

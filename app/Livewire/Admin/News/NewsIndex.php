@@ -6,13 +6,11 @@ use App\Models\Category;
 use App\Models\News;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
-#[Title('News')]
 class NewsIndex extends Component
 {
     use WithPagination;
@@ -91,6 +89,6 @@ class NewsIndex extends Component
         return view('livewire.admin.news.index', [
             'newsList' => $this->renderedQuery()->with(['translations', 'category.translations'])->paginate(15),
             'categories' => Category::with('translations')->get(),
-        ]);
+        ])->title(__('admin.news.title_section'));
     }
 }

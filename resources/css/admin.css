@@ -148,7 +148,7 @@ code { font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; font-size: .8
 .btn-light { background: var(--admin-surface); border-color: var(--admin-border); color: var(--admin-text); }
 
 .table { color: var(--admin-text); font-size: .9rem; margin: 0; }
-.table > :not(caption) > * > * { vertical-align: middle; padding: .75rem 1rem; }
+.table > :not(caption) > * > * { vertical-align: middle; padding: .6rem 1rem; }
 .table > thead > tr > th { background: transparent; font-weight: 500; font-size: .78rem; color: var(--admin-text-faint); text-transform: none; letter-spacing: 0; border-bottom: 1px solid var(--admin-border); padding-top: .65rem; padding-bottom: .65rem; }
 .table > tbody > tr { border-bottom: 1px solid var(--admin-border-soft); transition: background .08s; }
 .table > tbody > tr:hover { background: var(--admin-surface-soft); }
@@ -282,3 +282,8 @@ details[open] > summary { color: var(--admin-text); }
 
 .activity-row { border-bottom: 1px solid var(--admin-border-soft); }
 .activity-row:last-child { border-bottom: none; }
+
+.thumb-placeholder {
+    width: 44px; height: 44px; border-radius: 6px; background: var(--admin-chip-bg);
+    display: flex; align-items: center; justify-content: center; color: var(--admin-text-faint);
+}
