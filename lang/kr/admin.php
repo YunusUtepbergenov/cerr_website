@@ -16,6 +16,7 @@ return [
         'activity' => '',
         'view_site' => '',
         'sign_out' => '',
+        'toggle_theme' => '',
     ],
     'common' => [
         'save' => '',

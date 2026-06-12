@@ -46,3 +46,20 @@
             else document.addEventListener('DOMContentLoaded', setup);
             document.addEventListener('livewire:navigated', setup);
         })();
+
+(function () {
+    const setup = () => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn || btn.dataset.bound === '1') return;
+        btn.dataset.bound = '1';
+        btn.addEventListener('click', () => {
+            const next = document.documentElement.getAttribute('data-admin-theme') === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-admin-theme', next);
+            document.documentElement.setAttribute('data-bs-theme', next);
+            try { localStorage.setItem('cerr-admin-theme', next); } catch (e) {}
+        });
+    };
+    if (document.readyState !== 'loading') setup();
+    else document.addEventListener('DOMContentLoaded', setup);
+    document.addEventListener('livewire:navigated', setup);
+})();

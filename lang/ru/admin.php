@@ -16,6 +16,7 @@ return [
         'activity' => 'Журнал действий',
         'view_site' => 'Открыть сайт',
         'sign_out' => 'Выйти',
+        'toggle_theme' => 'Переключить тему',
     ],
 
     'common' => [

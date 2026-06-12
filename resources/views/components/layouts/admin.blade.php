@@ -3,6 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('cerr-admin-theme')
+                    || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                document.documentElement.setAttribute('data-admin-theme', t);
+                document.documentElement.setAttribute('data-bs-theme', t);
+            } catch (e) {}
+        })();
+    </script>
     <title>{{ $title ?? __('admin.dashboard.title') }} — CERR Admin</title>
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -82,6 +92,10 @@
                     </nav>
                 </div>
                 <div class="d-flex align-items-center gap-2">
+                    <button type="button" class="icon-btn" id="theme-toggle" title="{{ __('admin.nav.toggle_theme') }}">
+                        <i class="fa-solid fa-moon theme-icon-dark"></i>
+                        <i class="fa-solid fa-sun theme-icon-light"></i>
+                    </button>
                     <a href="{{ route('home') }}" target="_blank" class="icon-btn" title="{{ __('admin.nav.view_site') }}">
                         <i class="fa-solid fa-arrow-up-right-from-square"></i>
                     </a>
