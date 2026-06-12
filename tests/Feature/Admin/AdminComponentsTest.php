@@ -32,6 +32,7 @@ describe('Admin Blade components', function () {
         $html->assertSee('Черновики');
         $html->assertSee('3');
         $html->assertSee('accent-warning', false);
+        $html->assertSee('stat-icon', false);
     });
 
     it('renders a page header with actions slot', function () {
