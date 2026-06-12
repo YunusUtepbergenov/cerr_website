@@ -2,15 +2,14 @@
 
 namespace App\Livewire\Admin;
 
+use App\Models\Activity;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\Tag;
 use Livewire\Attributes\Layout;
-use Livewire\Attributes\Title;
 use Livewire\Component;
 
 #[Layout('components.layouts.admin')]
-#[Title('Dashboard')]
 class Dashboard extends Component
 {
     public function render()
@@ -22,6 +21,9 @@ class Dashboard extends Component
             'categoryCount' => Category::count(),
             'tagCount' => Tag::count(),
             'recentNews' => News::with('translations')->latest()->limit(8)->get(),
-        ]);
+            'recentActivity' => auth()->user()->canViewActivity()
+                ? Activity::with('user')->latest('created_at')->limit(8)->get()
+                : collect(),
+        ])->title(__('admin.nav.dashboard'));
     }
 }
