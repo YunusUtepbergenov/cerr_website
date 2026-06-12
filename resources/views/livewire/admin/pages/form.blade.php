@@ -1,15 +1,13 @@
 <div>
     <livewire:admin.media.media-picker />
 
-    <div class="page-header">
-        <div>
-            <h1>{{ $page?->exists ? __('admin.pages.edit_page') : __('admin.pages.create_page') }}</h1>
-            <div class="subtitle">{{ $page?->exists ? '#'.$page->id : __('admin.pages.create_page') }}</div>
-        </div>
+    <x-admin.page-header
+        :title="$page?->exists ? __('admin.pages.edit_page') : __('admin.pages.create_page')"
+        :subtitle="$page?->exists ? '#'.$page->id : __('admin.pages.create_page')">
         <a href="{{ route('admin.pages.index') }}" class="btn btn-outline-secondary">
             <i class="fa-solid fa-arrow-left me-1"></i> {{ __('admin.common.back') }}
         </a>
-    </div>
+    </x-admin.page-header>
 
     <form wire:submit.prevent="save">
         <div class="row g-3">

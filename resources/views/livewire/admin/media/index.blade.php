@@ -60,7 +60,7 @@
                         allowReorder: true,
                         acceptedFileTypes: ['image/jpeg', 'image/png', 'image/webp', 'image/gif'],
                         maxFileSize: '5MB',
-                        labelIdle: '{{ __('admin.media.filepond_idle') }}',
+                        labelIdle: @js(__('admin.media.filepond_idle')),
                         labelFileLoading: '{{ __('admin.media.filepond_loading') }}',
                         labelFileProcessing: '{{ __('admin.media.filepond_uploading') }}',
                         labelFileProcessingComplete: '{{ __('admin.media.filepond_done') }}',

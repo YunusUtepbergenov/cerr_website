@@ -35,4 +35,15 @@ describe('Media library', function () {
 
         Storage::disk('public')->assertExists('something/else.jpg');
     })->group('feature', 'admin');
+
+    it('does not double-escape the FilePond idle label', function () {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $response = $this->actingAs($admin)->get(route('admin.media.index'));
+
+        $response->assertOk();
+        // The raw-escaped span must never reach the page as text.
+        $response->assertDontSee('&lt;span class=&quot;filepond--label-action&quot;&gt;', false);
+        $response->assertDontSee('&lt;span', false);
+    })->group('feature', 'admin');
 });
