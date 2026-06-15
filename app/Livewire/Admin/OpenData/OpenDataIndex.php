@@ -81,6 +81,8 @@ class OpenDataIndex extends Component
         $isNew = ! $entry->exists;
 
         if ($this->fileUpload) {
+            // Read metadata before store(): on a real upload, store() consumes the
+            // Livewire temporary file, after which getSize()/getMimeType() would throw.
             $originalName = $this->fileUpload->getClientOriginalName();
             $size = $this->fileUpload->getSize();
             $mime = $this->fileUpload->getMimeType();

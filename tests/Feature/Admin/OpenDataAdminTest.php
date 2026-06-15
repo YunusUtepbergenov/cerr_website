@@ -42,7 +42,7 @@ describe('Open data admin CRUD', function () {
             ->set('quarter', '2')
             ->set('titles.uz', 'Hisobot UZ')
             ->set('titles.ru', 'Отчёт RU')
-            ->upload('fileUpload', [UploadedFile::fake()->create('report.pdf', 20, 'application/pdf')])
+            ->set('fileUpload', UploadedFile::fake()->create('report.pdf', 20, 'application/pdf'))
             ->call('save')
             ->assertHasNoErrors();
 
@@ -80,7 +80,7 @@ describe('Open data admin CRUD', function () {
 
         Livewire::actingAs($this->accountant)->test(OpenDataIndex::class)
             ->call('edit', $entry->id)
-            ->upload('fileUpload', [UploadedFile::fake()->create('new.pdf', 10, 'application/pdf')])
+            ->set('fileUpload', UploadedFile::fake()->create('new.pdf', 10, 'application/pdf'))
             ->call('save')
             ->assertHasNoErrors();
 
