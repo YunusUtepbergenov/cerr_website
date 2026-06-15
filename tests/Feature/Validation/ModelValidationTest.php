@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin\Users\UserIndex;
 use App\Models\Category;
 use App\Models\CategoryTranslation;
 use App\Models\News;
@@ -7,6 +8,7 @@ use App\Models\NewsTranslation;
 use App\Models\Page;
 use App\Models\PageTranslation;
 use App\Models\User;
+use Livewire\Livewire;
 
 describe('News Status Validation', function () {
     it('accepts valid status values', function (string $status) {
@@ -18,7 +20,7 @@ describe('News Status Validation', function () {
 
     it('rejects invalid status values', function () {
         expect(fn () => News::factory()->create(['status' => 'invalid']))
-            ->toThrow(\Exception::class);
+            ->toThrow(Exception::class);
     })->group('unit', 'validation');
 
     it('has draft as one of valid statuses', function () {
@@ -32,13 +34,24 @@ describe('User Role Validation', function () {
         $user = User::factory()->create(['role' => $role]);
 
         expect($user->role)->toBe($role);
-    })->with(['admin', 'writer', 'editor', 'viewer'])
+    })->with(['admin', 'writer', 'editor', 'viewer', 'accountant'])
         ->group('unit', 'validation');
 
-    it('rejects invalid role values', function () {
-        expect(fn () => User::factory()->create(['role' => 'superuser']))
-            ->toThrow(\Exception::class);
-    })->group('unit', 'validation');
+    it('rejects invalid role values through the user form', function () {
+        app()->setLocale('ru');
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        Livewire::actingAs($admin)->test(UserIndex::class)
+            ->call('startCreate')
+            ->set('name', 'Test')
+            ->set('email', 'invalid-role@x.test')
+            ->set('role', 'superuser')
+            ->set('password', 'secret-pass')
+            ->call('save')
+            ->assertHasErrors(['role']);
+
+        expect(User::where('email', 'invalid-role@x.test')->exists())->toBeFalse();
+    })->group('feature', 'validation');
 });
 
 describe('Translation Language Validation', function () {
@@ -81,20 +94,20 @@ describe('Slug Validation', function () {
         News::factory()->create(['slug' => 'unique-slug']);
 
         expect(fn () => News::factory()->create(['slug' => 'unique-slug']))
-            ->toThrow(\Exception::class);
+            ->toThrow(Exception::class);
     })->group('unit', 'validation');
 
     it('category requires unique slug', function () {
         Category::factory()->create(['slug' => 'unique-cat-slug']);
 
         expect(fn () => Category::factory()->create(['slug' => 'unique-cat-slug']))
-            ->toThrow(\Exception::class);
+            ->toThrow(Exception::class);
     })->group('unit', 'validation');
 
     it('page requires unique slug', function () {
         Page::factory()->create(['slug' => 'unique-page-slug']);
 
         expect(fn () => Page::factory()->create(['slug' => 'unique-page-slug']))
-            ->toThrow(\Exception::class);
+            ->toThrow(Exception::class);
     })->group('unit', 'validation');
 });
