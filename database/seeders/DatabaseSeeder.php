@@ -7,7 +7,6 @@ use App\Models\News;
 use App\Models\NewsTranslation;
 use App\Models\Tag;
 use App\Models\User;
-use Database\Factories\NewsTranslationsFactory;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -33,6 +32,7 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             CategorySeeder::class,
+            OpenDataSeeder::class,
         ]);
 
         News::factory(1000)->create();
