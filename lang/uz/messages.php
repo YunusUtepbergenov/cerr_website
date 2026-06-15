@@ -31,7 +31,7 @@ return [
     'useful_links' => 'Foydali havolalar',
 
     'test_mode' => 'Sayt hozirda <strong>test rejimida</strong> ishlamoqda.',
-    'load_more' => 'Ko’proq yuklash',
+    'load_more' => 'Ko‘proq yuklash',
 
     'open_data' => 'Ochiq ma\'lumotlar',
     'open_data_all_years' => 'Yilni tanlang',
