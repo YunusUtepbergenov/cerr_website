@@ -171,6 +171,7 @@ return [
         'role_writer' => '',
         'role_editor' => '',
         'role_viewer' => '',
+        'role_accountant' => '',
         'password' => '',
         'password_help' => '',
         'last_login' => '',

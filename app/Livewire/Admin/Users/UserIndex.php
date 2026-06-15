@@ -40,7 +40,7 @@ class UserIndex extends Component
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->editingId)],
-            'role' => ['required', Rule::in(['admin', 'writer', 'editor', 'viewer'])],
+            'role' => ['required', Rule::in(['admin', 'writer', 'editor', 'viewer', 'accountant'])],
             'password' => [$this->editingId ? 'nullable' : 'required', 'string', 'min:8'],
         ];
     }

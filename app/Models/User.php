@@ -70,6 +70,11 @@ class User extends Authenticatable
         return $this->role === 'writer';
     }
 
+    public function isAccountant(): bool
+    {
+        return $this->role === 'accountant';
+    }
+
     public function canAccessAdmin(): bool
     {
         return in_array($this->role, ['admin', 'editor', 'writer'], true);
@@ -83,6 +88,11 @@ class User extends Authenticatable
     public function canManageUsers(): bool
     {
         return $this->isAdmin();
+    }
+
+    public function canManageOpenData(): bool
+    {
+        return $this->isAdmin() || $this->isAccountant();
     }
 
     public function canViewActivity(): bool

@@ -178,6 +178,7 @@ return [
         'role_writer' => 'Автор',
         'role_editor' => 'Редактор',
         'role_viewer' => 'Читатель',
+        'role_accountant' => 'Бухгалтер',
         'password' => 'Пароль',
         'password_help' => 'Оставьте пустым, чтобы не менять.',
         'last_login' => 'Последний вход',
