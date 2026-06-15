@@ -4,7 +4,7 @@ return [
     'main' => 'Bosh sahifa',
     'about' => 'Markaz haqida',
     'objectives' => 'Markaz vazifalari',
-    'history' => 'Markaz tarixi', 
+    'history' => 'Markaz tarixi',
     'leadership' => 'Rahbariyat',
     'structure' => 'Tuzilma',
     'press' => 'Press Servis',
@@ -14,7 +14,7 @@ return [
     'vacancies' => 'Ish o`rinlari',
     'contacts' => 'Aloqa',
     'popular' => 'Ommabop',
-    
+
     'our_research' => 'Tadqiqotlar',
     'events' => 'Tadbirlar',
     'infographics' => 'Infografikalar',
@@ -31,6 +31,14 @@ return [
     'useful_links' => 'Foydali havolalar',
 
     'test_mode' => 'Sayt hozirda <strong>test rejimida</strong> ishlamoqda.',
-    'load_more' => 'Ko‘proq yuklash',
+    'load_more' => 'Ko’proq yuklash',
+
+    'open_data' => 'Ochiq ma\'lumotlar',
+    'open_data_all_years' => 'Yilni tanlang',
+    'open_data_all_quarters' => 'Chorakni tanlang',
+    'open_data_download' => 'Yuklab olish',
+    'open_data_downloads' => 'Yuklab olishlar',
+    'open_data_empty' => 'Hozircha ma\'lumotlar yo\'q.',
+    'open_data_quarter' => 'chorak',
 
 ];

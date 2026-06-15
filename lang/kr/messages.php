@@ -4,7 +4,7 @@ return [
     'main' => 'Бош саҳифа',
     'about' => 'Марказ ҳақида',
     'objectives' => 'Марказ вазифалар',
-    'history' => 'Марказ тарихи', 
+    'history' => 'Марказ тарихи',
     'leadership' => 'Раҳбарият',
     'structure' => 'Тузилма',
     'press' => 'Пресс сервис',
@@ -14,7 +14,7 @@ return [
     'vacancies' => 'Иш ўринлари',
     'contacts' => 'Алоқа',
     'popular' => 'Оммабоп',
-    
+
     'our_research' => 'Тадқиқотлар',
     'events' => 'Тадбирлар',
     'infographics' => 'Инфографикалар',
@@ -31,5 +31,13 @@ return [
     'useful_links' => 'Фойдали ҳаволалар',
     'test_mode' => 'Сайт ҳозирда <strong>тест режимида</strong> ишламоқда.',
     'load_more' => 'Кўпкоқ юклаш',
+
+    'open_data' => 'Очиқ маълумотлар',
+    'open_data_all_years' => 'Йилни танланг',
+    'open_data_all_quarters' => 'Чоракни танланг',
+    'open_data_download' => 'Юклаб олиш',
+    'open_data_downloads' => 'Юклаб олишлар',
+    'open_data_empty' => 'Ҳозирча маълумотлар йўқ.',
+    'open_data_quarter' => 'чорак',
 
 ];

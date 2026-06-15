@@ -4,7 +4,7 @@ return [
     'main' => 'Main page',
     'about' => 'About',
     'objectives' => 'Objectives',
-    'history' => 'History', 
+    'history' => 'History',
     'leadership' => 'Leadership',
     'structure' => 'Structure',
     'press' => 'Press Service',
@@ -31,5 +31,13 @@ return [
     'org_name' => 'Center for Economic Research and <br> Reforms under the Administration <br> of the President of the Republic<br> of Uzbekistan',
     'test_mode' => 'This website is currently in <strong>test mode</strong>. Features may not be stable.',
     'load_more' => 'Load more',
+
+    'open_data' => 'Open data',
+    'open_data_all_years' => 'Select year',
+    'open_data_all_quarters' => 'Select quarter',
+    'open_data_download' => 'Download',
+    'open_data_downloads' => 'Downloads',
+    'open_data_empty' => 'No data yet.',
+    'open_data_quarter' => 'quarter',
 
 ];

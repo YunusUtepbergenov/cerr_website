@@ -191,6 +191,7 @@
                                                 </ul>
                                             </li>
                                             <li class="menu-item"><a wire:navigate href="{{route('vacancies')}}" class="echo-dropdown-main-element">@lang('messages.vacancies')</a></li>
+                                            <li class="menu-item"><a wire:navigate href="{{route('open-data.index')}}" class="echo-dropdown-main-element">@lang('messages.open_data')</a></li>
                                             <li class="menu-item"><a wire:navigate href="{{route('contact')}}" class="echo-dropdown-main-element">@lang('messages.contacts')</a></li>
                                         </ul>
                                     </div>
@@ -242,6 +243,7 @@
                                     </div>
                                 </li>
                                 <li class="menu-item"><a wire:navigate href="{{route('vacancies')}}" class="echo-dropdown-main-element">@lang('messages.vacancies')</a></li>
+                                <li class="menu-item"><a wire:navigate href="{{route('open-data.index')}}" class="echo-dropdown-main-element">@lang('messages.open_data')</a></li>
                                 <li class="menu-item"><a wire:navigate href="{{route('contact')}}" class="echo-dropdown-main-element">@lang('messages.contacts')</a></li>
                             </ul>
                         </div>

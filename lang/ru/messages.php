@@ -33,4 +33,13 @@ return [
     'org_name' => 'Центр экономических исследований <br> и реформ при Администрации <br> Президента Республики <br> Узбекистан',
     'test_mode' => 'В настоящее время этот сайт находится в <strong>тестовом режиме</strong>.',
     'load_more' => 'Загрузить еще',
+
+    'open_data' => 'Открытые данные',
+    'open_data_all_years' => 'Выберите год',
+    'open_data_all_quarters' => 'Выберите квартал',
+    'open_data_download' => 'Скачать',
+    'open_data_downloads' => 'Скачиваний',
+    'open_data_empty' => 'Пока нет данных.',
+    'open_data_quarter' => 'квартал',
+
 ];
