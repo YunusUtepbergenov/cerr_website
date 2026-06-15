@@ -36,7 +36,6 @@ return [
     'open_data_all_years' => 'Йилни танланг',
     'open_data_all_quarters' => 'Чоракни танланг',
     'open_data_download' => 'Юклаб олиш',
-    'open_data_downloads' => 'Юклаб олишлар',
     'open_data_empty' => 'Ҳозирча маълумотлар йўқ.',
     'open_data_quarter' => 'чорак',
 

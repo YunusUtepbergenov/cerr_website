@@ -36,7 +36,6 @@ return [
     'open_data_all_years' => 'Select year',
     'open_data_all_quarters' => 'Select quarter',
     'open_data_download' => 'Download',
-    'open_data_downloads' => 'Downloads',
     'open_data_empty' => 'No data yet.',
     'open_data_quarter' => 'quarter',
 

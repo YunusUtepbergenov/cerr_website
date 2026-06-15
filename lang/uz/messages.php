@@ -37,7 +37,6 @@ return [
     'open_data_all_years' => 'Yilni tanlang',
     'open_data_all_quarters' => 'Chorakni tanlang',
     'open_data_download' => 'Yuklab olish',
-    'open_data_downloads' => 'Yuklab olishlar',
     'open_data_empty' => 'Hozircha ma\'lumotlar yo\'q.',
     'open_data_quarter' => 'chorak',
 

@@ -38,7 +38,6 @@ return [
     'open_data_all_years' => 'Выберите год',
     'open_data_all_quarters' => 'Выберите квартал',
     'open_data_download' => 'Скачать',
-    'open_data_downloads' => 'Скачиваний',
     'open_data_empty' => 'Пока нет данных.',
     'open_data_quarter' => 'квартал',
 
