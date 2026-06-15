@@ -81,14 +81,17 @@ class OpenDataIndex extends Component
         $isNew = ! $entry->exists;
 
         if ($this->fileUpload) {
+            $originalName = $this->fileUpload->getClientOriginalName();
+            $size = $this->fileUpload->getSize();
+            $mime = $this->fileUpload->getMimeType();
             $path = $this->fileUpload->store('open-data', 'local');
             if (! $isNew && $entry->file_path) {
                 Storage::disk('local')->delete($entry->file_path);
             }
             $entry->file_path = $path;
-            $entry->file_name = $this->fileUpload->getClientOriginalName();
-            $entry->file_size = $this->fileUpload->getSize();
-            $entry->file_mime = $this->fileUpload->getMimeType();
+            $entry->file_name = $originalName;
+            $entry->file_size = $size;
+            $entry->file_mime = $mime;
         }
 
         $entry->year = $this->year;
