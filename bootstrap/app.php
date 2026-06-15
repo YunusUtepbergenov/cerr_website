@@ -3,6 +3,7 @@
 use App\Http\Middleware\EnsureAdmin;
 use App\Http\Middleware\EnsureAdminOnly;
 use App\Http\Middleware\EnsureCanManageContent;
+use App\Http\Middleware\EnsureCanManageOpenData;
 use App\Http\Middleware\SetAdminLocale;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
@@ -23,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin-only' => EnsureAdminOnly::class,
             'manage-content' => EnsureCanManageContent::class,
+            'manage-open-data' => EnsureCanManageOpenData::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

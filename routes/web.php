@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\InlineImageController;
 use App\Http\Controllers\Admin\MediaUploadController;
 use App\Http\Controllers\OpenDataDownloadController;
+use App\Http\Middleware\SetAdminLocale;
 use App\Livewire\About;
 use App\Livewire\Admin\Activity\ActivityIndex;
 use App\Livewire\Admin\Categories\CategoryIndex;
@@ -10,6 +11,7 @@ use App\Livewire\Admin\Dashboard as AdminDashboard;
 use App\Livewire\Admin\Media\MediaIndex;
 use App\Livewire\Admin\News\NewsForm;
 use App\Livewire\Admin\News\NewsIndex;
+use App\Livewire\Admin\OpenData\OpenDataIndex as AdminOpenDataIndex;
 use App\Livewire\Admin\Pages\PageForm;
 use App\Livewire\Admin\Pages\PageIndex;
 use App\Livewire\Admin\Tags\TagIndex;
@@ -81,6 +83,10 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 
     Route::post('/inline-image', [InlineImageController::class, 'store'])->name('inline-image.store');
     Route::post('/media/upload', [MediaUploadController::class, 'store'])->name('media.upload');
+});
+
+Route::middleware(['auth', SetAdminLocale::class, 'manage-open-data'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/open-data', AdminOpenDataIndex::class)->name('open-data.index');
 });
 
 require __DIR__.'/auth.php';
