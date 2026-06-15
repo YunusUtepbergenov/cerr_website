@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\InlineImageController;
 use App\Http\Controllers\Admin\MediaUploadController;
+use App\Http\Controllers\OpenDataDownloadController;
 use App\Livewire\About;
 use App\Livewire\Admin\Activity\ActivityIndex;
 use App\Livewire\Admin\Categories\CategoryIndex;
@@ -18,6 +19,7 @@ use App\Livewire\Contact;
 use App\Livewire\History;
 use App\Livewire\Home;
 use App\Livewire\Leadership;
+use App\Livewire\OpenData\OpenDataIndex;
 use App\Livewire\ShowAllCategories;
 use App\Livewire\ShowCategory;
 use App\Livewire\ShowNews;
@@ -52,6 +54,9 @@ Route::get('/show-all-category', ShowAllCategories::class)->name('show.all.categ
 
 Route::get('/videos', VideoIndex::class)->name('videos.index');
 Route::get('/videos/{id}', VideoShow::class)->name('videos.show');
+
+Route::get('/open-data', OpenDataIndex::class)->name('open-data.index');
+Route::get('/open-data/{openData}/download', OpenDataDownloadController::class)->name('open-data.download');
 
 Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', AdminDashboard::class)->name('dashboard');
