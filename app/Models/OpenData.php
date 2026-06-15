@@ -70,7 +70,13 @@ class OpenData extends Model
 
     public function quarterLabel(): string
     {
-        return [1 => 'I', 2 => 'II', 3 => 'III', 4 => 'IV'][$this->quarter] ?? '';
+        return match ($this->quarter) {
+            1 => 'I',
+            2 => 'II',
+            3 => 'III',
+            4 => 'IV',
+            default => '',
+        };
     }
 
     public function fileExtension(): string

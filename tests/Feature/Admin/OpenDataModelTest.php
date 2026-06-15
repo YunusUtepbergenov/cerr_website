@@ -40,5 +40,8 @@ describe('OpenData model', function () {
         expect($entry->fileExtension())->toBe('XLSX')
             ->and($entry->fileSizeForHumans())->toContain('KB')
             ->and($entry->quarterLabel())->toBe('III');
+
+        $annual = OpenData::factory()->create(['quarter' => null]);
+        expect($annual->quarterLabel())->toBe('');
     });
 })->group('feature', 'admin');
