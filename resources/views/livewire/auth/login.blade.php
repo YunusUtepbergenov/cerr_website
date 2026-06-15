@@ -51,7 +51,13 @@ class extends Component
             request()->session()->regenerate();
         }
 
-        $this->redirectIntended($user && $user->isAdmin() ? route('admin.dashboard') : '/', navigate: false);
+        $target = match (true) {
+            $user?->isAdmin() => route('admin.dashboard'),
+            $user?->isAccountant() => route('admin.open-data.index'),
+            default => '/',
+        };
+
+        $this->redirectIntended($target, navigate: false);
     }
 }; ?>
 

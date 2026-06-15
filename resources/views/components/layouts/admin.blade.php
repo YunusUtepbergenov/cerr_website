@@ -33,15 +33,19 @@
                 <span>CERR Admin</span>
             </div>
 
+            @unless (auth()->user()?->isAccountant())
             <div class="nav-label">{{ __('admin.nav.overview') }}</div>
             <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <i class="fa-solid fa-gauge-high"></i> {{ __('admin.nav.dashboard') }}
             </a>
+            @endunless
 
             <div class="nav-label">{{ __('admin.nav.content') }}</div>
+            @unless (auth()->user()?->isAccountant())
             <a href="{{ route('admin.news.index') }}" class="{{ request()->routeIs('admin.news.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-newspaper"></i> {{ __('admin.nav.news') }}
             </a>
+            @endunless
             @if (auth()->user()?->canManageContent())
             <a href="{{ route('admin.categories.index') }}" class="{{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-folder-open"></i> {{ __('admin.nav.categories') }}
@@ -56,10 +60,18 @@
                 <i class="fa-solid fa-video"></i> {{ __('admin.nav.videos') }}
             </a>
             @endif
+            @if (auth()->user()?->canManageOpenData())
+            <a href="{{ route('admin.open-data.index') }}" class="{{ request()->routeIs('admin.open-data.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-database"></i> {{ __('admin.nav.open_data') }}
+            </a>
+            @endif
+            @unless (auth()->user()?->isAccountant())
             <a href="{{ route('admin.media.index') }}" class="{{ request()->routeIs('admin.media.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-photo-film"></i> {{ __('admin.nav.media') }}
             </a>
+            @endunless
 
+            @unless (auth()->user()?->isAccountant())
             <div class="nav-label">{{ __('admin.nav.administration') }}</div>
             @if (auth()->user()?->canManageUsers())
             <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
@@ -71,6 +83,7 @@
                 <i class="fa-solid fa-clock-rotate-left"></i> {{ __('admin.nav.activity') }}
             </a>
             @endif
+            @endunless
 
             <div class="sidebar-footer">
                 v1.0 · {{ now()->format('Y') }} CERR
@@ -84,7 +97,7 @@
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <nav class="breadcrumb-trail" aria-label="breadcrumb">
-                        <a href="{{ route('admin.dashboard') }}"><i class="fa-solid fa-house"></i></a>
+                        <a href="{{ auth()->user()?->isAccountant() ? route('admin.open-data.index') : route('admin.dashboard') }}"><i class="fa-solid fa-house"></i></a>
                         @if (! request()->routeIs('admin.dashboard'))
                             <span>/</span>
                             <span class="current">{{ $title ?? 'Page' }}</span>
