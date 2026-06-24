@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\CarbonInterval;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
@@ -88,7 +89,9 @@ class extends Component
         );
 
         throw ValidationException::withMessages([
-            'email' => __('admin.auth.too_many_attempts', ['seconds' => $seconds]),
+            'email' => __('admin.auth.too_many_attempts', [
+                'time' => CarbonInterval::seconds($seconds)->cascade()->forHumans(['short' => true]),
+            ]),
         ]);
     }
 

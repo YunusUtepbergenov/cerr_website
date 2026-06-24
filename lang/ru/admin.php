@@ -61,7 +61,7 @@ return [
         'sign_in_button' => 'Войти',
         'signing_in' => 'Вход…',
         'invalid_credentials' => 'Неверный email или пароль.',
-        'too_many_attempts' => 'Слишком много попыток. Попробуйте через :seconds сек.',
+        'too_many_attempts' => 'Слишком много попыток. Попробуйте через :time',
         'show_password' => 'Показать',
         'hide_password' => 'Скрыть',
     ],
