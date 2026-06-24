@@ -113,14 +113,14 @@
 
         .submit {
             margin-top: 8px; height: 48px; width: 100%; border: 0; border-radius: 10px;
-            background: var(--grad); color: #fff;
+            background: linear-gradient(135deg, #3b82f6, #5e6ad2); color: #fff;
             font-family: 'Manrope', sans-serif; font-weight: 700; font-size: 15px; letter-spacing: .01em; cursor: pointer;
-            box-shadow: 0 10px 24px -8px rgba(94, 106, 210, .7), 0 2px 6px rgba(0, 0, 0, .3);
+            box-shadow: 0 10px 24px -8px rgba(59, 130, 246, .7), 0 2px 6px rgba(0, 0, 0, .3);
             transition: transform .12s, box-shadow .18s, filter .18s;
         }
-        .submit:hover { filter: brightness(1.06); box-shadow: 0 14px 30px -8px rgba(94, 106, 210, .8), 0 2px 6px rgba(0, 0, 0, .35); transform: translateY(-1px); }
+        .submit:hover { filter: brightness(1.06); box-shadow: 0 14px 30px -8px rgba(59, 130, 246, .85), 0 2px 6px rgba(0, 0, 0, .35); transform: translateY(-1px); }
         .submit:active { transform: translateY(0); filter: brightness(.98); }
-        .submit:focus-visible { outline: none; box-shadow: 0 0 0 4px var(--ring), 0 10px 24px -8px rgba(94, 106, 210, .7); }
+        .submit:focus-visible { outline: none; box-shadow: 0 0 0 4px rgba(59, 130, 246, .4), 0 10px 24px -8px rgba(59, 130, 246, .7); }
 
         .footer { margin-top: 24px; text-align: center; font-size: 12.5px; color: #5e6488; letter-spacing: .01em; }
 
