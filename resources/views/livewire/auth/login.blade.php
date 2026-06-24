@@ -74,10 +74,16 @@ class extends Component
             @error('email') <div class="invalid-feedback">{{ $message }}</div> @enderror
         </div>
 
-        <div class="mb-3">
+        <div class="mb-3" x-data="{ show: false }">
             <label class="form-label">{{ __('admin.auth.password') }}</label>
-            <input type="password" wire:model="password" class="form-control @error('password') is-invalid @enderror" required>
-            @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            <div class="input-group has-validation">
+                <input :type="show ? 'text' : 'password'" wire:model="password" class="form-control @error('password') is-invalid @enderror" required>
+                <button type="button" class="btn btn-outline-secondary" @click="show = !show" tabindex="-1">
+                    <span x-show="!show">{{ __('admin.auth.show_password') }}</span>
+                    <span x-show="show" style="display: none;">{{ __('admin.auth.hide_password') }}</span>
+                </button>
+                @error('password') <div class="invalid-feedback">{{ $message }}</div> @enderror
+            </div>
         </div>
 
         <div class="form-check mb-3">

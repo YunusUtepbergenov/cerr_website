@@ -59,6 +59,8 @@ return [
         'signing_in' => '',
         'invalid_credentials' => '',
         'too_many_attempts' => '',
+        'show_password' => '',
+        'hide_password' => '',
     ],
     'dashboard' => [
         'title' => '',
