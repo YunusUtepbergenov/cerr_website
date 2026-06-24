@@ -32,7 +32,7 @@ describe('Accountant role', function () {
             ->set('name', 'Buxgalter')
             ->set('email', 'acc@x.test')
             ->set('role', 'accountant')
-            ->set('password', 'secret-pass')
+            ->set('password', 'Str0ng#Pass2026')
             ->call('save')
             ->assertHasNoErrors();
 

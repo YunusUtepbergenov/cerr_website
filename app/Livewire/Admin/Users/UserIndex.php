@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 
@@ -41,7 +42,12 @@ class UserIndex extends Component
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->editingId)],
             'role' => ['required', Rule::in(['admin', 'writer', 'editor', 'viewer', 'accountant'])],
-            'password' => [$this->editingId ? 'nullable' : 'required', 'string', 'min:8'],
+            'password' => [
+                Rule::excludeIf($this->editingId !== null && $this->password === ''),
+                $this->editingId ? 'nullable' : 'required',
+                'string',
+                Password::min(12)->mixedCase()->numbers()->symbols(),
+            ],
         ];
     }
 
