@@ -26,5 +26,11 @@
     "devDependencies": {
         "@rollup/plugin-inject": "^5.0.5",
         "vite": "^6.3.5"
+    },
+    "overrides": {
+        "shell-quote": "^1.8.4"
+    },
+    "allowScripts": {
+        "esbuild@0.25.12": true
     }
 }
