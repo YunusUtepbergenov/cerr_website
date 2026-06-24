@@ -51,13 +51,16 @@ class extends Component
             request()->session()->regenerate();
         }
 
-        $target = match (true) {
-            $user?->isAdmin() => route('admin.dashboard'),
-            $user?->isAccountant() => route('admin.open-data.index'),
-            default => '/',
-        };
+        // Accountants can only reach Open Data; send them there unconditionally
+        // rather than honoring an intended URL (e.g. /admin), which EnsureAdmin
+        // would 403.
+        if ($user?->isAccountant()) {
+            $this->redirect(route('admin.open-data.index'), navigate: false);
 
-        $this->redirectIntended($target, navigate: false);
+            return;
+        }
+
+        $this->redirectIntended($user?->isAdmin() ? route('admin.dashboard') : '/', navigate: false);
     }
 }; ?>
 

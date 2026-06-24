@@ -50,4 +50,23 @@ describe('Accountant admin chrome', function () {
             ->assertHasNoErrors()
             ->assertRedirect(route('admin.open-data.index'));
     })->group('feature', 'admin');
+
+    it('sends an accountant to open data even when a forbidden admin url was intended', function () {
+        User::factory()->create([
+            'email' => 'acc2@cerr.uz',
+            'password' => Hash::make('secret-pass'),
+            'role' => 'accountant',
+        ]);
+
+        // Reaching /login by first hitting /admin stores it as the intended URL;
+        // honoring it would 403 the accountant via EnsureAdmin.
+        session()->put('url.intended', route('admin.dashboard'));
+
+        Volt::test('auth.login')
+            ->set('email', 'acc2@cerr.uz')
+            ->set('password', 'secret-pass')
+            ->call('login')
+            ->assertHasNoErrors()
+            ->assertRedirect(route('admin.open-data.index'));
+    })->group('feature', 'admin');
 })->group('feature', 'admin');
