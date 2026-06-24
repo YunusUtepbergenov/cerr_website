@@ -52,6 +52,7 @@ return [
     ],
     'auth' => [
         'sign_in' => '',
+        'subtitle' => '',
         'email' => '',
         'password' => '',
         'remember_me' => '',

@@ -54,6 +54,7 @@ return [
 
     'auth' => [
         'sign_in' => 'Вход в админ-панель',
+        'subtitle' => 'Панель управления CERR',
         'email' => 'Email',
         'password' => 'Пароль',
         'remember_me' => 'Запомнить меня',
