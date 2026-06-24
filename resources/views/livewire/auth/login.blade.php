@@ -22,27 +22,33 @@ class extends Component
 
     public bool $remember = false;
 
+    /** Per-account limiter: stops distributed brute force on one email, even from many IPs. */
+    private const MAX_EMAIL_ATTEMPTS = 5;
+
+    private const EMAIL_DECAY_SECONDS = 900;
+
+    /** Per-IP limiter: stops credential stuffing across many accounts from one source. */
+    private const MAX_IP_ATTEMPTS = 20;
+
+    private const IP_DECAY_SECONDS = 300;
+
     public function login(): void
     {
         $this->validate();
 
-        $throttleKey = Str::transliterate(Str::lower($this->email).'|'.request()->ip());
-
-        if (RateLimiter::tooManyAttempts($throttleKey, 5)) {
-            $seconds = RateLimiter::availableIn($throttleKey);
-            throw ValidationException::withMessages([
-                'email' => __('admin.auth.too_many_attempts', ['seconds' => $seconds]),
-            ]);
-        }
+        $this->ensureIsNotRateLimited();
 
         if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            RateLimiter::hit($throttleKey);
+            RateLimiter::hit($this->emailThrottleKey(), self::EMAIL_DECAY_SECONDS);
+            RateLimiter::hit($this->ipThrottleKey(), self::IP_DECAY_SECONDS);
+
             throw ValidationException::withMessages([
                 'email' => __('admin.auth.invalid_credentials'),
             ]);
         }
 
-        RateLimiter::clear($throttleKey);
+        RateLimiter::clear($this->emailThrottleKey());
+        RateLimiter::clear($this->ipThrottleKey());
 
         $user = Auth::user();
         $user->forceFill(['last_login_at' => now()])->save();
@@ -61,6 +67,39 @@ class extends Component
         }
 
         $this->redirectIntended($user?->isAdmin() ? route('admin.dashboard') : '/', navigate: false);
+    }
+
+    /**
+     * Block the attempt when either the per-account or per-IP limiter is tripped,
+     * reporting the longer of the two remaining lockouts.
+     */
+    protected function ensureIsNotRateLimited(): void
+    {
+        $emailLocked = RateLimiter::tooManyAttempts($this->emailThrottleKey(), self::MAX_EMAIL_ATTEMPTS);
+        $ipLocked = RateLimiter::tooManyAttempts($this->ipThrottleKey(), self::MAX_IP_ATTEMPTS);
+
+        if (! $emailLocked && ! $ipLocked) {
+            return;
+        }
+
+        $seconds = max(
+            $emailLocked ? RateLimiter::availableIn($this->emailThrottleKey()) : 0,
+            $ipLocked ? RateLimiter::availableIn($this->ipThrottleKey()) : 0,
+        );
+
+        throw ValidationException::withMessages([
+            'email' => __('admin.auth.too_many_attempts', ['seconds' => $seconds]),
+        ]);
+    }
+
+    protected function emailThrottleKey(): string
+    {
+        return 'login:'.sha1(Str::lower($this->email));
+    }
+
+    protected function ipThrottleKey(): string
+    {
+        return 'login-ip:'.sha1((string) request()->ip());
     }
 }; ?>
 
