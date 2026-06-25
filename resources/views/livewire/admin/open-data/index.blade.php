@@ -16,7 +16,7 @@
                         @foreach (\App\Livewire\Admin\OpenData\OpenDataIndex::LOCALES as $locale)
                             <li class="nav-item">
                                 <button type="button" class="nav-link {{ $loop->first ? 'active' : '' }}" data-bs-toggle="tab" data-bs-target="#od-tab-{{ $locale }}">
-                                    {{ strtoupper($locale) }}
+                                    {{ \App\Support\Locales::label($locale) }}
                                     @if ($locale === \App\Livewire\Admin\OpenData\OpenDataIndex::PRIMARY_LOCALE) <span class="text-danger">*</span> @endif
                                     @error('titles.'.$locale) <i class="fa-solid fa-circle-exclamation text-danger lang-status"></i> @enderror
                                 </button>
@@ -26,7 +26,7 @@
                     <div class="tab-content mb-3">
                         @foreach (\App\Livewire\Admin\OpenData\OpenDataIndex::LOCALES as $locale)
                             <div class="tab-pane fade {{ $loop->first ? 'show active' : '' }}" id="od-tab-{{ $locale }}">
-                                <label class="form-label">{{ __('admin.open_data.title') }} ({{ strtoupper($locale) }})</label>
+                                <label class="form-label">{{ __('admin.open_data.title') }} ({{ \App\Support\Locales::label($locale) }})</label>
                                 <input type="text" wire:model="titles.{{ $locale }}" class="form-control @error('titles.'.$locale) is-invalid @enderror">
                                 @error('titles.'.$locale) <div class="invalid-feedback">{{ $message }}</div> @enderror
                             </div>

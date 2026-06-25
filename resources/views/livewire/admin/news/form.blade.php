@@ -29,7 +29,7 @@
                                 @endphp
                                 <li class="nav-item">
                                     <button type="button" class="nav-link {{ $activeLocale === $locale ? 'active' : '' }}" wire:click.prevent="setLocale('{{ $locale }}')">
-                                        {{ strtoupper($locale) }}
+                                        {{ \App\Support\Locales::label($locale) }}
                                         @if ($hasErrors)
                                             <i class="fa-solid fa-circle-exclamation text-danger lang-status"></i>
                                         @elseif ($hasTitle)
@@ -46,7 +46,7 @@
                             <div @class(['d-none' => $activeLocale !== $locale])>
                                 <div class="mb-3">
                                     <label class="form-label">{{ __('admin.news.title') }} @if ($locale === \App\Livewire\Admin\News\NewsForm::PRIMARY_LOCALE) <span class="text-danger">*</span> @endif</label>
-                                    <input type="text" wire:model="translations.{{ $locale }}.title" class="form-control @error('translations.'.$locale.'.title') is-invalid @enderror" placeholder="{{ __('admin.news.title_placeholder', ['locale' => strtoupper($locale)]) }}">
+                                    <input type="text" wire:model="translations.{{ $locale }}.title" class="form-control @error('translations.'.$locale.'.title') is-invalid @enderror" placeholder="{{ __('admin.news.title_placeholder', ['locale' => \App\Support\Locales::label($locale)]) }}">
                                     @error("translations.$locale.title") <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
 
@@ -68,7 +68,7 @@
                                 </div>
 
                                 <details class="mb-3">
-                                    <summary class="text-muted small mb-2" style="cursor: pointer;"><i class="fa-solid fa-magnifying-glass me-1"></i> {{ __('admin.news.seo', ['locale' => strtoupper($locale)]) }}</summary>
+                                    <summary class="text-muted small mb-2" style="cursor: pointer;"><i class="fa-solid fa-magnifying-glass me-1"></i> {{ __('admin.news.seo', ['locale' => \App\Support\Locales::label($locale)]) }}</summary>
                                     <div class="row g-2 mt-1">
                                         <div class="col-md-6">
                                             <label class="form-label">{{ __('admin.news.seo_title') }}</label>
@@ -85,7 +85,7 @@
                                      x-data
                                      x-on:media-picked.window="(e) => { if ($wire.activeLocale === '{{ $locale }}') { $wire.set('translations.{{ $locale }}.image_url', e.detail.path); } }">
                                     <label class="form-label d-flex justify-content-between align-items-center">
-                                        <span>{{ __('admin.news.cover_image', ['locale' => strtoupper($locale)]) }}</span>
+                                        <span>{{ __('admin.news.cover_image', ['locale' => \App\Support\Locales::label($locale)]) }}</span>
                                         <span class="text-muted small fw-normal">{{ __('admin.news.cover_specs') }}</span>
                                     </label>
                                     <button type="button" class="btn btn-sm btn-outline-secondary mb-2"

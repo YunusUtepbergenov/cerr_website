@@ -18,7 +18,7 @@
                             @foreach (\App\Livewire\Admin\Pages\PageForm::LOCALES as $locale)
                                 <li class="nav-item">
                                     <button type="button" class="nav-link {{ $activeLocale === $locale ? 'active' : '' }}" wire:click.prevent="setLocale('{{ $locale }}')">
-                                        {{ strtoupper($locale) }}
+                                        {{ \App\Support\Locales::label($locale) }}
                                     </button>
                                 </li>
                             @endforeach
@@ -44,7 +44,7 @@
                                 </div>
 
                                 <details class="mb-3">
-                                    <summary class="text-muted small mb-2" style="cursor: pointer;">SEO ({{ strtoupper($locale) }})</summary>
+                                    <summary class="text-muted small mb-2" style="cursor: pointer;">SEO ({{ \App\Support\Locales::label($locale) }})</summary>
                                     <div class="row g-2 mt-1">
                                         <div class="col-md-6">
                                             <label class="form-label">{{ __('admin.news.seo_title') }}</label>

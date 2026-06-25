@@ -31,7 +31,7 @@
                         @foreach (\App\Livewire\Admin\Categories\CategoryIndex::LOCALES as $locale)
                             <div class="col-md-6 col-xl-3">
                                 <label class="form-label">
-                                    <span class="lang-chip">{{ $locale }}</span> {{ __('admin.categories.name_label') }}
+                                    <span class="lang-chip">{{ \App\Support\Locales::label($locale) }}</span> {{ __('admin.categories.name_label') }}
                                     @if ($locale === 'kr') <span class="text-danger">*</span> @endif
                                 </label>
                                 <input type="text" wire:model="names.{{ $locale }}" class="form-control @error('names.'.$locale) is-invalid @enderror">
@@ -59,7 +59,7 @@
                         <th style="width: 60px;">ID</th>
                         <th style="width: 180px;">Slug</th>
                         @foreach (\App\Livewire\Admin\Categories\CategoryIndex::LOCALES as $locale)
-                            <th><span class="lang-chip">{{ $locale }}</span></th>
+                            <th><span class="lang-chip">{{ \App\Support\Locales::label($locale) }}</span></th>
                         @endforeach
                         <th style="width: 100px;">{{ __('admin.common.status') }}</th>
                         <th style="width: 120px;"></th>
