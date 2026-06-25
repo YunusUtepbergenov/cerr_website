@@ -18,6 +18,8 @@ return [
         'view_site' => '',
         'sign_out' => '',
         'toggle_theme' => '',
+        'control_center' => '',
+        'home' => '',
     ],
     'common' => [
         'save' => '',
@@ -78,6 +80,12 @@ return [
         'all_news' => '',
         'no_news' => '',
         'create_first' => '',
+        'total_in_system' => '',
+        'publication_share' => '',
+        'recent_news_sub' => '',
+        'recent_activity_sub' => '',
+        'open_data_pending' => '',
+        'open_data_manage' => '',
     ],
     'news' => [
         'title_section' => '',

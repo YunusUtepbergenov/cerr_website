@@ -30,7 +30,10 @@
         <aside class="admin-sidebar" id="admin-sidebar">
             <div class="brand">
                 <span class="brand-mark">C</span>
-                <span>CERR Admin</span>
+                <span class="brand-wordmark">
+                    <b>CERR Admin</b>
+                    <small>{{ __('admin.nav.control_center') }}</small>
+                </span>
             </div>
 
             @unless (auth()->user()?->isAccountant())
@@ -44,14 +47,17 @@
             @unless (auth()->user()?->isAccountant())
             <a href="{{ route('admin.news.index') }}" class="{{ request()->routeIs('admin.news.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-newspaper"></i> {{ __('admin.nav.news') }}
+                @isset($navCounts)<span class="nav-count">{{ $navCounts['news'] }}</span>@endisset
             </a>
             @endunless
             @if (auth()->user()?->canManageContent())
             <a href="{{ route('admin.categories.index') }}" class="{{ request()->routeIs('admin.categories.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-folder-open"></i> {{ __('admin.nav.categories') }}
+                @isset($navCounts)<span class="nav-count">{{ $navCounts['categories'] }}</span>@endisset
             </a>
             <a href="{{ route('admin.tags.index') }}" class="{{ request()->routeIs('admin.tags.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-tags"></i> {{ __('admin.nav.tags') }}
+                @isset($navCounts)<span class="nav-count">{{ $navCounts['tags'] }}</span>@endisset
             </a>
             <a href="{{ route('admin.pages.index') }}" class="{{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-file-lines"></i> {{ __('admin.nav.pages') }}
@@ -86,7 +92,19 @@
             @endunless
 
             <div class="sidebar-footer">
-                v1.0 · {{ now()->format('Y') }} CERR
+                <div class="sidebar-user">
+                    <span class="su-avatar">{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}</span>
+                    <span class="su-meta">
+                        <b>{{ auth()->user()->name }}</b>
+                        <small>{{ __('admin.users.role_'.auth()->user()->role) }}</small>
+                    </span>
+                    <form method="POST" action="{{ route('logout') }}" class="m-0">
+                        @csrf
+                        <button type="submit" class="su-logout" title="{{ __('admin.nav.sign_out') }}" aria-label="{{ __('admin.nav.sign_out') }}">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                        </button>
+                    </form>
+                </div>
             </div>
         </aside>
 
@@ -97,11 +115,11 @@
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <nav class="breadcrumb-trail" aria-label="breadcrumb">
-                        <a href="{{ auth()->user()?->isAccountant() ? route('admin.open-data.index') : route('admin.dashboard') }}"><i class="fa-solid fa-house"></i></a>
-                        @if (! request()->routeIs('admin.dashboard'))
-                            <span>/</span>
-                            <span class="current">{{ $title ?? 'Page' }}</span>
-                        @endif
+                        <a href="{{ auth()->user()?->isAccountant() ? route('admin.open-data.index') : route('admin.dashboard') }}">
+                            <i class="fa-solid fa-house"></i> {{ __('admin.nav.home') }}
+                        </a>
+                        <span class="sep">/</span>
+                        <span class="current">{{ $title ?? __('admin.nav.dashboard') }}</span>
                     </nav>
                 </div>
                 <div class="d-flex align-items-center gap-2">
@@ -116,12 +134,6 @@
                         <span class="avatar">{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}</span>
                         <span class="small text-muted">{{ auth()->user()->name }}</span>
                     </div>
-                    <form method="POST" action="{{ route('logout') }}" class="m-0">
-                        @csrf
-                        <button type="submit" class="icon-btn" title="{{ __('admin.nav.sign_out') }}">
-                            <i class="fa-solid fa-right-from-bracket"></i>
-                        </button>
-                    </form>
                 </div>
             </div>
 

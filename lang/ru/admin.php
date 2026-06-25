@@ -18,6 +18,8 @@ return [
         'view_site' => 'Открыть сайт',
         'sign_out' => 'Выйти',
         'toggle_theme' => 'Переключить тему',
+        'control_center' => 'Центр управления',
+        'home' => 'Главная',
     ],
 
     'common' => [
@@ -81,6 +83,12 @@ return [
         'all_news' => 'Все новости',
         'no_news' => 'Новостей пока нет.',
         'create_first' => 'Создать первую статью',
+        'total_in_system' => 'Всего новостей в системе',
+        'publication_share' => 'Доля публикаций',
+        'recent_news_sub' => 'Свежие материалы и их статус публикации',
+        'recent_activity_sub' => 'История событий админ-панели',
+        'open_data_pending' => ':count наб. ждут проверки',
+        'open_data_manage' => 'Управление наборами данных',
     ],
 
     'news' => [
