@@ -21,11 +21,11 @@
     @keydown.escape.window="open = false"
     x-show="open"
     x-cloak
-    style="position: fixed; inset: 0; z-index: 1080; background: rgba(15, 23, 42, .5); display: flex; align-items: center; justify-content: center;"
+    class="confirm-overlay"
 >
-    <div @click.outside="open = false" style="background: var(--admin-surface); border-radius: 12px; padding: 1.5rem; max-width: 420px; width: calc(100% - 2rem); box-shadow: 0 20px 40px rgba(15,23,42,.2);">
+    <div @click.outside="open = false" class="confirm-dialog">
         <div class="d-flex align-items-start gap-3 mb-3">
-            <div style="width: 40px; height: 40px; flex-shrink: 0; border-radius: 50%; background: var(--admin-danger-soft); display: flex; align-items: center; justify-content: center; color: var(--admin-danger);">
+            <div class="confirm-icon">
                 <i class="fa-solid fa-triangle-exclamation"></i>
             </div>
             <div class="flex-grow-1">
