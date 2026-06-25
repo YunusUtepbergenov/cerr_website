@@ -41,7 +41,10 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            // Fall back to a host-relative URL when APP_URL has no scheme (e.g. a
+            // bare IP in local/dev), otherwise an <img src> would resolve relative
+            // to the current path and 404. A properly configured APP_URL is used as-is.
+            'url' => str_starts_with((string) env('APP_URL'), 'http') ? env('APP_URL').'/storage' : '/storage',
             'visibility' => 'public',
             'throw' => false,
             'report' => false,
