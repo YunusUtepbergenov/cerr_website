@@ -78,9 +78,14 @@
                     @forelse ($users as $u)
                         <tr wire:key="user-{{ $u->id }}">
                             <td class="text-muted small">#{{ $u->id }}</td>
-                            <td>{{ $u->name }}</td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <span class="table-avatar">{{ strtoupper(mb_substr($u->name, 0, 1)) }}</span>
+                                    <span class="fw-semibold">{{ $u->name }}</span>
+                                </div>
+                            </td>
                             <td>{{ $u->email }}</td>
-                            <td><span class="lang-chip">{{ __('admin.users.role_'.$u->role) }}</span></td>
+                            <td><span class="role-badge role-{{ $u->role }}">{{ __('admin.users.role_'.$u->role) }}</span></td>
                             <td><span class="text-muted small">{{ $u->last_login_at?->diffForHumans() ?? __('admin.users.never_logged_in') }}</span></td>
                             <td class="text-end">
                                 <div class="btn-group btn-group-sm">

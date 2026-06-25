@@ -43,8 +43,8 @@
                     @forelse ($activities as $a)
                         <tr wire:key="activity-{{ $a->id }}">
                             <td><span class="text-muted small">{{ $a->created_at->diffForHumans() }}</span></td>
-                            <td>{{ $a->user->name ?? __('admin.activity.system') }}</td>
-                            <td>{{ __('admin.activity.action_'.$a->action) }}</td>
+                            <td class="fw-semibold">{{ $a->user->name ?? __('admin.activity.system') }}</td>
+                            <td><span class="action-badge action-{{ $a->action }}">{{ __('admin.activity.action_'.$a->action) }}</span></td>
                             <td><code class="small">{{ class_basename($a->subject_type) }} #{{ $a->subject_id }}</code></td>
                             <td><code class="small">{{ json_encode($a->changes ?? [], JSON_UNESCAPED_UNICODE) }}</code></td>
                         </tr>
