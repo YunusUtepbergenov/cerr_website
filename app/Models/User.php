@@ -65,11 +65,6 @@ class User extends Authenticatable
         return $this->role === 'editor';
     }
 
-    public function isWriter(): bool
-    {
-        return $this->role === 'writer';
-    }
-
     public function isAccountant(): bool
     {
         return $this->role === 'accountant';
@@ -77,7 +72,16 @@ class User extends Authenticatable
 
     public function canAccessAdmin(): bool
     {
-        return in_array($this->role, ['admin', 'editor', 'writer'], true);
+        return in_array($this->role, ['admin', 'editor'], true);
+    }
+
+    /**
+     * Whether the user has any admin-panel chrome to land on — the content
+     * roles plus accountants. Used to gate shared pages like account settings.
+     */
+    public function canAccessPanel(): bool
+    {
+        return $this->canAccessAdmin() || $this->isAccountant();
     }
 
     public function canManageContent(): bool
@@ -100,18 +104,9 @@ class User extends Authenticatable
         return $this->isAdmin() || $this->isEditor();
     }
 
-    public function canPublishNews(): bool
-    {
-        return $this->isAdmin() || $this->isEditor();
-    }
-
     public function canEditNews(News $news): bool
     {
-        if ($this->isAdmin() || $this->isEditor()) {
-            return true;
-        }
-
-        return $this->isWriter() && $news->user_id === $this->id;
+        return $this->isAdmin() || $this->isEditor();
     }
 
     public function initials(): string

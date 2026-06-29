@@ -76,6 +76,76 @@ describe('News CRUD', function () {
             ->assertHasErrors(['slug']);
     })->group('feature', 'admin');
 
+    it('auto-generates a unique slug from the title', function () {
+        Livewire::test(NewsForm::class)
+            ->call('regenerateSlug', 'Hello World')
+            ->assertSet('slug', 'hello-world');
+
+        News::factory()->create(['slug' => 'hello-world']);
+
+        Livewire::test(NewsForm::class)
+            ->call('regenerateSlug', 'Hello World')
+            ->assertSet('slug', 'hello-world-2');
+    })->group('feature', 'admin');
+
+    it('flags a duplicate slug live, before the form is submitted', function () {
+        News::factory()->create(['slug' => 'taken']);
+
+        Livewire::test(NewsForm::class)
+            ->set('slug', 'taken')
+            ->call('checkSlugAvailability')
+            ->assertHasErrors('slug');
+    })->group('feature', 'admin');
+
+    it('live-checks the normalized form without rewriting what the user typed', function () {
+        News::factory()->create(['slug' => 'my-cool-article']);
+
+        Livewire::test(NewsForm::class)
+            ->set('slug', 'My Cool Article')
+            ->call('checkSlugAvailability')
+            ->assertSet('slug', 'My Cool Article')
+            ->assertHasErrors('slug');
+    })->group('feature', 'admin');
+
+    it('normalizes the slug to its stored form on blur', function () {
+        Livewire::test(NewsForm::class)
+            ->set('slug', 'My Cool Article!')
+            ->call('normalizeSlug')
+            ->assertSet('slug', 'my-cool-article')
+            ->assertHasNoErrors('slug');
+    })->group('feature', 'admin');
+
+    it('does not flag the current article as a duplicate of itself while editing', function () {
+        $news = News::factory()->create(['slug' => 'self-slug']);
+
+        Livewire::test(NewsForm::class, ['news' => $news])
+            ->set('slug', 'self-slug')
+            ->call('checkSlugAvailability')
+            ->assertHasNoErrors('slug');
+    })->group('feature', 'admin');
+
+    it('clears the live duplicate-slug error once a unique slug is entered', function () {
+        News::factory()->create(['slug' => 'taken']);
+
+        Livewire::test(NewsForm::class)
+            ->set('slug', 'taken')
+            ->call('checkSlugAvailability')
+            ->assertHasErrors('slug')
+            ->set('slug', 'free-slug')
+            ->call('checkSlugAvailability')
+            ->assertHasNoErrors('slug');
+    })->group('feature', 'admin');
+
+    it('flags collisions with another article when editing, even before normalization', function () {
+        $articleA = News::factory()->create(['slug' => 'article-a']);
+        News::factory()->create(['slug' => 'article-b']);
+
+        Livewire::test(NewsForm::class, ['news' => $articleA])
+            ->set('slug', 'Article B')
+            ->call('checkSlugAvailability')
+            ->assertHasErrors('slug');
+    })->group('feature', 'admin');
+
     it('updates an existing news item', function () {
         $news = News::factory()->create(['slug' => 'old-slug']);
         $news->translations()->create([

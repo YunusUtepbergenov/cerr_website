@@ -43,10 +43,6 @@ class NewsIndex extends Component
     {
         $query = News::query()->latest();
 
-        if (auth()->user()->isWriter()) {
-            $query->where('user_id', auth()->id());
-        }
-
         if ($this->status !== '') {
             $query->where('status', $this->status);
         }

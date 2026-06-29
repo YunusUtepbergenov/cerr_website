@@ -34,7 +34,7 @@ describe('Accountant admin chrome', function () {
         $response->assertSee(route('admin.news.index'), false);
     })->group('feature', 'admin');
 
-    it('redirects an accountant to open data on login', function () {
+    it('redirects an accountant to the overview dashboard on login', function () {
         User::factory()->create([
             'email' => 'acc@cerr.uz',
             'password' => Hash::make('secret-pass'),
@@ -48,10 +48,10 @@ describe('Accountant admin chrome', function () {
             ->set('password', 'secret-pass')
             ->call('login')
             ->assertHasNoErrors()
-            ->assertRedirect(route('admin.open-data.index'));
+            ->assertRedirect(route('admin.overview'));
     })->group('feature', 'admin');
 
-    it('sends an accountant to open data even when a forbidden admin url was intended', function () {
+    it('sends an accountant to the overview even when a forbidden admin url was intended', function () {
         User::factory()->create([
             'email' => 'acc2@cerr.uz',
             'password' => Hash::make('secret-pass'),
@@ -67,6 +67,6 @@ describe('Accountant admin chrome', function () {
             ->set('password', 'secret-pass')
             ->call('login')
             ->assertHasNoErrors()
-            ->assertRedirect(route('admin.open-data.index'));
+            ->assertRedirect(route('admin.overview'));
     })->group('feature', 'admin');
 })->group('feature', 'admin');

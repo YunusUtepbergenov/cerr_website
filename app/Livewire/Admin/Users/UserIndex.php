@@ -19,7 +19,7 @@ class UserIndex extends Component
 
     public string $email = '';
 
-    public string $role = 'viewer';
+    public string $role = 'editor';
 
     public string $password = '';
 
@@ -41,7 +41,7 @@ class UserIndex extends Component
         return [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($this->editingId)],
-            'role' => ['required', Rule::in(['admin', 'writer', 'editor', 'viewer', 'accountant'])],
+            'role' => ['required', Rule::in(['admin', 'editor', 'accountant'])],
             'password' => [
                 Rule::excludeIf($this->editingId !== null && $this->password === ''),
                 $this->editingId ? 'nullable' : 'required',
@@ -134,7 +134,7 @@ class UserIndex extends Component
         $this->editingId = null;
         $this->name = '';
         $this->email = '';
-        $this->role = 'viewer';
+        $this->role = 'editor';
         $this->password = '';
         $this->resetValidation();
     }

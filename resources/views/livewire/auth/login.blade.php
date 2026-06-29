@@ -58,11 +58,11 @@ class extends Component
             request()->session()->regenerate();
         }
 
-        // Accountants can only reach Open Data; send them there unconditionally
-        // rather than honoring an intended URL (e.g. /admin), which EnsureAdmin
-        // would 403.
+        // Accountants get their own overview dashboard; send them there
+        // unconditionally rather than honoring an intended URL (e.g. /admin),
+        // which EnsureAdmin would 403.
         if ($user?->isAccountant()) {
-            $this->redirect(route('admin.open-data.index'), navigate: false);
+            $this->redirect(route('admin.overview'), navigate: false);
 
             return;
         }

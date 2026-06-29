@@ -81,7 +81,7 @@ describe('User CRUD', function () {
         $component->assertSet('currentUserId', $this->admin->id);
         $component->call('edit', $this->admin->id);
         $component->assertSet('editingId', $this->admin->id);
-        $component->set('role', 'viewer');
+        $component->set('role', 'editor');
         $component->call('save');
         $component->assertHasErrors(['role']);
 

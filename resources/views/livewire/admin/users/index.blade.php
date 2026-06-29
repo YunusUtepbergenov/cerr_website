@@ -36,9 +36,7 @@
                             <label class="form-label">{{ __('admin.users.role') }}</label>
                             <select wire:model="role" class="form-select @error('role') is-invalid @enderror">
                                 <option value="admin">{{ __('admin.users.role_admin') }}</option>
-                                <option value="writer">{{ __('admin.users.role_writer') }}</option>
                                 <option value="editor">{{ __('admin.users.role_editor') }}</option>
-                                <option value="viewer">{{ __('admin.users.role_viewer') }}</option>
                                 <option value="accountant">{{ __('admin.users.role_accountant') }}</option>
                             </select>
                             @error('role') <div class="invalid-feedback">{{ $message }}</div> @enderror

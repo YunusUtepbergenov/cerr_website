@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\News;
 use App\Models\Tag;
 use App\Support\HtmlSanitizer;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
@@ -124,6 +125,46 @@ class NewsForm extends Component
     }
 
     /**
+     * Live, non-destructive uniqueness check used while the slug is being
+     * typed. Validates the slug exactly as it will be stored (slugified) and
+     * surfaces a duplicate-slug error immediately, without rewriting what the
+     * user is currently typing. Kept separate from the slug's wire:model so it
+     * never interferes with the title-driven auto-fill in regenerateSlug().
+     */
+    public function checkSlugAvailability(): void
+    {
+        $this->validateSlugCandidate(Str::slug($this->slug));
+    }
+
+    /**
+     * Normalize the slug to its stored form when the field loses focus, so the
+     * displayed value matches what will be saved, then re-check availability.
+     */
+    public function normalizeSlug(): void
+    {
+        $this->slug = Str::slug($this->slug);
+        $this->validateSlugCandidate($this->slug);
+    }
+
+    /**
+     * Validate a slug candidate against the uniqueness rule and reflect the
+     * result in the 'slug' error bag, without throwing.
+     */
+    private function validateSlugCandidate(string $candidate): void
+    {
+        $this->resetErrorBag('slug');
+
+        $validator = Validator::make(
+            ['slug' => $candidate],
+            ['slug' => $this->rules()['slug']],
+        );
+
+        if ($validator->fails()) {
+            $this->addError('slug', $validator->errors()->first('slug'));
+        }
+    }
+
+    /**
      * @return array<string, mixed>
      */
     protected function rules(): array
@@ -155,14 +196,12 @@ class NewsForm extends Component
 
     public function save(): void
     {
-        if (! auth()->user()->canPublishNews()) {
-            $this->status = 'draft';
-        }
+        $this->slug = Str::slug($this->slug);
 
         $this->validate();
 
         $news = $this->news ?? new News;
-        $news->slug = Str::slug($this->slug);
+        $news->slug = $this->slug;
         $news->category_id = $this->category_id;
         $news->status = $this->status;
         $news->is_main = $this->is_main;

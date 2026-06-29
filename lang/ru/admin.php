@@ -20,6 +20,8 @@ return [
         'toggle_theme' => 'Переключить тему',
         'control_center' => 'Центр управления',
         'home' => 'Главная',
+        'account' => 'Аккаунт',
+        'settings' => 'Настройки',
     ],
 
     'common' => [
@@ -144,7 +146,6 @@ return [
         'deleted_flash' => 'Статья удалена.',
         'saved_flash' => 'Статья сохранена.',
         'drop_here' => 'Перетащите изображение сюда',
-        'draft_only_writer' => 'Черновик (отправлено на проверку)',
     ],
 
     'categories' => [
@@ -187,9 +188,7 @@ return [
         'email' => 'Email',
         'role' => 'Роль',
         'role_admin' => 'Администратор',
-        'role_writer' => 'Автор',
         'role_editor' => 'Редактор',
-        'role_viewer' => 'Читатель',
         'role_accountant' => 'Бухгалтер',
         'password' => 'Пароль',
         'password_help' => 'Оставьте пустым, чтобы не менять.',
@@ -300,6 +299,38 @@ return [
         'action_unpublished' => 'снял с публикации',
         'action_reset_password' => 'сбросил пароль',
         'system' => 'Система',
+    ],
+
+    'accountant' => [
+        'title' => 'Панель',
+        'welcome' => 'С возвращением, :name.',
+        'total_datasets' => 'Всего наборов',
+        'published' => 'Опубликовано',
+        'drafts' => 'Черновики',
+        'downloads' => 'Скачиваний',
+        'recent' => 'Недавние наборы',
+        'recent_sub' => 'Последние добавленные наборы данных',
+        'all_data' => 'Все данные',
+        'manage_data' => 'Управление данными',
+        'no_data' => 'Наборов данных пока нет.',
+        'add_first' => 'Добавить первый',
+    ],
+
+    'account' => [
+        'title' => 'Настройки аккаунта',
+        'subtitle' => 'Управление личными данными и паролем.',
+        'profile_title' => 'Профиль',
+        'password_title' => 'Смена пароля',
+        'name' => 'Имя',
+        'email' => 'Email',
+        'current_password' => 'Текущий пароль',
+        'new_password' => 'Новый пароль',
+        'confirm_password' => 'Подтвердите пароль',
+        'password_help' => 'Минимум 12 символов: буквы разного регистра, цифры и спецсимволы.',
+        'save_profile' => 'Сохранить профиль',
+        'save_password' => 'Обновить пароль',
+        'profile_saved' => 'Профиль обновлён.',
+        'password_saved' => 'Пароль обновлён.',
     ],
 
     'validation' => [

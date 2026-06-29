@@ -3,9 +3,9 @@
 use App\Models\User;
 
 describe('User Model', function () {
-    it('has correct default role', function () {
-        $user = User::factory()->create(['role' => 'viewer']);
-        expect($user->role)->toBe('viewer');
+    it('can have accountant role', function () {
+        $user = User::factory()->create(['role' => 'accountant']);
+        expect($user->role)->toBe('accountant');
     })->group('unit', 'models');
 
     it('generates correct initials for single name', function () {
@@ -26,11 +26,6 @@ describe('User Model', function () {
     it('can have admin role', function () {
         $user = User::factory()->create(['role' => 'admin']);
         expect($user->role)->toBe('admin');
-    })->group('unit', 'models');
-
-    it('can have writer role', function () {
-        $user = User::factory()->create(['role' => 'writer']);
-        expect($user->role)->toBe('writer');
     })->group('unit', 'models');
 
     it('can have editor role', function () {

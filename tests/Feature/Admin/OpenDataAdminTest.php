@@ -8,14 +8,12 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
 describe('Open data admin access', function () {
-    it('lets accountants and admins in, but not editors/writers', function () {
+    it('lets accountants and admins in, but not editors', function () {
         $this->actingAs(User::factory()->create(['role' => 'accountant']))
             ->get(route('admin.open-data.index'))->assertOk();
         $this->actingAs(User::factory()->create(['role' => 'admin']))
             ->get(route('admin.open-data.index'))->assertOk();
         $this->actingAs(User::factory()->create(['role' => 'editor']))
-            ->get(route('admin.open-data.index'))->assertForbidden();
-        $this->actingAs(User::factory()->create(['role' => 'writer']))
             ->get(route('admin.open-data.index'))->assertForbidden();
     })->group('feature', 'admin');
 

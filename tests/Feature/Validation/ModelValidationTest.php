@@ -34,7 +34,7 @@ describe('User Role Validation', function () {
         $user = User::factory()->create(['role' => $role]);
 
         expect($user->role)->toBe($role);
-    })->with(['admin', 'writer', 'editor', 'viewer', 'accountant'])
+    })->with(['admin', 'editor', 'accountant'])
         ->group('unit', 'validation');
 
     it('rejects invalid role values through the user form', function () {
@@ -45,7 +45,7 @@ describe('User Role Validation', function () {
             ->call('startCreate')
             ->set('name', 'Test')
             ->set('email', 'invalid-role@x.test')
-            ->set('role', 'superuser')
+            ->set('role', 'writer')
             ->set('password', 'secret-pass')
             ->call('save')
             ->assertHasErrors(['role']);

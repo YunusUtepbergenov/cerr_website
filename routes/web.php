@@ -5,6 +5,8 @@ use App\Http\Controllers\Admin\MediaUploadController;
 use App\Http\Controllers\OpenDataDownloadController;
 use App\Http\Middleware\SetAdminLocale;
 use App\Livewire\About;
+use App\Livewire\Admin\AccountantDashboard;
+use App\Livewire\Admin\AccountSettings;
 use App\Livewire\Admin\Activity\ActivityIndex;
 use App\Livewire\Admin\Categories\CategoryIndex;
 use App\Livewire\Admin\Dashboard as AdminDashboard;
@@ -86,7 +88,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
 });
 
 Route::middleware(['auth', SetAdminLocale::class, 'manage-open-data'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/overview', AccountantDashboard::class)->name('overview');
     Route::get('/open-data', AdminOpenDataIndex::class)->name('open-data.index');
+});
+
+// Self-service account settings, reachable by any panel user — the content
+// roles plus accountants (who are excluded from the EnsureAdmin group above).
+Route::middleware(['auth', SetAdminLocale::class, 'panel-access'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/settings', AccountSettings::class)->name('settings');
 });
 
 require __DIR__.'/auth.php';

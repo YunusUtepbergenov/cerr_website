@@ -150,11 +150,12 @@
             </div>
 
             <div class="col-lg-4">
-                <div class="card mb-3" style="position: sticky; top: 80px;">
+                <div class="admin-form-sidebar">
+                <div class="card mb-3">
                     <div class="card-header">{{ __('admin.news.publishing') }}</div>
                     <div class="card-body">
                         <div class="mb-3"
-                             x-data="{ manuallyEdited: @js((bool) ($news?->exists)), debounce: null }"
+                             x-data="{ manuallyEdited: @js((bool) ($news?->exists)), debounce: null, slugCheck: null }"
                              x-init="
                                 $watch(() => $wire.translations.uz.title, (title) => {
                                     if (manuallyEdited) return;
@@ -164,7 +165,9 @@
                                 });
                              ">
                             <label class="form-label">Slug <span class="text-danger">*</span></label>
-                            <input type="text" wire:model="slug" @input="manuallyEdited = true"
+                            <input type="text" wire:model="slug"
+                                   @input="manuallyEdited = true; clearTimeout(debounce); clearTimeout(slugCheck); slugCheck = setTimeout(() => $wire.checkSlugAvailability(), 400)"
+                                   @blur="$wire.normalizeSlug()"
                                    class="form-control @error('slug') is-invalid @enderror" placeholder="my-article-url">
                             @error('slug') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             <div class="form-text small">{{ __('admin.news.slug_help') }}</div>
@@ -172,18 +175,12 @@
 
                         <div class="mb-3">
                             <label class="form-label">{{ __('admin.common.status') }}</label>
-                            @if (auth()->user()->canPublishNews())
                             <select wire:model="status" class="form-select">
                                 <option value="draft">{{ __('admin.news.status_draft') }}</option>
                                 <option value="published">{{ __('admin.news.status_published') }}</option>
                                 <option value="auto_publish">{{ __('admin.news.status_auto_publish') }}</option>
                                 <option value="disabled">{{ __('admin.news.status_disabled') }}</option>
                             </select>
-                            @else
-                            <div class="form-control-plaintext">
-                                <span class="pill status-draft">{{ __('admin.news.draft_only_writer') }}</span>
-                            </div>
-                            @endif
                         </div>
 
                         <div class="mb-3">
@@ -225,7 +222,7 @@
                         <span>{{ __('admin.news.tags') }}</span>
                         <span class="text-muted small">{{ __('admin.news.tags_selected', ['count' => count($tag_ids)]) }}</span>
                     </div>
-                    <div class="card-body" style="max-height: 280px; overflow-y: auto;">
+                    <div class="card-body">
                         <div class="tag-chip-list">
                         @forelse ($allTags as $tag)
                             <div class="form-check">
@@ -244,7 +241,7 @@
                 @if ($news?->exists)
                     <div class="card mt-3">
                         <div class="card-header">{{ __('admin.activity.title_section') }}</div>
-                        <div class="card-body" style="max-height: 300px; overflow-y: auto;">
+                        <div class="card-body">
                             @forelse ($news->activity()->with('user')->latest()->limit(10)->get() as $a)
                                 <div class="d-flex gap-2 align-items-start mb-2 pb-2 border-bottom">
                                     <i class="fa-solid fa-clock-rotate-left text-muted small mt-1"></i>
@@ -262,6 +259,7 @@
                         </div>
                     </div>
                 @endif
+                </div>
             </div>
         </div>
 

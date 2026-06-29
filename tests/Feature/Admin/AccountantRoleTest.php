@@ -19,8 +19,7 @@ describe('Accountant role', function () {
 
     it('lets admins manage open data but not editors', function () {
         expect(User::factory()->make(['role' => 'admin'])->canManageOpenData())->toBeTrue()
-            ->and(User::factory()->make(['role' => 'editor'])->canManageOpenData())->toBeFalse()
-            ->and(User::factory()->make(['role' => 'writer'])->canManageOpenData())->toBeFalse();
+            ->and(User::factory()->make(['role' => 'editor'])->canManageOpenData())->toBeFalse();
     });
 
     it('allows creating a user with the accountant role', function () {

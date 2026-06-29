@@ -70,7 +70,7 @@ code { font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; font-size: .8
     border-radius: 24px;
     padding: 1.05rem .85rem 1rem;
     position: sticky; top: 20px; align-self: flex-start;
-    max-height: calc(100vh - 40px); overflow: hidden auto;
+    min-height: calc(100vh - 40px); max-height: calc(100vh - 40px); overflow: hidden auto;
     display: flex; flex-direction: column;
     box-shadow: var(--shadow-float);
     transition: transform .22s ease;
@@ -252,8 +252,6 @@ code { font-family: 'JetBrains Mono', 'SF Mono', Menlo, monospace; font-size: .8
 }
 .role-badge.role-admin { background: var(--admin-primary-soft); color: var(--admin-primary); }
 .role-badge.role-editor { background: var(--admin-success-soft); color: var(--admin-success); }
-.role-badge.role-writer { background: var(--admin-warning-soft); color: var(--admin-warning); }
-.role-badge.role-viewer { background: var(--admin-chip-bg); color: var(--admin-text-muted); }
 .role-badge.role-accountant { background: rgba(139, 92, 246, .14); color: var(--admin-violet); }
 .table-avatar {
     width: 30px; height: 30px; border-radius: 9px; flex-shrink: 0;
@@ -464,6 +462,20 @@ details[open] > summary { color: var(--admin-text); }
 
 input[type="datetime-local"].form-control { font-feature-settings: "tnum"; }
 
+/* Form sidebar — publishing / category / tags / activity move as one sticky
+   block so individual cards never slide over each other while scrolling. */
+.admin-form-sidebar {
+    position: sticky; top: 20px;
+    max-height: calc(100vh - 40px);
+    overflow: hidden auto;
+    /* padding + negative margin keeps card alignment while giving the soft card
+       shadows room so the scroll container doesn't clip them. */
+    padding: 6px; margin: -6px;
+}
+@media (max-width: 991px) {
+    .admin-form-sidebar { position: static; max-height: none; overflow: visible; margin: 0; padding: 0; }
+}
+
 .tag-chip-list { display: flex; flex-wrap: wrap; gap: .35rem; }
 .tag-chip-list .form-check { padding: 0; margin: 0; min-height: 0; }
 .tag-chip-list .form-check-input { position: absolute; opacity: 0; pointer-events: none; }
@@ -522,6 +534,7 @@ tr[data-href] { cursor: pointer; }
 
 /* ---------- Dashboard: KPI bento ---------- */
 .kpi-bento { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr; gap: 16px; }
+.kpi-quad { grid-template-columns: repeat(4, 1fr); } /* 4 even cards, no feature ring */
 .kpi-bento .stat-card { justify-content: center; gap: .5rem; }
 .kpi-bento .stat-card .stat-icon { margin-bottom: .15rem; }
 .kpi-bento .stat-card .value { font-size: 2.35rem; }

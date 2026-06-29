@@ -36,12 +36,16 @@
                 </span>
             </div>
 
-            @unless (auth()->user()?->isAccountant())
             <div class="nav-label">{{ __('admin.nav.overview') }}</div>
+            @if (auth()->user()?->isAccountant())
+            <a href="{{ route('admin.overview') }}" class="{{ request()->routeIs('admin.overview') ? 'active' : '' }}">
+                <i class="fa-solid fa-gauge-high"></i> {{ __('admin.nav.dashboard') }}
+            </a>
+            @else
             <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
                 <i class="fa-solid fa-gauge-high"></i> {{ __('admin.nav.dashboard') }}
             </a>
-            @endunless
+            @endif
 
             <div class="nav-label">{{ __('admin.nav.content') }}</div>
             @unless (auth()->user()?->isAccountant())
@@ -91,6 +95,11 @@
             @endif
             @endunless
 
+            <div class="nav-label">{{ __('admin.nav.account') }}</div>
+            <a href="{{ route('admin.settings') }}" class="{{ request()->routeIs('admin.settings') ? 'active' : '' }}">
+                <i class="fa-solid fa-gear"></i> {{ __('admin.nav.settings') }}
+            </a>
+
             <div class="sidebar-footer">
                 <div class="sidebar-user">
                     <span class="su-avatar">{{ strtoupper(substr(auth()->user()->name ?? 'A', 0, 1)) }}</span>
@@ -115,7 +124,7 @@
                         <i class="fa-solid fa-bars"></i>
                     </button>
                     <nav class="breadcrumb-trail" aria-label="breadcrumb">
-                        <a href="{{ auth()->user()?->isAccountant() ? route('admin.open-data.index') : route('admin.dashboard') }}">
+                        <a href="{{ auth()->user()?->isAccountant() ? route('admin.overview') : route('admin.dashboard') }}">
                             <i class="fa-solid fa-house"></i> {{ __('admin.nav.home') }}
                         </a>
                         <span class="sep">/</span>

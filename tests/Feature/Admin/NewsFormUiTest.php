@@ -38,6 +38,26 @@ describe('News form UI', function () {
             ->assertSee('form-action-bar', false);
     })->group('feature', 'admin');
 
+    it('wraps the publishing sidebar in a single sticky container', function () {
+        app()->setLocale('ru');
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)->get(route('admin.news.create'))
+            ->assertOk()
+            ->assertSee('admin-form-sidebar', false)
+            ->assertDontSee('position: sticky; top: 80px;', false);
+    })->group('feature', 'admin');
+
+    it('checks the slug live without binding it live (so title auto-fill still works)', function () {
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        $this->actingAs($admin)->get(route('admin.news.create'))
+            ->assertOk()
+            ->assertSee('wire:model="slug"', false)
+            ->assertSee('checkSlugAvailability', false)
+            ->assertDontSee('wire:model.live.debounce.400ms="slug"', false);
+    })->group('feature', 'admin');
+
     it('opens the edit page of an article with a scheduled publish time', function () {
         $admin = User::factory()->create(['role' => 'admin']);
         $news = createNewsWithTranslation([
