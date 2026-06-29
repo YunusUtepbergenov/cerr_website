@@ -7,11 +7,12 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
 class OpenDataIndex extends Component
 {
-    use WithFileUploads;
+    use WithFileUploads, WithPagination;
 
     public const LOCALES = ['uz', 'kr', 'ru', 'en'];
 
@@ -159,7 +160,7 @@ class OpenDataIndex extends Component
     {
         return view('livewire.admin.open-data.index', [
             'entries' => OpenData::with('translations')
-                ->orderByDesc('year')->orderByDesc('quarter')->orderByDesc('id')->get(),
+                ->orderByDesc('year')->orderByDesc('quarter')->orderByDesc('id')->paginate(15),
         ])->title(__('admin.open_data.title_section'));
     }
 }

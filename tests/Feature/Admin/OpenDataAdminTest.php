@@ -96,4 +96,13 @@ describe('Open data admin CRUD', function () {
         expect(OpenData::find($entry->id))->toBeNull();
         Storage::disk('local')->assertMissing($path);
     })->group('feature', 'admin');
+
+    it('paginates the entries list at 15 per page', function () {
+        OpenData::factory()->count(18)->create();
+
+        Livewire::actingAs($this->accountant)->test(OpenDataIndex::class)
+            ->assertViewHas('entries', fn ($e) => $e->count() === 15 && $e->total() === 18)
+            ->call('gotoPage', 2)
+            ->assertViewHas('entries', fn ($e) => $e->count() === 3);
+    })->group('feature', 'admin');
 });
