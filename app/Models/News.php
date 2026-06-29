@@ -69,6 +69,11 @@ class News extends Model
         return $this->morphMany(Activity::class, 'subject', 'subject_type', 'subject_id');
     }
 
+    public function dailyViews(): HasMany
+    {
+        return $this->hasMany(NewsDailyView::class);
+    }
+
     /**
      * Restrict to news that should be visible publicly:
      * - status = 'published', or

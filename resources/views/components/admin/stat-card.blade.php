@@ -8,4 +8,7 @@
         <div class="label">{{ $label }}</div>
         <div class="value">{{ $value }}</div>
     </div>
+    @isset($trend)
+        <div class="stat-trend">{{ $trend }}</div>
+    @endisset
 </div>

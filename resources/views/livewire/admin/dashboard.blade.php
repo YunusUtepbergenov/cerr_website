@@ -1,20 +1,8 @@
 <div>
     @php
-        $showActivity = auth()->user()->canViewActivity();
         $ringCirc = 194.78; // 2·π·31
         $ringDash = round($ringCirc * (1 - $publicationRate / 100), 1);
-
-        // Activity dots take their colour + icon from the subject they touched,
-        // with a few actions (delete / publish) overriding to a clearer signal.
-        $subjectStyles = [
-            'News' => ['feed-news', 'fa-newspaper'],
-            'OpenData' => ['feed-data', 'fa-database'],
-            'User' => ['feed-user', 'fa-users'],
-            'Video' => ['feed-video', 'fa-video'],
-            'Category' => ['feed-category', 'fa-folder-open'],
-            'Tag' => ['feed-tag', 'fa-tags'],
-            'Page' => ['feed-page', 'fa-file-lines'],
-        ];
+        $locale = app()->getLocale();
     @endphp
 
     <x-admin.page-header :title="__('admin.dashboard.title')" :subtitle="__('admin.dashboard.welcome', ['name' => explode(' ', auth()->user()->name)[0]])">
@@ -54,13 +42,89 @@
             </div>
         </div>
 
-        <x-admin.stat-card :label="__('admin.dashboard.published')" :value="number_format($publishedCount)" icon="fa-solid fa-circle-check" accent="success" />
-        <x-admin.stat-card :label="__('admin.dashboard.drafts')" :value="number_format($draftCount)" icon="fa-regular fa-pen-to-square" accent="warning" />
-        <x-admin.stat-card :label="__('admin.dashboard.categories')" :value="$categoryCount" icon="fa-solid fa-folder-open" accent="info" />
-        <x-admin.stat-card :label="__('admin.dashboard.tags')" :value="$tagCount" icon="fa-solid fa-tags" accent="violet" />
+        <x-admin.stat-card :label="__('admin.dashboard.total_views')" :value="number_format($totalViews)" icon="fa-solid fa-eye" accent="primary" />
+        <x-admin.stat-card :label="__('admin.dashboard.views_today')" :value="number_format($viewsToday)" icon="fa-regular fa-calendar-check" accent="info" />
+
+        <x-admin.stat-card :label="__('admin.dashboard.views_7d')" :value="number_format($trend7d['current'])" icon="fa-solid fa-chart-line" accent="success">
+            <x-slot:trend>
+                <x-admin.trend-badge :change="$trend7d['change']" />
+                <span class="stat-trend-sub">{{ __('admin.dashboard.vs_prev') }}</span>
+            </x-slot:trend>
+        </x-admin.stat-card>
+
+        <x-admin.stat-card :label="__('admin.dashboard.views_30d')" :value="number_format($trend30d['current'])" icon="fa-solid fa-chart-column" accent="violet">
+            <x-slot:trend>
+                <x-admin.trend-badge :change="$trend30d['change']" />
+                <span class="stat-trend-sub">{{ __('admin.dashboard.vs_prev') }}</span>
+            </x-slot:trend>
+        </x-admin.stat-card>
     </section>
 
-    <div class="dash-grid {{ $showActivity ? '' : 'single' }}">
+    <div class="card spark-panel mb-4">
+        <div class="panel-head">
+            <div>
+                <h3>{{ __('admin.dashboard.views_over_time') }}</h3>
+                <div class="panel-sub">{{ __('admin.dashboard.views_over_time_sub') }}</div>
+            </div>
+        </div>
+        @php
+            $sparkMax = max(1, max($sparkline ?: [0]));
+            $sparkN = max(1, count($sparkline));
+            $gap = 1.4;
+            $barW = (100 - ($sparkN - 1) * $gap) / $sparkN;
+        @endphp
+        <div class="spark-wrap">
+            <svg viewBox="0 0 100 40" preserveAspectRatio="none" class="spark-svg" aria-hidden="true">
+                @foreach ($sparkline as $i => $v)
+                    @php
+                        $barH = $v > 0 ? max(1.5, $v / $sparkMax * 40) : 0.6;
+                        $x = round($i * ($barW + $gap), 2);
+                    @endphp
+                    <rect x="{{ $x }}" y="{{ round(40 - $barH, 2) }}" width="{{ round($barW, 2) }}" height="{{ round($barH, 2) }}" rx="0.5" />
+                @endforeach
+            </svg>
+        </div>
+    </div>
+
+    <div class="dash-grid">
+        <div class="card top-panel">
+            <div class="panel-head">
+                <div>
+                    <h3>{{ __('admin.dashboard.top_viewed') }}</h3>
+                    <div class="panel-sub">{{ __('admin.dashboard.top_viewed_sub') }}</div>
+                </div>
+            </div>
+            <div class="period-tabs">
+                @foreach (['day', 'week', 'month', 'year', 'all'] as $p)
+                    <button type="button" wire:click="setPeriod('{{ $p }}')"
+                            wire:loading.attr="disabled" wire:target="setPeriod"
+                            class="period-tab {{ $topPeriod === $p ? 'active' : '' }}">
+                        {{ __('admin.dashboard.period_'.$p) }}
+                    </button>
+                @endforeach
+            </div>
+            <div class="top-list" wire:loading.class="is-loading" wire:target="setPeriod">
+                @forelse ($topNews as $i => $row)
+                    @php
+                        $t = $row['news']->translations->firstWhere('lang', $locale)
+                            ?? $row['news']->translations->first();
+                    @endphp
+                    <a href="{{ route('admin.news.edit', $row['news']) }}" class="top-row">
+                        <span class="top-rank">{{ $i + 1 }}</span>
+                        <span class="top-body">
+                            <span class="top-title">{{ $t->title ?? '#'.$row['news']->id }}</span>
+                        </span>
+                        <span class="top-views"><i class="fa-regular fa-eye"></i> {{ number_format($row['views']) }}</span>
+                        @if ($topPeriod !== 'all')
+                            <x-admin.trend-badge :change="$row['change']" />
+                        @endif
+                    </a>
+                @empty
+                    <x-admin.empty-state icon="fa-regular fa-eye-slash" :title="__('admin.dashboard.no_view_data')" />
+                @endforelse
+            </div>
+        </div>
+
         <div class="card news-panel">
             <div class="panel-head">
                 <div>
@@ -76,7 +140,7 @@
                     <a href="{{ route('admin.news.edit', $item) }}" class="news-row">
                         <span class="news-id">#{{ $item->id }}</span>
                         <span class="news-body">
-                            <span class="news-title">{{ optional($item->translations->first())->title ?? '—' }}</span>
+                            <span class="news-title">{{ optional($item->translations->firstWhere('lang', $locale) ?? $item->translations->first())->title ?? '—' }}</span>
                             <span class="news-meta">
                                 <x-admin.status-pill :status="$item->status" />
                                 <x-admin.lang-chips :available="$item->translations->pluck('lang')->all()" />
@@ -95,55 +159,5 @@
                 @endforelse
             </div>
         </div>
-
-        @if ($showActivity)
-            <div class="card activity-panel">
-                <div class="panel-head">
-                    <div>
-                        <h3>{{ __('admin.dashboard.recent_activity') }}</h3>
-                        <div class="panel-sub">{{ __('admin.dashboard.recent_activity_sub') }}</div>
-                    </div>
-                    <a href="{{ route('admin.activity.index') }}" class="link-all">
-                        {{ __('admin.dashboard.all_activity') }} <i class="fa-solid fa-arrow-right"></i>
-                    </a>
-                </div>
-                <div class="feed">
-                    @forelse ($recentActivity as $a)
-                        @php
-                            [$dotClass, $dotIcon] = $subjectStyles[class_basename($a->subject_type)] ?? ['feed-default', 'fa-clock-rotate-left'];
-                            if ($a->action === 'deleted') { [$dotClass, $dotIcon] = ['feed-deleted', 'fa-trash-can']; }
-                            elseif ($a->action === 'published') { [$dotClass, $dotIcon] = ['feed-published', 'fa-circle-check']; }
-                            elseif ($a->action === 'unpublished') { [$dotClass, $dotIcon] = ['feed-unpublished', 'fa-eye-slash']; }
-                            elseif ($a->action === 'reset_password') { $dotIcon = 'fa-key'; }
-                            elseif ($a->action === 'updated') { $dotIcon = 'fa-pen'; }
-                        @endphp
-                        <div class="feed-item">
-                            <span class="feed-dot {{ $dotClass }}">
-                                <i class="fa-solid {{ $dotIcon }}"></i>
-                            </span>
-                            <div class="feed-txt">
-                                <b>{{ $a->user->name ?? __('admin.activity.system') }}</b>
-                                {{ __('admin.activity.action_'.$a->action) }}
-                                <span class="feed-subject">{{ class_basename($a->subject_type) }} #{{ $a->subject_id }}</span>
-                                <span class="feed-when">{{ $a->created_at?->diffForHumans() }}</span>
-                            </div>
-                        </div>
-                    @empty
-                        <x-admin.empty-state icon="fa-regular fa-clock" :title="__('admin.activity.no_activity')" />
-                    @endforelse
-                </div>
-
-                @if (auth()->user()->canManageOpenData())
-                    <a href="{{ route('admin.open-data.index') }}" class="mini-cta">
-                        <span class="mc-icon"><i class="fa-solid fa-database"></i></span>
-                        <span class="mc-text">
-                            <b>{{ __('admin.nav.open_data') }}</b>
-                            <small>{{ $pendingOpenData > 0 ? __('admin.dashboard.open_data_pending', ['count' => $pendingOpenData]) : __('admin.dashboard.open_data_manage') }}</small>
-                        </span>
-                        <span class="mc-go"><i class="fa-solid fa-arrow-right"></i></span>
-                    </a>
-                @endif
-            </div>
-        @endif
     </div>
 </div>
