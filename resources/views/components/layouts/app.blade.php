@@ -5,11 +5,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Center for Economic Research and Reforms">
+    <meta name="description" content="{{ $metaDescription ?? 'Center for Economic Research and Reforms' }}">
     <meta name="keywords" content="Center for Economic Research and Reforms">
-    <link rel="canonical" href="https://cerr.uz" />
+    <link rel="canonical" href="{{ $canonical ?? 'https://cerr.uz' }}" />
 
-    <title>Center for Economic Research and Reforms</title>
+    <title>{{ $title ?? 'Center for Economic Research and Reforms' }}</title>
+
+    @isset($ogTitle)
+        <meta property="og:type" content="article">
+        <meta property="og:title" content="{{ $ogTitle }}">
+    @endisset
+    @isset($metaDescription)
+        <meta property="og:description" content="{{ $metaDescription }}">
+    @endisset
+    @isset($ogImage)
+        <meta property="og:image" content="{{ $ogImage }}">
+    @endisset
     <link rel="shortcut icon" href="https://cer.uz/themes/cer/icon/favicon.ico" type="image/x-icon">
     
     <link rel="stylesheet" href="{{asset('css/vendor/bootstrap.min.css')}}">
