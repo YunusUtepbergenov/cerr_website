@@ -53,4 +53,11 @@ return [
     'open_data_empty' => 'Пока нет данных.',
     'open_data_quarter' => 'квартал',
 
+    'related_news' => 'Похожие новости',
+    'min_read' => 'мин чтения',
+    'views_label' => 'просмотров',
+    'share' => 'Поделиться',
+    'copy_link' => 'Копировать ссылку',
+    'link_copied' => 'Ссылка скопирована',
+
 ];

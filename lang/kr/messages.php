@@ -51,4 +51,11 @@ return [
     'open_data_empty' => 'Ҳозирча маълумотлар йўқ.',
     'open_data_quarter' => 'чорак',
 
+    'related_news' => 'Ўхшаш янгиликлар',
+    'min_read' => 'дақиқа ўқиш',
+    'views_label' => 'кўришлар',
+    'share' => 'Улашиш',
+    'copy_link' => 'Ҳаволани нусхалаш',
+    'link_copied' => 'Ҳавола нусхаланди',
+
 ];

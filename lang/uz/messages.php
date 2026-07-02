@@ -52,4 +52,11 @@ return [
     'open_data_empty' => 'Hozircha ma\'lumotlar yo\'q.',
     'open_data_quarter' => 'chorak',
 
+    'related_news' => 'O‘xshash yangiliklar',
+    'min_read' => 'daqiqa o‘qish',
+    'views_label' => 'ko‘rishlar',
+    'share' => 'Ulashish',
+    'copy_link' => 'Havolani nusxalash',
+    'link_copied' => 'Havola nusxalandi',
+
 ];
