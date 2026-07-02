@@ -288,6 +288,8 @@
                         menubar: false,
                         promotion: false,
                         branding: false,
+                        content_css: '{{ asset('css/news-article.css') }}',
+                        body_class: 'news-article-body',
                         plugins: 'lists link image table code autolink media',
                         toolbar: 'undo redo | styles | bold italic underline | bullist numlist | link image media table | alignleft aligncenter alignright | code',
                         paste_data_images: false,
