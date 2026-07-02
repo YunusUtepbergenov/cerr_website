@@ -53,4 +53,20 @@ class NewsTranslation extends Model
 
         return asset('images/news/'.$value);
     }
+
+    /**
+     * Estimated reading time of the body content in whole minutes (min 1).
+     */
+    public function readingTime(): int
+    {
+        $text = trim(strip_tags((string) $this->content));
+
+        if ($text === '') {
+            return 1;
+        }
+
+        $words = count(preg_split('/\s+/', $text, -1, PREG_SPLIT_NO_EMPTY) ?: []);
+
+        return max(1, (int) ceil($words / 200));
+    }
 }
