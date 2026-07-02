@@ -102,13 +102,17 @@ class ShowNews extends Component
     {
         $translation = $this->news->translation;
         $title = $translation->seo_title ?: $translation->title;
+        $cover = $translation->coverUrl();
 
         return view('livewire.show-news')
             ->layout('components.layouts.app', [
                 'title' => $title,
                 'metaDescription' => $translation->seo_description ?: $translation->short_description,
                 'ogTitle' => $title,
-                'ogImage' => $translation->coverUrl(),
+                // Social crawlers require an absolute og:image. coverUrl() can be
+                // host-relative when APP_URL has no scheme (see d241806); url()
+                // absolutizes relative paths and leaves absolute URLs untouched.
+                'ogImage' => $cover ? url($cover) : null,
                 'canonical' => route('show.news', $this->news->slug),
             ]);
     }

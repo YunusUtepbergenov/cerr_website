@@ -187,4 +187,18 @@ describe('ShowNews Component', function () {
             ->assertOk()
             ->assertDontSee('article-cover', false);
     })->group('feature', 'livewire');
+
+    it('exposes an absolute og:image url for a storage-relative cover', function () {
+        setAppLocale('uz');
+        // Reproduce the production config where APP_URL has no scheme, so the
+        // public disk serves host-relative "/storage/..." URLs (see d241806).
+        // Social crawlers require an absolute og:image, so the page must absolutize it.
+        config(['filesystems.disks.public.url' => '/storage']);
+        createNewsWithTranslation(['slug' => 'og-news'], ['image_url' => 'news/covers/og.jpg']);
+
+        $html = $this->get(route('show.news', 'og-news'))->getContent();
+
+        expect((bool) preg_match('/property="og:image" content="([^"]+)"/', $html, $m))->toBeTrue()
+            ->and($m[1])->toStartWith('http');
+    })->group('feature', 'livewire');
 });
