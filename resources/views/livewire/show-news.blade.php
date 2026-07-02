@@ -25,7 +25,9 @@
                         <h1 class="article-title">{{ $news->translation->title }}</h1>
 
                         <div class="article-meta">
-                            <span><i class="fa-light fa-clock"></i> {{ $news->created_at->format('d.m.Y') }}</span>
+                            @if ($news->created_at)
+                                <span><i class="fa-light fa-clock"></i> {{ $news->created_at->format('d.m.Y') }}</span>
+                            @endif
                             <span><i class="fa-light fa-eye"></i> {{ $views >= 1000 ? round($views / 1000, 1).'k' : $views }} @lang('messages.views_label')</span>
                             <span><i class="fa-light fa-book-open"></i> {{ $news->translation->readingTime() }} @lang('messages.min_read')</span>
                         </div>
@@ -79,7 +81,9 @@
                                                 @endif
                                             </div>
                                             <h4 class="related-card-title">{{ $item->translation?->title }}</h4>
-                                            <span class="related-card-date">{{ $item->created_at->format('d.m.Y') }}</span>
+                                            @if ($item->created_at)
+                                                <span class="related-card-date">{{ $item->created_at->format('d.m.Y') }}</span>
+                                            @endif
                                         </a>
                                     </div>
                                 @endforeach
@@ -99,7 +103,9 @@
                                     </div>
                                     <div class="echo-story-text">
                                         <h6><a href="{{ route('show.news', $item->slug) }}" class="title-hover">{{ $item->translation->title }}</a></h6>
-                                        <a href="{{ route('show.news', $item->slug) }}" class="pe-none"><i class="fa-light fa-clock"></i> {{ $item->created_at->format('d-m-Y') }}</a>
+                                        @if ($item->created_at)
+                                            <a href="{{ route('show.news', $item->slug) }}" class="pe-none"><i class="fa-light fa-clock"></i> {{ $item->created_at->format('d-m-Y') }}</a>
+                                        @endif
                                     </div>
                                 </div>
                                 <hr>

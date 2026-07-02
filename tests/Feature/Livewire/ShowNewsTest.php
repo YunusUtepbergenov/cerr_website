@@ -4,6 +4,7 @@ use App\Livewire\ShowNews;
 use App\Models\News;
 use App\Models\NewsTranslation;
 use App\Models\Tag;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redis;
 use Livewire\Livewire;
 
@@ -186,6 +187,24 @@ describe('ShowNews Component', function () {
         $this->get(route('show.news', 'no-cover'))
             ->assertOk()
             ->assertDontSee('article-cover', false);
+    })->group('feature', 'livewire');
+
+    it('renders when the article and sidebar items have null timestamps', function () {
+        setAppLocale('uz');
+        $tag = Tag::factory()->create();
+
+        $main = createNewsWithTranslation(['slug' => 'legacy-main', 'category_id' => null]);
+        $main->tags()->attach($tag->id);
+
+        $related = createNewsWithTranslation(['slug' => 'legacy-related']);
+        $related->tags()->attach($tag->id);
+
+        // Legacy/imported news rows can have null created_at/updated_at; the page
+        // must render regardless (the meta bar, related grid and popular sidebar
+        // all format created_at). Null them directly to bypass Eloquent timestamps.
+        DB::table('news')->update(['created_at' => null, 'updated_at' => null]);
+
+        $this->get(route('show.news', 'legacy-main'))->assertOk();
     })->group('feature', 'livewire');
 
     it('exposes an absolute og:image url for a storage-relative cover', function () {
