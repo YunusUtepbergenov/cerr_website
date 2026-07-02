@@ -110,4 +110,19 @@ describe('HtmlSanitizer', function () {
         expect($out)->toContain('width="300"')
             ->and($out)->toContain('height="200"');
     })->group('unit', 'security');
+
+    it('preserves a centered image style block from the editor', function () {
+        $out = HtmlSanitizer::sanitize('<img src="/a.jpg" style="display: block; margin-left: auto; margin-right: auto;" alt="a">');
+        expect($out)->toContain('display')
+            ->and($out)->toContain('block')
+            ->and($out)->toContain('margin-left')
+            ->and($out)->toContain('margin-right');
+    })->group('unit', 'security');
+
+    it('drops unexpected display values', function () {
+        $out = HtmlSanitizer::sanitize('<p style="display:none;text-align:left">x</p>');
+        expect($out)->not->toContain('display')
+            ->and($out)->not->toContain('none')
+            ->and($out)->toContain('text-align');
+    })->group('unit', 'security');
 });

@@ -51,6 +51,7 @@ class HtmlSanitizer
         'text-align', 'text-decoration',
         'width', 'height', 'max-width',
         'float', 'margin', 'margin-left', 'margin-right',
+        'display',
     ];
 
     public static function sanitize(?string $html): string
@@ -209,6 +210,10 @@ class HtmlSanitizer
             }
 
             if ($value === '' || preg_match('/url\(|expression|javascript:|@import|\/\*|[<>\\\\]/i', $value) === 1) {
+                continue;
+            }
+
+            if ($prop === 'display' && ! in_array(strtolower($value), ['block', 'inline-block', 'inline', 'flex', 'table'], true)) {
                 continue;
             }
 
