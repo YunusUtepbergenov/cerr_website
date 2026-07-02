@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\News;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
 use Livewire\Component;
 
@@ -12,9 +13,13 @@ class ShowNews extends Component
 
     public $popular_news;
 
+    public $related_news;
+
     public function mount($slug): void
     {
-        $news = News::with('translation')->where('slug', $slug)->first();
+        $news = News::with(['translation', 'category.translation', 'tags', 'user'])
+            ->where('slug', $slug)
+            ->first();
 
         if (! $news || ! $news->translation) {
             abort(404);
@@ -33,7 +38,54 @@ class ShowNews extends Component
         }
 
         $locale = app()->getLocale();
-        $this->popular_news = News::published()->whereHas('translations', fn ($query) => $query->where('lang', $locale))->orderBy('view_count', 'DESC')->limit(6)->get();
+
+        $this->popular_news = News::published()
+            ->whereHas('translations', fn ($query) => $query->where('lang', $locale))
+            ->with('translation')
+            ->orderBy('view_count', 'DESC')
+            ->limit(6)
+            ->get();
+
+        $this->related_news = $this->loadRelatedNews($news, $locale);
+    }
+
+    /**
+     * Related articles: published news sharing a tag with the current article,
+     * topped up with same-category news when there aren't enough tag matches.
+     */
+    private function loadRelatedNews(News $news, string $locale): Collection
+    {
+        $tagIds = $news->tags->pluck('id');
+
+        $related = News::published()
+            ->whereHas('translations', fn ($query) => $query->where('lang', $locale))
+            ->where('id', '!=', $news->id)
+            ->when(
+                $tagIds->isNotEmpty(),
+                fn ($query) => $query->whereHas('tags', fn ($tag) => $tag->whereIn('tags.id', $tagIds)),
+                fn ($query) => $query->whereRaw('1 = 0'),
+            )
+            ->with('translation')
+            ->latest()
+            ->limit(3)
+            ->get();
+
+        if ($related->count() < 3 && $news->category_id) {
+            $exclude = $related->pluck('id')->push($news->id);
+
+            $fallback = News::published()
+                ->whereHas('translations', fn ($query) => $query->where('lang', $locale))
+                ->where('category_id', $news->category_id)
+                ->whereNotIn('id', $exclude)
+                ->with('translation')
+                ->latest()
+                ->limit(3 - $related->count())
+                ->get();
+
+            $related = $related->concat($fallback);
+        }
+
+        return $related;
     }
 
     private function trackView(): void
@@ -48,6 +100,16 @@ class ShowNews extends Component
 
     public function render()
     {
-        return view('livewire.show-news');
+        $translation = $this->news->translation;
+        $title = $translation->seo_title ?: $translation->title;
+
+        return view('livewire.show-news')
+            ->layout('components.layouts.app', [
+                'title' => $title,
+                'metaDescription' => $translation->seo_description ?: $translation->short_description,
+                'ogTitle' => $title,
+                'ogImage' => $translation->coverUrl(),
+                'canonical' => route('show.news', $this->news->slug),
+            ]);
     }
 }

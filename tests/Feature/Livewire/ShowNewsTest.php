@@ -3,6 +3,7 @@
 use App\Livewire\ShowNews;
 use App\Models\News;
 use App\Models\NewsTranslation;
+use App\Models\Tag;
 use Illuminate\Support\Facades\Redis;
 use Livewire\Livewire;
 
@@ -112,4 +113,34 @@ describe('ShowNews Component', function () {
                     && $val->last()->id === $news->id;
             });
     })->group('feature', 'livewire', 'critical');
+
+    it('shows related news sharing a tag and excludes the current article', function () {
+        setAppLocale('uz');
+        $tag = Tag::factory()->create();
+
+        $main = createNewsWithTranslation(['slug' => 'main', 'category_id' => null]);
+        $main->tags()->attach($tag->id);
+
+        $related = createNewsWithTranslation(['slug' => 'related-one']);
+        $related->tags()->attach($tag->id);
+
+        $unrelated = createNewsWithTranslation(['slug' => 'unrelated', 'category_id' => null]);
+
+        Livewire::test(ShowNews::class, ['slug' => 'main'])
+            ->assertSet('related_news', fn ($v) => $v->contains('id', $related->id)
+                && ! $v->contains('id', $main->id)
+                && ! $v->contains('id', $unrelated->id));
+    })->group('feature', 'livewire');
+
+    it('falls back to same-category news when there are no tag matches', function () {
+        setAppLocale('uz');
+        $category = createCategoryWithTranslation();
+
+        $main = createNewsWithTranslation(['slug' => 'main', 'category_id' => $category->id]);
+        $sibling = createNewsWithTranslation(['slug' => 'sibling', 'category_id' => $category->id]);
+
+        Livewire::test(ShowNews::class, ['slug' => 'main'])
+            ->assertSet('related_news', fn ($v) => $v->contains('id', $sibling->id)
+                && ! $v->contains('id', $main->id));
+    })->group('feature', 'livewire');
 });
