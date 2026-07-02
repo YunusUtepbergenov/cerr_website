@@ -208,7 +208,7 @@ class HtmlSanitizer
                 continue;
             }
 
-            if ($value === '' || preg_match('/url\(|expression|javascript:|@import|[<>\\\\]/i', $value) === 1) {
+            if ($value === '' || preg_match('/url\(|expression|javascript:|@import|\/\*|[<>\\\\]/i', $value) === 1) {
                 continue;
             }
 

@@ -92,9 +92,17 @@ describe('HtmlSanitizer', function () {
     })->group('unit', 'security');
 
     it('drops url() based style values', function () {
-        $out = HtmlSanitizer::sanitize('<div style="background:url(javascript:alert(1))">x</div>');
+        $out = HtmlSanitizer::sanitize('<p style="width:url(javascript:alert(1));text-align:left">x</p>');
         expect($out)->not->toContain('url(')
-            ->and($out)->not->toContain('javascript');
+            ->and($out)->not->toContain('javascript')
+            ->and($out)->toContain('text-align');
+    })->group('unit', 'security');
+
+    it('drops style values obfuscated with css comments', function () {
+        $out = HtmlSanitizer::sanitize('<p style="width:expr/**/ession(alert(1));text-align:left">x</p>');
+        expect($out)->not->toContain('/*')
+            ->and($out)->not->toContain('ession')
+            ->and($out)->toContain('text-align');
     })->group('unit', 'security');
 
     it('keeps image width and height attributes', function () {
