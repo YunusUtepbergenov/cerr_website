@@ -143,4 +143,48 @@ describe('ShowNews Component', function () {
             ->assertSet('related_news', fn ($v) => $v->contains('id', $sibling->id)
                 && ! $v->contains('id', $main->id));
     })->group('feature', 'livewire');
+
+    it('sets the page title from seo_title', function () {
+        setAppLocale('uz');
+        createNewsWithTranslation(['slug' => 'seo-news'], ['seo_title' => 'Custom SEO Title', 'title' => 'Normal Title']);
+
+        $this->get(route('show.news', 'seo-news'))->assertSee('Custom SEO Title', false);
+    })->group('feature', 'livewire');
+
+    it('falls back to the article title when seo_title is empty', function () {
+        setAppLocale('uz');
+        createNewsWithTranslation(['slug' => 'no-seo'], ['seo_title' => null, 'title' => 'Just The Title']);
+
+        $this->get(route('show.news', 'no-seo'))->assertSee('Just The Title', false);
+    })->group('feature', 'livewire');
+
+    it('renders the article body wrapper, preserved styling, tags and related section', function () {
+        setAppLocale('uz');
+        $tag = Tag::factory()->create(['name' => 'economy']);
+
+        $news = createNewsWithTranslation(
+            ['slug' => 'full-render', 'category_id' => null],
+            ['content' => '<p style="text-align:center">Centered body copy</p>'],
+        );
+        $news->tags()->attach($tag->id);
+
+        $related = createNewsWithTranslation(['slug' => 'rel-article']);
+        $related->tags()->attach($tag->id);
+
+        $this->get(route('show.news', 'full-render'))
+            ->assertSee('news-article-body', false)
+            ->assertSee('text-align', false)
+            ->assertSee(__('messages.min_read'))
+            ->assertSee('economy')
+            ->assertSee(__('messages.related_news'));
+    })->group('feature', 'livewire');
+
+    it('renders no cover figure when the cover image is missing', function () {
+        setAppLocale('uz');
+        createNewsWithTranslation(['slug' => 'no-cover'], ['image_url' => '']);
+
+        $this->get(route('show.news', 'no-cover'))
+            ->assertOk()
+            ->assertDontSee('article-cover', false);
+    })->group('feature', 'livewire');
 });
