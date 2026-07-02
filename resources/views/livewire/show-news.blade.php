@@ -121,10 +121,13 @@
                     get facebook() { return 'https://www.facebook.com/sharer/sharer.php?u=' + this.encoded; },
                     get twitter() { return 'https://twitter.com/intent/tweet?url=' + this.encoded; },
                     copy() {
-                        navigator.clipboard.writeText(url).then(() => {
+                        const done = () => {
                             this.copied = true;
                             setTimeout(() => { this.copied = false; }, 2000);
-                        });
+                        };
+                        if (navigator.clipboard && navigator.clipboard.writeText) {
+                            navigator.clipboard.writeText(url).then(done).catch(() => {});
+                        }
                     },
                 }));
             });
