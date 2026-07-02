@@ -72,4 +72,34 @@ describe('HtmlSanitizer', function () {
         $out = HtmlSanitizer::sanitize('<p>Ўзбекча тест</p>');
         expect($out)->toContain('Ўзбекча тест');
     })->group('unit', 'security');
+
+    it('preserves safe text-align styling', function () {
+        $out = HtmlSanitizer::sanitize('<p style="text-align:center">x</p>');
+        expect($out)->toContain('text-align')
+            ->and($out)->toContain('center');
+    })->group('unit', 'security');
+
+    it('drops disallowed style properties but keeps allowed ones', function () {
+        $out = HtmlSanitizer::sanitize('<p style="position:fixed;text-align:center">x</p>');
+        expect($out)->not->toContain('position')
+            ->and($out)->toContain('text-align');
+    })->group('unit', 'security');
+
+    it('drops style declarations with dangerous values', function () {
+        $out = HtmlSanitizer::sanitize('<p style="width:expression(alert(1));text-align:left">x</p>');
+        expect($out)->not->toContain('expression')
+            ->and($out)->toContain('text-align');
+    })->group('unit', 'security');
+
+    it('drops url() based style values', function () {
+        $out = HtmlSanitizer::sanitize('<div style="background:url(javascript:alert(1))">x</div>');
+        expect($out)->not->toContain('url(')
+            ->and($out)->not->toContain('javascript');
+    })->group('unit', 'security');
+
+    it('keeps image width and height attributes', function () {
+        $out = HtmlSanitizer::sanitize('<img src="/a.jpg" width="300" height="200" alt="a">');
+        expect($out)->toContain('width="300"')
+            ->and($out)->toContain('height="200"');
+    })->group('unit', 'security');
 });

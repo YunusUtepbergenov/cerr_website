@@ -32,7 +32,7 @@ class HtmlSanitizer
         'img' => ['src', 'alt', 'title', 'width', 'height'],
         'th' => ['colspan', 'rowspan', 'scope'],
         'td' => ['colspan', 'rowspan'],
-        '*' => ['class', 'id', 'lang', 'dir'],
+        '*' => ['class', 'id', 'lang', 'dir', 'style'],
     ];
 
     /**
@@ -41,6 +41,17 @@ class HtmlSanitizer
      * @var list<string>
      */
     private const SAFE_URL_SCHEMES = ['http', 'https', 'mailto', 'tel'];
+
+    /**
+     * CSS properties permitted inside inline style attributes.
+     *
+     * @var list<string>
+     */
+    private const ALLOWED_STYLE_PROPS = [
+        'text-align', 'text-decoration',
+        'width', 'height', 'max-width',
+        'float', 'margin', 'margin-left', 'margin-right',
+    ];
 
     public static function sanitize(?string $html): string
     {
@@ -113,6 +124,15 @@ class HtmlSanitizer
                         $el->removeAttribute($name);
                     }
                 }
+
+                if ($lower === 'style') {
+                    $clean = self::sanitizeStyle($el->getAttribute($name));
+                    if ($clean === '') {
+                        $el->removeAttribute($name);
+                    } else {
+                        $el->setAttribute($name, $clean);
+                    }
+                }
             }
 
             if ($tag === 'a' && $el->getAttribute('target') === '_blank') {
@@ -162,5 +182,39 @@ class HtmlSanitizer
         }
 
         return in_array($scheme, self::SAFE_URL_SCHEMES, true);
+    }
+
+    /**
+     * Reduce an inline style string to a safe, allowlisted subset.
+     */
+    private static function sanitizeStyle(string $style): string
+    {
+        $safe = [];
+
+        foreach (explode(';', $style) as $declaration) {
+            if (trim($declaration) === '') {
+                continue;
+            }
+
+            $parts = explode(':', $declaration, 2);
+            if (count($parts) !== 2) {
+                continue;
+            }
+
+            $prop = strtolower(trim($parts[0]));
+            $value = trim($parts[1]);
+
+            if (! in_array($prop, self::ALLOWED_STYLE_PROPS, true)) {
+                continue;
+            }
+
+            if ($value === '' || preg_match('/url\(|expression|javascript:|@import|[<>\\\\]/i', $value) === 1) {
+                continue;
+            }
+
+            $safe[] = $prop.': '.$value;
+        }
+
+        return implode('; ', $safe);
     }
 }
