@@ -5,6 +5,14 @@ use App\Models\NewsDailyView;
 use Illuminate\Support\Facades\Redis;
 
 describe('FlushNewsViewCounts Command', function () {
+    // The news:views Redis hash is shared, real state that DB transactions do not
+    // roll back. Clear it before AND after each test so a stale news id leaked by
+    // another test can't make the flush command insert a daily-view row for a
+    // rolled-back news row (a foreign-key violation).
+    beforeEach(function () {
+        Redis::del('news:views');
+    });
+
     afterEach(function () {
         Redis::del('news:views');
     });

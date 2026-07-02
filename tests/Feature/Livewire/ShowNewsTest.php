@@ -11,6 +11,9 @@ use Livewire\Livewire;
 describe('ShowNews Component', function () {
     beforeEach(function () {
         setAppLocale('uz');
+        // Clear the shared, non-transactional news:views Redis hash so a leaked
+        // news id can't bleed into view-tracking assertions or other suites.
+        Redis::del('news:views');
     });
 
     afterEach(function () {
