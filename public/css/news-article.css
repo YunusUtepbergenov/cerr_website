@@ -1,8 +1,6 @@
 /* News article page. Shared by the public show page and the TinyMCE editor
    (loaded via content_css + body_class="news-article-body") for true WYSIWYG. */
 
-[x-cloak] { display: none !important; }
-
 /* ---- Article header --------------------------------------------------- */
 .news-article { max-width: 780px; }
 
@@ -10,21 +8,6 @@
 .article-breadcrumb a { color: #6b7280; text-decoration: none; }
 .article-breadcrumb a:hover { color: #2563eb; }
 .article-breadcrumb .sep { margin: 0 8px; color: #cbd5e1; }
-
-.article-category-badge {
-    display: inline-block;
-    background: #2563eb;
-    color: #fff;
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: .4px;
-    padding: 4px 12px;
-    border-radius: 20px;
-    text-decoration: none;
-    margin-bottom: 14px;
-}
-.article-category-badge:hover { background: #1d4ed8; color: #fff; }
 
 .article-title {
     font-size: clamp(28px, 4vw, 40px);
@@ -103,23 +86,12 @@
 .news-article-body tbody tr:nth-child(even) { background: #fbfcfe; }
 .news-article-body hr { border: 0; border-top: 1px solid #e5e7eb; margin: 2em 0; }
 
-/* ---- Footer: tags + share --------------------------------------------- */
+/* ---- Footer: tags ----------------------------------------------------- */
 .article-footer {
-    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;
-    gap: 16px; margin-top: 32px; padding-top: 20px; border-top: 1px solid #eceff3;
+    margin-top: 32px; padding-top: 20px; border-top: 1px solid #eceff3;
 }
 .article-tags { display: flex; flex-wrap: wrap; gap: 8px; }
 .article-tag { background: #f1f5f9; color: #475569; font-size: 13px; padding: 5px 12px; border-radius: 6px; }
-.article-share { display: flex; align-items: center; gap: 10px; }
-.article-share .share-label { font-size: 14px; color: #6b7280; }
-.share-btn {
-    display: inline-flex; align-items: center; justify-content: center;
-    width: 38px; height: 38px; border-radius: 50%;
-    border: 1px solid #e5e7eb; background: #fff; color: #475569;
-    cursor: pointer; transition: all .15s; text-decoration: none;
-}
-.share-btn:hover { background: #2563eb; color: #fff; border-color: #2563eb; }
-.article-share .copied { font-size: 13px; color: #16a34a; }
 
 /* ---- Related news ------------------------------------------------------ */
 .related-news { margin-top: 48px; }
@@ -140,6 +112,5 @@
 .related-card-date { font-size: 13px; color: #9ca3af; }
 
 @media (max-width: 767px) {
-    .article-footer { flex-direction: column; align-items: flex-start; }
     .related-news .col-md-4 { margin-bottom: 24px; }
 }

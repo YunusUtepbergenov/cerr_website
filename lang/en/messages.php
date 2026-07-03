@@ -54,8 +54,5 @@ return [
     'related_news' => 'Related news',
     'min_read' => 'min read',
     'views_label' => 'views',
-    'share' => 'Share',
-    'copy_link' => 'Copy link',
-    'link_copied' => 'Link copied',
 
 ];

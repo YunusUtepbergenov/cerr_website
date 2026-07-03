@@ -18,10 +18,6 @@
                             @endif
                         </nav>
 
-                        @if ($news->category?->translation)
-                            <a href="{{ route('show.category', $news->category->slug) }}" class="article-category-badge">{{ $news->category->translation->name }}</a>
-                        @endif
-
                         <h1 class="article-title">{{ $news->translation->title }}</h1>
 
                         <div class="article-meta">
@@ -46,26 +42,15 @@
                             @sanitized($news->translation->content)
                         </div>
 
-                        <div class="article-footer">
-                            @if ($news->tags->isNotEmpty())
+                        @if ($news->tags->isNotEmpty())
+                            <div class="article-footer">
                                 <div class="article-tags">
                                     @foreach ($news->tags as $tag)
                                         <span class="article-tag">#{{ $tag->name }}</span>
                                     @endforeach
                                 </div>
-                            @else
-                                <span></span>
-                            @endif
-
-                            <div class="article-share" x-data="articleShare(@js(route('show.news', $news->slug)))">
-                                <span class="share-label">@lang('messages.share'):</span>
-                                <a :href="telegram" target="_blank" rel="noopener" class="share-btn"><i class="fa-brands fa-telegram"></i></a>
-                                <a :href="facebook" target="_blank" rel="noopener" class="share-btn"><i class="fa-brands fa-facebook-f"></i></a>
-                                <a :href="twitter" target="_blank" rel="noopener" class="share-btn"><i class="fa-brands fa-x-twitter"></i></a>
-                                <button type="button" @click="copy()" class="share-btn" title="@lang('messages.copy_link')"><i class="fa-light fa-link"></i></button>
-                                <span class="copied" x-show="copied" x-cloak>@lang('messages.link_copied')</span>
                             </div>
-                        </div>
+                        @endif
                     </article>
 
                     @if ($related_news->isNotEmpty())
@@ -116,27 +101,4 @@
             </div>
         </div>
     </section>
-
-    @push('scripts')
-        <script>
-            document.addEventListener('alpine:init', () => {
-                Alpine.data('articleShare', (url) => ({
-                    copied: false,
-                    get encoded() { return encodeURIComponent(url); },
-                    get telegram() { return 'https://t.me/share/url?url=' + this.encoded; },
-                    get facebook() { return 'https://www.facebook.com/sharer/sharer.php?u=' + this.encoded; },
-                    get twitter() { return 'https://twitter.com/intent/tweet?url=' + this.encoded; },
-                    copy() {
-                        const done = () => {
-                            this.copied = true;
-                            setTimeout(() => { this.copied = false; }, 2000);
-                        };
-                        if (navigator.clipboard && navigator.clipboard.writeText) {
-                            navigator.clipboard.writeText(url).then(done).catch(() => {});
-                        }
-                    },
-                }));
-            });
-        </script>
-    @endpush
 </div>

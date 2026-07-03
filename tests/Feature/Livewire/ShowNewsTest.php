@@ -192,6 +192,24 @@ describe('ShowNews Component', function () {
             ->assertDontSee('article-cover', false);
     })->group('feature', 'livewire');
 
+    it('does not render the category badge or share widget', function () {
+        setAppLocale('uz');
+        $category = createCategoryWithTranslation();
+        $tag = Tag::factory()->create(['name' => 'economy']);
+
+        $news = createNewsWithTranslation(['slug' => 'no-badge-share', 'category_id' => $category->id]);
+        $news->tags()->attach($tag->id);
+
+        $this->get(route('show.news', 'no-badge-share'))
+            ->assertOk()
+            ->assertDontSee('article-category-badge', false)
+            ->assertDontSee('article-share', false)
+            ->assertDontSee('articleShare', false)
+            // category navigation is still available via the breadcrumb, and tags still render
+            ->assertSee(route('show.category', $category->slug), false)
+            ->assertSee('economy');
+    })->group('feature', 'livewire');
+
     it('renders when the article and sidebar items have null timestamps', function () {
         setAppLocale('uz');
         $tag = Tag::factory()->create();
