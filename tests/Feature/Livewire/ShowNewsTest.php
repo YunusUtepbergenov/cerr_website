@@ -210,6 +210,29 @@ describe('ShowNews Component', function () {
             ->assertSee('economy');
     })->group('feature', 'livewire');
 
+    it('renders the Meridian layout: kicker, lead, single article column and popular list', function () {
+        setAppLocale('uz');
+        $category = createCategoryWithTranslation(['slug' => 'research']);
+
+        $main = createNewsWithTranslation(
+            ['slug' => 'meridian-main', 'category_id' => $category->id],
+            ['short_description' => 'A standfirst on Q1 growth.'],
+        );
+
+        // a second article so the Popular list has something to render
+        createNewsWithTranslation(['slug' => 'meridian-other', 'view_count' => 500]);
+
+        $this->get(route('show.news', 'meridian-main'))
+            ->assertOk()
+            ->assertSee('news-article-section', false)   // Meridian shell
+            ->assertSee('article-kicker', false)          // azure category kicker
+            ->assertSee('article-lead', false)            // standfirst
+            ->assertSee('A standfirst on Q1 growth.')
+            ->assertSee('article-more', false)            // distinct "read next" band
+            ->assertSee('popular-item', false)            // numbered popular list
+            ->assertSee(__('messages.popular'));
+    })->group('feature', 'livewire');
+
     it('renders when the article and sidebar items have null timestamps', function () {
         setAppLocale('uz');
         $tag = Tag::factory()->create();
