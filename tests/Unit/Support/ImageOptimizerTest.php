@@ -50,17 +50,17 @@ describe('ImageOptimizer', function () {
         expect(filesize($target))->toBe(filesize($source->getRealPath()));
     })->group('unit', 'image');
 
-    it('copies SVG unchanged', function () {
-        $svg = '<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><rect width="100" height="100" fill="red"/></svg>';
+    it('refuses SVG and writes nothing (defense in depth against stored XSS)', function () {
+        $svg = '<svg xmlns="http://www.w3.org/2000/svg"><script>alert(1)</script></svg>';
         $sourcePath = $this->tmpDir.'/source.svg';
         file_put_contents($sourcePath, $svg);
         $source = new UploadedFile($sourcePath, 'logo.svg', 'image/svg+xml', null, true);
         $target = $this->tmpDir.'/logo.svg';
 
-        $this->optimizer->optimize($source, $target);
-
-        expect(file_get_contents($target))->toBe($svg);
-    })->group('unit', 'image');
+        expect(fn () => $this->optimizer->optimize($source, $target))
+            ->toThrow(RuntimeException::class);
+        expect(file_exists($target))->toBeFalse();
+    })->group('unit', 'image', 'security');
 
     it('falls back to copying the original on processing failure', function () {
         $sourcePath = $this->tmpDir.'/corrupt.jpg';

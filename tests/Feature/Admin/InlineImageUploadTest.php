@@ -31,6 +31,24 @@ describe('Inline image upload', function () {
         $response->assertStatus(302); // redirected back with validation errors
     })->group('feature', 'admin');
 
+    it('rejects SVG uploads to prevent stored XSS', function () {
+        Storage::fake('public');
+        $admin = User::factory()->create(['role' => 'admin']);
+
+        // An SVG can carry <script>; served from our origin it would execute.
+        $svg = <<<'SVG'
+        <svg xmlns="http://www.w3.org/2000/svg"><script>alert(document.domain)</script></svg>
+        SVG;
+        $file = UploadedFile::fake()->createWithContent('logo.svg', $svg);
+
+        $response = $this->actingAs($admin)->post(route('admin.inline-image.store'), [
+            'file' => $file,
+        ]);
+
+        $response->assertStatus(302); // rejected by validation
+        expect(Storage::disk('public')->files('news/inline'))->toBeEmpty();
+    })->group('feature', 'admin', 'security');
+
     it('blocks non-admins', function () {
         $user = User::factory()->create(['role' => 'viewer']);
 

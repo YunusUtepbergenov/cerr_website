@@ -15,14 +15,22 @@ class ImageOptimizer
      * - JPEG/PNG/WebP: scaled down to 1920px on the longer side, re-encoded
      *   at quality 82, EXIF stripped, orientation applied to pixels first.
      * - GIF: copied unchanged (preserves animation).
-     * - SVG: copied unchanged (vector).
+     * - SVG: rejected — it can carry executable script and must never reach a
+     *   web-served disk. Upload validation already blocks it; this is defense
+     *   in depth so a future validation change cannot reopen the hole.
      * - On any failure: copy the original file unchanged and log a warning.
+     *
+     * @throws \RuntimeException when handed an SVG.
      */
     public function optimize(UploadedFile $file, string $absolutePath): void
     {
         $extension = strtolower($file->getClientOriginalExtension() ?: $file->extension());
 
-        if (in_array($extension, ['gif', 'svg'], true)) {
+        if ($extension === 'svg' || in_array((string) $file->getMimeType(), ['image/svg+xml', 'image/svg'], true)) {
+            throw new \RuntimeException('SVG uploads are not permitted.');
+        }
+
+        if ($extension === 'gif') {
             $this->copyOriginal($file, $absolutePath);
 
             return;
