@@ -20,7 +20,7 @@ class Vacancies extends Component
             abort(404);
         }
 
-        $this->popular_news = News::whereHas('translations', fn ($query) => $query->where('lang', app()->getLocale()))->orderBy('view_count', 'DESC')->limit(8)->get();
+        $this->popular_news = News::whereHas('translations', fn ($query) => $query->where('lang', app()->getLocale()))->with('translation')->orderBy('view_count', 'DESC')->limit(8)->get();
     }
 
     public function render()

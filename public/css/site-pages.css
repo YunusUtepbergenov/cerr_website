@@ -1,0 +1,82 @@
+/* Static site pages (contact). Meridian design language.
+   Requires news-article.css to be loaded on the same page for the --na-* tokens
+   and the self-hosted fonts. Uses collision-safe prefixes (cc-, contact-, sp-). */
+
+.sp-wide { max-width: 960px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 32px); }
+
+.contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: 28px;
+    align-items: start;
+    margin-top: 8px;
+}
+.contact-cards { display: grid; gap: 12px; }
+.contact-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 15px;
+    align-items: center;
+    background: var(--na-paper);
+    border: 1px solid var(--na-hair);
+    border-radius: 12px;
+    padding: 16px 18px;
+}
+.contact-card .cc-ic {
+    width: 42px;
+    height: 42px;
+    border-radius: 10px;
+    background: var(--na-mist);
+    color: var(--na-navy);
+    display: grid;
+    place-items: center;
+    font-size: 16px;
+}
+.contact-card .cc-info { display: block; min-width: 0; }
+.contact-card .cc-lbl {
+    display: block;
+    font-family: var(--na-font-display);
+    font-size: 11px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--na-slate);
+}
+.contact-card .cc-val {
+    display: block;
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--na-ink);
+    margin-top: 3px;
+}
+.contact-card .cc-val a { color: var(--na-azure); text-decoration: none; font-weight: 600; }
+.contact-card .cc-val a:hover { text-decoration: underline; }
+
+.cc-social { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 8px; }
+.cc-social a {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: var(--na-navy);
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    transition: background .15s ease;
+}
+.cc-social a:hover { background: var(--na-azure); color: #fff; }
+
+.contact-map {
+    border: 1px solid var(--na-hair);
+    border-radius: 12px;
+    overflow: hidden;
+    min-height: 480px;
+}
+.contact-map iframe { width: 100%; height: 100%; min-height: 480px; border: 0; display: block; }
+
+@media (max-width: 800px) {
+    .contact-layout { grid-template-columns: 1fr; }
+    .contact-map,
+    .contact-map iframe { min-height: 340px; }
+}

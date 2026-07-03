@@ -1,44 +1,50 @@
 <div>
-    <section class="echo-hero-section inner inner-post">
-        <div class="echo-hero">
-            <div class="container">
-                <div class="echo-full-hero-content">
-                    <div class="row gx-5 sticky-coloum-wrap">
-                        <div class="col-xl-8 col-lg-8">
-                            <div class="echo-hero-baner">
-                                <div class="echo-inner-img-ct-1  img-transition-scale">
-                                    <a href="#"><img src="{{$page->translation->image}}" alt="Echo" class="post-style-1-frist-hero-img"></a>
-                                </div>
-                                <h3 class="echo-hero-title text-capitalize font-weight-bold"><a href="#" class="title-hover">{{$page->translation->title}}</a></h3>
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('css/news-article.css') }}">
+    @endpush
 
-                                <div>
-                                    @sanitized($page->translation->content)
-                                </div>
-                            </div>
-                        </div>
+    <section class="news-article-section">
+        <article class="news-article">
+            <nav class="article-breadcrumb" aria-label="breadcrumb">
+                <a href="{{ route('home') }}">@lang('messages.main')</a>
+                <span class="sep">/</span>
+                <span class="current">{{ $page->translation->title }}</span>
+            </nav>
 
+            <h1 class="article-title">{{ $page->translation->title }}</h1>
 
-                        <div class="col-xl-4 col-lg-4 sticky-coloum-item">
-                            <div class="echo-right-ct-1">
-                                <div class="echo-home-1-hero-area-top-story">
-                                    <h5 class="text-center">@lang('messages.popular')</h5>
-                                    @foreach($popular_news as $news)
-                                        <div class="echo-top-story" wire:key="popular-news-{{ $news->id }}">
-                                            <div class="echo-story-picture img-transition-scale">
-                                                <a href="{{route('show.news', $news->slug)}}"><img src="{{$news->translation->coverUrl()}}" alt="Echo" class="img-hover"></a>
-                                            </div>
-                                            <div class="echo-story-text">
-                                                <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
-                                                <a href="{{route('show.news', $news->slug)}}" class="pe-none"><i class="fa-light fa-clock"></i> {{ \Carbon\Carbon::parse($news->created_at)->format('d.m.Y') }}</a>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
+            @if (str_starts_with((string) $page->translation->image, 'http'))
+                <figure class="article-cover">
+                    <img src="{{ $page->translation->image }}" alt="{{ $page->translation->title }}">
+                </figure>
+            @endif
+
+            <div class="news-article-body">
+                @sanitized($page->translation->content)
+            </div>
+        </article>
+    </section>
+
+    @if ($popular_news->isNotEmpty())
+        <section class="article-more">
+            <div class="article-more-inner">
+                <div class="article-more-block">
+                    <h2 class="article-more-title">@lang('messages.popular')</h2>
+                    <div class="popular-list">
+                        @foreach ($popular_news as $item)
+                            <a href="{{ route('show.news', $item->slug) }}" class="popular-item" wire:key="popular-{{ $item->id }}">
+                                <span class="pop-num">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                                <span class="pop-meta">
+                                    <span class="pop-title">{{ $item->translation?->title }}</span>
+                                    @if ($item->created_at)
+                                        <span class="pop-date">{{ $item->created_at->format('d.m.Y') }}</span>
+                                    @endif
+                                </span>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 </div>

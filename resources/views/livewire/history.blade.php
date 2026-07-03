@@ -1,34 +1,21 @@
 <div>
-    <section class="echo-banner-innerpage">
-        <div class="container">
-            <div class="banner-inner">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="banner-image top">
-                            <img src="https://cer.uz/uploads/menu/212-c6c0545ece.jpg" alt="Echo">
-                        </div>
-                    </div>
-                </div>
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('css/news-article.css') }}">
+    @endpush
+
+    <section class="news-article-section">
+        <article class="news-article">
+            <nav class="article-breadcrumb" aria-label="breadcrumb">
+                <a href="{{ route('home') }}">@lang('messages.main')</a>
+                <span class="sep">/</span>
+                <span class="current">{{ $page->translation->title }}</span>
+            </nav>
+
+            <h1 class="article-title">{{ $page->translation->title }}</h1>
+
+            <div class="news-article-body">
+                @sanitized($page->translation->content)
             </div>
-        </div>
-    </section>
-    <section class="echo-hero-section inner inner-post inner-post-3">
-        <div class="echo-hero">
-            <div class="container">
-                <div class="echo-full-hero-content">
-                    <div class="row gx-5 sticky-coloum-wrap">
-                        <div class="col-xl-12">
-                            <div class="echo-hero-baner" style="text-align: justify;">
-                                <h2 class="echo-hero-title text-capitalize font-weight-bold" style="text-align: center;"><a href="#" class="title-hover">{{$page->translation->title}}</a></h2>
-                                <div class="echo-hero-area-titlepost-post-like-comment-share">
-                                </div>
-                                <hr>
-                                @sanitized($page->translation->content)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        </article>
     </section>
 </div>
