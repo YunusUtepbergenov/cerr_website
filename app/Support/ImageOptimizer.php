@@ -5,38 +5,65 @@ namespace App\Support;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Drivers\Gd\Driver;
 use Intervention\Image\ImageManager;
+use RuntimeException;
 use Throwable;
 
 class ImageOptimizer
 {
     /**
+     * Allowed image MIME types mapped to the ONLY extensions we will ever store.
+     *
+     * The stored extension is always derived from the file's sniffed content —
+     * never the attacker-controlled client filename — so a polyglot uploaded as
+     * "evil.php" can never be written with a .php (or any executable) extension
+     * on the web-served public disk. SVG is deliberately absent: it can carry
+     * script and must never reach a served disk.
+     *
+     * @var array<string, string>
+     */
+    private const SAFE_TYPES = [
+        'image/jpeg' => 'jpg',
+        'image/pjpeg' => 'jpg',
+        'image/png' => 'png',
+        'image/gif' => 'gif',
+        'image/webp' => 'webp',
+    ];
+
+    /**
+     * Resolve the safe storage extension for an uploaded image from its actual
+     * (content-sniffed) MIME type.
+     *
+     * @throws RuntimeException when the file is not an allowed raster image.
+     */
+    public static function safeExtension(UploadedFile $file): string
+    {
+        $mime = strtolower((string) $file->getMimeType());
+
+        if (! isset(self::SAFE_TYPES[$mime])) {
+            throw new RuntimeException('Unsupported image type: '.($mime !== '' ? $mime : 'unknown'));
+        }
+
+        return self::SAFE_TYPES[$mime];
+    }
+
+    /**
      * Optimize an uploaded image and write it to $absolutePath.
      *
-     * - JPEG/PNG/WebP: scaled down to 1920px on the longer side, re-encoded
-     *   at quality 82, EXIF stripped, orientation applied to pixels first.
+     * - JPEG/PNG/WebP: scaled down to 1920px on the longer side, re-encoded at
+     *   quality 82, EXIF stripped, orientation baked into pixels (re-encoding
+     *   also strips any payload appended to a polyglot).
      * - GIF: copied unchanged (preserves animation).
-     * - SVG: rejected — it can carry executable script and must never reach a
-     *   web-served disk. Upload validation already blocks it; this is defense
-     *   in depth so a future validation change cannot reopen the hole.
-     * - On any failure: copy the original file unchanged and log a warning.
+     * - Anything that is not an allowed raster image (including SVG): rejected.
+     * - On a processing failure of an otherwise-valid image: copy the original
+     *   file and log a warning.
      *
-     * @throws \RuntimeException when handed an SVG.
+     * @throws RuntimeException when the file is not an allowed raster image.
      */
     public function optimize(UploadedFile $file, string $absolutePath): void
     {
-        $extension = strtolower($file->getClientOriginalExtension() ?: $file->extension());
-
-        if ($extension === 'svg' || in_array((string) $file->getMimeType(), ['image/svg+xml', 'image/svg'], true)) {
-            throw new \RuntimeException('SVG uploads are not permitted.');
-        }
+        $extension = self::safeExtension($file);
 
         if ($extension === 'gif') {
-            $this->copyOriginal($file, $absolutePath);
-
-            return;
-        }
-
-        if (! in_array($extension, ['jpg', 'jpeg', 'png', 'webp'], true)) {
             $this->copyOriginal($file, $absolutePath);
 
             return;

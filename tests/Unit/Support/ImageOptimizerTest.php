@@ -62,15 +62,36 @@ describe('ImageOptimizer', function () {
         expect(file_exists($target))->toBeFalse();
     })->group('unit', 'image', 'security');
 
-    it('falls back to copying the original on processing failure', function () {
+    it('falls back to copying the original when a valid image cannot be processed', function () {
+        // A real JPEG signature (so it sniffs as image/jpeg and passes the
+        // content check) but an unprocessable body, to exercise the fallback.
+        $corrupt = "\xFF\xD8\xFF\xE0\x00\x10JFIF\x00\x01\x02\x00\x00\x01\x00\x01\x00\x00".str_repeat("\x00", 64);
         $sourcePath = $this->tmpDir.'/corrupt.jpg';
-        file_put_contents($sourcePath, 'not actually an image');
+        file_put_contents($sourcePath, $corrupt);
         $source = new UploadedFile($sourcePath, 'corrupt.jpg', 'image/jpeg', null, true);
-        $target = $this->tmpDir.'/corrupt.jpg';
+        $target = $this->tmpDir.'/corrupt-out.jpg';
 
         $this->optimizer->optimize($source, $target);
 
-        expect(file_exists($target))->toBeTrue();
-        expect(file_get_contents($target))->toBe('not actually an image');
+        expect(file_exists($target))->toBeTrue()
+            ->and(file_get_contents($target))->toBe($corrupt);
     })->group('unit', 'image');
+
+    it('safeExtension derives the extension from content, not the .php client name', function () {
+        // 1x1 transparent GIF bytes, presented with an executable client filename.
+        $gif = base64_decode('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
+        $path = $this->tmpDir.'/real.gif';
+        file_put_contents($path, $gif);
+        $file = new UploadedFile($path, 'evil.php', 'image/gif', null, true);
+
+        expect(ImageOptimizer::safeExtension($file))->toBe('gif');
+    })->group('unit', 'image', 'security');
+
+    it('safeExtension rejects a php script disguised as .jpg', function () {
+        $path = $this->tmpDir.'/shell.jpg';
+        file_put_contents($path, "<?php echo 'pwned'; ?>");
+        $file = new UploadedFile($path, 'shell.jpg', 'image/jpeg', null, true);
+
+        expect(fn () => ImageOptimizer::safeExtension($file))->toThrow(RuntimeException::class);
+    })->group('unit', 'image', 'security');
 });

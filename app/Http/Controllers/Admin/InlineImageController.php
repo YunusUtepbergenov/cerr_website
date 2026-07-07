@@ -23,7 +23,7 @@ class InlineImageController
         ]);
 
         $file = $request->file('file');
-        $extension = strtolower($file->getClientOriginalExtension() ?: $file->extension());
+        $extension = ImageOptimizer::safeExtension($file);
         $filename = Str::uuid()->toString().'.'.$extension;
         $relativePath = 'news/inline/'.$filename;
         $absolutePath = Storage::disk('public')->path($relativePath);

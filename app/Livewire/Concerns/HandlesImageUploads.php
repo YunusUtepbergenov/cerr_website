@@ -16,7 +16,7 @@ trait HandlesImageUploads
      */
     protected function storeUploadedImage(UploadedFile $file, string $folder): string
     {
-        $extension = strtolower($file->getClientOriginalExtension() ?: $file->extension());
+        $extension = ImageOptimizer::safeExtension($file);
         $filename = Str::uuid()->toString().'.'.$extension;
         $relativePath = $folder.'/'.$filename;
         $absolutePath = Storage::disk('public')->path($relativePath);
