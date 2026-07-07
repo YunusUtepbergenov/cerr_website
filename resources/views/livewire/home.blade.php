@@ -152,7 +152,7 @@
                             @if($videos->first())
                                 <div class="echo-video-left-site">
                                     <a href="{{ $videos->first()->url }}" class="play-video popup-youtube">
-                                        <img src="{{asset('images/video/'.$videos->first()->image)}}" alt="Video">
+                                        <img src="{{ $videos->first()->thumbnailUrl() }}" alt="{{ $videos->first()->title }}">
                                     </a>
 
                                     <div class="vedio-icone">
@@ -198,7 +198,7 @@
                                         </div>
                                         <div class="echo-video-right-site-content-video">
                                             <a href="{{ $video->url }}" class="play-video popup-youtube">
-                                                <img src="{{asset('images/video/'.$video->image)}}" alt="Video">
+                                                <img src="{{ $video->thumbnailUrl() }}" alt="{{ $video->title }}">
                                             </a>
                                             <div class="vedio-icone">
                                                 <a class="play-video popup-youtube video-play-button" href="{{ $video->url }}">
