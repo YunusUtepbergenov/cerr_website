@@ -16,7 +16,7 @@ class VideoShow extends Component
     {
         $this->video = Video::findOrFail($id);
         $locale = app()->getLocale();
-        $this->popular_news = News::whereHas('translations', fn ($query) => $query->where('lang', $locale))->orderBy('view_count', 'DESC')->limit(5)->get();
+        $this->popular_news = News::whereHas('translations', fn ($query) => $query->where('lang', $locale))->with('translation')->orderBy('view_count', 'DESC')->limit(5)->get();
     }
 
     public function render()

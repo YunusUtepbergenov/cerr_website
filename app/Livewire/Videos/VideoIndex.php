@@ -21,7 +21,7 @@ class VideoIndex extends Component
     public function mount()
     {
         $this->locale = app()->getLocale();
-        $this->popular_news = News::whereHas('translations', fn ($query) => $query->where('lang', $this->locale))->orderBy('view_count', 'DESC')->limit(5)->get();
+        $this->popular_news = News::whereHas('translations', fn ($query) => $query->where('lang', $this->locale))->with('translation')->orderBy('view_count', 'DESC')->limit(5)->get();
     }
 
     public function loadMore()

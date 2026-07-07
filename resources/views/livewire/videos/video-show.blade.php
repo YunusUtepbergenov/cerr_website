@@ -1,53 +1,56 @@
 <div>
-    <section class="echo-hero-section inner inner-post">
-        <div class="echo-hero">
-            <div class="container">
-                <div class="echo-full-hero-content">
-                    <div class="row gx-5 sticky-coloum-wrap">
-                        <div class="col-xl-8 col-lg-8">
-                            <div class="echo-hero-baner">
-                                <div class="echo-inner-img-ct-1  img-transition-scale">
-                                    <a class="play-video popup-youtube" href="{{$video->url}}"><img src="{{ asset('images/video/' . $video->image) }}" alt="Echo" class="post-style-1-frist-hero-img"></a>
-                                </div>
-                                <h2 class="echo-hero-title text-capitalize font-weight-bold"><a href="post-details.html" class="title-hover">{{$video->title}}</a></h2>
-                                <div class="echo-hero-area-titlepost-post-like-comment-share">
-                                    <div class="echo-hero-area-like-read-comment-share">
-                                        <a href="#"><i class="fa-light fa-clock"></i> {{ $video->created_at->format('d.m.Y') }}</a>
-                                    </div>
-                                    <div class="echo-hero-area-like-read-comment-share">
-                                        <a href="#"><i class="fa-light fa-eye"></i> 3.5k Views</a>
-                                    </div>
-                                    <div class="echo-hero-area-like-read-comment-share">
-                                        <a href="#"><i class="fa-light fa-comment-dots"></i> 05 Comment</a>
-                                    </div>
-                                    <div class="echo-hero-area-like-read-comment-share">
-                                        <a href="#"><i class="fa-light fa-arrow-up-from-bracket"></i> 1.5k Share</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('css/news-article.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/site-pages.css') }}">
+    @endpush
 
-                        <div class="col-xl-4 col-lg-4 sticky-coloum-item">
-                            <div class="echo-right-ct-1">
-                                <div class="echo-home-1-hero-area-top-story">
-                                    <h5 class="text-center">@lang('messages.popular')</h5>
-                                    @foreach($popular_news as $news)
-                                        <div class="echo-top-story" wire:key="popular-news-{{ $news->id }}">
-                                            <div class="echo-story-picture img-transition-scale">
-                                                <a href="{{route('show.news', $news->slug)}}"><img src="{{$news->translation->coverUrl()}}" alt="Echo" class="img-hover"></a>
-                                            </div>
-                                            <div class="echo-story-text">
-                                                <h6><a href="{{route('show.news', $news->slug)}}" class="title-hover">{{$news->translation->title}}</a></h6>
-                                                <a href="{{route('show.news', $news->slug)}}" class="pe-none"><i class="fa-light fa-clock"></i> {{ \Carbon\Carbon::parse($news->created_at)->format('d.m.Y') }}</a>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
+    <section class="news-article-section">
+        <article class="news-article">
+            <nav class="article-breadcrumb" aria-label="breadcrumb">
+                <a href="{{ route('home') }}">@lang('messages.main')</a>
+                <span class="sep">/</span>
+                <a href="{{ route('videos.index') }}">@lang('messages.videogallery')</a>
+                <span class="sep">/</span>
+                <span class="current">{{ $video->title }}</span>
+            </nav>
+
+            <h1 class="article-title">{{ $video->title }}</h1>
+
+            <div class="article-meta">
+                @if ($video->created_at)
+                    <span>{{ $video->created_at->format('d.m.Y') }}</span>
+                @endif
+            </div>
+
+            <a href="{{ $video->url }}" class="video-stage play-video popup-youtube" aria-label="{{ $video->title }}">
+                @if ($video->thumbnailUrl())
+                    <img src="{{ $video->thumbnailUrl() }}" alt="{{ $video->title }}">
+                @endif
+                <span class="vc-play"><span><i class="fa-solid fa-play"></i></span></span>
+            </a>
+        </article>
+    </section>
+
+    @if ($popular_news->isNotEmpty())
+        <section class="article-more">
+            <div class="article-more-inner">
+                <div class="article-more-block">
+                    <h2 class="article-more-title">@lang('messages.popular')</h2>
+                    <div class="popular-list">
+                        @foreach ($popular_news as $item)
+                            <a href="{{ route('show.news', $item->slug) }}" class="popular-item" wire:key="popular-{{ $item->id }}">
+                                <span class="pop-num">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                                <span class="pop-meta">
+                                    <span class="pop-title">{{ $item->translation?->title }}</span>
+                                    @if ($item->created_at)
+                                        <span class="pop-date">{{ $item->created_at->format('d.m.Y') }}</span>
+                                    @endif
+                                </span>
+                            </a>
+                        @endforeach
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 </div>

@@ -1,70 +1,67 @@
 <div>
-    <div class="echo-breadcrumb-area">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="breadcrumb-inner text-center">
-                        <h1 class="title">{{$category->translation->name}}</h1>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('css/news-article.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/site-pages.css') }}">
+    @endpush
 
-    <section class="echo-hero-section inner inner-2">
-        <div class="echo-hero">
-            <div class="container">
-                <div class="echo-full-hero-content">
-                    <div class="row gx-5 sticky-coloum-wrap">
-                        <div class="col-xl-9 col-lg-9">
-                            @foreach ($category->news as $item)
-                                <div class="echo-hero-baner" wire:key="category-news-{{ $item->id }}">
-                                    <div class="echo-inner-img-ct-1  img-transition-scale">
-                                        <a href="{{route('show.news', $item->slug)}}"><img src="{{$item->translation->coverUrl()}}" alt="Echo"></a>
-                                    </div>
-                                    <div class="echo-banner-texting">
-                                        <h3 class="echo-hero-title text-capitalize font-weight-bold"><a href="{{route('show.news', $item->slug)}}" class="title-hover">{{$item->translation->title}}</a></h3>
-                                        <div class="echo-hero-area-titlepost-post-like-comment-share">
-                                            <div class="echo-hero-area-like-read-comment-share">
-                                                <a href="{{route('show.news', $item->slug)}}"><i class="fa-light fa-clock"></i> {{ date('d-m-Y', strtotime($item->created_at)) }}</a>
-                                            </div>
-                                            <div class="echo-hero-area-like-read-comment-share">
-                                                <a href="{{route('show.news', $item->slug)}}"><i class="fa-light fa-eye"></i> {{$item->view_count}}</a>
-                                            </div>
-                                        </div>
-                                        <hr>
-                                        <p class="echo-hero-discription">{{$item->translation->short_description}} </p>
-                                    </div>
-                                </div>                                
-                            @endforeach
-                            {{-- <div class="echo-de-category-show-more-btn text-center">
-                                <a href="post-details.html" class="text-capitalize echo-py-btn">Show more</a>
-                            </div> --}}
-                        </div>
-                        <div class="col-xl-3 col-lg-3 sticky-coloum-item">
-                            <div class="echo-home-1-hero-area-top-story bg-right-side">
-                                <h5 class="text-center">@lang('messages.popular')</h5>
-                                <hr style="background-color: #4c0505; margin-top: 10px;"> 
-                                @foreach ($popular_news as $news)
-                                    <div class="echo-top-story first" wire:key="popular-news-{{ $news->id }}">
-                                        <div class="echo-story-picture img-transition-scale">
-                                            <a href="{{route('show.news', $news->slug)}}"><img src="{{$news->translation->coverUrl()}}" alt="Echo" class="img-hover"></a>
-                                        </div>
-                                        <div class="echo-story-text">
-                                            <h4><a href="#" class="title-hover">{{$news->translation->title}}</a></h4>
-                                            <div class="echo-trending-post-bottom-icons">
-                                                <a href="#" class="pe-none"><i class="fa-light fa-clock"></i> {{ \Carbon\Carbon::parse($news->created_at)->format('d.m.Y') }}</a>
-                                                <a href="#" class="pe-none"><i class="fa-light fa-eye"></i> {{$news->view_count}}</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <hr style="background-color: #4c0505;">                                    
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
+    <section class="news-article-section">
+        <div class="sp-wide">
+            <nav class="article-breadcrumb" aria-label="breadcrumb">
+                <a href="{{ route('home') }}">@lang('messages.main')</a>
+                <span class="sep">/</span>
+                <span class="current">{{ $category->translation->name }}</span>
+            </nav>
+
+            <h1 class="article-title">{{ $category->translation->name }}</h1>
+
+            @if ($category->news->isNotEmpty())
+                <div class="news-grid">
+                    @foreach ($category->news as $item)
+                        <a href="{{ route('show.news', $item->slug) }}" class="news-card" wire:key="cat-news-{{ $item->id }}">
+                            <span class="nc-thumb">
+                                @if ($item->translation?->coverUrl())
+                                    <img src="{{ $item->translation->coverUrl() }}" alt="{{ $item->translation->title }}">
+                                @endif
+                            </span>
+                            <span class="nc-body">
+                                <span class="nc-title">{{ $item->translation?->title }}</span>
+                                <span class="nc-meta">
+                                    @if ($item->created_at)
+                                        <span><i class="fa-light fa-clock"></i>{{ $item->created_at->format('d.m.Y') }}</span>
+                                    @endif
+                                    <span><i class="fa-light fa-eye"></i>{{ $item->view_count }}</span>
+                                </span>
+                                @if ($item->translation?->short_description)
+                                    <span class="nc-excerpt">{{ $item->translation->short_description }}</span>
+                                @endif
+                            </span>
+                        </a>
+                    @endforeach
                 </div>
-            </div>
+            @endif
         </div>
     </section>
+
+    @if ($popular_news->isNotEmpty())
+        <section class="article-more">
+            <div class="article-more-inner">
+                <div class="article-more-block">
+                    <h2 class="article-more-title">@lang('messages.popular')</h2>
+                    <div class="popular-list">
+                        @foreach ($popular_news as $item)
+                            <a href="{{ route('show.news', $item->slug) }}" class="popular-item" wire:key="popular-{{ $item->id }}">
+                                <span class="pop-num">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                                <span class="pop-meta">
+                                    <span class="pop-title">{{ $item->translation?->title }}</span>
+                                    @if ($item->created_at)
+                                        <span class="pop-date">{{ $item->created_at->format('d.m.Y') }}</span>
+                                    @endif
+                                </span>
+                            </a>
+                        @endforeach
+                    </div>
+                </div>
+            </div>
+        </section>
+    @endif
 </div>

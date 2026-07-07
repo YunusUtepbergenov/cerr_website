@@ -13,9 +13,9 @@
 
             <h1 class="article-title">{{ $page->translation->title }}</h1>
 
-            @if (str_starts_with((string) $page->translation->image, 'http'))
+            @if ($page->translation->coverUrl())
                 <figure class="article-cover">
-                    <img src="{{ $page->translation->image }}" alt="{{ $page->translation->title }}">
+                    <img src="{{ $page->translation->coverUrl() }}" alt="{{ $page->translation->title }}">
                 </figure>
             @endif
 

@@ -14,14 +14,14 @@ class ShowCategory extends Component
 
     public function mount($slug)
     {
-        $this->category = Category::with(['translation', 'news'])->where('slug', $slug)->first();
+        $this->category = Category::with(['translation', 'news.translation'])->where('slug', $slug)->first();
 
         if (! $this->category || ! $this->category->translation) {
             abort(404);
         }
 
         $locale = app()->getLocale();
-        $this->popular_news = News::published()->whereHas('translations', fn ($query) => $query->where('lang', $locale))->orderBy('view_count', 'DESC')->limit(6)->get();
+        $this->popular_news = News::published()->whereHas('translations', fn ($query) => $query->where('lang', $locale))->with('translation')->orderBy('view_count', 'DESC')->limit(6)->get();
     }
 
     public function render()
