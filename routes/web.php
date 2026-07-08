@@ -24,6 +24,7 @@ use App\Livewire\History;
 use App\Livewire\Home;
 use App\Livewire\Leadership;
 use App\Livewire\OpenData\OpenDataIndex;
+use App\Livewire\Search;
 use App\Livewire\ShowAllCategories;
 use App\Livewire\ShowCategory;
 use App\Livewire\ShowNews;
@@ -55,6 +56,7 @@ Route::get('/vacancies', Vacancies::class)->name('vacancies');
 Route::get('/show-news/{slug}', ShowNews::class)->name('show.news');
 Route::get('/show-category/{slug}', ShowCategory::class)->name('show.category');
 Route::get('/show-all-category', ShowAllCategories::class)->name('show.all.category');
+Route::get('/search', Search::class)->name('search');
 
 Route::get('/videos', VideoIndex::class)->name('videos.index');
 Route::get('/videos/{id}', VideoShow::class)->name('videos.show');

@@ -21,25 +21,19 @@
     @isset($ogImage)
         <meta property="og:image" content="{{ $ogImage }}">
     @endisset
-    <link rel="shortcut icon" href="https://cer.uz/themes/cer/icon/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     
     <link rel="stylesheet" href="{{asset('css/vendor/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/vendor/metismenu.css')}}">
     <link rel="stylesheet" href="{{asset('css/plugins/fontawesome-5.css')}}">
     <link rel="stylesheet" href="{{asset('css/vendor/magnific-popup.css')}}">
-    <link rel="stylesheet"
-          href="https://unpkg.com/aos@2.3.4/dist/aos.css"
-          integrity="sha384-/rJKQnzOkEo+daG0jMjU1IwwY9unxt1NBw3Ef2fmOJ3PW/TfAg2KXVoWwMZQZtw9"
-          crossorigin="anonymous"
-          referrerpolicy="no-referrer">
-
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
     @stack('styles')
 
 </head>
 
 <body class="home-one">
-    <div class="alert alert-warning text-center mb-0" role="alert">
+    <div class="site-notice" role="status">
         @lang('messages.test_mode')
     </div>
 
@@ -114,7 +108,9 @@
                                             <div class="container">
                                                 <div class="search-input-inner">
                                                     <div class="input-div">
-                                                        <input id="searchInput1" class="search-input" type="text" placeholder="Search by keyword or #">
+                                                        <form action="{{ route('search') }}" method="GET">
+                                                            <input id="searchInput1" class="search-input" type="search" name="q" placeholder="@lang('messages.search_placeholder')" aria-label="@lang('messages.search')">
+                                                        </form>
                                                     </div>
                                                     <div class="search-close-icon"><i class="fa-regular fa-xmark-large rt-xmark"></i></div>
                                                 </div>
@@ -248,9 +244,8 @@
                                     </a>
                                     <div x-show="pressDropdownOpen" x-transition class="mt-2">
                                         <ul class="list-unstyled ps-3">
-                                            <li class="nav-item py-2"><a href="http://192.168.1.49:8000/show-category/maxime-error">@lang('messages.press_releases') </a></li>
-                                            <li class="nav-item py-2"><a href="404.html">@lang('messages.photogallery')</a></li>
-                                            <li class="nav-item py-2"><a href="404.html">@lang('messages.videogallery')</a></li>
+                                            <li class="nav-item py-2"><a href="{{ route('show.category', 'research') }}">@lang('messages.press_releases') </a></li>
+                                            <li class="nav-item py-2"><a href="{{ route('videos.index') }}">@lang('messages.videogallery')</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -364,12 +359,7 @@
         'resources/js/app.js',
         ])
 
-    <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"
-            integrity="sha384-n1AULnKdMJlK1oQCLNDL9qZsDgXtH6jRYFCpBtWFc+a9Yve0KSoMn575rk755NJZ"
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"></script>
     <script>
-        AOS.init();
         document.addEventListener('DOMContentLoaded', function() {
     // Handle opening/closing of the mobile menu
     const mobileMenuToggle = document.querySelector('.navbar-toggler');

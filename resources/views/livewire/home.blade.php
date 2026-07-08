@@ -3,7 +3,7 @@
         <div class="container">
             <div class="position-relative overflow-hidden custom-hero-inner p-5 d-flex justify-content-center align-items-center">
     
-                <img src="{{asset('images/main_image/hero.png')}}" alt="Decorative background"
+                <img src="{{asset('images/main_image/hero.webp')}}" alt="" width="1267" height="600" fetchpriority="high"
                      class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover z-n1" />
     
                 <div class="text-center position-relative z-1">
@@ -14,7 +14,7 @@
         </div>
     </section>
 
-    <section class="echo-latest-news-area" data-aos="fade-left" data-aos-duration="600" data-aos-delay="100">
+    <section class="echo-latest-news-area">
         <div class="echo-latest-news-content">
             <div class="container">
                 <div class="echo-be-slider-btn">
