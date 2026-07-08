@@ -138,88 +138,62 @@
     </section>
     <br>
 
-    <section class="echo-video-area">
-        <div class="echo-video-content">
-            <div class="container">
-                <div class="echo-video-area-title-row text-center">
-                    <h6>@lang('messages.videogallery')</h6>
+    @push('styles')
+        <link rel="stylesheet" href="{{ asset('css/news-article.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/site-pages.css') }}">
+    @endpush
+
+    @if ($videos->isNotEmpty())
+        <section class="home-videos">
+            <div class="hv-inner">
+                <div class="hv-head">
+                    <h2 class="hv-title">@lang('messages.videogallery')</h2>
+                    <a href="{{ route('videos.index') }}" class="hv-all">@lang('messages.show_more') <i class="fa-solid fa-arrow-right hv-all-icon"></i></a>
                 </div>
 
-                <div class="echo-full-video-content">
-                    <div class="row gx-6">
-
-                        <div class="col-xl-8 col-lg-8 col-md-12">
-                            @if($videos->first())
-                                <div class="echo-video-left-site">
-                                    <a href="{{ $videos->first()->url }}" class="play-video popup-youtube">
-                                        <img src="{{ $videos->first()->thumbnailUrl() }}" alt="{{ $videos->first()->title }}">
-                                    </a>
-
-                                    <div class="vedio-icone">
-                                        <a class="play-video popup-youtube video-play-button" href="{{ $videos->first()->url }}">
-                                            <span></span>
-                                        </a>
-                                        <div class="video-overlay">
-                                            <a class="video-overlay-close">×</a>
-                                        </div>
-                                    </div>
-
-                                    <div class="echo-video-left-site-text-box">
-                                        <h5>
-                                            <a href="{{ $videos->first()->url }}" class="play-video popup-youtube title-hover">
-                                                {{ $videos->first()->title }}
-                                            </a>
-                                            <div class="video-overlay">
-                                                <a class="video-overlay-close">×</a>
-                                            </div>
-                                        </h5>
-                                        <hr>
-                                        <div class="echo-video-left-site-read-views">
-                                            <a href="#" class="pe-none">
-                                                <i class="fa-light fa-clock"></i> {{ $videos->first()->created_at->format('d.m.Y') }}
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
+                @php($featured = $videos->first())
+                <div class="hv-stage">
+                    <a href="{{ $featured->url }}" class="hv-feature play-video popup-youtube" wire:key="hv-feature-{{ $featured->id }}">
+                        <span class="hv-feature-thumb">
+                            @if ($featured->thumbnailUrl())
+                                <img class="hv-img" src="{{ $featured->thumbnailUrl() }}" alt="{{ $featured->title }}">
                             @endif
-                        </div>
+                            <span class="hv-veil"></span>
+                            <span class="hv-disc"><i class="fa-solid fa-play hv-disc-icon"></i></span>
+                        </span>
+                        <span class="hv-feature-meta">
+                            <span class="hv-feature-title">{{ $featured->title }}</span>
+                            @if ($featured->created_at)
+                                <span class="hv-date">{{ $featured->created_at->format('d.m.Y') }}</span>
+                            @endif
+                        </span>
+                    </a>
 
-                        <div class="col-xl-4 col-lg-4 col-md-12">
-                            <div class="echo-video-area-home-1-right-content-responsive">
-                                @foreach($videos->skip(1) as $video)
-                                    <div class="echo-video-right-site-content" wire:key="video-{{ $video->id }}">
-                                        <div class="echo-video-right-site-content-text">
-                                            <h5>
-                                                <a href="{{ $video->url }}" class="play-video popup-youtube title-hover text-white">
-                                                    {{ $video->title }}
-                                                </a>
-                                            </h5>
-                                            <hr>
-                                        </div>
-                                        <div class="echo-video-right-site-content-video">
-                                            <a href="{{ $video->url }}" class="play-video popup-youtube">
-                                                <img src="{{ $video->thumbnailUrl() }}" alt="{{ $video->title }}">
-                                            </a>
-                                            <div class="vedio-icone">
-                                                <a class="play-video popup-youtube video-play-button" href="{{ $video->url }}">
-                                                    <span></span>
-                                                </a>
-                                                <div class="video-overlay">
-                                                    <a class="video-overlay-close">×</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
+                    @if ($videos->count() > 1)
+                        <div class="hv-list">
+                            @foreach ($videos->skip(1) as $video)
+                                <a href="{{ $video->url }}" class="hv-row play-video popup-youtube" wire:key="hv-row-{{ $video->id }}">
+                                    <span class="hv-row-thumb">
+                                        @if ($video->thumbnailUrl())
+                                            <img class="hv-img" src="{{ $video->thumbnailUrl() }}" alt="{{ $video->title }}" loading="lazy">
+                                        @endif
+                                        <span class="hv-veil"></span>
+                                        <span class="hv-disc hv-disc-sm"><i class="fa-solid fa-play hv-disc-icon"></i></span>
+                                    </span>
+                                    <span class="hv-row-body">
+                                        <span class="hv-row-title">{{ $video->title }}</span>
+                                        @if ($video->created_at)
+                                            <span class="hv-date">{{ $video->created_at->format('d.m.Y') }}</span>
+                                        @endif
+                                    </span>
+                                </a>
+                            @endforeach
                         </div>
-
-                    </div>
+                    @endif
                 </div>
-
             </div>
-        </div>
-    </section>
+        </section>
+    @endif
 
 
     <section class="echo-popular-news-area">

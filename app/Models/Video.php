@@ -5,6 +5,9 @@ namespace App\Models;
 use App\Models\Concerns\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\Client\ConnectionException;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 
 class Video extends Model
 {
@@ -27,7 +30,7 @@ class Video extends Model
         }
 
         if ($id = $this->youtubeId()) {
-            return 'https://img.youtube.com/vi/'.$id.'/hqdefault.jpg';
+            return $this->youtubeThumbnailUrl($id);
         }
 
         if ($this->image && preg_match('#^https?://#i', $this->image) === 1) {
@@ -35,6 +38,35 @@ class Video extends Model
         }
 
         return null;
+    }
+
+    /**
+     * Prefer the 1280x720 maxresdefault thumbnail when YouTube has one,
+     * falling back to the always-available 480x360 hqdefault. Only videos
+     * uploaded in HD get a maxresdefault, so availability is probed once
+     * and cached for a week; a probe that cannot connect falls back and is
+     * only cached briefly so the thumbnail can still upgrade later.
+     */
+    protected function youtubeThumbnailUrl(string $id): string
+    {
+        $cacheKey = 'video-maxres:'.$id;
+        $hasMaxres = Cache::get($cacheKey);
+
+        if ($hasMaxres === null) {
+            try {
+                $hasMaxres = Http::timeout(2)
+                    ->head('https://img.youtube.com/vi/'.$id.'/maxresdefault.jpg')
+                    ->successful();
+                Cache::put($cacheKey, $hasMaxres, now()->addWeek());
+            } catch (ConnectionException) {
+                $hasMaxres = false;
+                Cache::put($cacheKey, false, now()->addMinutes(10));
+            }
+        }
+
+        return $hasMaxres
+            ? 'https://img.youtube.com/vi/'.$id.'/maxresdefault.jpg'
+            : 'https://img.youtube.com/vi/'.$id.'/hqdefault.jpg';
     }
 
     /**

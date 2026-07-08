@@ -172,6 +172,7 @@
                                                     <li class="nav-item"><a wire:navigate href="{{route('history')}}">@lang('messages.history')</a></li>
                                                     <li class="nav-item"><a wire:navigate href="{{route('leadership')}}">@lang('messages.leadership') </a></li>
                                                     <li class="nav-item"><a wire:navigate href="{{route('structure')}}">@lang('messages.structure') </a></li>
+                                                    <li class="nav-item"><a wire:navigate href="{{route('open-data.index')}}">@lang('messages.open_data')</a></li>
                                                     {{-- <li class="nav-item"><a href="404.html">Филиалы центра</a></li> --}}
                                                     {{-- <li class="nav-item"><a href="404.html">Сектора центра</a></li> --}}
                                                     {{-- <li class="nav-item"><a href="404.html">Международное сотрудничество</a></li>
@@ -202,7 +203,6 @@
                                                 </ul>
                                             </li>
                                             <li class="menu-item"><a wire:navigate href="{{route('vacancies')}}" class="echo-dropdown-main-element">@lang('messages.vacancies')</a></li>
-                                            <li class="menu-item"><a wire:navigate href="{{route('open-data.index')}}" class="echo-dropdown-main-element">@lang('messages.open_data')</a></li>
                                             <li class="menu-item"><a wire:navigate href="{{route('contact')}}" class="echo-dropdown-main-element">@lang('messages.contacts')</a></li>
                                         </ul>
                                     </div>
@@ -237,6 +237,7 @@
                                             <li class="nav-item py-2"><a wire:navigate href="{{route('history')}}">@lang('messages.history')</a></li>
                                             <li class="nav-item py-2"><a wire:navigate href="{{route('leadership')}}">@lang('messages.leadership') </a></li>
                                             <li class="nav-item py-2"><a wire:navigate href="{{route('structure')}}">@lang('messages.structure') </a></li>
+                                            <li class="nav-item py-2"><a wire:navigate href="{{route('open-data.index')}}">@lang('messages.open_data')</a></li>
                                         </ul>
                                     </div>
                                 </li>
@@ -254,7 +255,6 @@
                                     </div>
                                 </li>
                                 <li class="menu-item"><a wire:navigate href="{{route('vacancies')}}" class="echo-dropdown-main-element">@lang('messages.vacancies')</a></li>
-                                <li class="menu-item"><a wire:navigate href="{{route('open-data.index')}}" class="echo-dropdown-main-element">@lang('messages.open_data')</a></li>
                                 <li class="menu-item"><a wire:navigate href="{{route('contact')}}" class="echo-dropdown-main-element">@lang('messages.contacts')</a></li>
                             </ul>
                         </div>
