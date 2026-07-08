@@ -11,6 +11,8 @@ return [
     'press_releases' => 'Press Releases',
     'photogallery' => 'Photo gallery',
     'videogallery' => 'Videos',
+    'our_partners' => 'Our partners',
+    'journals' => 'Journals',
     'vacancies' => 'Vacancies',
     'contacts' => 'Contacts',
     'popular' => 'Popular',

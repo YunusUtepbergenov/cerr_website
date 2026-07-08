@@ -11,6 +11,8 @@ return [
     'press_releases' => 'Матбуот хабарлари',
     'photogallery' => 'Фотогаллерея',
     'videogallery' => 'Видеолар',
+    'our_partners' => 'Ҳамкорларимиз',
+    'journals' => 'Журналлар',
     'vacancies' => 'Иш ўринлари',
     'contacts' => 'Алоқа',
     'popular' => 'Оммабоп',

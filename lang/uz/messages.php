@@ -11,6 +11,8 @@ return [
     'press_releases' => 'Matbuot xabarlari',
     'photogallery' => 'Fotogallereya',
     'videogallery' => 'Videolar',
+    'our_partners' => 'Hamkorlarimiz',
+    'journals' => 'Jurnallar',
     'vacancies' => 'Ish o`rinlari',
     'contacts' => 'Aloqa',
     'popular' => 'Ommabop',

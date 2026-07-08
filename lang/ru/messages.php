@@ -11,6 +11,8 @@ return [
     'press_releases' => 'Пресс релизы',
     'photogallery' => 'Фотогаллерея',
     'videogallery' => 'Видео',
+    'our_partners' => 'Наши партнёры',
+    'journals' => 'Журналы',
     'vacancies' => 'Ваканcии',
     'contacts' => 'Контакты',
     'popular' => 'Популярное',

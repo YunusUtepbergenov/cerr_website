@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Home;
+use App\Models\News;
 use App\Models\Video;
 use Livewire\Livewire;
 
@@ -75,10 +76,25 @@ describe('Home Component', function () {
     it('only shows news with translations', function () {
         $research = createCategoryWithTranslation(['slug' => 'research']);
         $newsWithTranslation = createNewsWithTranslation(['category_id' => $research->id]);
-        $newsWithoutTranslation = \App\Models\News::factory()->create(['category_id' => $research->id]);
+        $newsWithoutTranslation = News::factory()->create(['category_id' => $research->id]);
 
         Livewire::test(Home::class)
             ->assertSet('latest_news', fn ($val) => $val->count() === 1)
             ->assertSet('latest_news', fn ($val) => $val->first()->id === $newsWithTranslation->id);
     })->group('feature', 'livewire', 'critical');
+
+    it('renders the journals section with localized heading and issue links', function () {
+        Livewire::test(Home::class)
+            ->assertSee(__('messages.journals'))
+            ->assertSee('https://review.uz/journals/view/8-44-2025')
+            ->assertSee('https://review.uz/journals');
+    })->group('feature', 'livewire');
+
+    it('renders the partners section with localized heading and self-hosted logos', function () {
+        Livewire::test(Home::class)
+            ->assertSee(__('messages.our_partners'))
+            ->assertSee('images/partners/undp.svg')
+            ->assertSee('images/partners/eri.png')
+            ->assertSee('Organization of Turkic States');
+    })->group('feature', 'livewire');
 });

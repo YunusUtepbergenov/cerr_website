@@ -196,113 +196,53 @@
     @endif
 
 
-    <section class="echo-popular-news-area">
-        <div class="echo-popular-news-area-content">
-            <div class="container">
-                <div class="echo-popular-news-area-full-content">
-                    <div class="row">
-                        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
-                            <div class="echo-popular-area-title">
-                                <h4 class="text-center">Журналы</h4>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row gx-5">
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                            <div class="echo-popular-area-single-item">
-                                <div class="echo-popular-area-img img-transition-scale">
-                                    <a href="https://review.uz/journals/view/8-44-2025" target="_blank"><img src="https://static.review.uz/crop/1/8/200_265_95_1879944794.jpg?v=1757314135" alt="Echo" class="img-hover"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                            <div class="echo-popular-area-single-item">
-                                <div class="echo-popular-area-img img-transition-scale">
-                                    <a href="https://review.uz/journals/view/8-307-2025" target="_blank"><img src="https://static.review.uz/crop/1/4/200_265_95_1409325190.jpg?v=1756985379" alt="Echo" class="img-hover"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                            <div class="echo-popular-area-single-item echo-popular-news-responsive-home-1">
-                                <div class="echo-popular-area-img img-transition-scale">
-                                    <a href="https://review.uz/journals/view/1-08-2025" target="_blank"><img src="https://static.review.uz/crop/9/5/200_265_95_958738944.jpg?v=1756189246" alt="Echo" class="img-hover"></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
-                            <div class="echo-popular-area-single-item echo-popular-news-responsive-home-1">
-                                <div class="echo-popular-area-img img-transition-scale">
-                                    <a href="https://review.uz/journals/view/7-43-2025" target="_blank"><img src="https://static.review.uz/crop/1/4/360__95_1417567118.jpg?v=1755058724" alt="Echo" class="img-hover"></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    @php($journals = [
+        ['href' => 'https://review.uz/journals/view/8-44-2025', 'cover' => 'https://static.review.uz/crop/1/8/200_265_95_1879944794.jpg?v=1757314135'],
+        ['href' => 'https://review.uz/journals/view/8-307-2025', 'cover' => 'https://static.review.uz/crop/1/4/200_265_95_1409325190.jpg?v=1756985379'],
+        ['href' => 'https://review.uz/journals/view/1-08-2025', 'cover' => 'https://static.review.uz/crop/9/5/200_265_95_958738944.jpg?v=1756189246'],
+        ['href' => 'https://review.uz/journals/view/7-43-2025', 'cover' => 'https://static.review.uz/crop/1/4/360__95_1417567118.jpg?v=1755058724'],
+    ])
+    <section class="home-journals" aria-labelledby="hj-title">
+        <div class="hs-inner">
+            <div class="hs-head">
+                <h2 class="hs-title" id="hj-title">@lang('messages.journals')</h2>
+                <a class="hs-more" href="https://review.uz/journals" target="_blank" rel="noopener noreferrer">review.uz <i class="fa-solid fa-arrow-right hs-more-icon" aria-hidden="true"></i></a>
+            </div>
+            <div class="hj-grid">
+                @foreach ($journals as $issue)
+                    <a class="hj-item" href="{{ $issue['href'] }}" target="_blank" rel="noopener noreferrer">
+                        <span class="hj-cover"><img class="hj-img" src="{{ $issue['cover'] }}" alt="Iqtisodiy sharh — {{ $loop->iteration }}" width="200" height="265" loading="lazy"></span>
+                    </a>
+                @endforeach
             </div>
         </div>
     </section>
 
-    <section class="py-5 mb-20 bg-light">
-        <div class="container">
-          <h2 class="fw-bold text-center mb-4">Bizning hamkorlarimiz</h2>
-      
-          <div id="partnersCarousel" class="carousel slide mt-40" data-bs-ride="carousel">
-            <div class="carousel-inner">
-              <!-- Slide 1 -->
-              <div class="carousel-item active">
-                <div class="d-flex justify-content-center gap-4 flex-wrap">
-                  <!-- Partner 1 -->
-                  <div class="text-center" style="width: 250px;">
-                    <img src="https://www.undp.org/sites/g/files/zskgke326/files/2025-04/undp-logo-blue.4f32e17f.svg" class="img-fluid mb-2" style="max-height: 150px;" alt="British Council">
-                  </div>
-                  <!-- Partner 2 -->
-                  <div class="text-center" style="width: 250px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/en/a/ab/J-PAL_Logo.png" class="img-fluid mb-2" style="max-height: 150px;" alt="Oxford">
-                  </div>
-                  <!-- Partner 3 -->
-                  <div class="text-center" style="width: 250px;">
-                    <img src="https://ereforms.gov.az/image/iitkm_logo_en.png" class="img-fluid mb-2" style="max-height: 150px;" alt="UNDP">
-                  </div>
-                  <!-- Partner 4 -->
-                  <div class="text-center" style="width: 250px;">
-                    <img src="https://www.german-economic-team.com/wp-content/uploads/2021/09/logo-get.svg" class="img-fluid mb-2" style="max-height: 150px;" alt="Glasgow">
-                  </div>
-                </div>
-              </div>
-      
-              <!-- Slide 2 -->
-              <div class="carousel-item">
-                <div class="d-flex justify-content-center gap-4 flex-wrap">
-                  <!-- Partner 5 -->
-                  <div class="text-center" style="width: 200px;">
-                    <img src="https://www.iddri.org/themes/custom/iddri/images/logo.svg" class="img-fluid mb-2" style="max-height: 100px;" alt="Partner 5">
-                  </div>
-                  <!-- Partner 6 -->
-                  <div class="text-center" style="width: 250px;">
-                    <img src="https://www.ankasam.org/wp-content/uploads/2021/09/LOGO-THEMEPANEL-RETINA.png" class="img-fluid mb-2" style="max-height: 100px;" alt="Partner 6">
-                  </div>
-                  <!-- Partner 7 -->
-                  <div class="text-center" style="width: 250px;">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/Emblem_of_the_Organization_of_Turkic_States.svg/250px-Emblem_of_the_Organization_of_Turkic_States.svg.png" class="img-fluid mb-2" style="max-height: 100px;" alt="Partner 7">
-                  </div>
-                  <!-- Partner 8 -->
-                  <div class="text-center" style="width: 250px;">
-                    <img src="https://www.eurasian-research.org/wp-content/uploads/2023/06/ERI_logo.png" class="img-fluid mb-2" style="max-height: 100px;" alt="Partner 8">
-                  </div>
-                </div>
-              </div>
+    @php($partners = [
+        ['name' => 'UNDP', 'href' => 'https://www.undp.org', 'logo' => 'images/partners/undp.svg', 'w' => 237, 'h' => 482],
+        ['name' => 'J-PAL', 'href' => 'https://www.povertyactionlab.org', 'logo' => 'images/partners/jpal.png', 'w' => 500, 'h' => 200],
+        ['name' => 'CAERC Azerbaijan', 'href' => 'https://ereforms.gov.az', 'logo' => 'images/partners/iitkm.png', 'w' => 350, 'h' => 91],
+        ['name' => 'German Economic Team', 'href' => 'https://www.german-economic-team.com', 'logo' => 'images/partners/get.svg', 'w' => 220, 'h' => 58],
+        ['name' => 'IDDRI', 'href' => 'https://www.iddri.org', 'logo' => 'images/partners/iddri.svg', 'w' => 117, 'h' => 34],
+        ['name' => 'ANKASAM', 'href' => 'https://www.ankasam.org', 'logo' => 'images/partners/ankasam.png', 'w' => 544, 'h' => 181],
+        ['name' => 'Organization of Turkic States', 'href' => 'https://turkicstates.org', 'logo' => 'images/partners/ots.svg', 'w' => 178, 'h' => 178],
+        ['name' => 'Eurasian Research Institute', 'href' => 'https://www.eurasian-research.org', 'logo' => 'images/partners/eri.png', 'w' => 385, 'h' => 216],
+    ])
+    <section class="home-partners" aria-labelledby="hp-title">
+        <div class="hs-inner hp-inner">
+            <div class="hs-head">
+                <h2 class="hs-title" id="hp-title">@lang('messages.our_partners')</h2>
             </div>
-      
-            <!-- Carousel controls -->
-            <button class="carousel-control-prev" type="button" data-bs-target="#partnersCarousel" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#partnersCarousel" data-bs-slide="next">
-              <span class="carousel-control-next-icon"></span>
-            </button>
-          </div>
+            <div class="hp-wall">
+                @foreach ($partners as $partner)
+                    <a class="hp-cell" href="{{ $partner['href'] }}" target="_blank" rel="noopener noreferrer">
+                        <span class="hp-box"><img class="hp-logo" src="{{ asset($partner['logo']) }}" alt="{{ $partner['name'] }}" width="{{ $partner['w'] }}" height="{{ $partner['h'] }}" loading="lazy"></span>
+                        <span class="hp-name">{{ $partner['name'] }}</span>
+                    </a>
+                @endforeach
+            </div>
         </div>
-      </section>
+    </section>
 </div>
 
 

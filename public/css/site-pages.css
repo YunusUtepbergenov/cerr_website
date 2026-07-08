@@ -272,3 +272,73 @@
     .hv-row-thumb { width: 120px; }
     .hv-disc-sm { width: 32px; height: 32px; font-size: 12px; }
 }
+
+/* ==== Home page journals + partners — ruled ledger pair ================ */
+.home-journals,
+.home-partners { background: var(--na-paper); font-family: var(--na-font-body); }
+.home-journals { padding: clamp(52px, 7vw, 64px) 0 clamp(48px, 6vw, 60px); }
+.home-partners { padding: 0 0 clamp(56px, 7vw, 72px); }
+.hs-inner { max-width: 1140px; margin: 0 auto; padding: 0 clamp(20px, 5vw, 34px); }
+.hp-inner { border-top: 1px solid var(--na-hair); padding-top: clamp(48px, 6vw, 60px); }
+
+/* Shared light-section header row */
+.hs-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 32px; }
+.hs-title { display: flex; align-items: center; margin: 0; font-family: var(--na-font-display);
+    font-size: clamp(21px, 2.6vw, 27px); font-weight: 800; letter-spacing: -.01em; color: var(--na-navy); }
+.hs-title::before { content: ""; flex: none; width: 26px; height: 4px; border-radius: 2px; background: var(--na-azure); margin-right: 12px; }
+.hs-more { display: inline-flex; align-items: center; gap: 8px; font-family: var(--na-font-display);
+    font-size: 14px; font-weight: 700; color: var(--na-azure); text-decoration: none; white-space: nowrap;
+    border-radius: 6px; transition: color .16s ease; }
+.hs-more-icon { font-size: 12px; transition: transform .16s ease; }
+.hs-more:hover, .hs-more:focus-visible { color: var(--na-azure-dark); }
+.hs-more:hover .hs-more-icon, .hs-more:focus-visible .hs-more-icon { transform: translateX(2px); }
+.hs-more:focus-visible { outline: 2px solid var(--na-azure); outline-offset: 2px; }
+
+/* Journals: cover strip, lift + navy veil on hover */
+.hj-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: clamp(20px, 3vw, 28px); }
+.hj-item { display: block; min-width: 0; text-decoration: none; }
+.hj-item:focus-visible { outline: 2px solid var(--na-azure); outline-offset: 2px; border-radius: 4px; }
+.hj-cover { display: block; position: relative; aspect-ratio: 200 / 265; border-radius: 12px; overflow: hidden;
+    border: 1px solid var(--na-hair); background: var(--na-mist);
+    transition: transform .2s ease, box-shadow .2s ease; }
+.hj-cover::after { content: ""; position: absolute; inset: 0; background: rgba(14, 44, 78, 0); transition: background .18s ease; }
+.hj-item:hover .hj-cover, .hj-item:focus-visible .hj-cover { transform: translateY(-2px);
+    box-shadow: 0 14px 30px -18px rgba(14, 44, 78, .45); }
+.hj-item:hover .hj-cover::after, .hj-item:focus-visible .hj-cover::after { background: rgba(14, 44, 78, .18); }
+.hj-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* Partners: ruled sponsor wall (collapsed hairlines via 1px grid gap) */
+.hp-wall { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 1px;
+    background: var(--na-hair); border: 1px solid var(--na-hair); border-radius: 12px; overflow: hidden; }
+.hp-cell { display: flex; flex-direction: column; align-items: center; min-width: 0; text-align: center;
+    background: var(--na-paper); padding: 32px 24px 24px; text-decoration: none; transition: background .18s ease; }
+.hp-cell:hover, .hp-cell:focus-visible { background: var(--na-mist); }
+.hp-cell:focus-visible { outline: 2px solid var(--na-azure); outline-offset: -2px; }
+.hp-box { display: block; width: 100%; max-width: 176px; height: 96px; }
+.hp-logo { display: block; width: 100%; height: 100%; object-fit: contain;
+    filter: grayscale(1); opacity: .6; transition: filter .18s ease, opacity .18s ease; }
+.hp-cell:hover .hp-logo, .hp-cell:focus-visible .hp-logo { filter: none; opacity: 1; }
+.hp-name { margin-top: 16px; font-family: var(--na-font-body); font-size: 12px; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; line-height: 1.4; color: var(--na-slate); transition: color .18s ease; }
+.hp-cell:hover .hp-name, .hp-cell:focus-visible .hp-name { color: var(--na-azure); }
+
+@media (max-width: 880px) {
+    .hj-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 24px; }
+    .hj-item { width: 100%; max-width: 272px; justify-self: center; }
+    .hp-wall { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+    .home-journals { padding: 48px 0 44px; }
+    .home-partners { padding-bottom: 52px; }
+    .hp-inner { padding-top: 44px; }
+    .hs-head { margin-bottom: 24px; }
+    .hj-grid { gap: 24px 16px; }
+    .hp-cell { padding: 24px 16px 20px; }
+    .hp-box { max-width: 148px; height: 80px; }
+    .hp-name { margin-top: 12px; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .hs-more, .hs-more-icon, .hj-cover, .hj-cover::after, .hp-cell, .hp-logo, .hp-name { transition: none; }
+    .hs-more:hover .hs-more-icon, .hs-more:focus-visible .hs-more-icon,
+    .hj-item:hover .hj-cover, .hj-item:focus-visible .hj-cover { transform: none; }
+}
