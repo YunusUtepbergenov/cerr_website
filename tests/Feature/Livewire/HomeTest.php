@@ -1,8 +1,10 @@
 <?php
 
 use App\Livewire\Home;
+use App\Models\Journal;
 use App\Models\News;
 use App\Models\Video;
+use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
 describe('Home Component', function () {
@@ -83,11 +85,27 @@ describe('Home Component', function () {
             ->assertSet('latest_news', fn ($val) => $val->first()->id === $newsWithTranslation->id);
     })->group('feature', 'livewire', 'critical');
 
-    it('renders the journals section with localized heading and issue links', function () {
+    it('shows active journals newest first and hides inactive ones', function () {
+        Storage::fake('public');
+        Storage::disk('public')->put('journals/a.jpg', 'x');
+        Journal::factory()->create([
+            'title' => 'Active issue',
+            'link' => 'https://review.uz/journals/view/active',
+            'cover_image' => 'journals/a.jpg',
+        ]);
+        Journal::factory()->inactive()->create([
+            'link' => 'https://review.uz/journals/view/inactive',
+        ]);
+
         Livewire::test(Home::class)
             ->assertSee(__('messages.journals'))
-            ->assertSee('https://review.uz/journals/view/8-44-2025')
-            ->assertSee('https://review.uz/journals');
+            ->assertSee('https://review.uz/journals/view/active')
+            ->assertDontSee('https://review.uz/journals/view/inactive');
+    })->group('feature', 'livewire');
+
+    it('hides the journals section when there are no active journals', function () {
+        Livewire::test(Home::class)
+            ->assertDontSee('home-journals');
     })->group('feature', 'livewire');
 
     it('renders the partners section with localized heading and self-hosted logos', function () {

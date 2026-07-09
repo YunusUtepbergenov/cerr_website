@@ -196,12 +196,7 @@
     @endif
 
 
-    @php($journals = [
-        ['href' => 'https://review.uz/journals/view/8-44-2025', 'cover' => 'https://static.review.uz/crop/1/8/200_265_95_1879944794.jpg?v=1757314135'],
-        ['href' => 'https://review.uz/journals/view/8-307-2025', 'cover' => 'https://static.review.uz/crop/1/4/200_265_95_1409325190.jpg?v=1756985379'],
-        ['href' => 'https://review.uz/journals/view/1-08-2025', 'cover' => 'https://static.review.uz/crop/9/5/200_265_95_958738944.jpg?v=1756189246'],
-        ['href' => 'https://review.uz/journals/view/7-43-2025', 'cover' => 'https://static.review.uz/crop/1/4/360__95_1417567118.jpg?v=1755058724'],
-    ])
+    @if ($journals->isNotEmpty())
     <section class="home-journals" aria-labelledby="hj-title">
         <div class="hs-inner">
             <div class="hs-head">
@@ -209,14 +204,15 @@
                 <a class="hs-more" href="https://review.uz/journals" target="_blank" rel="noopener noreferrer">review.uz <i class="fa-solid fa-arrow-right hs-more-icon" aria-hidden="true"></i></a>
             </div>
             <div class="hj-grid">
-                @foreach ($journals as $issue)
-                    <a class="hj-item" href="{{ $issue['href'] }}" target="_blank" rel="noopener noreferrer">
-                        <span class="hj-cover"><img class="hj-img" src="{{ $issue['cover'] }}" alt="Iqtisodiy sharh — {{ $loop->iteration }}" width="200" height="265" loading="lazy"></span>
+                @foreach ($journals as $journal)
+                    <a class="hj-item" href="{{ $journal->link }}" target="_blank" rel="noopener noreferrer">
+                        <span class="hj-cover"><img class="hj-img" src="{{ $journal->coverUrl() }}" alt="{{ $journal->title }}" width="200" height="265" loading="lazy"></span>
                     </a>
                 @endforeach
             </div>
         </div>
     </section>
+    @endif
 
     @php($partners = [
         ['name' => 'UNDP', 'href' => 'https://www.undp.org', 'logo' => 'images/partners/undp.svg', 'w' => 237, 'h' => 482],

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Category;
+use App\Models\Journal;
 use App\Models\News;
 use App\Models\Video;
 use Livewire\Component;
@@ -16,6 +17,8 @@ class Home extends Component
     public $infographics;
 
     public $videos;
+
+    public $journals;
 
     public $popular_news;
 
@@ -43,6 +46,8 @@ class Home extends Component
             : collect();
 
         $this->videos = Video::latest()->take(4)->get();
+
+        $this->journals = Journal::active()->latest('published_at')->take(8)->get();
 
         $this->categories = Category::with(['translation', 'news'])->limit(3)->get();
     }
