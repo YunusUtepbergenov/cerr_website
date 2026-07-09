@@ -41,7 +41,7 @@ trait HandlesImageUploads
             return;
         }
 
-        $managedPrefixes = ['news/', 'pages/', 'videos/'];
+        $managedPrefixes = ['news/', 'pages/', 'videos/', 'journals/'];
         foreach ($managedPrefixes as $prefix) {
             if (str_starts_with($path, $prefix)) {
                 Storage::disk('public')->delete($path);
