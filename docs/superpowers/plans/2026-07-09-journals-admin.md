@@ -849,7 +849,7 @@ Add a public property (after `public $videos;`):
 In `mount()`, after the `$this->videos = ...` line, add:
 
 ```php
-        $this->journals = Journal::active()->latest('published_at')->take(8)->get();
+        $this->journals = Journal::active()->orderByDesc('published_at')->orderByDesc('id')->take(8)->get();
 ```
 
 - [ ] **Step 4: Replace the hardcoded journals markup**

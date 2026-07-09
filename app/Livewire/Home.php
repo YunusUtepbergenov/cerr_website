@@ -47,7 +47,7 @@ class Home extends Component
 
         $this->videos = Video::latest()->take(4)->get();
 
-        $this->journals = Journal::active()->latest('published_at')->take(8)->get();
+        $this->journals = Journal::active()->orderByDesc('published_at')->orderByDesc('id')->take(8)->get();
 
         $this->categories = Category::with(['translation', 'news'])->limit(3)->get();
     }
