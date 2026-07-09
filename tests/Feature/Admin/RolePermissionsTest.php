@@ -15,6 +15,7 @@ describe('removed / unrecognized role', function () {
         $this->actingAs($viewer)->get(route('admin.pages.index'))->assertForbidden();
         $this->actingAs($viewer)->get(route('admin.categories.index'))->assertForbidden();
         $this->actingAs($viewer)->get(route('admin.activity.index'))->assertForbidden();
+        $this->actingAs($viewer)->get(route('admin.journals.index'))->assertForbidden();
     })->group('feature', 'admin');
 })->group('feature', 'admin');
 
@@ -26,6 +27,7 @@ describe('editor role', function () {
         $this->actingAs($editor)->get(route('admin.pages.index'))->assertOk();
         $this->actingAs($editor)->get(route('admin.categories.index'))->assertOk();
         $this->actingAs($editor)->get(route('admin.activity.index'))->assertOk();
+        $this->actingAs($editor)->get(route('admin.journals.index'))->assertOk();
         $this->actingAs($editor)->get(route('admin.users.index'))->assertForbidden();
     })->group('feature', 'admin');
 })->group('feature', 'admin');
@@ -39,6 +41,7 @@ describe('admin role', function () {
         $this->actingAs($admin)->get(route('admin.categories.index'))->assertOk();
         $this->actingAs($admin)->get(route('admin.activity.index'))->assertOk();
         $this->actingAs($admin)->get(route('admin.users.index'))->assertOk();
+        $this->actingAs($admin)->get(route('admin.journals.index'))->assertOk();
     })->group('feature', 'admin');
 
     it('can edit any news regardless of owner', function () {

@@ -69,6 +69,9 @@
             <a href="{{ route('admin.videos.index') }}" class="{{ request()->routeIs('admin.videos.*') ? 'active' : '' }}">
                 <i class="fa-solid fa-video"></i> {{ __('admin.nav.videos') }}
             </a>
+            <a href="{{ route('admin.journals.index') }}" class="{{ request()->routeIs('admin.journals.*') ? 'active' : '' }}">
+                <i class="fa-solid fa-book-open"></i> {{ __('admin.nav.journals') }}
+            </a>
             @endif
             @if (auth()->user()?->canManageOpenData())
             <a href="{{ route('admin.open-data.index') }}" class="{{ request()->routeIs('admin.open-data.*') ? 'active' : '' }}">

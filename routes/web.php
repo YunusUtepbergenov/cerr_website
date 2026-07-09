@@ -10,6 +10,7 @@ use App\Livewire\Admin\AccountSettings;
 use App\Livewire\Admin\Activity\ActivityIndex;
 use App\Livewire\Admin\Categories\CategoryIndex;
 use App\Livewire\Admin\Dashboard as AdminDashboard;
+use App\Livewire\Admin\Journals\JournalIndex;
 use App\Livewire\Admin\Media\MediaIndex;
 use App\Livewire\Admin\News\NewsForm;
 use App\Livewire\Admin\News\NewsIndex;
@@ -81,6 +82,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(fun
     Route::get('/pages/{page}/edit', PageForm::class)->name('pages.edit')->middleware('manage-content');
 
     Route::get('/videos', AdminVideoIndex::class)->name('videos.index')->middleware('manage-content');
+    Route::get('/journals', JournalIndex::class)->name('journals.index')->middleware('manage-content');
 
     Route::get('/media', MediaIndex::class)->name('media.index');
     Route::get('/activity', ActivityIndex::class)->name('activity.index')->middleware('manage-content');
