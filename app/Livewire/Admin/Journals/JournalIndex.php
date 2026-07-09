@@ -38,7 +38,7 @@ class JournalIndex extends Component
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'link' => ['required', 'url', 'max:2048'],
+            'link' => ['required', 'url:http,https', 'max:2048'],
             'published_at' => ['required', 'date'],
             'is_active' => ['boolean'],
             'coverUpload' => [$this->editingId ? 'nullable' : 'required', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'],
@@ -65,6 +65,8 @@ class JournalIndex extends Component
 
     public function save(): void
     {
+        abort_if(! auth()->user()?->canManageContent(), 403);
+
         $this->validate();
 
         $journal = $this->editingId ? Journal::findOrFail($this->editingId) : new Journal;
@@ -94,7 +96,7 @@ class JournalIndex extends Component
 
     public function delete(int $id): void
     {
-        abort_if(! auth()->user()->canManageContent(), 403);
+        abort_if(! auth()->user()?->canManageContent(), 403);
 
         $journal = Journal::findOrFail($id);
         $journal->logActivity('deleted', ['title' => $journal->title]);

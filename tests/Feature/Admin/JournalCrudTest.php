@@ -51,6 +51,18 @@ describe('Journal CRUD', function () {
             ->assertHasErrors(['link']);
     })->group('feature', 'admin');
 
+    it('rejects a link with a non-http scheme', function () {
+        Storage::fake('public');
+
+        Livewire::test(JournalIndex::class)
+            ->call('startCreate')
+            ->set('title', 'X')
+            ->set('link', 'javascript://alert(1)')
+            ->set('coverUpload', UploadedFile::fake()->image('c.jpg'))
+            ->call('save')
+            ->assertHasErrors(['link']);
+    })->group('feature', 'admin');
+
     it('requires a cover image when creating', function () {
         Livewire::test(JournalIndex::class)
             ->call('startCreate')
