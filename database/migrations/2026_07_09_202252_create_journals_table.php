@@ -12,7 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('cover_image');
-            $table->string('link');
+            $table->string('link', 2048);
             $table->date('published_at');
             $table->boolean('is_active')->default(true);
             $table->timestamps();
