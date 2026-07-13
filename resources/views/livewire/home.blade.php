@@ -139,8 +139,8 @@
     <br>
 
     @push('styles')
-        <link rel="stylesheet" href="{{ asset('css/news-article.css') }}">
-        <link rel="stylesheet" href="{{ asset('css/site-pages.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/news-article.css') }}?v={{ filemtime(public_path('css/news-article.css')) }}">
+        <link rel="stylesheet" href="{{ asset('css/site-pages.css') }}?v={{ filemtime(public_path('css/site-pages.css')) }}">
     @endpush
 
     @if ($videos->isNotEmpty())

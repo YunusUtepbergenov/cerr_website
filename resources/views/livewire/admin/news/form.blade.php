@@ -288,7 +288,7 @@
                         menubar: false,
                         promotion: false,
                         branding: false,
-                        content_css: '{{ asset('css/news-article.css') }}',
+                        content_css: '{{ asset('css/news-article.css') }}?v={{ filemtime(public_path('css/news-article.css')) }}',
                         body_class: 'news-article-body',
                         plugins: 'lists link image table code autolink media',
                         toolbar: 'undo redo | styles | bold italic underline | bullist numlist | link image media table | alignleft aligncenter alignright | code',

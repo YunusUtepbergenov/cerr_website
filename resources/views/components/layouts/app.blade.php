@@ -23,11 +23,12 @@
     @endisset
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
     
+    <link rel="stylesheet" href="{{ asset('css/fonts.css') }}?v={{ filemtime(public_path('css/fonts.css')) }}">
     <link rel="stylesheet" href="{{asset('css/vendor/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/vendor/metismenu.css')}}">
     <link rel="stylesheet" href="{{asset('css/plugins/fontawesome-5.css')}}">
     <link rel="stylesheet" href="{{asset('css/vendor/magnific-popup.css')}}">
-    <link rel="stylesheet" href="{{asset('css/style.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}">
     @stack('styles')
 
 </head>
