@@ -5,7 +5,7 @@
                'clip' blocks horizontal scroll the same way but keeps the sticky rail working. */
             html { overflow-x: clip !important; overflow-y: visible !important; }
             body { overflow-x: clip !important; }
-            .od-catalog { font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f7f8fc; color: #1c2240; padding: 46px 0 66px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+            .od-catalog { font-family: 'Source Sans 3', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif; background: #f7f8fc; color: #1c2240; padding: 46px 0 66px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
             .od-catalog *, .od-catalog *::before, .od-catalog *::after { box-sizing: border-box; }
             .od-catalog .od-wrap { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
             .od-catalog .od-head { margin-bottom: 24px; }

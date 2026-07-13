@@ -5,8 +5,8 @@
   --color-primary: #3a4c7a;
   --color-primary-3: #FF390E;
   --color-primary-m: #7817F2;
-  --home-5-title-font:"Bebas Neue", sans-serif;
-  --home-5-body-font:"DM Sans", sans-serif;
+  --home-5-title-font:'Golos Text', sans-serif;
+  --home-5-body-font:'Source Sans 3', sans-serif;
   --home-5-body-color:#EBEBEB;
   --color-body:#5E5E5E;
   --dark-color-body:rgba(255, 255, 255, .8);
@@ -73,19 +73,19 @@ html {
 }
 
 html[lang="en"] {
-    font-family: 'Inter', 'Roboto', sans-serif;
+    font-family: 'Source Sans 3', sans-serif;
 }
 
 html[lang="ru"] {
-    font-family: "Signika Negative";
+    font-family: 'Golos Text', sans-serif;
 }
 
 html[lang="uz"] {
-    font-family: 'Manrope', 'Noto Sans', sans-serif;
+    font-family: 'Golos Text', sans-serif;
 }
 
 html[lang="kr"] {
-    font-family: Arial, sans-serif;
+    font-family: 'Source Sans 3', sans-serif;
 }
 
 body {
@@ -97,7 +97,7 @@ body {
   font-weight: var(--p-regular);
   position: relative;
   overflow-x: hidden;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 .language-dropdown{
@@ -424,7 +424,7 @@ cite,
 }
 
 var {
-  font-family: "Manrope", sans-serif;
+  font-family: 'Golos Text', sans-serif;
 }
 
 /*---------------------------
@@ -9147,7 +9147,7 @@ ins {
 }
 
 pre {
-  font-family: "Raleway", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: var(--font-size-b3);
   margin: 10px 0;
   overflow: auto;
@@ -11875,7 +11875,7 @@ textarea:focus {
 
 .hm7-btn-1 {
   color: #FE5301;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   border: 1px solid #FE5301;
   font-size: 18px;
   font-style: normal;
@@ -15594,7 +15594,7 @@ body.sal-disabled [data-sal|=flip] {
   font-weight: var(--s-bold);
   font-size: var(--font-size-b2);
   color: var(--color-heading-1);
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 @media (max-width: 1200px) and (min-width: 991px) {
   .echo-meta-total-jobs .echo-meta-jobs-text span {
@@ -16709,7 +16709,7 @@ html[data-theme=dark] body.home-three .header-sticky .echo-site-main-logo-menu-s
   font-size: 16px;
   font-weight: 500;
   line-height: 26px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 .echo-header-area.header-seven .echo-home-2-menu .echo-site-main-logo-menu-social .echo-home-2-menu-full-contetn .echo-home-1-social-media-icons .sign-in-area a i {
   width: 35px;
@@ -18484,7 +18484,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-latest-news-area.home-three .echo-latest-news-content .sub-title {
   margin-bottom: 0;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
   font-size: 30px;
   line-height: 40px;
@@ -18529,7 +18529,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 35px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
 }
 .echo-latest-news-area.home-three .echo-latest-news-content .echo-latest-news-full-content .echo-latest-news-img .content-catagory-tag.tech {
   background: #00D971;
@@ -18538,7 +18538,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   margin-top: 35px;
 }
 .echo-latest-news-area.home-three .echo-latest-news-content .echo-latest-news-full-content .echo-latest-news-single-title h5 {
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -18807,7 +18807,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   background: #F05600;
   border-radius: 4px;
   padding: 5px 10px;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-weight: 600;
   font-size: 14px;
   line-height: 22px;
@@ -18903,7 +18903,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .home-one .echo-video-area .echo-full-video-content .echo-video-left-site .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -19044,7 +19044,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .home-one .echo-video-area .echo-full-video-content .echo-video-right-site-content .echo-video-right-site-content-video .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -19150,13 +19150,13 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 35px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
 }
 .home-one .echo-video-area.home-three .echo-video-area-inner .banner-content .contents {
   margin-top: 30px;
 }
 .home-one .echo-video-area.home-three .echo-video-area-inner .banner-content .contents .content-title1 {
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
   font-size: 50px;
   line-height: 60px;
@@ -19178,7 +19178,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   color: #ffffff;
 }
 .home-one .echo-video-area.home-three .echo-video-area-inner .banner-content .contents .desc {
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -19215,7 +19215,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .home-one .echo-video-area.home-three .echo-video-area-inner .echo-button-wrapper .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -19340,7 +19340,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   background: #F05600;
   border-radius: 4px;
   padding: 5px 10px;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-weight: 600;
   font-size: 12px;
   line-height: 20px;
@@ -19366,7 +19366,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .echo-de-category-area .echo-de-category-title-btn a {
   border: 1px solid;
   padding: 15px 20px;
-  font-family: "Bona Nova", serif;
+  font-family: 'Golos Text', sans-serif;
 }
 .echo-de-category-area .echo-de-category-title-btn a::after {
   content: "\f061";
@@ -19427,7 +19427,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   text-align: center;
   border: 1px solid;
   opacity: 0.8;
-  font-family: "Bona Nova", serif;
+  font-family: 'Golos Text', sans-serif;
 }
 .echo-de-category-area .echo-de-category-content .echo-de-category-show-more-btn a::after {
   content: "\f061";
@@ -19823,7 +19823,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 20px;
   line-height: 30px;
   color: #5E5E5E;
-  font-family: "Bona Nova", serif;
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
   margin: 0;
 }
@@ -19895,7 +19895,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   background: #F05600;
   border-radius: 4px;
   padding: 5px 10px;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-weight: 600;
   font-size: 14px;
   line-height: 22px;
@@ -19969,7 +19969,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   border-radius: 4px;
   padding: 5px 10px;
   color: #ffffff;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-weight: 600;
   font-size: 14px;
   line-height: 22px;
@@ -19981,7 +19981,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   background: #00D971;
 }
 .echo-feature-area.home-three .echo-feature-area-content .echo-feature-full-content .echo-feature-area-right-site-full-content .content-box ul .wrapper .content .content-title1 {
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
   font-size: 20px;
   line-height: 30px;
@@ -20993,7 +20993,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-hm2-video-area .echo-hm2-video-area-content .echo-hm2-video-area-full-content .echo-row .echo-hm2-video-img .echo-hm2-video-icons .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -21280,7 +21280,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   padding: 10px 36px;
   text-align: center;
   border: 1px solid;
-  font-family: "Inter", serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 16px;
   line-height: 30px;
   margin: 0 auto;
@@ -21307,7 +21307,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
  .echo-inner-img-ct-1 .echo-hm2-video-icons .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -21423,7 +21423,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-hero-section.inner .echo-hero-baner:nth-child(4) .echo-inner-img-ct-1 .echo-hm2-video-icons .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -21674,7 +21674,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 20px;
   line-height: 30px;
   color: #5E5E5E;
-  font-family: "Bona Nova", serif;
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
   margin: 0;
 }
@@ -21735,7 +21735,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-hero-section.inner-2 .echo-hero-baner:nth-child(2) .echo-inner-img-ct-1 .echo-hm2-video-icons .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -21850,7 +21850,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-hero-section.inner-2 .echo-hero-baner:nth-child(5) .echo-inner-img-ct-1 .echo-hm2-video-icons .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -21930,7 +21930,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-hm2-video-icons .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -22188,7 +22188,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   list-style: none;
   width: 50%;
   padding-left: 30px;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
@@ -22336,7 +22336,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   position: absolute;
   top: 35px;
   right: 0;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
 }
 .echo-hero-section.inner-post .echo-comment-box {
@@ -22381,7 +22381,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   display: block;
   float: left;
   color: #181823;
-  font-family: Bona Nova ", serif";
+  font-family: 'Golos Text', sans-serif;
 }
 .echo-hero-section.inner-post-3 .echo-post-style-quote-info-flexing {
   display: flex;
@@ -23352,7 +23352,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .echo-latest-news-area.home-six .section-inner .echo-latest-news-main-content .content .author {
   margin-bottom: 0;
   color: #FFCC48;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 14px;
   font-style: italic;
   font-weight: 500;
@@ -23363,7 +23363,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-latest-news-area.home-six .section-inner .echo-latest-news-main-content .content h4 a {
   color: #FFF;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 25px;
   font-style: normal;
   font-weight: 700;
@@ -23393,7 +23393,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-hero-section.home-six .echo-full-hero-content .echo-hero-baner .content .author {
   color: #EF5727;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 16px;
   font-style: italic;
   font-weight: 500;
@@ -23404,7 +23404,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-hero-section.home-six .echo-full-hero-content .echo-hero-baner .content .echo-hero-title {
   text-align: center;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 70px;
   font-style: normal;
   font-weight: 700;
@@ -23454,7 +23454,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   padding: 30px;
 }
 .echo-hero-section.home-six .echo-full-hero-content .echo-right-ct-1 .echo-author-area .heading-title {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 .echo-hero-section.home-six .echo-full-hero-content .echo-right-ct-1 .echo-author-area .content {
   margin-top: 30px;
@@ -23463,14 +23463,14 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   background: #F4F4F4;
 }
 .echo-hero-section.home-six .echo-full-hero-content .echo-right-ct-1 .echo-feature-area-right-site-follower .echo-home-2-title .echo-home-2-main-title h5 {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 .echo-hero-section.home-six .echo-full-hero-content .echo-right-ct-1 .echo-home-1-hero-area-top-story {
   background: #f4f4f4;
   margin-top: 25px;
 }
 .echo-hero-section.home-six .echo-full-hero-content .echo-right-ct-1 .echo-home-1-hero-area-top-story h5 {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 @media (max-width: 500px) {
   .echo-hero-section.home-six .echo-full-hero-content .echo-right-ct-1 .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text {
@@ -23479,14 +23479,14 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-hero-section.home-six .echo-full-hero-content .echo-right-ct-1 .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text .pe-none {
   color: #EF5727;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 14px;
   font-style: italic;
   font-weight: 500;
   line-height: 22px;
 }
 .echo-hero-section.home-six .echo-full-hero-content .echo-right-ct-1 .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text h6 {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   margin-bottom: 0;
 }
 @media (max-width: 500px) {
@@ -23520,7 +23520,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   padding: 30px;
 }
 .echo-hero-section.home-six .echo-full-hero-content .echo-right-ct-1 .echo-feature-area-right-site-author h5 {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 @media (max-width: 1366px) and (min-width: 1200px) {
   .echo-hero-section.home-six .echo-full-hero-content .echo-right-ct-1 .echo-feature-area-right-site-author h5 {
@@ -23553,7 +23553,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   line-height: 30px;
   text-transform: capitalize;
   margin-bottom: 0;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 .echo-video-area.home-six {
@@ -23569,7 +23569,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   }
 }
 .echo-video-area.home-six .hm5-feature-title .hm-5-title-btn h2 {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 60px;
   font-style: normal;
   font-weight: 700;
@@ -23701,7 +23701,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-video-area.home-six .section-inner .echo-hero-baner .content .author {
   color: #FFFFFF;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 16px;
   font-style: italic;
   font-weight: 500;
@@ -23711,7 +23711,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   margin-top: 30px;
 }
 .echo-video-area.home-six .section-inner .echo-hero-baner .content .echo-hero-title {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 70px;
   font-style: normal;
   font-weight: 700;
@@ -23896,7 +23896,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-video-area.home-six .section-inner .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text .pe-none {
   color: #E2E2E2;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 14px;
   font-style: italic;
   font-weight: 400;
@@ -23904,7 +23904,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-video-area.home-six .section-inner .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text h6 {
   color: #FFF;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 40px;
   font-weight: 700;
   line-height: 45px;
@@ -23926,7 +23926,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-video-area.home-six .section-inner .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text .read-more-btn {
   color: #E2E2E2;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 26px;
@@ -23948,7 +23948,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-video-area.home-seven .hm5-feature-title .hm-5-title-btn .hm-5-main-title h2 {
   text-align: center;
-  font-family: "Jost", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 40px;
   font-weight: 500;
   line-height: 50px;
@@ -24026,7 +24026,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-video-area.home-seven .section-inner .echo-home-1-hero-area-top-story .echo-story-text h6 {
   color: #FFF;
-  font-family: "Jost", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 40px;
   font-style: normal;
   font-weight: 400;
@@ -24186,7 +24186,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   }
 }
 .hm5-feature-area.home-six .hm5-feature-title .hm-5-main-title h2 {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 60px;
   line-height: 70px;
   font-weight: 700;
@@ -24214,7 +24214,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .hm5-feature-area.home-six .hm5-feature-content .hm5-featurea-main-content .content .author {
   color: #EF5727;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 16px;
   font-style: italic;
   font-weight: 500;
@@ -24226,7 +24226,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .hm5-feature-area.home-six .hm5-feature-content .hm5-featurea-main-content .content .echo-hero-title {
   text-align: center;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 40px;
   font-style: normal;
   font-weight: 700;
@@ -24376,14 +24376,14 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .hm5-feature-area.home-six .hm5-feature-content .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text .pe-none {
   color: #EF5727;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 14px;
   font-style: italic;
   font-weight: 400;
   line-height: 24px;
 }
 .hm5-feature-area.home-six .hm5-feature-content .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text h6 {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 40px;
   font-weight: 700;
   line-height: 50px;
@@ -24418,7 +24418,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .hm5-feature-area.home-six .hm5-feature-content .echo-home-1-hero-area-top-story .echo-top-story .echo-story-text .read-more-btn {
   color: #EF5727;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 26px;
@@ -24436,7 +24436,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   padding: 120px 0;
 }
 .echo-newsletter-area.home-six .newsletter-inner .content-title {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   color: #FFFFFF;
   font-size: 50px;
   line-height: 60px;
@@ -24546,7 +24546,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-newsletter-area.home-six .newsletter-inner form .desc {
   margin-top: 10px;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-style: italic;
   font-weight: 300;
   font-size: 14px;
@@ -24679,7 +24679,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-newsletter-area.home-nine .newsletter-inner form .desc {
   margin-top: 10px;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-style: italic;
   font-weight: 300;
   font-size: 14px;
@@ -24712,7 +24712,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-business-area .hm5-feature-title .hm-5-title-btn .hm-5-main-title h2 {
   color: #313131;
-  font-family: "Jost", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 40px;
   font-style: normal;
   font-weight: 500;
@@ -24917,7 +24917,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-latest-news-area.home-eight .hm5-feature-title .hm-5-main-title h2 {
   color: #171717;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 30px;
   line-height: 40px;
   font-weight: 600;
@@ -25031,7 +25031,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-latest-news-area.home-eight .echo-right-ct-1 .right-side-banner .category li a span {
   color: #FE5301;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   transition: all 0.4s;
 }
 .echo-latest-news-area.home-eight .echo-right-ct-1 .echo-feature-area-right-site-newsletter {
@@ -25043,7 +25043,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .echo-latest-news-area.home-eight .echo-right-ct-1 .echo-feature-area-right-site-newsletter .echo-feature-area-right-site-sub-title p {
   color: #171717;
   text-align: center;
-  font-family: "Inconsolata", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 25px;
   font-weight: 600;
   line-height: 35px;
@@ -25057,7 +25057,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-latest-news-area.home-eight .echo-right-ct-1 .echo-feature-area-right-site-newsletter form input::placeholder {
   color: #454545;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 14px;
   font-weight: 400;
   line-height: 22px;
@@ -25161,7 +25161,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   padding: 20px 55px;
   color: #fff;
   position: relative;
-  font-family: "Bona Nova", serif;
+  font-family: 'Golos Text', sans-serif;
   font-size: 16px;
   font-weight: 700;
 }
@@ -25184,7 +25184,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   background: #47164F;
 }
 .echo-software-download-area.home-eight .echo-software-download-full-content-bg .echo-software-download-full-content .echo-software-download-text-content .echo-software-download-title h2 {
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 
 .echo-hero-section.home-three {
@@ -25209,13 +25209,13 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 35px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
 }
 .echo-hero-section.home-three .echo-hero-inner .banner-content .contents {
   margin-top: 30px;
 }
 .echo-hero-section.home-three .echo-hero-inner .banner-content .contents .content-title1 {
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
   font-size: 60px;
   line-height: 70px;
@@ -25237,7 +25237,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   color: #ffffff;
 }
 .echo-hero-section.home-three .echo-hero-inner .banner-content .contents .desc {
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -25319,7 +25319,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-hero-section.home-three .echo-hero-inner .banner-content .contents .echo-button-wrapper .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -25405,7 +25405,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   padding: 50px 30px;
 }
 .echo-hero-section.home-three .echo-hero-inner .echo-hero-right-side .right-side-inner .sub-title {
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
   font-size: 20px;
   line-height: 30px;
@@ -25443,7 +25443,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   border-radius: 4px;
   padding: 5px 10px;
   color: #ffffff;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-weight: 600;
   font-size: 14px;
   line-height: 22px;
@@ -25455,7 +25455,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   background: #00D971;
 }
 .echo-hero-section.home-three .echo-hero-inner .echo-hero-right-side .right-side-inner .content-box ul .wrapper .content .content-title1 {
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
   font-size: 25px;
   line-height: 35px;
@@ -25483,7 +25483,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-hero-section.home-three .echo-hero-inner .echo-hero-right-side .right-side-inner .content-box ul .wrapper .content .content-bottom-info ul li {
   list-style: none;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-weight: 500;
   font-size: 14px;
   line-height: 22px;
@@ -25534,7 +25534,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 35px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
 }
 .echo-hero-section.home-four .echo-full-hero-content .echo-latest-news-main-content .echo-latest-news-img .content-catagory-tag.tech {
   background: #00D971;
@@ -25546,7 +25546,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   margin-top: 35px;
 }
 .echo-hero-section.home-four .echo-full-hero-content .echo-latest-news-main-content .echo-latest-news-single-title h5 {
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
   font-size: 42px;
   line-height: 55px;
@@ -25878,7 +25878,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   padding: 10px 22px;
   border-radius: 10px;
   transition: all 0.4s;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
   font-size: 16px;
   line-height: 30px;
@@ -25944,7 +25944,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 35px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   z-index: 1;
 }
 .echo-latest-news-area.home-four .echo-latest-news-content .echo-latest-news-full-content .echo-latest-news-img .video-play-button {
@@ -25963,7 +25963,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-latest-news-area.home-four .echo-latest-news-content .echo-latest-news-full-content .echo-latest-news-img .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -26051,7 +26051,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   margin-top: 35px;
 }
 .echo-latest-news-area.home-four .echo-latest-news-content .echo-latest-news-full-content .echo-latest-news-single-title h5 {
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 25px;
@@ -26111,7 +26111,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 40px;
   line-height: 50px;
   font-weight: 500;
-  font-family: "Jost", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 .echo-latest-news-area.home-seven .echo-hero-baner.small {
   text-align: left;
@@ -26295,14 +26295,14 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 40px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   z-index: 1;
 }
 .echo-feature-area.home-four .echo-feature-area-full-content .echo-latest-news-main-content .echo-latest-news-single-title {
   margin-top: 45px;
 }
 .echo-feature-area.home-four .echo-feature-area-full-content .echo-latest-news-main-content .echo-latest-news-single-title h5 {
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 30px;
@@ -26476,7 +26476,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 40px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   z-index: 1;
 }
 .echo-feature-area.area-2 .echo-feature-area-content .echo-feature-full-content .echo-feature-area-site-title .echo-feature-area-last-news .echo-feature-area-last-content .echo-feature-area-last-content-text h3 {
@@ -26535,7 +26535,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 35px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   z-index: 1;
 }
 .echo-feature-area.area-2 .echo-feature-area-content .echo-feature-full-content .echo-feature-right-area .echo-feature-area-last-content .echo-feature-area-last-content-text h3 {
@@ -26603,7 +26603,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   border-radius: 10px;
   background: none;
   border: 1px solid #5E5E5E9e;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 16px;
@@ -26713,7 +26713,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 40px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   z-index: 1;
 }
 .echo-popular-news-area.home-four .echo-popular-news-area-content .echo-popular-news-area-full-content .left-side-content .echo-latest-news-main-content .echo-latest-news-img .vedio-icone {
@@ -26736,7 +26736,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-popular-news-area.home-four .echo-popular-news-area-content .echo-popular-news-area-full-content .left-side-content .echo-latest-news-main-content .echo-latest-news-img .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -26824,7 +26824,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   margin-top: 45px;
 }
 .echo-popular-news-area.home-four .echo-popular-news-area-content .echo-popular-news-area-full-content .left-side-content .echo-latest-news-main-content .echo-latest-news-single-title h5 {
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   text-align: center;
   font-weight: 700;
   font-size: 25px;
@@ -27013,7 +27013,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-video-area.home-four .echo-video-area-inner .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -27142,7 +27142,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 35px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   z-index: 1;
   margin: 0 auto;
 }
@@ -27263,7 +27263,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-video-area.inner .echo-video-area-inner .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -27389,7 +27389,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-video-area.home-eight .echo-video-area-inner .video-play-button span.outer-text {
   border: none;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-size: 20px;
   min-width: max-content;
   margin-left: 75px;
@@ -27519,14 +27519,14 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-size: 14px;
   line-height: 40px;
   text-transform: uppercase;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   z-index: 1;
 }
 .echo-video-area.home-eight .swiper-container-h8 .slider-inner .echo-video-bottom-area .content h5 {
   font-weight: 500;
   font-size: 50px;
   line-height: 65px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   text-align: start;
   text-transform: capitalize;
   margin-top: 20px;
@@ -27658,7 +27658,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .echo-video-area.home-eight .swiper-container-h8 .swiper-pagination .swiper-pagination-current {
   color: #FE6821;
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 35px;
   font-weight: 500;
   text-transform: uppercase;
@@ -27945,7 +27945,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   list-style: none;
   width: 50%;
   padding-left: 20px;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 400;
   font-size: 20px;
   line-height: 30px;
@@ -28102,7 +28102,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   position: absolute;
   top: 35px;
   right: 0;
-  font-family: "Bona Nova";
+  font-family: 'Golos Text', sans-serif;
   font-weight: 700;
 }
 .echo-hero-section.inner-post .echo-comment-box {
@@ -28234,7 +28234,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .hero-home-six .hero-inner .slider-inner .content .hero-hm6-title h1 {
   color: #FFF;
   text-align: center;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 160px;
   font-weight: 700;
   line-height: 160px;
@@ -28386,7 +28386,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   margin: auto;
   color: #2B2004;
   text-align: center;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 18px;
   font-weight: 700;
 }
@@ -28697,7 +28697,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .echo-banner-area.home-nine .swiper .echo-hero-baner .content .echo-hero-discription {
   color: #E2E2E2;
   text-align: center;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 26px;
@@ -28744,7 +28744,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .echo-banner-area.home-nine .echo-hero-baner.small .content .author {
   color: #FF9A82;
   text-align: center;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 18px;
   font-weight: 500;
   line-height: 24px;
@@ -28909,7 +28909,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .home-seven .echo-hero-baner .content .echo-hero-title {
   text-align: center;
-  font-family: "Jost", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 40px;
   font-weight: 600;
   line-height: 50px;
@@ -28999,7 +28999,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .home-eight .echo-hero-baner .content .author {
   color: #FFFFFF;
   text-align: center;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 20px;
   font-weight: 700;
   text-transform: uppercase;
@@ -29025,7 +29025,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .home-eight .echo-hero-baner .content .echo-hero-title {
   text-align: center;
-  font-family: "Dm Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 40px;
   font-weight: 700;
   line-height: 50px;
@@ -29136,7 +29136,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .home-eight .echo-banner-area.home-seven .right-side-banner .echo-hero-baner.small .content .echo-story-text {
   margin-top: 5px;
   font-size: 16px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   color: #FFF;
   font-weight: 300;
   line-height: 26px;
@@ -29173,7 +29173,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 }
 .home-eight .echo-hero-section.home-eight .hm5-feature-title .hm-5-main-title h2 {
   color: #171717;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 30px;
   line-height: 40px;
   font-weight: 600;
@@ -29238,7 +29238,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .home-eight .echo-hero-section.home-eight .echo-full-hero-content .right-side-banner .echo-hero-baner.small .content .echo-story-text {
   margin-top: 5px;
   font-size: 14px;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   color: #171717;
   font-weight: 400;
   line-height: 24px;
@@ -29345,7 +29345,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .home-eight .echo-hero-section.home-eight .echo-full-hero-content .echo-right-ct-1 .echo-home-1-hero-area-top-story h5 {
   font-size: 30px;
   line-height: 1.2;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-weight: 700;
 }
 .home-eight .echo-hero-section.home-eight .echo-full-hero-content .echo-right-ct-1 .echo-home-1-hero-area-top-story .right-side-banner .echo-hero-baner {
@@ -29355,7 +29355,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .home-eight .echo-hero-section.home-eight .echo-full-hero-content .echo-right-ct-1 .echo-feature-area-right-site-gallery h5 {
   font-size: 30px;
   line-height: 1.2;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-weight: 700;
 }
 .home-eight .echo-hero-section.home-eight .echo-full-hero-content .echo-right-ct-1 .echo-feature-area-right-site-gallery .gallery-wrapper {
@@ -29407,7 +29407,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
   font-weight: 500;
   line-height: 24px;
   margin-bottom: 20px;
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 .home-nine .echo-hero-baner .content .echo-hero-title {
   font-size: 60px;
@@ -29425,7 +29425,7 @@ html[data-theme=dark] .echo-header-area.header-seven .echo-home-2-menu .echo-sit
 .home-nine .echo-hero-baner .content .echo-hero-discription {
   color: #E2E2E2;
   text-align: center;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 26px;
@@ -29757,7 +29757,7 @@ html[data-theme=dark] body.home-nine .echo-hero-baner .content .echo-hero-title 
   font-weight: 500;
   line-height: 50px;
   margin-bottom: 60px;
-  font-family: "Jost", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 .echo-trending-news-area.home-seven .section-inner .left-side-inner .echo-hero-baner .echo-hero-banner-main-img img {
   width: 100%;
@@ -29833,7 +29833,7 @@ html[data-theme=dark] body.home-nine .echo-hero-baner .content .echo-hero-title 
 }
 .echo-trending-news-area.home-eight .hm5-feature-title .hm-5-main-title h2 {
   color: #171717;
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 30px;
   line-height: 40px;
   font-weight: 600;
@@ -30232,7 +30232,7 @@ html[data-theme=dark] body.home-nine .echo-hero-baner .content .echo-hero-title 
   text-align: center;
   color: rgba(255, 255, 255, 0.8);
   font-size: 16px;
-  font-family: "Bona Nova", serif;
+  font-family: 'Golos Text', sans-serif;
   position: relative;
   border: 1px solid transparent;
 }
@@ -30263,7 +30263,7 @@ html[data-theme=dark] body.home-nine .echo-hero-baner .content .echo-hero-title 
 }
 .echo-footer-area .echo-footer-copyright-area .copyright-area-inner .copyright-content .title {
   color: #FFFFFFb0;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -30493,7 +30493,7 @@ html[data-theme=dark] body.home-two .echo-footer-area.footer-2 .echo-get-in-tuch
 }
 .echo-footer-area4 .footer-top .footer-top-inner .footer-top-right .echo-subscribe-box-button form .desc {
   margin-top: 10px;
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-style: italic;
   font-weight: 300;
   font-size: 14px;
@@ -30565,7 +30565,7 @@ html[data-theme=dark] body.home-two .echo-footer-area.footer-2 .echo-get-in-tuch
   display: none;
 }
 .echo-footer-area4 .footer-main .footer-main-inner .footer-menu-area .menu-item a {
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 26px;
@@ -30585,7 +30585,7 @@ html[data-theme=dark] body.home-two .echo-footer-area.footer-2 .echo-get-in-tuch
   text-align: center;
 }
 .echo-footer-area4 .footer-copyright-area .copyright-area-inner .title {
-  font-family: "Inter";
+  font-family: 'Source Sans 3', sans-serif;
   font-weight: 300;
   font-size: 16px;
   line-height: 26px;
@@ -30721,7 +30721,7 @@ html[data-theme=dark] body.home-two .echo-footer-area.footer-2 .echo-get-in-tuch
   }
 }
 .home-six .echo-footer-area .echo-row .echo-get-in-tuch h4 {
-  font-family: "DM Sans", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
 }
 .home-six .echo-footer-area .echo-row .echo-get-in-tuch h4::after {
   display: none;
@@ -34327,7 +34327,7 @@ html[data-theme=dark] body.home-two .echo-footer-area.footer-2 .echo-get-in-tuch
 }
 
 .hero-title {
-  font-family: "Inter", sans-serif;
+  font-family: 'Source Sans 3', sans-serif;
   font-size: 5rem;
   text-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
 }
@@ -34335,6 +34335,21 @@ html[data-theme=dark] body.home-two .echo-footer-area.footer-2 .echo-get-in-tuch
 .custom-hero-inner img {
   object-fit: cover;
   object-position: center;
+}
+
+/* Hero photo — slow zoom in/out. Transform-only so it runs entirely on the
+   compositor (no layout/paint per frame); will-change promotes the image to
+   its own layer once instead of re-rasterizing; honors reduced-motion. */
+@media (prefers-reduced-motion: no-preference) {
+  .custom-hero-inner img {
+    will-change: transform;
+    animation: hero-zoom 5s ease-in-out infinite alternate;
+  }
+
+  @keyframes hero-zoom {
+    from { transform: scale(1); }
+    to { transform: scale(1.1); }
+  }
 }
 
 .z-1 {
@@ -34412,3 +34427,14 @@ html[data-theme=dark] body.home-two .echo-footer-area.footer-2 .echo-get-in-tuch
   background: #d99a06;
 }
 .site-notice strong { color: #8a6200; font-weight: 700; }
+
+/* ============================================================
+   Unified type system (2026-07): every heading renders in the
+   display face, Golos Text; body text is Source Sans 3.
+   !important is deliberate — it outranks the legacy theme's
+   per-component heading families without hunting all of them.
+   ============================================================ */
+h1, h2, h3, h4, h5, h6,
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a {
+  font-family: 'Golos Text', sans-serif !important;
+}
