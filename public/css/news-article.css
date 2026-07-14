@@ -130,7 +130,7 @@
 /* ---- Article body (prose) — Meridian typography ----------------------- */
 .news-article-body { font-size: var(--na-body-size); line-height: 1.7; color: var(--na-ink); overflow-wrap: break-word; }
 .news-article-body > *:first-child { margin-top: 0; }
-.news-article-body p { margin: 0 0 1.15em; font-size: var(--na-body-size); line-height: 1.7; color: var(--na-ink); }
+.news-article-body p { margin: 0 0 1.15em; font-size: var(--na-body-size); line-height: 1.7; color: var(--na-ink); text-align: justify; hyphens: auto; }
 .news-article-body h1,
 .news-article-body h2,
 .news-article-body h3,
@@ -153,7 +153,7 @@
 .news-article-body strong { font-weight: 700; color: var(--na-ink); }
 .news-article-body ul { margin: 0 0 1.2em; padding-left: 1.4em; list-style: disc; }
 .news-article-body ol { margin: 0 0 1.2em; padding-left: 1.4em; list-style: decimal; }
-.news-article-body li { margin: 0 0 .5em; font-size: var(--na-body-size); line-height: 1.7; color: var(--na-ink); }
+.news-article-body li { margin: 0 0 .5em; font-size: var(--na-body-size); line-height: 1.7; color: var(--na-ink); text-align: justify; hyphens: auto; }
 .news-article-body blockquote {
     background: var(--na-mist);
     border-left: 3px solid var(--na-azure);
