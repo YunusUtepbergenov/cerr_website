@@ -21,7 +21,16 @@ class FlushNewsViewCounts extends Command
             return self::SUCCESS;
         }
 
+        // Resolve which buffered ids still map to a live article. A buffer left
+        // over from a deleted article (or an id shifted by a schema rebuild)
+        // would otherwise raise a foreign-key violation in NewsDailyView::record()
+        // and abort the whole flush, permanently stalling view analytics.
+        $existingIds = News::whereIn('id', array_keys($views))
+            ->pluck('id')
+            ->flip();
+
         foreach ($views as $newsId => $count) {
+            $newsId = (int) $newsId;
             $count = (int) $count;
 
             // Skip non-positive buffers so corrupt/zero values can never
@@ -30,8 +39,16 @@ class FlushNewsViewCounts extends Command
                 continue;
             }
 
+            // Orphaned buffer for an article that no longer exists: discard it
+            // so it stops accumulating and can never crash a future flush.
+            if (! $existingIds->has($newsId)) {
+                Redis::hdel('news:views', $newsId);
+
+                continue;
+            }
+
             News::where('id', $newsId)->increment('view_count', $count);
-            NewsDailyView::record((int) $newsId, $count);
+            NewsDailyView::record($newsId, $count);
             Redis::hincrby('news:views', $newsId, -$count);
         }
 

@@ -92,4 +92,21 @@ describe('FlushNewsViewCounts Command', function () {
         expect($news->fresh()->view_count)->toBe(10)
             ->and(NewsDailyView::where('news_id', $news->id)->count())->toBe(0);
     })->group('feature', 'console');
+
+    it('discards buffered views for a deleted article without failing the whole flush', function () {
+        $live = News::factory()->create();
+        $orphanId = $live->id + 999; // no news row exists for this id (article deleted)
+
+        Redis::hset('news:views', $orphanId, 5);
+        Redis::hset('news:views', $live->id, 4);
+
+        $this->artisan('news:flush-views')->assertSuccessful();
+
+        // The surviving article is still flushed and its buffer drained...
+        expect((int) NewsDailyView::where('news_id', $live->id)->sum('views'))->toBe(4)
+            ->and((int) Redis::hget('news:views', $live->id))->toBe(0)
+            // ...while the orphaned entry is dropped so it can never crash a later flush.
+            ->and((bool) Redis::hexists('news:views', $orphanId))->toBeFalse()
+            ->and(NewsDailyView::where('news_id', $orphanId)->count())->toBe(0);
+    })->group('feature', 'console');
 });
