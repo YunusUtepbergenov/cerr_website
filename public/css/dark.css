@@ -377,3 +377,79 @@ html[data-theme=dark] .echo-footer-area .echo-row .echo-footer-content-1 .echo-f
 html[data-theme=dark] .echo-footer-area .echo-row .echo-footer-content-1 .echo-footer-address .echo-footer-social-media a:hover i {
     color: var(--dk-bg);
 }
+
+/* ---- Search modal retoken (spec §3.5) + light plates (spec §4) ---------
+   Retires the modal's private blue-slate family (style.css:34468-34486).
+   dark.css loads after style.css, so identical selectors win by order;
+   rules with no dark counterpart out-specify the light originals. */
+html[data-theme=dark] body .search-input-area {
+    background: var(--dk-scrim);
+}
+html[data-theme=dark] body .search-input-area .search-input-inner {
+    background: var(--dk-surface);
+    border: 1px solid var(--dk-border);
+}
+html[data-theme=dark] body .search-input-area .search-input-inner:focus-within {
+    border-color: var(--dk-accent);
+    box-shadow: 0 0 0 3px var(--dk-accent-bg);
+}
+html[data-theme=dark] body .search-input-area .search-input-inner input {
+    color: var(--dk-text);
+}
+html[data-theme=dark] body .search-input-area .search-input-inner input::placeholder {
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] body .search-input-area .search-input-inner .search-close-icon i {
+    background: var(--dk-surface-2);
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] body .search-input-area .search-input-inner .search-close-icon i:hover {
+    background: var(--dk-accent);
+    color: var(--dk-bg);
+}
+
+/* ---- Home journals + partners: dark band, light logo plates ------------
+   Section background/heading flip via the --na-* re-declare (Task 3); the
+   explicit band rule below makes the pair self-contained. Partner tiles
+   stay deliberately light (--dk-plate) — logos are colored artwork. */
+html[data-theme=dark] .home-journals,
+html[data-theme=dark] .home-partners {
+    background: var(--dk-bg);
+}
+html[data-theme=dark] .hj-item:hover .hj-cover,
+html[data-theme=dark] .hj-item:focus-visible .hj-cover {
+    box-shadow: 0 14px 30px -18px var(--dk-scrim);
+}
+html[data-theme=dark] .hp-wall {
+    background: var(--dk-border);
+    border-color: var(--dk-border);
+}
+html[data-theme=dark] .hp-cell,
+html[data-theme=dark] .hp-cell:hover,
+html[data-theme=dark] .hp-cell:focus-visible {
+    background: var(--dk-plate);
+}
+html[data-theme=dark] .hp-cell:focus-visible {
+    outline-color: var(--dk-surface-2);
+}
+html[data-theme=dark] .hp-cell .hp-name {
+    color: var(--dk-bg);
+}
+
+/* ---- Structure page: org chart on a document plate ---------------------
+   The hotlinked lex.uz GIF is opaque white; a --dk-plate mat frames it as
+   a document card instead of a raw white slab on the dark page. */
+html[data-theme=dark] .echo-hero img[src^="https://lex.uz"] {
+    background: var(--dk-plate);
+    border: 1px solid var(--dk-border);
+    border-radius: 12px;
+    padding: clamp(14px, 3vw, 28px);
+}
+
+/* ---- Mobile menu bottom edge (Task 5 review polish) --------------------
+   The open panel overlays --dk-surface cards at ~1.35:1; its retained
+   light shadow rgba(0,0,0,.1) is invisible on a dark page, so the panel
+   needs its own bottom edge. */
+html[data-theme=dark] .echo-mobile-menu-wrapper {
+    border-bottom: 1px solid var(--dk-border);
+}
