@@ -636,7 +636,10 @@ git commit -m "feat(dark-mode): fix chrome — mobile menu, language switchers, 
 
 ```css
 /* ---- Search modal retoken (spec §3.5) + light plates (spec §4) ---------
-   Retires the modal's private blue-slate family (style.css:34468-34486).
+   Retires the modal's private blue-slate family (style.css:34468-34482;
+   the ::before magnifier at 34484 is intentionally retained — a data-URI
+   cannot consume tokens and its #8fa1ba stroke stays legible on the
+   new surfaces).
    dark.css loads after style.css, so identical selectors win by order;
    rules with no dark counterpart out-specify the light originals. */
 html[data-theme=dark] body .search-input-area {
