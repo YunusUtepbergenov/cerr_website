@@ -151,3 +151,132 @@ html[data-theme=dark] .hv-row:hover .hv-disc,
 html[data-theme=dark] .hv-row:focus-visible .hv-disc {
     color: var(--dk-bg);
 }
+
+/* ---- Vendor retint — navy surfaces (spec §3.2) -------------------------
+   Overrides the vendor's own html[data-theme=dark] rules (style.css
+   ~17839-18090). dark.css loads after style.css, so identical selectors win
+   on source order; the light rules cited per block are lower-specificity. */
+
+/* Page background — style.css:17839 paints body var(--color-heading-1) #181823. */
+html[data-theme=dark] body {
+    background: var(--dk-bg);
+}
+
+/* Full-width sections + desktop menu bar — style.css:17890-17899 paints them
+   var(--bg-dark-three) #0f0f1c (darker than the page: inverted elevation). */
+html[data-theme=dark] body .echo-latest-news-area,
+html[data-theme=dark] body .echo-site-main-logo-menu-social {
+    background: var(--dk-band);
+}
+
+/* Category-page section wrapper — style.css:17925 → --bg-dark-three. */
+html[data-theme=dark] body .echo-hero-section.inner {
+    background: var(--dk-band);
+}
+
+/* Sticky menu bar — style.css:15771 (dark → --bg-dark-three), 15764 (light
+   #193a51); .header-sticky is added to .echo-header-area by helper.js:97.
+   Needed at (0,4,2): the light sticky rule (0,3,0) outranks the generic
+   menu-bar retint above. */
+html[data-theme=dark] body.home-one .header-sticky .echo-site-main-logo-menu-social {
+    background: var(--dk-band);
+}
+
+/* Sidebar "top story" block — style.css:17914 painted it --bg-dark-three; in
+   light mode it is a card (#F9F9F9 at 18154, .bg-right-side #eeecec at 18159),
+   so in dark it sits one elevation step above the section band. */
+html[data-theme=dark] body .echo-home-1-hero-area-top-story {
+    background: var(--dk-surface);
+}
+
+/* Breadcrumb band — style.css:17933-17938 multiplies #181823 into the light
+   breadcrumb.png (set at 11354-11359). Flat band instead: image off, blend
+   off, navy band. */
+html[data-theme=dark] body .echo-breadcrumb-area {
+    background-color: var(--dk-band);
+    background-image: none;
+    background-blend-mode: normal;
+}
+
+/* Desktop dropdown panel — style.css:17961 → var(--color-heading-1) #181823;
+   light panel #ffffff at 15837, its 3px border-top keeps invisible brand
+   navy (15838) — retinted to the strong border token. */
+html[data-theme=dark] body .echo-site-main-logo-menu-social ul.echo-desktop-menu li.echo-has-dropdown ul.echo-submenu {
+    background: var(--dk-surface);
+    border-top-color: var(--dk-border-strong);
+}
+
+/* Footer — permanently #181823 via style.css:30107-30110; the vendor dark rule
+   (17922) targets .echo-footer-area.footer-2, a class this footer never has,
+   so the retint must target the base class. Dark scope only: the light-mode
+   footer keeps its designed dark plum. */
+html[data-theme=dark] body .echo-footer-area {
+    background-color: var(--dk-band);
+}
+
+/* ---- Accent restoration (spec §3.7) ------------------------------------ */
+
+/* Vendor dark link system = white slide-in underline (style.css:17939-17947)
+   + white hover text (17948-17955). Rebrand to the accent pair so hover reads
+   as brand, not glare. */
+html[data-theme=dark] body .title-hover {
+    background-image: linear-gradient(to right, var(--dk-accent) 50%, transparent 50%);
+}
+html[data-theme=dark] body .title-hover:hover {
+    color: var(--dk-accent-strong);
+}
+
+/* Desktop submenu hover — light-only var(--color-primary) #3a4c7a ≈2.1:1 on
+   the dark panel (style.css:15866); the slide-in dot (15873-15884) uses the
+   same invisible primary. */
+html[data-theme=dark] .echo-site-main-logo-menu-social ul.echo-desktop-menu li.echo-has-dropdown ul.echo-submenu .nav-item:hover a {
+    color: var(--dk-accent);
+}
+html[data-theme=dark] .echo-site-main-logo-menu-social ul.echo-desktop-menu li.echo-has-dropdown ul.echo-submenu .nav-item::before {
+    background: var(--dk-accent);
+}
+
+/* Prose list links — the vendor rule html[data-theme=dark] body ul li a
+   ((0,1,5), style.css:17849) out-ranks .news-article-body a ((0,1,1)),
+   leaving authored-list links unbranded near-white at rest while their
+   hover flips to the accent family. Restore the accent pair. */
+html[data-theme=dark] body .news-article-body li a {
+    color: var(--dk-accent);
+}
+html[data-theme=dark] body .news-article-body li a:hover {
+    color: var(--dk-accent-strong);
+}
+
+/* ---- Small vendor components (spec §3.8, partial) ----------------------- */
+
+/* Carousel prev/next arrows — #5E5E5E ≈2.9:1 on the band, gray hover fill
+   (style.css:18359-18424). */
+html[data-theme=dark] .echo-latest-news-area .echo-latest-news-content .echo-be-slider-btn .echo-latest-news-next-prev-btn .swiper-button-next,
+html[data-theme=dark] .echo-latest-news-area .echo-latest-news-content .echo-be-slider-btn .echo-latest-news-next-prev-btn .swiper-button-prev {
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] .echo-latest-news-area .echo-latest-news-content .echo-be-slider-btn .echo-latest-news-next-prev-btn .swiper-button-next:hover,
+html[data-theme=dark] .echo-latest-news-area .echo-latest-news-content .echo-be-slider-btn .echo-latest-news-next-prev-btn .swiper-button-prev:hover {
+    background-color: var(--dk-surface-2);
+    color: var(--dk-text);
+}
+
+/* Form fields — the vendor's dark form rule (style.css:17862-17877) recolors
+   text only, leaving light fills/borders. Mirrors the vendor's group minus
+   `button`, which other dark rules style deliberately. */
+html[data-theme=dark] body .input,
+html[data-theme=dark] body select,
+html[data-theme=dark] body textarea {
+    background-color: var(--dk-surface);
+    border-color: var(--dk-border-strong);
+}
+
+/* Focus companion: the resting rule above out-ranks the light :focus rule
+   (style.css:9424-9433, (0,1,1), border → --color-primary) — and outline is
+   already none there — so without this, focused fields would show no focus
+   state at all. Blade-local rules (e.g. od-sort focus, (0,4,2)) still win. */
+html[data-theme=dark] body .input:focus,
+html[data-theme=dark] body select:focus,
+html[data-theme=dark] body textarea:focus {
+    border-color: var(--dk-accent);
+}
