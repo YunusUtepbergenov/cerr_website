@@ -41,7 +41,7 @@ class Search extends Component
             $query = $this->searchQuery($term);
 
             $totalCount = (clone $query)->count();
-            $results = $query->with('translation')->latest()->take($perPage)->get();
+            $results = $query->with(['translation' => fn ($q) => $q->cardColumns()])->latest()->take($perPage)->get();
         }
 
         return view('livewire.search', [

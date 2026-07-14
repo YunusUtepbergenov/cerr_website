@@ -90,4 +90,20 @@ class News extends Model
                 });
         });
     }
+
+    /**
+     * In-memory mirror of scopePublished() for an already-loaded row, so a
+     * visibility check doesn't re-query a model we already hold. Keep the two
+     * in sync.
+     */
+    public function isPubliclyVisible(): bool
+    {
+        if ($this->status === 'published') {
+            return true;
+        }
+
+        return $this->status === 'auto_publish'
+            && $this->scheduled_at !== null
+            && $this->scheduled_at <= now();
+    }
 }

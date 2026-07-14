@@ -41,7 +41,7 @@ class Dashboard extends Component
             'trend30d' => $this->viewTrend(30),
             'sparkline' => $this->dailyTotals(30),
             'topNews' => $this->topViewed($this->topPeriod),
-            'recentNews' => News::with('translations')->latest('id')->limit(8)->get(),
+            'recentNews' => News::with(['translations' => fn ($query) => $query->cardColumns()])->latest('id')->limit(8)->get(),
         ])->title(__('admin.nav.dashboard'));
     }
 

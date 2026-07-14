@@ -14,14 +14,14 @@ class ShowAllCategories extends Component
 
     public function mount()
     {
-        $this->category = Category::with(['translation', 'news'])->first();
+        $this->category = Category::with(['translation', 'news.translation' => fn ($query) => $query->cardColumns()])->first();
 
         if (! $this->category || ! $this->category->translation) {
             abort(404);
         }
 
         $locale = app()->getLocale();
-        $this->popular_news = News::published()->whereHas('translations', fn ($query) => $query->where('lang', $locale))->orderBy('view_count', 'DESC')->limit(6)->get();
+        $this->popular_news = News::published()->whereHas('translations', fn ($query) => $query->where('lang', $locale))->with(['translation' => fn ($query) => $query->cardColumns()])->orderBy('view_count', 'DESC')->limit(6)->get();
     }
 
     public function render()

@@ -30,6 +30,17 @@ class NewsTranslation extends Model
     }
 
     /**
+     * Limit a translation query to the columns news cards render, omitting the
+     * large `content` body and the SEO fields. Keeps id/news_id/lang so the
+     * relation still resolves and locale filtering works. Use on list/card
+     * eager loads; the article detail page loads the full translation.
+     */
+    public function scopeCardColumns($query)
+    {
+        return $query->select('id', 'news_id', 'lang', 'title', 'short_description', 'image_url');
+    }
+
+    /**
      * Resolve the cover image URL.
      *
      * Legacy values are bare filenames stored under public/images/news/.

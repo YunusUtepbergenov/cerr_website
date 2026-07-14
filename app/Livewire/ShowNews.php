@@ -25,7 +25,7 @@ class ShowNews extends Component
             abort(404);
         }
 
-        $isPubliclyVisible = News::published()->whereKey($news->id)->exists();
+        $isPubliclyVisible = $news->isPubliclyVisible();
 
         if (! $isPubliclyVisible && ! auth()->user()?->canEditNews($news)) {
             abort(404);
@@ -41,7 +41,7 @@ class ShowNews extends Component
 
         $this->popular_news = News::published()
             ->whereHas('translations', fn ($query) => $query->where('lang', $locale))
-            ->with('translation')
+            ->with(['translation' => fn ($query) => $query->cardColumns()])
             ->orderBy('view_count', 'DESC')
             ->limit(6)
             ->get();
@@ -65,7 +65,7 @@ class ShowNews extends Component
                 fn ($query) => $query->whereHas('tags', fn ($tag) => $tag->whereIn('tags.id', $tagIds)),
                 fn ($query) => $query->whereRaw('1 = 0'),
             )
-            ->with('translation')
+            ->with(['translation' => fn ($query) => $query->cardColumns()])
             ->latest()
             ->limit(3)
             ->get();
@@ -77,7 +77,7 @@ class ShowNews extends Component
                 ->whereHas('translations', fn ($query) => $query->where('lang', $locale))
                 ->where('category_id', $news->category_id)
                 ->whereNotIn('id', $exclude)
-                ->with('translation')
+                ->with(['translation' => fn ($query) => $query->cardColumns()])
                 ->latest()
                 ->limit(3 - $related->count())
                 ->get();

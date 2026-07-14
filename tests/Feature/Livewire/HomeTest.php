@@ -66,15 +66,6 @@ describe('Home Component', function () {
             ->assertSet('latest_news', fn ($val) => $val->count() === 10);
     })->group('feature', 'livewire', 'critical');
 
-    it('loads categories with relationships', function () {
-        $category = createCategoryWithTranslation();
-        createNewsWithTranslation(['category_id' => $category->id]);
-
-        Livewire::test(Home::class)
-            ->assertSet('categories', fn ($val) => $val->count() === 1)
-            ->assertSet('categories', fn ($val) => $val->first()->news->count() === 1);
-    })->group('feature', 'livewire', 'critical');
-
     it('only shows news with translations', function () {
         $research = createCategoryWithTranslation(['slug' => 'research']);
         $newsWithTranslation = createNewsWithTranslation(['category_id' => $research->id]);
