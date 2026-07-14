@@ -443,6 +443,17 @@ html[data-theme=dark] .echo-site-main-logo-menu-social ul.echo-desktop-menu li.e
     background: var(--dk-accent);
 }
 
+/* Prose list links — the vendor rule html[data-theme=dark] body ul li a
+   ((0,1,5), style.css:17849) out-ranks .news-article-body a ((0,1,1)),
+   leaving authored-list links unbranded near-white at rest while their
+   hover flips to the accent family. Restore the accent pair. */
+html[data-theme=dark] body .news-article-body li a {
+    color: var(--dk-accent);
+}
+html[data-theme=dark] body .news-article-body li a:hover {
+    color: var(--dk-accent-strong);
+}
+
 /* ---- Small vendor components (spec §3.8, partial) ----------------------- */
 
 /* Carousel prev/next arrows — #5E5E5E ≈2.9:1 on the band, gray hover fill
@@ -651,6 +662,10 @@ html[data-theme=dark] body .search-input-area .search-input-inner .search-close-
 html[data-theme=dark] .home-journals,
 html[data-theme=dark] .home-partners {
     background: var(--dk-bg);
+}
+html[data-theme=dark] .hj-item:hover .hj-cover,
+html[data-theme=dark] .hj-item:focus-visible .hj-cover {
+    box-shadow: 0 14px 30px -18px var(--dk-scrim);
 }
 html[data-theme=dark] .hp-wall {
     background: var(--dk-border);
