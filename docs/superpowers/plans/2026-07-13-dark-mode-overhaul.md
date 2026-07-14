@@ -121,7 +121,7 @@ html[data-theme=dark] .story-divider {
 @endpush
 ```
 
-- [ ] **Step 5: Re-verify**
+- [x] **Step 5: Re-verify**
 
 Run: `php artisan test --compact --filter="DarkModeLayout|ShowAllCategories"`
 Expected: all tests pass (deprecation markers are the pre-existing PDO baseline).
@@ -129,7 +129,7 @@ Expected: all tests pass (deprecation markers are the pre-existing PDO baseline)
 Run: `vendor/bin/pint --dirty --format agent`
 Expected: no fixes needed in these files.
 
-- [ ] **Step 6: Commit**
+- [x] **Step 6: Commit**
 
 ```bash
 git add public/css/dark.css resources/views/components/layouts/app.blade.php resources/views/livewire/show-all-categories.blade.php tests/Feature/DarkModeLayoutTest.php
@@ -182,7 +182,7 @@ html[data-theme=dark] .od-catalog .od-page.is-current { background: var(--dk-acc
 
 This also fixes the four audited gaps: `.od-eyebrow` (new rule), `.od-page.od-nav:hover` (new rule at (0,5,0) > light (0,4,0)), `.od-clear button:hover` (new rule), `.od-sort select:focus` (new rule after the resting rule, same specificity → source order wins). The three `rgba(0,0,0,…)` shadows are pre-existing values carried over (shadows have no token; they read correctly on dark).
 
-- [ ] **Step 2: Re-verify**
+- [x] **Step 2: Re-verify**
 
 Run: `php artisan test --compact --filter=OpenData`
 Expected: existing open-data tests pass.
@@ -190,7 +190,7 @@ Expected: existing open-data tests pass.
 Run: `curl -s http://localhost/open-data | grep -c 'var(--dk-'`
 Expected: ≥ 30 (the retokened block renders).
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add resources/views/livewire/open-data/open-data-index.blade.php
@@ -204,7 +204,7 @@ git commit -m "refactor(dark-mode): open-data page consumes shared dark tokens, 
 **Files:**
 - Modify: `public/css/dark.css` (append at end)
 
-- [ ] **Step 1: Append this section** (verified: every selector's light rule read at the cited line; wins vs the `@push`'d `news-article.css`/`site-pages.css` are strict specificity wins, not load-order ties)
+- [x] **Step 1: Append this section** (verified: every selector's light rule read at the cited line; wins vs the `@push`'d `news-article.css`/`site-pages.css` are strict specificity wins, not load-order ties)
 
 ```css
 /* ---- Meridian re-token (spec fix #1) ----------------------------------- */
@@ -332,7 +332,7 @@ html[data-theme=dark] .hv-row:focus-visible .hv-disc {
 
 Notes locked in by the verifier: the vendor dark rules `html[data-theme=dark] body h1…/p` correctly paint Meridian headings/prose near-white on the now-dark sheets — no extra rules needed. The search-modal close-chip hover that consumes `var(--na-azure)` (style.css:11550) is handled in Task 6 (do **not** duplicate it here). Prose links inside `ul li` lose azure to the vendor `ul li a` rule — restored by Task 4's accent work only where reachable; the `.cc-social`/`.hv-row`/`.popular-item` anchors are not inside `ul/li` and are unaffected.
 
-- [ ] **Step 2: Verify**
+- [x] **Step 2: Verify**
 
 Run: `php artisan test --compact --filter=DarkModeLayout`
 Expected: 3 pass.
@@ -342,7 +342,7 @@ Expected: a fresh version stamp (cache busts automatically via filemtime).
 
 Guardrails: `grep -c '!important' public/css/dark.css` → `0`; `awk '/^[a-zA-Z.#\[:*]/ && !/^html\[data-theme=dark\]/' public/css/dark.css` → no output (every top-level selector dark-scoped).
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add public/css/dark.css
@@ -356,7 +356,7 @@ git commit -m "feat(dark-mode): re-token Meridian design system — flips the te
 **Files:**
 - Modify: `public/css/dark.css` (append at end)
 
-- [ ] **Step 1: Append this section** (every style.css citation verified; dark.css loads after style.css so identical selectors win on order)
+- [x] **Step 1: Append this section** (every style.css citation verified; dark.css loads after style.css so identical selectors win on order)
 
 ```css
 /* ---- Vendor retint — navy surfaces (spec §3.2) -------------------------
@@ -491,12 +491,12 @@ html[data-theme=dark] body textarea:focus {
 
 Verified dead code deliberately **not** overridden (elements render on no page, no blade, no public JS): `.echo-popup-model` scrim, the newsletter subscribe widget, `ul.mega-menu`, `.echo-breadcrumb-area-2`, and the `#D00032` hover (gated on `.header-ten .header-three`, unreachable — this closes the spec's #D00032 finding as dead code).
 
-- [ ] **Step 2: Verify**
+- [x] **Step 2: Verify**
 
 Run: `php artisan test --compact --filter=DarkModeLayout` → 3 pass.
 Guardrails from Task 3 Step 2 → same expected output.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add public/css/dark.css
@@ -510,7 +510,7 @@ git commit -m "feat(dark-mode): retint vendor surfaces to navy family, restore b
 **Files:**
 - Modify: `public/css/dark.css` (append at end)
 
-- [ ] **Step 1: Append this section** (markup verified in `app.blade.php` — site-notice L40, desktop lang L53-58, mobile popup L78-83, social L91-96, mobile menu L216-258)
+- [x] **Step 1: Append this section** (markup verified in `app.blade.php` — site-notice L40, desktop lang L53-58, mobile popup L78-83, social L91-96, mobile menu L216-258)
 
 ```css
 /* ---- Header / chrome — every page (spec §3.3, §3.4) -------------------- */
@@ -613,12 +613,12 @@ html[data-theme=dark] .echo-footer-area .echo-row .echo-footer-content-1 .echo-f
 
 (One normalization vs the drafted section, per spec §2's accent-fill rule: the social-pill hover glyph is `var(--dk-bg)` (~8.2:1 on accent), not `var(--dk-surface-2)`. The footer-social hover pair was added from the Task 4 quality review — the light hover fill uses the brand navy that fails contrast on every dark surface.)
 
-- [ ] **Step 2: Verify**
+- [x] **Step 2: Verify**
 
 Run: `php artisan test --compact --filter=DarkModeLayout` → 3 pass.
 Guardrails from Task 3 Step 2 → `!important` count is 0; the awk scoping check prints nothing; the only hex literals below the token block are `#d99a06`, `#45B58C`, `#E07B63` (plus hexes inside comments).
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add public/css/dark.css
@@ -632,7 +632,7 @@ git commit -m "feat(dark-mode): fix chrome — mobile menu, language switchers, 
 **Files:**
 - Modify: `public/css/dark.css` (append at end)
 
-- [ ] **Step 1: Append this section** (verified: home renders 1 modal, 8 `.hp-cell`; `/structure` renders exactly one `.echo-hero` with the lex.uz img)
+- [x] **Step 1: Append this section** (verified: home renders 1 modal, 8 `.hp-cell`; `/structure` renders exactly one `.echo-hero` with the lex.uz img)
 
 ```css
 /* ---- Search modal retoken (spec §3.5) + light plates (spec §4) ---------
@@ -717,12 +717,12 @@ html[data-theme=dark] .echo-mobile-menu-wrapper {
 
 Accepted nuances (verifier-signed): the modal's magnifier icon keeps the vendor's data-URI SVG stroke (retokening it would need a new literal inside a data URI); `.hp-name`/`outline-color` use dark tokens as ink on the light plate — a sanctioned token-role stretch in lieu of minting a plate-ink token; the org-chart hook keys off the lex.uz URL (a true dark asset is the spec's follow-up).
 
-- [ ] **Step 2: Verify**
+- [x] **Step 2: Verify**
 
 Run: `php artisan test --compact --filter=DarkModeLayout` → 3 pass.
 Guardrails from Task 5 Step 2 → same expected output.
 
-- [ ] **Step 3: Commit**
+- [x] **Step 3: Commit**
 
 ```bash
 git add public/css/dark.css
@@ -735,17 +735,17 @@ git commit -m "feat(dark-mode): retoken search modal, partner logo plates, org-c
 
 **Files:** none new
 
-- [ ] **Step 1: Run the full test suite**
+- [x] **Step 1: Run the full test suite**
 
 Run: `php artisan test --compact`
 Expected: everything green (pre-existing deprecation markers aside). If anything fails, stop and fix before proceeding.
 
-- [ ] **Step 2: Pint**
+- [x] **Step 2: Pint**
 
 Run: `vendor/bin/pint --dirty --format agent`
 Expected: no violations (CSS is untouched by Pint; this guards the blade/test files).
 
-- [ ] **Step 3: Commit (only if Pint changed anything)**
+- [x] **Step 3: Commit (only if Pint changed anything)**
 
 ```bash
 git add -u && git commit -m "style(dark-mode): pint"
@@ -757,7 +757,7 @@ git add -u && git commit -m "style(dark-mode): pint"
 
 **Files:** none — verification against the spec's Appendix checklist
 
-- [ ] **Step 1: Automated spot checks** — for each URL below, confirm HTTP 200 and that `css/dark.css?v=` is present after the pushed page styles:
+- [x] **Step 1: Automated spot checks** — for each URL below, confirm HTTP 200 and that `css/dark.css?v=` is present after the pushed page styles:
 
 ```bash
 for p in / /about /contact /history /leadership /open-data "/search?query=iqtisodiyot" /show-all-category /show-category/mulohaza /structure /vacancies /videos /videos/4; do
