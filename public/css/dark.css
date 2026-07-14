@@ -280,3 +280,100 @@ html[data-theme=dark] body select:focus,
 html[data-theme=dark] body textarea:focus {
     border-color: var(--dk-accent);
 }
+
+/* ---- Header / chrome — every page (spec §3.3, §3.4) -------------------- */
+
+/* Mobile hamburger menu (style.css:34108-34190). Panel is hardcoded #fff
+   while the vendor dark rule html[data-theme=dark] body ul li a
+   (style.css:17848, (0,1,5)) turns the links near-white — white-on-white.
+   Every color rule below carries at least (0,2,2), out-ranking both the
+   light rules and that vendor rule. */
+html[data-theme=dark] .echo-mobile-menu-wrapper {
+    background-color: var(--dk-surface);
+}
+html[data-theme=dark] .echo-mobile-menu-content ul li {
+    border-bottom-color: var(--dk-border);
+}
+html[data-theme=dark] .echo-mobile-menu-content a {
+    color: var(--dk-text);
+}
+html[data-theme=dark] .echo-mobile-menu-content a:hover {
+    color: var(--dk-accent);
+}
+html[data-theme=dark] .mobile-dropdown ul {
+    background-color: var(--dk-surface-2);
+}
+html[data-theme=dark] .echo-mobile-menu-content .mobile-dropdown ul li a {
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] .echo-mobile-menu-content .mobile-dropdown ul li a:hover {
+    color: var(--dk-accent);
+}
+
+/* ---- Desktop language switcher (style.css:34200-34214) ---------------- */
+html[data-theme=dark] .language-dropdown a {
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] .language-dropdown a:hover {
+    color: var(--dk-accent-strong);
+}
+html[data-theme=dark] .language-dropdown a.active {
+    color: var(--dk-accent);
+}
+
+/* ---- Mobile language toggle + popup (style.css:34222-34270) ----------- */
+html[data-theme=dark] .lang-toggle-btn {
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] .lang-toggle-btn:hover {
+    background: var(--dk-accent-bg);
+}
+html[data-theme=dark] .mobile-lang-options {
+    background: var(--dk-surface);
+    border: 1px solid var(--dk-border);
+    box-shadow: none;
+}
+html[data-theme=dark] .mobile-lang-options a {
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] .mobile-lang-options a:hover {
+    background: var(--dk-surface-2);
+    color: var(--dk-accent-strong);
+}
+html[data-theme=dark] .mobile-lang-options a.active {
+    background: var(--dk-accent-bg);
+    color: var(--dk-accent);
+}
+
+/* ---- Header social icon pills (style.css:34283-34298) ----------------- */
+html[data-theme=dark] .echo-home-1-social-media-icons .list-group-item a {
+    background: var(--dk-accent-bg);
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] .echo-home-1-social-media-icons .list-group-item a:hover {
+    background: var(--dk-accent);
+    color: var(--dk-bg);
+}
+
+/* ---- Test-mode notice (style.css:34433-34454, spec §3.4) --------------
+   Amber dot (::before, #d99a06) is kept from the light rule untouched;
+   the amber left border is the permitted existing literal. */
+html[data-theme=dark] .site-notice {
+    background: var(--dk-surface);
+    border-bottom: 1px solid var(--dk-border);
+    border-left: 3px solid #d99a06;
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] .site-notice strong {
+    color: var(--dk-text);
+}
+
+/* ---- Footer social icons on hover (style.css:30154-30161) -------------
+   The light hover fills with brand navy #3a4c7a — ≈2.1:1 on the dark
+   footer band. Accent fill with dark glyph instead. */
+html[data-theme=dark] .echo-footer-area .echo-row .echo-footer-content-1 .echo-footer-address .echo-footer-social-media a:hover {
+    background-color: var(--dk-accent);
+}
+html[data-theme=dark] .echo-footer-area .echo-row .echo-footer-content-1 .echo-footer-address .echo-footer-social-media a:hover i {
+    color: var(--dk-bg);
+}
