@@ -1,0 +1,31 @@
+/* Dark theme — branded navy. Public site only.
+   Every rule is scoped under html[data-theme=dark]; light mode is untouched by
+   construction. Loaded LAST in the layout head (after @stack('styles')) and
+   version-stamped via filemtime. Token system and fix map:
+   docs/superpowers/specs/2026-07-13-dark-mode-overhaul-design.md */
+
+html[data-theme=dark] {
+    color-scheme: dark;
+    --dk-bg:            #0D1321;
+    --dk-band:          #111927;
+    --dk-surface:       #17202F;
+    --dk-surface-2:     #1E2A3D;
+    --dk-text:          #E8ECF4;
+    --dk-text-muted:    rgba(232,236,244,.65);
+    --dk-accent:        #8FAEE0;
+    --dk-accent-strong: #A8C2EC;
+    --dk-accent-bg:     rgba(143,174,224,.15);
+    --dk-border:        rgba(143,174,224,.16);
+    --dk-border-strong: rgba(143,174,224,.34);
+    --dk-scrim:         rgba(4,8,16,.7);
+    --dk-plate:         #E9EDF3;
+}
+
+/* ---- Story dividers (show-all-category sidebar) ------------------------ */
+/* Bootstrap's base hr rule keeps opacity:.25; at that opacity the .16-alpha
+   border token would vanish, so the divider opts out and renders the token
+   at its designed strength. */
+html[data-theme=dark] .story-divider {
+    background-color: var(--dk-border);
+    opacity: 1;
+}

@@ -1,4 +1,14 @@
 <div>
+    @push('styles')
+        <style>
+            /* Story dividers — light mode; replaces the old inline hr styles exactly
+               (#4c0505 at Bootstrap's hr opacity .25, first divider pulled up 10px).
+               Dark treatment lives in css/dark.css. */
+            .story-divider { background-color: #4c0505; }
+            .story-divider--tight { margin-top: 10px; }
+        </style>
+    @endpush
+
     <div class="echo-breadcrumb-area">
         <div class="container">
             <div class="row">
@@ -46,7 +56,7 @@
                         <div class="col-xl-3 col-lg-3 sticky-coloum-item">
                                 <div class="echo-home-1-hero-area-top-story bg-right-side">
                                     <h5 class="text-center">@lang('messages.popular')</h5>
-                                    <hr style="background-color: #4c0505; margin-top: 10px;"> 
+                                    <hr class="story-divider story-divider--tight">
                                     @foreach ($popular_news as $news)
                                         <div class="echo-top-story first" wire:key="popular-news-{{ $news->id }}">
                                             <div class="echo-story-picture img-transition-scale">
@@ -60,7 +70,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <hr style="background-color: #4c0505;">                                    
+                                        <hr class="story-divider">
                                     @endforeach
                                 </div>
                         </div>

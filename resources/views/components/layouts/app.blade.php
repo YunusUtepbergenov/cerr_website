@@ -22,7 +22,9 @@
         <meta property="og:image" content="{{ $ogImage }}">
     @endisset
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon">
-    
+
+    <script>try{var t=localStorage.getItem('echo-theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+
     <link rel="stylesheet" href="{{ asset('css/fonts.css') }}?v={{ filemtime(public_path('css/fonts.css')) }}">
     <link rel="stylesheet" href="{{asset('css/vendor/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/vendor/metismenu.css')}}">
@@ -30,6 +32,7 @@
     <link rel="stylesheet" href="{{asset('css/vendor/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}?v={{ filemtime(public_path('css/style.css')) }}">
     @stack('styles')
+    <link rel="stylesheet" href="{{ asset('css/dark.css') }}?v={{ filemtime(public_path('css/dark.css')) }}">
 
 </head>
 
