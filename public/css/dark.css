@@ -29,3 +29,125 @@ html[data-theme=dark] .story-divider {
     background-color: var(--dk-border);
     opacity: 1;
 }
+
+/* ---- Meridian re-token (spec fix #1) ----------------------------------- */
+/* news-article.css + site-pages.css consume the --na-* tokens 136 times;
+   re-declaring the palette under dark scope flips all ten Meridian pages
+   in one block. html[data-theme=dark] (0,1,1) beats the light :root
+   (0,1,0) declarations (news-article.css:37-54) regardless of load order.
+   --na-navy-deep and the font/measure tokens are untouched by design.
+   TinyMCE is unaffected: its iframe html never carries data-theme=dark. */
+html[data-theme=dark] {
+    --na-navy: var(--dk-text);
+    --na-azure: var(--dk-accent);
+    --na-azure-dark: var(--dk-accent-strong);
+    --na-ink: var(--dk-text);
+    --na-slate: var(--dk-text-muted);
+    --na-mist: var(--dk-band);
+    --na-hair: var(--dk-border);
+    --na-paper: var(--dk-bg);
+    --na-favorable: #45B58C; /* lightened data colors — the spec §2 exception */
+    --na-adverse: #E07B63;
+}
+
+/* ---- Card surfaces: one elevation step above the --dk-bg sheet -------- */
+html[data-theme=dark] .news-card,
+html[data-theme=dark] .contact-card,
+html[data-theme=dark] .leader-card,
+html[data-theme=dark] .related-card {
+    background: var(--dk-surface);
+}
+html[data-theme=dark] .news-card:hover {
+    box-shadow: 0 14px 30px -18px var(--dk-scrim);
+}
+html[data-theme=dark] .related-card:hover {
+    box-shadow: 0 12px 26px -16px var(--dk-scrim);
+}
+
+/* ---- Thumb placeholders: their navy fills would remap near-white ------ */
+html[data-theme=dark] .news-card .nc-thumb,
+html[data-theme=dark] .related-card .rc-thumb,
+html[data-theme=dark] .vc-thumb,
+html[data-theme=dark] .video-stage {
+    background: var(--dk-surface-2);
+}
+
+/* ---- Residual literals that bypass the tokens ------------------------- */
+html[data-theme=dark] .article-lead {
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] .news-card .nc-excerpt {
+    color: var(--dk-text-muted);
+}
+html[data-theme=dark] .article-tag {
+    border-color: var(--dk-border-strong);
+}
+html[data-theme=dark] .news-article-body thead th,
+html[data-theme=dark] .news-article-body table > tr:first-child th {
+    background: var(--dk-surface-2);
+    color: var(--dk-text);
+}
+html[data-theme=dark] .news-article-body td,
+html[data-theme=dark] .news-article-body tbody th {
+    border-top-color: var(--dk-border);
+}
+html[data-theme=dark] .news-article-body tbody tr:nth-child(even) td {
+    background: var(--dk-band);
+}
+
+/* ---- Contact page ------------------------------------------------------ */
+html[data-theme=dark] .contact-card .cc-ic {
+    background: var(--dk-surface-2);
+}
+html[data-theme=dark] .cc-social a {
+    background: var(--dk-accent-bg);
+    color: var(--dk-accent);
+}
+html[data-theme=dark] .cc-social a:hover {
+    background: var(--dk-accent);
+    color: var(--dk-bg);
+}
+
+/* ---- "Load more" buttons (search, videos) ------------------------------ */
+/* After the remap the light hover (site-pages.css:175) becomes near-white
+   on near-white; resting border --na-navy would glare. Accent-fill hover
+   per spec §2 (dark text on accent). */
+html[data-theme=dark] .sp-more-btn {
+    background: var(--dk-surface);
+    border-color: var(--dk-border-strong);
+    color: var(--dk-text);
+}
+html[data-theme=dark] .sp-more-btn:hover {
+    background: var(--dk-accent);
+    border-color: var(--dk-accent);
+    color: var(--dk-bg);
+}
+
+/* ---- Video play discs: dark glyph on the light disc / accent fill ----- */
+html[data-theme=dark] .vc-play span {
+    color: var(--dk-bg);
+}
+html[data-theme=dark] .video-card:hover .vc-play span {
+    color: var(--dk-bg);
+}
+
+/* ---- Search input focus (the light rule brightens mist -> paper) ------ */
+html[data-theme=dark] .search-box-input:focus {
+    background: var(--dk-surface);
+}
+
+/* ---- Home "studio band": keep it navy, keep light-on-dark text -------- */
+/* Inside .home-videos the light design already IS dark: --na-navy paints
+   the band and --na-paper paints the text. Re-scope both so the global
+   remap doesn't wash the band near-white; --na-navy-deep (#0a2340,
+   unmapped) restores the navy without introducing a new literal. */
+html[data-theme=dark] .home-videos {
+    --na-navy: var(--na-navy-deep);
+    --na-paper: var(--dk-text);
+}
+html[data-theme=dark] .hv-feature:hover .hv-disc,
+html[data-theme=dark] .hv-feature:focus-visible .hv-disc,
+html[data-theme=dark] .hv-row:hover .hv-disc,
+html[data-theme=dark] .hv-row:focus-visible .hv-disc {
+    color: var(--dk-bg);
+}
