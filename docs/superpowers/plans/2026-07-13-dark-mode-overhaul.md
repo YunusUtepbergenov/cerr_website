@@ -599,9 +599,19 @@ html[data-theme=dark] .site-notice {
 html[data-theme=dark] .site-notice strong {
     color: var(--dk-text);
 }
+
+/* ---- Footer social icons on hover (style.css:30154-30161) -------------
+   The light hover fills with brand navy #3a4c7a — ≈2.1:1 on the dark
+   footer band. Accent fill with dark glyph instead. */
+html[data-theme=dark] .echo-footer-area .echo-row .echo-footer-content-1 .echo-footer-address .echo-footer-social-media a:hover {
+    background-color: var(--dk-accent);
+}
+html[data-theme=dark] .echo-footer-area .echo-row .echo-footer-content-1 .echo-footer-address .echo-footer-social-media a:hover i {
+    color: var(--dk-bg);
+}
 ```
 
-(One normalization vs the drafted section, per spec §2's accent-fill rule: the social-pill hover glyph is `var(--dk-bg)` (~8.2:1 on accent), not `var(--dk-surface-2)`.)
+(One normalization vs the drafted section, per spec §2's accent-fill rule: the social-pill hover glyph is `var(--dk-bg)` (~8.2:1 on accent), not `var(--dk-surface-2)`. The footer-social hover pair was added from the Task 4 quality review — the light hover fill uses the brand navy that fails contrast on every dark surface.)
 
 - [ ] **Step 2: Verify**
 
