@@ -702,6 +702,14 @@ html[data-theme=dark] .echo-hero img[src^="https://lex.uz"] {
     border-radius: 12px;
     padding: clamp(14px, 3vw, 28px);
 }
+
+/* ---- Mobile menu bottom edge (Task 5 review polish) --------------------
+   The open panel overlays --dk-surface cards at ~1.35:1; its retained
+   light shadow rgba(0,0,0,.1) is invisible on a dark page, so the panel
+   needs its own bottom edge. */
+html[data-theme=dark] .echo-mobile-menu-wrapper {
+    border-bottom: 1px solid var(--dk-border);
+}
 ```
 
 Accepted nuances (verifier-signed): the modal's magnifier icon keeps the vendor's data-URI SVG stroke (retokening it would need a new literal inside a data URI); `.hp-name`/`outline-color` use dark tokens as ink on the light plate — a sanctioned token-role stretch in lieu of minting a plate-ink token; the org-chart hook keys off the lex.uz URL (a true dark asset is the spec's follow-up).
