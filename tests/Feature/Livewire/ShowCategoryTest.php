@@ -37,7 +37,8 @@ describe('ShowCategory Component', function () {
         $news2 = createNewsWithTranslation(['category_id' => $category->id]);
 
         Livewire::test(ShowCategory::class, ['slug' => 'test-category'])
-            ->assertSet('category', fn ($val) => $val->news->count() === 2);
+            ->assertViewHas('news', fn ($news) => $news->count() === 2)
+            ->assertViewHas('totalCount', 2);
     })->group('feature', 'livewire', 'critical');
 
     it('loads popular news sidebar', function () {
@@ -67,9 +68,9 @@ describe('ShowCategory Component', function () {
         $newsWithoutTranslation = News::factory()->create(['category_id' => $category->id]);
 
         Livewire::test(ShowCategory::class, ['slug' => 'test-category'])
-            ->assertSet('category', function ($val) use ($newsWithTranslation) {
-                return $val->news->count() === 1
-                    && $val->news->first()->id === $newsWithTranslation->id;
+            ->assertViewHas('news', function ($news) use ($newsWithTranslation) {
+                return $news->count() === 1
+                    && $news->first()->id === $newsWithTranslation->id;
             });
     })->group('feature', 'livewire', 'critical');
 
@@ -85,8 +86,37 @@ describe('ShowCategory Component', function () {
         ]);
 
         Livewire::test(ShowCategory::class, ['slug' => 'test-category'])
-            ->assertSet('category', function ($val) use ($newer) {
-                return $val->news->first()->id === $newer->id;
-            });
+            ->assertViewHas('news', fn ($news) => $news->first()->id === $newer->id);
+    })->group('feature', 'livewire', 'critical');
+
+    it('paginates category news to the per-page step', function () {
+        $category = createCategoryWithTranslation(['slug' => 'test-category']);
+
+        foreach (range(1, ShowCategory::PER_PAGE_STEP + 3) as $i) {
+            createNewsWithTranslation([
+                'category_id' => $category->id,
+                'created_at' => now()->subMinutes($i),
+            ]);
+        }
+
+        Livewire::test(ShowCategory::class, ['slug' => 'test-category'])
+            ->assertViewHas('news', fn ($news) => $news->count() === ShowCategory::PER_PAGE_STEP)
+            ->assertViewHas('totalCount', ShowCategory::PER_PAGE_STEP + 3);
+    })->group('feature', 'livewire', 'critical');
+
+    it('loads more news when loadMore is called', function () {
+        $category = createCategoryWithTranslation(['slug' => 'test-category']);
+
+        foreach (range(1, ShowCategory::PER_PAGE_STEP + 3) as $i) {
+            createNewsWithTranslation([
+                'category_id' => $category->id,
+                'created_at' => now()->subMinutes($i),
+            ]);
+        }
+
+        Livewire::test(ShowCategory::class, ['slug' => 'test-category'])
+            ->assertViewHas('news', fn ($news) => $news->count() === ShowCategory::PER_PAGE_STEP)
+            ->call('loadMore')
+            ->assertViewHas('news', fn ($news) => $news->count() === ShowCategory::PER_PAGE_STEP + 3);
     })->group('feature', 'livewire', 'critical');
 });

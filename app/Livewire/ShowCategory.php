@@ -8,13 +8,19 @@ use Livewire\Component;
 
 class ShowCategory extends Component
 {
+    public const PER_PAGE_STEP = 12;
+
+    public const PER_PAGE_MAX = 200;
+
     public $category;
 
     public $popular_news;
 
+    public $perPage = self::PER_PAGE_STEP;
+
     public function mount($slug)
     {
-        $this->category = Category::with(['translation', 'news.translation' => fn ($query) => $query->cardColumns()])->where('slug', $slug)->first();
+        $this->category = Category::with('translation')->where('slug', $slug)->first();
 
         if (! $this->category || ! $this->category->translation) {
             abort(404);
@@ -24,8 +30,18 @@ class ShowCategory extends Component
         $this->popular_news = News::published()->whereHas('translations', fn ($query) => $query->where('lang', $locale))->with(['translation' => fn ($query) => $query->cardColumns()])->orderBy('view_count', 'DESC')->limit(6)->get();
     }
 
+    public function loadMore(): void
+    {
+        $this->perPage = min((int) $this->perPage + self::PER_PAGE_STEP, self::PER_PAGE_MAX);
+    }
+
     public function render()
     {
-        return view('livewire.show-category');
+        $perPage = max(1, min((int) $this->perPage, self::PER_PAGE_MAX));
+
+        return view('livewire.show-category', [
+            'news' => $this->category->news()->with(['translation' => fn ($query) => $query->cardColumns()])->take($perPage)->get(),
+            'totalCount' => $this->category->news()->count(),
+        ]);
     }
 }

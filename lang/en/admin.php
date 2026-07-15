@@ -158,6 +158,8 @@ return [
         'deleted_flash' => '',
         'saved_flash' => '',
         'drop_here' => '',
+        'translation_hint' => '',
+        'translation_required' => '',
     ],
     'categories' => [
         'title_section' => '',

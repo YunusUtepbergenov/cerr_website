@@ -16,6 +16,10 @@
             <div class="col-lg-8">
                 <div class="card mb-3">
                     <div class="card-body">
+                        @error('translations')
+                            <div class="alert alert-danger py-2 px-3 mb-2">{{ $message }}</div>
+                        @enderror
+                        <p class="text-muted small mb-2">{{ __('admin.news.translation_hint') }}</p>
                         <ul class="nav nav-tabs lang-tabs">
                             @foreach (\App\Livewire\Admin\News\NewsForm::LOCALES as $locale)
                                 @php
@@ -45,19 +49,19 @@
                         @foreach (\App\Livewire\Admin\News\NewsForm::LOCALES as $locale)
                             <div @class(['d-none' => $activeLocale !== $locale])>
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('admin.news.title') }} @if ($locale === \App\Livewire\Admin\News\NewsForm::PRIMARY_LOCALE) <span class="text-danger">*</span> @endif</label>
+                                    <label class="form-label">{{ __('admin.news.title') }}</label>
                                     <input type="text" wire:model="translations.{{ $locale }}.title" class="form-control @error('translations.'.$locale.'.title') is-invalid @enderror" placeholder="{{ __('admin.news.title_placeholder', ['locale' => \App\Support\Locales::label($locale)]) }}">
                                     @error("translations.$locale.title") <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('admin.news.short_description') }} @if ($locale === \App\Livewire\Admin\News\NewsForm::PRIMARY_LOCALE) <span class="text-danger">*</span> @endif</label>
+                                    <label class="form-label">{{ __('admin.news.short_description') }}</label>
                                     <textarea wire:model="translations.{{ $locale }}.short_description" class="form-control @error('translations.'.$locale.'.short_description') is-invalid @enderror" rows="2" placeholder="{{ __('admin.news.short_description_placeholder') }}"></textarea>
                                     @error("translations.$locale.short_description") <div class="invalid-feedback">{{ $message }}</div> @enderror
                                 </div>
 
                                 <div class="mb-3">
-                                    <label class="form-label">{{ __('admin.news.content') }} @if ($locale === \App\Livewire\Admin\News\NewsForm::PRIMARY_LOCALE) <span class="text-danger">*</span> @endif</label>
+                                    <label class="form-label">{{ __('admin.news.content') }}</label>
                                     <div wire:ignore>
                                         <textarea
                                             id="editor-{{ $locale }}"
@@ -157,9 +161,10 @@
                         <div class="mb-3"
                              x-data="{ manuallyEdited: @js((bool) ($news?->exists)), debounce: null, slugCheck: null }"
                              x-init="
-                                $watch(() => $wire.translations.uz.title, (title) => {
+                                $watch(() => $wire.translations[$wire.activeLocale]?.title, (title) => {
                                     if (manuallyEdited) return;
-                                    if (typeof title !== 'string') return;
+                                    // Skip blanks so switching to an unfilled tab never wipes the slug.
+                                    if (typeof title !== 'string' || title === '') return;
                                     clearTimeout(debounce);
                                     debounce = setTimeout(() => $wire.regenerateSlug(title), 250);
                                 });

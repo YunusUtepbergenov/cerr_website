@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Storage;
 use Livewire\Livewire;
 
 beforeEach(function () {
+    // Admin requests are forced to Russian by SetAdminLocale; mirror that here
+    // so translated validation messages resolve (other locale files are empty).
+    app()->setLocale('ru');
     $this->actingAs(User::factory()->create(['role' => 'admin']));
 });
 
@@ -55,13 +58,40 @@ describe('News CRUD', function () {
         Storage::disk('public')->assertExists($primary->image_url);
     })->group('feature', 'admin');
 
-    it('requires uz title', function () {
+    it('requires at least one complete language', function () {
         Livewire::test(NewsForm::class)
             ->set('slug', 'partial')
             ->set('translations.uz.short_description', 'x')
             ->set('translations.uz.content', '<p>x</p>')
             ->call('save')
-            ->assertHasErrors(['translations.uz.title']);
+            ->assertHasErrors('translations');
+
+        expect(News::where('slug', 'partial')->exists())->toBeFalse();
+    })->group('feature', 'admin');
+
+    it('rejects a language that is only partially filled', function () {
+        Livewire::test(NewsForm::class)
+            ->set('slug', 'partial-ru')
+            ->set('translations.ru.title', 'Only a title')
+            ->call('save')
+            ->assertHasErrors('translations');
+    })->group('feature', 'admin');
+
+    it('creates news when only a non-primary language is filled', function () {
+        Livewire::test(NewsForm::class)
+            ->set('slug', 'ru only')
+            ->set('status', 'published')
+            ->set('translations.ru.title', 'RU Title')
+            ->set('translations.ru.short_description', 'RU short')
+            ->set('translations.ru.content', '<p>RU body</p>')
+            ->call('save')
+            ->assertHasNoErrors();
+
+        $news = News::where('slug', 'ru-only')->first();
+        expect($news)->not->toBeNull()
+            ->and($news->translations()->count())->toBe(1)
+            ->and($news->translations()->where('lang', 'ru')->first()->title)->toBe('RU Title')
+            ->and($news->translations()->where('lang', 'uz')->exists())->toBeFalse();
     })->group('feature', 'admin');
 
     it('rejects duplicate slug', function () {

@@ -43,6 +43,18 @@ describe('Admin dashboard', function () {
                 && $top->first()['views'] === 200);
     })->group('feature', 'admin');
 
+    it('caps the most viewed list at 10 items', function () {
+        foreach (range(1, 13) as $i) {
+            createNewsWithTranslation(['view_count' => $i * 10]);
+        }
+
+        $this->actingAs($this->admin);
+
+        Livewire::test(Dashboard::class)
+            ->call('setPeriod', 'all')
+            ->assertViewHas('topNews', fn ($top) => $top->count() === 10);
+    })->group('feature', 'admin');
+
     it('changes the ranking window when the period is switched', function () {
         $recent = createNewsWithTranslation();
         $older = createNewsWithTranslation();

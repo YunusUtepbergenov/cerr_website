@@ -14,7 +14,7 @@ class Dashboard extends Component
     /** @var array<string, int> */
     private const PERIOD_DAYS = ['day' => 1, 'week' => 7, 'month' => 30, 'year' => 365];
 
-    private const TOP_LIMIT = 5;
+    private const TOP_LIMIT = 10;
 
     public string $topPeriod = 'week';
 

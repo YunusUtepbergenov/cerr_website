@@ -10,6 +10,7 @@ use App\Support\HtmlSanitizer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -181,11 +182,12 @@ class NewsForm extends Component
             'tag_ids.*' => ['integer', 'exists:tags,id'],
         ];
 
+        // No single language is mandatory; save() enforces that at least one
+        // language is filled in completely (see hasCompleteTranslation()).
         foreach (self::LOCALES as $locale) {
-            $required = $locale === self::PRIMARY_LOCALE ? 'required' : 'nullable';
-            $rules["translations.$locale.title"] = [$required, 'string', 'max:255'];
-            $rules["translations.$locale.short_description"] = [$required, 'string', 'max:1000'];
-            $rules["translations.$locale.content"] = [$required, 'string'];
+            $rules["translations.$locale.title"] = ['nullable', 'string', 'max:255'];
+            $rules["translations.$locale.short_description"] = ['nullable', 'string', 'max:1000'];
+            $rules["translations.$locale.content"] = ['nullable', 'string'];
             $rules["translations.$locale.seo_title"] = ['nullable', 'string', 'max:255'];
             $rules["translations.$locale.seo_description"] = ['nullable', 'string', 'max:500'];
             $rules["cover_uploads.$locale"] = ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,gif', 'max:5120'];
@@ -194,11 +196,46 @@ class NewsForm extends Component
         return $rules;
     }
 
+    /**
+     * A locale counts as complete when its title, short description and content
+     * are all filled — enough to render a full article in that language.
+     */
+    private function localeIsComplete(string $locale): bool
+    {
+        $data = $this->translations[$locale] ?? [];
+
+        return trim((string) ($data['title'] ?? '')) !== ''
+            && trim((string) ($data['short_description'] ?? '')) !== ''
+            && trim((string) ($data['content'] ?? '')) !== '';
+    }
+
+    /**
+     * The article is saveable as long as at least one language is filled in
+     * completely, so it can be authored in any single language rather than
+     * always requiring the primary (uz) one.
+     */
+    private function hasCompleteTranslation(): bool
+    {
+        foreach (self::LOCALES as $locale) {
+            if ($this->localeIsComplete($locale)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     public function save(): void
     {
         $this->slug = Str::slug($this->slug);
 
         $this->validate();
+
+        if (! $this->hasCompleteTranslation()) {
+            throw ValidationException::withMessages([
+                'translations' => __('admin.news.translation_required'),
+            ]);
+        }
 
         $news = $this->news ?? new News;
         $news->slug = $this->slug;

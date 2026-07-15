@@ -14,13 +14,13 @@
 
             <h1 class="article-title">{{ $category->translation->name }}</h1>
 
-            @if ($category->news->isNotEmpty())
+            @if ($news->isNotEmpty())
                 <div class="news-grid">
-                    @foreach ($category->news as $item)
+                    @foreach ($news as $item)
                         <a href="{{ route('show.news', $item->slug) }}" class="news-card" wire:key="cat-news-{{ $item->id }}">
                             <span class="nc-thumb">
                                 @if ($item->translation?->coverUrl())
-                                    <img src="{{ $item->translation->coverUrl() }}" alt="{{ $item->translation->title }}">
+                                    <img src="{{ $item->translation->coverUrl() }}" alt="{{ $item->translation->title }}" loading="lazy">
                                 @endif
                             </span>
                             <span class="nc-body">
@@ -38,6 +38,14 @@
                         </a>
                     @endforeach
                 </div>
+
+                @if ($perPage < $totalCount)
+                    <div class="sp-more-wrap" x-intersect.margin.300px="$wire.loadMore()">
+                        <button type="button" wire:click.prevent="loadMore" class="sp-more-btn" wire:loading.attr="disabled">
+                            <i class="fa-solid fa-arrow-down"></i> @lang('messages.load_more')
+                        </button>
+                    </div>
+                @endif
             @endif
         </div>
     </section>
