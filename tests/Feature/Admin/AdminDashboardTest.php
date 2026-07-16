@@ -179,7 +179,32 @@ describe('Admin dashboard', function () {
         Livewire::test(Dashboard::class)
             ->assertViewHas('trend7d', fn ($t) => $t['current'] === 0 && $t['previous'] === 0 && $t['change'] === 0)
             ->assertViewHas('topNews', fn ($top) => $top->isEmpty())
-            ->assertViewHas('sparkline', fn ($s) => count($s) === 30 && array_sum($s) === 0);
+            ->assertViewHas('sparkline', fn ($s) => count($s) === 30 && array_sum(array_column($s, 'views')) === 0)
+            ->assertViewHas('sparkMeta', fn ($m) => $m['total'] === 0 && $m['peak'] === 0 && $m['peakIndex'] === -1);
+    })->group('feature', 'admin');
+
+    it('labels the daily-views chart with dates, rounded ticks and summary figures', function () {
+        $news = createNewsWithTranslation();
+        NewsDailyView::create(['news_id' => $news->id, 'date' => today()->toDateString(), 'views' => 120]);
+        NewsDailyView::create(['news_id' => $news->id, 'date' => today()->subDays(2)->toDateString(), 'views' => 40]);
+
+        $this->actingAs($this->admin);
+
+        Livewire::test(Dashboard::class)
+            ->assertViewHas('sparkline', function ($s) {
+                $last = end($s);
+
+                return count($s) === 30
+                    && $last['date'] === today()->toDateString()
+                    && $last['label'] === today()->format('d.m')
+                    && $last['views'] === 120;
+            })
+            ->assertViewHas('sparkMeta', fn ($m) => $m['total'] === 160
+                && $m['avg'] === 5
+                && $m['peak'] === 120
+                && $m['peakIndex'] === 29
+                && $m['niceMax'] === 150
+                && $m['ticks'] === [0, 50, 100, 150]);
     })->group('feature', 'admin');
 
     it('ignores an invalid period and keeps the current one', function () {

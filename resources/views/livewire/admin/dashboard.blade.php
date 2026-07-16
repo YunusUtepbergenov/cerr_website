@@ -66,23 +66,69 @@
                 <h3>{{ __('admin.dashboard.views_over_time') }}</h3>
                 <div class="panel-sub">{{ __('admin.dashboard.views_over_time_sub') }}</div>
             </div>
+            <div class="spark-stats">
+                <div class="ss">
+                    <div class="ss-val">{{ number_format($sparkMeta['total']) }}</div>
+                    <div class="ss-label">{{ __('admin.dashboard.chart_total') }}</div>
+                </div>
+                <div class="ss">
+                    <div class="ss-val">{{ number_format($sparkMeta['avg']) }}</div>
+                    <div class="ss-label">{{ __('admin.dashboard.chart_avg') }}</div>
+                </div>
+                <div class="ss">
+                    <div class="ss-val">{{ number_format($sparkMeta['peak']) }}</div>
+                    <div class="ss-label">{{ __('admin.dashboard.chart_peak') }}</div>
+                </div>
+            </div>
         </div>
         @php
-            $sparkMax = max(1, max($sparkline ?: [0]));
             $sparkN = max(1, count($sparkline));
-            $gap = 1.4;
-            $barW = (100 - ($sparkN - 1) * $gap) / $sparkN;
+            $sparkMax = max(1, $sparkMeta['niceMax']);
         @endphp
-        <div class="spark-wrap">
-            <svg viewBox="0 0 100 40" preserveAspectRatio="none" class="spark-svg" aria-hidden="true">
-                @foreach ($sparkline as $i => $v)
-                    @php
-                        $barH = $v > 0 ? max(1.5, $v / $sparkMax * 40) : 0.6;
-                        $x = round($i * ($barW + $gap), 2);
-                    @endphp
-                    <rect x="{{ $x }}" y="{{ round(40 - $barH, 2) }}" width="{{ round($barW, 2) }}" height="{{ round($barH, 2) }}" rx="0.5" />
+        <div class="spark-chart" x-data="{ tip: null }">
+            <div class="sc-frame">
+                <div class="sc-y" aria-hidden="true">
+                    @foreach ($sparkMeta['ticks'] as $tick)
+                        <span class="sc-ylabel" style="bottom: {{ round($tick / $sparkMax * 100, 2) }}%">{{ number_format($tick) }}</span>
+                    @endforeach
+                </div>
+                <div class="sc-main">
+                    @foreach ($sparkMeta['ticks'] as $tick)
+                        <span class="sc-gridline {{ $tick === 0 ? 'is-baseline' : '' }}" style="bottom: {{ round($tick / $sparkMax * 100, 2) }}%" aria-hidden="true"></span>
+                    @endforeach
+
+                    @if ($sparkMeta['total'] === 0)
+                        <div class="sc-empty">{{ __('admin.dashboard.no_view_data') }}</div>
+                    @else
+                        <div class="sc-cols">
+                            @foreach ($sparkline as $i => $day)
+                                @php $barPct = round($day['views'] / $sparkMax * 100, 2); @endphp
+                                <div class="sc-col" tabindex="0" role="img"
+                                     aria-label="{{ $day['label'] }} — {{ number_format($day['views']) }}"
+                                     @mouseenter="tip = { label: '{{ $day['label'] }}', value: '{{ number_format($day['views']) }}', x: $el.offsetLeft + $el.offsetWidth / 2, h: {{ $barPct }} }"
+                                     @focus="tip = { label: '{{ $day['label'] }}', value: '{{ number_format($day['views']) }}', x: $el.offsetLeft + $el.offsetWidth / 2, h: {{ $barPct }} }"
+                                     @mouseleave="tip = null" @blur="tip = null">
+                                    <span class="sc-bar" style="height: {{ $barPct }}%"></span>
+                                </div>
+                            @endforeach
+                        </div>
+                        @if ($sparkMeta['peakIndex'] >= 0)
+                            <span class="sc-peak" x-show="!tip" style="left: clamp(18px, {{ round(($sparkMeta['peakIndex'] + .5) / $sparkN * 100, 2) }}%, calc(100% - 18px)); bottom: {{ round($sparkMeta['peak'] / $sparkMax * 100, 2) }}%">{{ number_format($sparkMeta['peak']) }}</span>
+                        @endif
+                    @endif
+
+                    <div class="sc-tip" x-cloak x-show="tip" :style="tip && ('--tx: ' + tip.x + 'px; --th: ' + tip.h + '%')">
+                        <b x-text="tip?.value"></b><span x-text="tip?.label"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="sc-x" aria-hidden="true">
+                @foreach ($sparkline as $i => $day)
+                    @if ($i % 7 === 0)
+                        <span class="sc-xlabel" style="left: {{ round(($i + .5) / $sparkN * 100, 2) }}%">{{ $day['label'] }}</span>
+                    @endif
                 @endforeach
-            </svg>
+            </div>
         </div>
     </div>
 

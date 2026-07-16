@@ -10,6 +10,7 @@
     --admin-primary: #5e6ad2;
     --admin-primary-hover: #4f5bc7;
     --admin-primary-soft: rgba(94, 106, 210, .10);
+    --admin-chart: #5e6ad2; /* chart mark fill — validated ≥3:1 against --admin-surface */
     --admin-violet: #8b5cf6;
     --admin-grad: linear-gradient(135deg, #5e6ad2 0%, #8b5cf6 100%);
     --admin-success: #159c7a;
@@ -39,6 +40,7 @@
     --admin-shadow: var(--shadow-md);
 }
 * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+[x-cloak] { display: none !important; }
 html, body {
     color: var(--admin-text);
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -402,6 +404,7 @@ details[open] > summary { color: var(--admin-text); }
     --admin-primary: #8b94ec;
     --admin-primary-hover: #9aa2f0;
     --admin-primary-soft: rgba(124, 137, 232, .16);
+    --admin-chart: #7c86e8; /* chart mark fill — validated on the dark surface */
     --admin-success: #4ade80;
     --admin-success-soft: rgba(74, 222, 128, .14);
     --admin-danger: #f87171;
@@ -589,10 +592,39 @@ tr[data-href] { cursor: pointer; }
 .trend-new { color: var(--admin-primary); background: var(--admin-primary-soft); }
 .trend-flat { color: var(--admin-text-muted); background: var(--admin-chip-bg); }
 
-.spark-panel .spark-wrap { padding: .25rem 1.25rem 1.25rem; }
-.spark-svg { display: block; width: 100%; height: 88px; }
-.spark-svg rect { fill: var(--admin-primary); opacity: .82; }
-[data-admin-theme="dark"] .spark-svg rect { opacity: .92; }
+/* Views-over-time chart: hairline grid + y ticks, date axis, hover tooltip. */
+.spark-panel .panel-head { flex-wrap: wrap; }
+.spark-stats { display: flex; gap: 1.6rem; }
+.spark-stats .ss { text-align: right; }
+.spark-stats .ss-val { font-size: 1.08rem; font-weight: 800; letter-spacing: -.02em; color: var(--admin-text); font-family: var(--font-display); line-height: 1.2; }
+.spark-stats .ss-label { font-size: .7rem; color: var(--admin-text-muted); font-weight: 500; margin-top: .1rem; }
+
+.spark-chart { padding: 0 1.25rem 1.1rem; }
+.sc-frame { display: flex; gap: 10px; padding-top: 20px; }
+.sc-y { position: relative; width: 46px; flex-shrink: 0; }
+.sc-ylabel { position: absolute; right: 0; transform: translateY(50%); font-size: .68rem; line-height: 1; color: var(--admin-text-muted); font-variant-numeric: tabular-nums; }
+.sc-main { position: relative; flex: 1; min-width: 0; height: 150px; }
+.sc-gridline { position: absolute; left: 0; right: 0; height: 1px; background: var(--admin-border-soft); }
+.sc-gridline.is-baseline { background: var(--admin-border); }
+.sc-cols { position: absolute; inset: 0; display: flex; align-items: flex-end; }
+.sc-col { flex: 1 1 0; min-width: 0; height: 100%; display: flex; align-items: flex-end; justify-content: center; border-radius: 6px 6px 0 0; outline: none; }
+.sc-col:hover, .sc-col:focus-visible { background: var(--admin-hover); }
+.sc-col:focus-visible { box-shadow: inset 0 0 0 2px var(--admin-primary-soft); }
+.sc-bar { width: min(62%, 22px); background: var(--admin-chart); opacity: .85; border-radius: 4px 4px 0 0; transition: opacity .12s; }
+.sc-col:hover .sc-bar, .sc-col:focus-visible .sc-bar { opacity: 1; }
+.sc-peak { position: absolute; transform: translateX(-50%); margin-bottom: 7px; font-size: .7rem; font-weight: 700; line-height: 1; color: var(--admin-text); font-variant-numeric: tabular-nums; pointer-events: none; }
+.sc-empty { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: .85rem; color: var(--admin-text-faint); }
+.sc-x { position: relative; height: 15px; margin: 7px 0 0 56px; }
+.sc-xlabel { position: absolute; transform: translateX(-50%); font-size: .68rem; line-height: 1; color: var(--admin-text-muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.sc-tip {
+    position: absolute; z-index: 5; pointer-events: none;
+    left: clamp(48px, var(--tx), calc(100% - 48px)); bottom: calc(var(--th) + 12px);
+    transform: translateX(-50%); white-space: nowrap;
+    background: var(--admin-surface); border: 1px solid var(--admin-border);
+    border-radius: 9px; box-shadow: var(--shadow-lg); padding: .3rem .6rem;
+    font-size: .76rem; color: var(--admin-text-muted);
+}
+.sc-tip b { color: var(--admin-text); font-weight: 800; font-variant-numeric: tabular-nums; margin-right: .35rem; }
 
 .period-tabs { display: flex; flex-wrap: wrap; gap: .35rem; padding: 0 1.25rem .35rem; }
 .period-tab {

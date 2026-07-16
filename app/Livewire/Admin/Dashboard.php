@@ -30,6 +30,8 @@ class Dashboard extends Component
         $newsCount = News::count();
         $publishedCount = News::where('status', 'published')->count();
 
+        $sparkline = $this->dailyTotals(30);
+
         return view('livewire.admin.dashboard', [
             'newsCount' => $newsCount,
             'publishedCount' => $publishedCount,
@@ -39,7 +41,8 @@ class Dashboard extends Component
             'viewsToday' => (int) NewsDailyView::where('date', today()->toDateString())->sum('views'),
             'trend7d' => $this->viewTrend(7),
             'trend30d' => $this->viewTrend(30),
-            'sparkline' => $this->dailyTotals(30),
+            'sparkline' => $sparkline,
+            'sparkMeta' => $this->chartMeta($sparkline),
             'topNews' => $this->topViewed($this->topPeriod),
             'recentNews' => News::with(['translations' => fn ($query) => $query->cardColumns()])->latest('id')->limit(8)->get(),
         ])->title(__('admin.nav.dashboard'));
@@ -47,9 +50,9 @@ class Dashboard extends Component
 
     /**
      * Total site-wide views per day for the last N days (oldest first),
-     * used to render the trend sparkline.
+     * used to render the daily-views chart.
      *
-     * @return array<int, int>
+     * @return array<int, array{date: string, label: string, views: int}>
      */
     private function dailyTotals(int $days): array
     {
@@ -62,11 +65,71 @@ class Dashboard extends Component
 
         $series = [];
         for ($i = 0; $i < $days; $i++) {
-            $key = $start->copy()->addDays($i)->toDateString();
-            $series[] = (int) ($totals[$key] ?? 0);
+            $day = $start->copy()->addDays($i);
+            $key = $day->toDateString();
+            $series[] = [
+                'date' => $key,
+                'label' => $day->format('d.m'),
+                'views' => (int) ($totals[$key] ?? 0),
+            ];
         }
 
         return $series;
+    }
+
+    /**
+     * Y-scale and summary figures for the daily-views chart: a "nice" rounded
+     * axis maximum with evenly spaced tick values, plus total, daily average
+     * and peak over the window.
+     *
+     * @param  array<int, array{date: string, label: string, views: int}>  $series
+     * @return array{niceMax: int, ticks: array<int, int>, total: int, avg: int, peak: int, peakIndex: int}
+     */
+    private function chartMeta(array $series): array
+    {
+        $values = array_column($series, 'views');
+        $peak = $values === [] ? 0 : max($values);
+        $total = array_sum($values);
+
+        $step = $this->niceStep($peak);
+        $niceMax = max($step, (int) ceil($peak / $step) * $step);
+
+        $ticks = [];
+        for ($tick = 0; $tick <= $niceMax; $tick += $step) {
+            $ticks[] = $tick;
+        }
+
+        return [
+            'niceMax' => $niceMax,
+            'ticks' => $ticks,
+            'total' => $total,
+            'avg' => (int) round($total / max(1, count($values))),
+            'peak' => $peak,
+            'peakIndex' => $peak > 0 ? (int) array_search($peak, $values, true) : -1,
+        ];
+    }
+
+    /**
+     * Smallest "nice" step (1/2/5 × 10^k) that divides the axis into at most
+     * ~3–4 intervals, so gridline values stay round numbers.
+     */
+    private function niceStep(int $max): int
+    {
+        if ($max <= 0) {
+            return 1;
+        }
+
+        $target = $max / 3;
+        $magnitude = 10 ** floor(log10($target));
+
+        foreach ([1, 2, 5, 10] as $multiplier) {
+            $step = $multiplier * $magnitude;
+            if ($step >= $target) {
+                return max(1, (int) $step);
+            }
+        }
+
+        return max(1, (int) (10 * $magnitude));
     }
 
     /**
