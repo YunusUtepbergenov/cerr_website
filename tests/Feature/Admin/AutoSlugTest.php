@@ -11,7 +11,8 @@ describe('Auto-slug behavior', function () {
 
         $response->assertOk()
             ->assertSee('manuallyEdited: false', false)
-            ->assertSee('$watch(() => $wire.translations.uz.title', false);
+            // The watcher follows the active language tab, not a fixed locale.
+            ->assertSee('$watch(() => $wire.translations[$wire.activeLocale]?.title', false);
     })->group('feature', 'admin');
 
     it('disables auto-fill on the edit form', function () {
