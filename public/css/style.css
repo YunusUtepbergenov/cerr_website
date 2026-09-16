@@ -34490,3 +34490,28 @@ html[data-theme=dark] body .search-input-area .search-input-inner .input-div::be
     transition: none;
   }
 }
+
+/* --- cosmetic fixes (2026-09-15) --- */
+/* 1. Partner logos: keep aspect, sane max size (override rigid w/h attrs) */
+.hp-logo {
+    object-fit: contain;
+    width: auto;
+    height: auto;
+    max-width: 150px;
+    max-height: 62px;
+}
+/* 2. Header wordmark bigger (subtitle is inside logo.svg) */
+.echo-site-logo img {
+    height: 54px;
+    width: auto;
+}
+@media (max-width: 991.98px) {
+    .echo-site-logo img { height: 44px; }
+}
+/* 3. Hero title: more graceful on small screens */
+@media (max-width: 575.98px) {
+    .hero-title { font-size: 1.25rem; line-height: 1.45; }
+}
+@media (min-width: 576px) and (max-width: 991.98px) {
+    .hero-title { font-size: 2rem; }
+}
