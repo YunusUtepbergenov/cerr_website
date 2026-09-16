@@ -37,9 +37,11 @@
 </head>
 
 <body class="home-one">
+    @if(!app()->isProduction())
     <div class="site-notice" role="status">
         @lang('messages.test_mode')
     </div>
+    @endif
 
     <header class="echo-header-area">
         <div class="echo-header-top">
