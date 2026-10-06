@@ -1,35 +1,18 @@
 <?php
 
-use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Middleware\SetAdminLocale;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
+// Only the login screen is exposed. Registration, password reset and email
+// verification were routed to Volt views that do not exist in this repo, so
+// every one of them returned a 500 (and `register` would have been public
+// self-signup had it worked). Accounts are created and their passwords reset
+// from the admin Users screen, which generates and displays a new password, so
+// nothing here needs a mailer.
 Route::middleware(['guest', SetAdminLocale::class])->group(function () {
     Volt::route('login', 'auth.login')
         ->name('login');
-
-    Volt::route('register', 'auth.register')
-        ->name('register');
-
-    Volt::route('forgot-password', 'auth.forgot-password')
-        ->name('password.request');
-
-    Volt::route('reset-password/{token}', 'auth.reset-password')
-        ->name('password.reset');
-
-});
-
-Route::middleware(['auth', SetAdminLocale::class])->group(function () {
-    Volt::route('verify-email', 'auth.verify-email')
-        ->name('verification.notice');
-
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['signed', 'throttle:6,1'])
-        ->name('verification.verify');
-
-    Volt::route('confirm-password', 'auth.confirm-password')
-        ->name('password.confirm');
 });
 
 Route::post('logout', App\Livewire\Actions\Logout::class)
