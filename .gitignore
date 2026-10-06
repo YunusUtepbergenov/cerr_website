@@ -24,7 +24,12 @@ yarn-error.log
 /.zed
 .agents
 .claude
-.juniestorage/backups/*.dump
+storage/backups/*.dump
 /.junie
 # Brainstorming visual companion
 .superpowers/
+
+# Caches created by running npm and artisan tinker as www-data on the server
+/.config
+/.npm
+/.npm-cache
