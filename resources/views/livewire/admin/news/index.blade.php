@@ -107,13 +107,6 @@
                 </tbody>
             </table>
         </div>
-        @if ($newsList->hasPages())
-            <div class="card-footer d-flex justify-content-between align-items-center flex-wrap gap-2">
-                <div class="text-muted small">
-                    {{ __('admin.common.showing_range', ['from' => $newsList->firstItem(), 'to' => $newsList->lastItem(), 'total' => $newsList->total()]) }}
-                </div>
-                <div>{{ $newsList->onEachSide(1)->links() }}</div>
-            </div>
-        @endif
+        <x-admin.pagination-footer :paginator="$newsList" />
     </div>
 </div>

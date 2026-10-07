@@ -7,11 +7,14 @@ use App\Models\Video;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
 class VideoIndex extends Component
 {
-    use HandlesImageUploads, WithFileUploads;
+    use HandlesImageUploads, WithFileUploads, WithPagination;
+
+    public const PER_PAGE = 20;
 
     public ?int $editingId = null;
 
@@ -104,7 +107,7 @@ class VideoIndex extends Component
     public function render()
     {
         return view('livewire.admin.videos.index', [
-            'videos' => Video::orderBy('id', 'desc')->get(),
+            'videos' => Video::orderBy('id', 'desc')->paginate(self::PER_PAGE),
         ])->title(__('admin.videos.title_section'));
     }
 }

@@ -7,10 +7,15 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
 class CategoryIndex extends Component
 {
+    use WithPagination;
+
+    public const PER_PAGE = 20;
+
     public const LOCALES = ['kr', 'uz', 'ru', 'en'];
 
     public ?int $editingId = null;
@@ -118,7 +123,7 @@ class CategoryIndex extends Component
     public function render()
     {
         return view('livewire.admin.categories.index', [
-            'categories' => Category::with('translations')->orderBy('id', 'desc')->get(),
+            'categories' => Category::with('translations')->orderBy('id', 'desc')->paginate(self::PER_PAGE),
         ])->title(__('admin.categories.title_section'));
     }
 }

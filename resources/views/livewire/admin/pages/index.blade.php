@@ -29,5 +29,6 @@
                 </tbody>
             </table>
         </div>
+        <x-admin.pagination-footer :paginator="$pages" />
     </div>
 </div>

@@ -3,17 +3,22 @@
 namespace App\Livewire\Admin\Media;
 
 use App\Livewire\Concerns\HandlesImageUploads;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
 class MediaIndex extends Component
 {
-    use HandlesImageUploads, WithFileUploads;
+    use HandlesImageUploads, WithFileUploads, WithPagination;
+
+    public const PER_PAGE = 24;
 
     #[Url(except: '')]
     public string $search = '';
@@ -24,6 +29,16 @@ class MediaIndex extends Component
     public array $uploads = [];
 
     public string $uploadFolder = 'news/covers';
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
+
+    public function updatingFolder(): void
+    {
+        $this->resetPage();
+    }
 
     protected function rules(): array
     {
@@ -93,8 +108,17 @@ class MediaIndex extends Component
 
         $files = $files->sortByDesc('modified')->values();
 
+        $page = $this->getPage();
+        $paginated = new LengthAwarePaginator(
+            $files->forPage($page, self::PER_PAGE)->values(),
+            $files->count(),
+            self::PER_PAGE,
+            $page,
+            ['path' => Paginator::resolveCurrentPath(), 'pageName' => 'page'],
+        );
+
         return view('livewire.admin.media.index', [
-            'files' => $files,
+            'files' => $paginated,
         ])->title(__('admin.media.title_section'));
     }
 }

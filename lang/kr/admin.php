@@ -186,6 +186,7 @@ return [
         'create_tag' => '',
         'name_label' => '',
         'articles_count' => '',
+        'search_placeholder' => '',
         'no_tags' => '',
         'no_tags_help' => '',
         'confirm_delete' => '',

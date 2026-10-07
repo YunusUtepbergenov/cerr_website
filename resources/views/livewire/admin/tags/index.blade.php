@@ -31,6 +31,12 @@
     @endif
 
     <div class="card">
+        <div class="card-body border-bottom">
+            <div class="position-relative" style="max-width: 360px;">
+                <i class="fa-solid fa-magnifying-glass position-absolute" style="left: .8rem; top: 50%; transform: translateY(-50%); color: var(--admin-text-muted);"></i>
+                <input type="text" wire:model.live.debounce.300ms="search" class="form-control ps-5" placeholder="{{ __('admin.tags.search_placeholder') }}">
+            </div>
+        </div>
         <div class="table-responsive">
             <table class="table mb-0">
                 <thead>
@@ -72,5 +78,6 @@
                 </tbody>
             </table>
         </div>
+        <x-admin.pagination-footer :paginator="$tags" />
     </div>
 </div>

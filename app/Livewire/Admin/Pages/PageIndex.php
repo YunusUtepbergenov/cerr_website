@@ -6,10 +6,15 @@ use App\Models\Page;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
 class PageIndex extends Component
 {
+    use WithPagination;
+
+    public const PER_PAGE = 20;
+
     public function delete(int $id): void
     {
         $page = Page::with('translations')->findOrFail($id);
@@ -28,7 +33,7 @@ class PageIndex extends Component
     public function render()
     {
         return view('livewire.admin.pages.index', [
-            'pages' => Page::with('translations')->orderBy('id')->get(),
+            'pages' => Page::with('translations')->orderBy('id')->paginate(self::PER_PAGE),
         ])->title(__('admin.pages.title_section'));
     }
 }

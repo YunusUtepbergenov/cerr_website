@@ -103,5 +103,6 @@
                 </tbody>
             </table>
         </div>
+        <x-admin.pagination-footer :paginator="$users" />
     </div>
 </div>

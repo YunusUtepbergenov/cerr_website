@@ -90,5 +90,6 @@
                 </tbody>
             </table>
         </div>
+        <x-admin.pagination-footer :paginator="$videos" />
     </div>
 </div>

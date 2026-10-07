@@ -104,5 +104,6 @@
                 </tbody>
             </table>
         </div>
+        <x-admin.pagination-footer :paginator="$categories" />
     </div>
 </div>

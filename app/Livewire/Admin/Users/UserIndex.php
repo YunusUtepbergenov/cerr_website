@@ -9,10 +9,15 @@ use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Password;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
 class UserIndex extends Component
 {
+    use WithPagination;
+
+    public const PER_PAGE = 20;
+
     public ?int $editingId = null;
 
     public string $name = '';
@@ -34,6 +39,11 @@ class UserIndex extends Component
     public function mount(): void
     {
         $this->currentUserId = auth()->id();
+    }
+
+    public function updatingRoleFilter(): void
+    {
+        $this->resetPage();
     }
 
     protected function rules(): array
@@ -147,7 +157,7 @@ class UserIndex extends Component
         }
 
         return view('livewire.admin.users.index', [
-            'users' => $query->get(),
+            'users' => $query->paginate(self::PER_PAGE),
         ])->title(__('admin.users.title_section'));
     }
 }

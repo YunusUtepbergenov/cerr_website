@@ -7,11 +7,14 @@ use App\Models\Journal;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
 class JournalIndex extends Component
 {
-    use HandlesImageUploads, WithFileUploads;
+    use HandlesImageUploads, WithFileUploads, WithPagination;
+
+    public const PER_PAGE = 20;
 
     public ?int $editingId = null;
 
@@ -127,7 +130,7 @@ class JournalIndex extends Component
     public function render()
     {
         return view('livewire.admin.journals.index', [
-            'journals' => Journal::orderByDesc('published_at')->orderByDesc('id')->get(),
+            'journals' => Journal::orderByDesc('published_at')->orderByDesc('id')->paginate(self::PER_PAGE),
         ])->title(__('admin.journals.title_section'));
     }
 }

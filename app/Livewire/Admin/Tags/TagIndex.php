@@ -5,16 +5,30 @@ namespace App\Livewire\Admin\Tags;
 use App\Models\Tag;
 use Illuminate\Validation\Rule;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Url;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 #[Layout('components.layouts.admin')]
 class TagIndex extends Component
 {
+    use WithPagination;
+
+    public const PER_PAGE = 20;
+
+    #[Url(except: '')]
+    public string $search = '';
+
     public ?int $editingId = null;
 
     public string $name = '';
 
     public bool $showForm = false;
+
+    public function updatingSearch(): void
+    {
+        $this->resetPage();
+    }
 
     protected function rules(): array
     {
@@ -76,7 +90,10 @@ class TagIndex extends Component
     public function render()
     {
         return view('livewire.admin.tags.index', [
-            'tags' => Tag::withCount('news')->orderBy('name')->get(),
+            'tags' => Tag::withCount('news')
+                ->when($this->search !== '', fn ($query) => $query->where('name', 'like', '%'.$this->search.'%'))
+                ->orderBy('name')
+                ->paginate(self::PER_PAGE),
         ])->title(__('admin.tags.title_section'));
     }
 }
