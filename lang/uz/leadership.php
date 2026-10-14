@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'obid_arzikulovich' => 'Xakimov Obid Аrzikulovich',
+    'kamoliddin_karamiddinovich' => 'Mardonov Kamoliddin Karamiddinovich',
     'khurshed_saadullaevich' => 'Asadov Xurshed Sadullaevich',
     'nozimjon_kozimjonovich' => 'Ortiqov Nozimjon Kozimjonovich',
     'director' => 'O‘zbekiston Respublikasi Prezidenti Administratsiyasi huzuridagi Iqtisodiy tadqiqotlar va islohotlar markazi direktori',

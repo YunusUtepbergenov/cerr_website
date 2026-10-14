@@ -16,13 +16,13 @@
 
             <div class="leaders-grid">
                 <div class="leader-card">
-                    <img class="ld-photo" src="{{ asset('images/leadership/obidarzikulovich.jpg') }}" alt="@lang('leadership.obid_arzikulovich')">
+                    <img class="ld-photo" src="{{ asset('images/leadership/KamoliddinMardonov.jpg') }}" alt="@lang('leadership.kamoliddin_karamiddinovich')">
                     <div class="ld-body">
-                        <div class="ld-name">@lang('leadership.obid_arzikulovich')</div>
+                        <div class="ld-name">@lang('leadership.kamoliddin_karamiddinovich')</div>
                         <div class="ld-role">@lang('leadership.director')</div>
                         <div class="ld-contacts">
                             <span><i class="fa-solid fa-phone"></i><a href="tel:+998781500202">+998 78 150-02-02</a></span>
-                            <span><i class="fa-solid fa-envelope"></i><a href="mailto:o.khakimov@cerr.uz">o.khakimov@cerr.uz</a></span>
+                            <span><i class="fa-solid fa-envelope"></i><a href="mailto:info@cerr.uz">info@cerr.uz</a></span>
                         </div>
                     </div>
                 </div>
