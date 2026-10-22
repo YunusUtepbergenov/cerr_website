@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\News;
 use App\Models\Tag;
 use App\Support\HtmlSanitizer;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
@@ -32,8 +33,6 @@ class NewsForm extends Component
 
     public string $status = 'draft';
 
-    public bool $is_main = false;
-
     public ?string $scheduled_at = null;
 
     /** @var array<int> */
@@ -57,7 +56,6 @@ class NewsForm extends Component
             $this->slug = $news->slug;
             $this->category_id = $news->category_id;
             $this->status = $news->status;
-            $this->is_main = (bool) $news->is_main;
             $this->scheduled_at = $news->scheduled_at?->format('Y-m-d\TH:i');
             $this->tag_ids = $news->tags->pluck('id')->all();
 
@@ -176,7 +174,6 @@ class NewsForm extends Component
             'slug' => ['required', 'string', 'max:255', Rule::unique('news', 'slug')->ignore($newsId)],
             'category_id' => ['nullable', 'integer', 'exists:categories,id'],
             'status' => ['required', Rule::in(['draft', 'published', 'auto_publish', 'disabled'])],
-            'is_main' => ['boolean'],
             'scheduled_at' => ['nullable', 'date'],
             'tag_ids' => ['array'],
             'tag_ids.*' => ['integer', 'exists:tags,id'],
@@ -225,6 +222,33 @@ class NewsForm extends Component
         return false;
     }
 
+    /**
+     * Create a tag from the picker's search text and attach it to this
+     * article. An existing tag whose name differs only in letter case is
+     * reused instead, so the picker cannot produce near-duplicates.
+     */
+    public function createTag(string $name): void
+    {
+        abort_unless(auth()->user()->canManageContent(), 403);
+
+        $name = Str::squish($name);
+
+        Validator::make(['new_tag' => $name], [
+            'new_tag' => ['required', 'string', 'max:255'],
+        ], [], ['new_tag' => __('admin.news.tags')])->validate();
+
+        $tag = Tag::all()->first(fn (Tag $tag) => mb_strtolower($tag->name) === mb_strtolower($name));
+
+        if (! $tag) {
+            $tag = Tag::create(['name' => $name]);
+            $tag->logActivity('created', ['name' => $tag->name]);
+        }
+
+        if (! in_array($tag->id, array_map('intval', $this->tag_ids), true)) {
+            $this->tag_ids[] = $tag->id;
+        }
+    }
+
     public function save(): void
     {
         $this->slug = Str::slug($this->slug);
@@ -241,7 +265,6 @@ class NewsForm extends Component
         $news->slug = $this->slug;
         $news->category_id = $this->category_id;
         $news->status = $this->status;
-        $news->is_main = $this->is_main;
         $news->scheduled_at = $this->scheduled_at ?: null;
         $news->user_id = $news->user_id ?: auth()->id();
         $isNew = ! $news->exists;
@@ -297,7 +320,7 @@ class NewsForm extends Component
      */
     private function summarizeChanges(News $news): array
     {
-        $tracked = ['slug', 'category_id', 'status', 'is_main', 'scheduled_at'];
+        $tracked = ['slug', 'category_id', 'status', 'scheduled_at'];
         $diff = [];
         foreach ($news->getChanges() as $key => $value) {
             if (in_array($key, $tracked, true)) {
@@ -327,11 +350,27 @@ class NewsForm extends Component
         $this->cover_uploads[$locale] = null;
     }
 
+    /**
+     * All tags alphabetically, with the ones already attached to this article
+     * moved to the front so they stay visible in the compact tag picker.
+     *
+     * @return Collection<int, Tag>
+     */
+    private function tagsSelectedFirst(): Collection
+    {
+        $selectedIds = array_map('intval', $this->tag_ids);
+
+        [$selected, $rest] = Tag::orderBy('name')->get()
+            ->partition(fn (Tag $tag) => in_array($tag->id, $selectedIds, true));
+
+        return $selected->concat($rest)->values();
+    }
+
     public function render()
     {
         return view('livewire.admin.news.form', [
             'categories' => Category::with('translations')->get(),
-            'allTags' => Tag::orderBy('name')->get(),
+            'allTags' => $this->tagsSelectedFirst(),
         ])->title($this->news?->exists ? __('admin.news.edit_article') : __('admin.news.new_article'));
     }
 }

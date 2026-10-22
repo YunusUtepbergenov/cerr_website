@@ -245,3 +245,85 @@ describe('News CRUD', function () {
         Storage::disk('public')->assertMissing('news/covers/will-die.jpg');
     })->group('feature', 'admin');
 });
+
+describe('News form tag picker', function () {
+    it('lists the article\'s own tags before the rest of the alphabet', function () {
+        $alpha = Tag::factory()->create(['name' => 'Alpha']);
+        $beta = Tag::factory()->create(['name' => 'Beta']);
+        $zulu = Tag::factory()->create(['name' => 'Zulu']);
+
+        $news = News::factory()->create();
+        $news->tags()->sync([$zulu->id]);
+
+        $tags = Livewire::test(NewsForm::class, ['news' => $news])->viewData('allTags');
+
+        expect($tags->pluck('id')->all())->toBe([$zulu->id, $alpha->id, $beta->id]);
+    })->group('feature', 'admin');
+
+    it('renders a search box and the compact scrolling chip list', function () {
+        Tag::factory()->create(['name' => 'Экономика']);
+
+        Livewire::test(NewsForm::class)
+            ->assertSeeHtml('tag-chip-scroll')
+            ->assertSeeHtml('data-name="экономика"')
+            ->assertSee(__('admin.news.tags_search_placeholder'))
+            ->assertSeeHtml('tag-picker-search')
+            ->assertSee(__('admin.news.tags_create_empty'));
+    })->group('feature', 'admin');
+
+    it('keeps the search box when no tags exist yet so the first one can be created', function () {
+        Livewire::test(NewsForm::class)
+            ->assertSee(__('admin.news.tags_search_placeholder'))
+            ->assertSee(__('admin.news.no_tags_yet'));
+    })->group('feature', 'admin');
+
+    it('creates a new tag from the search text and selects it', function () {
+        $existing = Tag::factory()->create(['name' => 'Alpha']);
+
+        Livewire::test(NewsForm::class)
+            ->set('tag_ids', [$existing->id])
+            ->call('createTag', '  Зелёная   экономика ')
+            ->assertHasNoErrors()
+            ->assertSet('tag_ids', [$existing->id, Tag::where('name', 'Зелёная экономика')->value('id')]);
+
+        expect(Tag::where('name', 'Зелёная экономика')->count())->toBe(1);
+    })->group('feature', 'admin');
+
+    it('reuses an existing tag that differs only in letter case', function () {
+        $tag = Tag::factory()->create(['name' => 'Экономика']);
+
+        Livewire::test(NewsForm::class)
+            ->call('createTag', 'ЭКОНОМИКА')
+            ->call('createTag', 'экономика')
+            ->assertSet('tag_ids', [$tag->id]);
+
+        expect(Tag::count())->toBe(1);
+    })->group('feature', 'admin');
+
+    it('rejects an empty tag name', function () {
+        Livewire::test(NewsForm::class)
+            ->call('createTag', '   ')
+            ->assertHasErrors(['new_tag' => 'required']);
+
+        expect(Tag::count())->toBe(0);
+    })->group('feature', 'admin');
+
+    it('saves a tag created in the picker with the article', function () {
+        $category = Category::factory()->create();
+
+        $component = Livewire::test(NewsForm::class)
+            ->set('slug', 'tagged-article')
+            ->set('category_id', $category->id)
+            ->set('status', 'published')
+            ->set('translations.ru.title', 'Заголовок')
+            ->set('translations.ru.short_description', 'Описание')
+            ->set('translations.ru.content', '<p>Текст</p>')
+            ->call('createTag', 'Новый тег')
+            ->call('save');
+
+        $news = News::where('slug', 'tagged-article')->first();
+
+        expect($news)->not->toBeNull()
+            ->and($news->tags->pluck('name')->all())->toBe(['Новый тег']);
+    })->group('feature', 'admin');
+});

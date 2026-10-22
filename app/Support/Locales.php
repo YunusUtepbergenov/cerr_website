@@ -18,8 +18,25 @@ class Locales
         'en' => 'EN',
     ];
 
+    /**
+     * Each language named in itself, for the editor's language tabs.
+     *
+     * @var array<string, string>
+     */
+    public const NATIVE_NAMES = [
+        'uz' => 'O‘zbekcha',
+        'kr' => 'Ўзбекча',
+        'ru' => 'Русский',
+        'en' => 'English',
+    ];
+
     public static function label(string $locale): string
     {
         return self::LABELS[$locale] ?? mb_strtoupper($locale);
+    }
+
+    public static function nativeName(string $locale): string
+    {
+        return self::NATIVE_NAMES[$locale] ?? self::label($locale);
     }
 }

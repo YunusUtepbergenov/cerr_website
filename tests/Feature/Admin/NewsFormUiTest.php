@@ -29,22 +29,33 @@ describe('News form UI', function () {
             ->assertSee('tag-chip-list', false);
     })->group('feature', 'admin');
 
-    it('renders the sticky form action bar', function () {
+    it('renders the sticky command bar with the save button inside the form', function () {
         app()->setLocale('ru');
         $admin = User::factory()->create(['role' => 'admin']);
 
-        $this->actingAs($admin)->get(route('admin.news.create'))
+        $response = $this->actingAs($admin)->get(route('admin.news.create'))
             ->assertOk()
-            ->assertSee('form-action-bar', false);
+            ->assertSee('editor-bar', false)
+            ->assertSee(__('admin.news.save_article'));
+
+        $html = $response->getContent();
+        $form = strpos($html, 'id="news-form"');
+        $save = strpos($html, 'editor-save');
+
+        expect($form)->not->toBeFalse()
+            ->and($save)->toBeGreaterThan($form)
+            ->and($save)->toBeLessThan(strpos($html, '</form>', $form));
     })->group('feature', 'admin');
 
-    it('wraps the publishing sidebar in a single sticky container', function () {
+    it('renders the settings as a single inspector panel with language tabs on the paper', function () {
         app()->setLocale('ru');
         $admin = User::factory()->create(['role' => 'admin']);
 
         $this->actingAs($admin)->get(route('admin.news.create'))
             ->assertOk()
-            ->assertSee('admin-form-sidebar', false)
+            ->assertSee('editor-inspector', false)
+            ->assertSee('doc-paper', false)
+            ->assertSeeInOrder(['doc-tab', 'O‘zbekcha', 'Ўзбекча', 'Русский', 'English'], false)
             ->assertDontSee('position: sticky; top: 80px;', false);
     })->group('feature', 'admin');
 
