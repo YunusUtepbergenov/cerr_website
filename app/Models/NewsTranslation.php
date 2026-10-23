@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Support\ArticleTables;
+use App\Support\HtmlSanitizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -96,5 +98,14 @@ class NewsTranslation extends Model
             $length > 70 => 'medium',
             default => 'short',
         };
+    }
+
+    /**
+     * Body HTML ready for output: sanitized, with pasted tables upgraded to
+     * proper data tables.
+     */
+    public function renderedContent(): string
+    {
+        return ArticleTables::enhance(HtmlSanitizer::sanitize($this->content));
     }
 }

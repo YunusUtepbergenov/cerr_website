@@ -194,39 +194,129 @@
 .news-article-body figcaption { font-size: 13px; color: var(--na-slate); margin-top: .6em; text-align: center; }
 .news-article-body hr { border: 0; border-top: 1px solid var(--na-hair); margin: 2em 0; }
 
-/* Data tables as credible, polished institutional exhibits */
+/* ---- Data tables ------------------------------------------------------ */
+/* Plain tables (about/history pages, or anything the enhancer skipped). */
 .news-article-body table {
     width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
+    border-collapse: collapse;
     margin: 1.6em 0;
-    font-size: 15.5px;
+    font-size: 15px;
+    line-height: 1.4;
     font-variant-numeric: tabular-nums lining-nums;
-    border: 1px solid var(--na-hair);
-    border-radius: 6px;
-    overflow: hidden;
 }
-.news-article-body thead th,
-.news-article-body table > tr:first-child th {
-    background: var(--na-navy);
-    color: #fff;
-    font-size: 11.5px;
-    letter-spacing: .04em;
-    text-transform: uppercase;
-    font-weight: 700;
-    text-align: left;
-    padding: 12px 14px;
-}
-.news-article-body td,
-.news-article-body tbody th {
-    padding: 12px 14px;
-    border-top: 1px solid #e4eaf1;
+.news-article-body th,
+.news-article-body td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--na-hair);
     text-align: left;
     vertical-align: top;
 }
-.news-article-body tbody tr:nth-child(even) td { background: #fafbfd; }
-.news-article-body tbody th { text-transform: none; font-weight: 700; color: var(--na-ink); }
+.news-article-body thead th {
+    font-family: var(--na-font-display);
+    font-size: 11.5px;
+    font-weight: 700;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+    color: var(--na-slate);
+    border-bottom: 2px solid var(--na-navy);
+}
+.news-article-body table p { margin: 0; font-size: inherit; line-height: inherit; text-align: inherit; }
 .news-article-body caption { text-align: left; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--na-slate); padding-bottom: 10px; }
+
+/* Enhanced article tables (App\Support\ArticleTables): a bordered exhibit
+   that scrolls sideways on narrow screens instead of being clipped. */
+.news-article-body .article-table {
+    margin: 1.8em 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    -webkit-overflow-scrolling: touch;
+    border: 1px solid var(--na-hair);
+    border-radius: 10px;
+    background: var(--na-paper);
+    scrollbar-width: thin;
+    scrollbar-color: #c5ccd9 transparent;
+}
+.news-article-body .article-table table {
+    width: 100%;
+    margin: 0;
+    border: 0;
+    font-size: 14.5px;
+    line-height: 1.35;
+}
+.news-article-body .article-table th,
+.news-article-body .article-table td {
+    padding: 10px 14px;
+    border: 0;
+    vertical-align: middle;
+    min-width: 4.5rem;
+}
+.news-article-body .article-table thead th {
+    background: var(--na-navy);
+    color: rgba(255, 255, 255, .94);
+    font-family: var(--na-font-display);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .01em;
+    text-transform: none;
+    line-height: 1.3;
+    vertical-align: bottom;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    border-bottom: 0;
+}
+.news-article-body .article-table thead th:first-child { padding-left: 18px; }
+.news-article-body .article-table tbody tr { background: var(--na-paper); }
+.news-article-body .article-table tbody tr:nth-child(even) { background: #f6f8fb; }
+.news-article-body .article-table tbody tr:first-child td { border-top: 0; }
+.news-article-body .article-table td { color: var(--na-ink); }
+.news-article-body .article-table td:first-child { padding-left: 18px; }
+.news-article-body .article-table th.num,
+.news-article-body .article-table td.num { text-align: right; }
+.news-article-body .article-table td.num { white-space: nowrap; }
+.news-article-body .article-table td.label {
+    font-weight: 600;
+    color: var(--na-navy);
+    min-width: 9rem;
+    overflow-wrap: normal;
+}
+.news-article-body .article-table .trend {
+    display: inline-block;
+    width: 1em;
+    margin-right: .2em;
+    font-weight: 700;
+    text-align: center;
+}
+.news-article-body .article-table td.up .trend { color: var(--na-favorable); }
+.news-article-body .article-table td.down .trend { color: var(--na-adverse); }
+
+@media (min-width: 900px) {
+    /* Exhibits may break the text measure a little, like figures in print. */
+    .news-article-body .article-table { margin-left: -48px; margin-right: -48px; }
+}
+
+@media (max-width: 720px) {
+    /* Full-bleed scroll strip with a pinned label column. */
+    .news-article-body .article-table {
+        margin-left: calc(-1 * clamp(20px, 5vw, 32px));
+        margin-right: calc(-1 * clamp(20px, 5vw, 32px));
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+    }
+    .news-article-body .article-table table { font-size: 13.5px; }
+    .news-article-body .article-table th,
+    .news-article-body .article-table td { padding: 9px 12px; min-width: 4.25rem; }
+    .news-article-body .article-table td.label,
+    .news-article-body .article-table thead th:first-child {
+        position: sticky;
+        left: 0;
+        z-index: 1;
+        background: inherit;
+        min-width: 8rem;
+        box-shadow: 1px 0 0 var(--na-hair), 6px 0 8px -6px rgba(14, 44, 78, .18);
+    }
+    .news-article-body .article-table thead th:first-child { background: var(--na-navy); }
+}
 
 /* ---- Footer: tags ----------------------------------------------------- */
 .article-footer { margin-top: 24px; }

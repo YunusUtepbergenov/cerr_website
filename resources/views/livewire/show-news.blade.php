@@ -42,7 +42,7 @@
             @endif
 
             <div class="news-article-body">
-                @sanitized($news->translation->content)
+                {!! $news->translation->renderedContent() !!}
             </div>
 
             @if ($news->tags->isNotEmpty())

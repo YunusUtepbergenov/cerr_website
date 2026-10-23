@@ -278,4 +278,18 @@ describe('ShowNews Component', function () {
         $this->get(route('show.news', 'medium-title'))->assertOk()->assertSee('article-title--medium', false);
         $this->get(route('show.news', 'short-title'))->assertOk()->assertSee('article-title--short', false);
     })->group('feature', 'livewire');
+
+    it('renders pasted tables as enhanced data tables', function () {
+        $content = '<p>Text</p><table><tbody>'
+            .'<tr><td><p>Минтақалар</p></td><td><p>ИФИ</p></td></tr>'
+            .'<tr><td><p>Жиззах</p><p>вилояти</p></td><td><p>↑1501</p></td></tr>'
+            .'</tbody></table>';
+        createNewsWithTranslation(['slug' => 'with-table'], ['content' => $content]);
+
+        $this->get(route('show.news', 'with-table'))
+            ->assertOk()
+            ->assertSee('<div class="article-table"><table><thead><tr><th scope="col">Минтақалар</th>', false)
+            ->assertSee('<td class="label">Жиззах вилояти</td>', false)
+            ->assertSee('<td class="num up"><span class="trend" aria-hidden="true">↑</span>1501</td>', false);
+    })->group('feature', 'livewire');
 });
