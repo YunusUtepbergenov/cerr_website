@@ -80,4 +80,21 @@ class NewsTranslation extends Model
 
         return max(1, (int) ceil($words / 200));
     }
+
+    /**
+     * Headline size bucket derived from the title length, so long Uzbek and
+     * Russian headlines render smaller than short punchy ones.
+     *
+     * @return 'short'|'medium'|'long'
+     */
+    public function titleScale(): string
+    {
+        $length = mb_strlen(trim((string) $this->title));
+
+        return match (true) {
+            $length > 110 => 'long',
+            $length > 70 => 'medium',
+            default => 'short',
+        };
+    }
 }

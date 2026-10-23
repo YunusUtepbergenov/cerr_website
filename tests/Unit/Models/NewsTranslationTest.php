@@ -19,3 +19,16 @@ describe('NewsTranslation reading time', function () {
         expect($t->readingTime())->toBe(2);
     })->group('unit', 'models');
 });
+
+describe('NewsTranslation title scale', function () {
+    it('buckets headlines by character length', function (string $title, string $scale) {
+        expect((new NewsTranslation(['title' => $title]))->titleScale())->toBe($scale);
+    })->with([
+        'short' => ['Қисқа сарлавҳа', 'short'],
+        'exactly 70' => [str_repeat('а', 70), 'short'],
+        'medium' => [str_repeat('а', 71), 'medium'],
+        'exactly 110' => [str_repeat('а', 110), 'medium'],
+        'long' => [str_repeat('а', 111), 'long'],
+        'multibyte counted as characters' => [str_repeat('ҳ', 60).' '.str_repeat('ў', 9), 'short'],
+    ])->group('unit', 'models');
+});

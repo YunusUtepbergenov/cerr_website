@@ -264,4 +264,18 @@ describe('ShowNews Component', function () {
         expect((bool) preg_match('/property="og:image" content="([^"]+)"/', $html, $m))->toBeTrue()
             ->and($m[1])->toStartWith('http');
     })->group('feature', 'livewire');
+
+    it('scales the headline by title length and keeps the breadcrumb to one line', function () {
+        $longTitle = 'Иқтисодий тадқиқотлар ва ислоҳотлар маркази ва Berlin Economics Ўзбекистон саноатининг рақобатбардошлигини баҳолашнинг янги ёндашувларини муҳокама қилди';
+        createNewsWithTranslation(['slug' => 'long-title'], ['title' => $longTitle]);
+        createNewsWithTranslation(['slug' => 'medium-title'], ['title' => str_repeat('Савдо ', 15)]);
+        createNewsWithTranslation(['slug' => 'short-title'], ['title' => 'Қисқа сарлавҳа']);
+
+        $this->get(route('show.news', 'long-title'))
+            ->assertOk()
+            ->assertSee('class="article-title article-title--long"', false)
+            ->assertSee('<span class="current">'.$longTitle.'</span>', false);
+        $this->get(route('show.news', 'medium-title'))->assertOk()->assertSee('article-title--medium', false);
+        $this->get(route('show.news', 'short-title'))->assertOk()->assertSee('article-title--short', false);
+    })->group('feature', 'livewire');
 });

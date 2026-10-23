@@ -21,7 +21,7 @@
                 <a href="{{ route('show.category', $news->category->slug) }}" class="article-kicker">{{ $news->category->translation->name }}</a>
             @endif
 
-            <h1 class="article-title">{{ $news->translation->title }}</h1>
+            <h1 class="article-title article-title--{{ $news->translation->titleScale() }}">{{ $news->translation->title }}</h1>
 
             @if ($news->translation->short_description)
                 <p class="article-lead">{{ $news->translation->short_description }}</p>
