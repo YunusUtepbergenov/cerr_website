@@ -26,6 +26,7 @@ use App\Livewire\Home;
 use App\Livewire\Leadership;
 use App\Livewire\OpenData\OpenDataIndex;
 use App\Livewire\ResearchStaff\StaffIndex as ResearchStaffIndex;
+use App\Livewire\ResearchStaff\StaffSector as ResearchStaffSector;
 use App\Livewire\ResearchStaff\StaffShow as ResearchStaffShow;
 use App\Livewire\Search;
 use App\Livewire\ShowAllCategories;
@@ -56,6 +57,7 @@ Route::get('/leadership', Leadership::class)->name('leadership');
 Route::get('/structure', Structure::class)->name('structure');
 // Prototype: reachable by URL only, not yet linked from the navigation.
 Route::get('/research-staff', ResearchStaffIndex::class)->name('research-staff.index');
+Route::get('/research-staff/sectors/{slug}', ResearchStaffSector::class)->name('research-staff.sector');
 Route::get('/research-staff/{slug}', ResearchStaffShow::class)->name('research-staff.show');
 Route::get('/contact', Contact::class)->name('contact');
 Route::get('/vacancies', Vacancies::class)->name('vacancies');

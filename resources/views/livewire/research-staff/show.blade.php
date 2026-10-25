@@ -33,7 +33,7 @@
                     @endif
                 </div>
                 <div class="rs-profile-main">
-                    <a class="rs-role-tag" href="{{ route('research-staff.index') }}#sector-{{ $sector['slug'] }}" wire:navigate>
+                    <a class="rs-role-tag" href="{{ route('research-staff.sector', $sector['slug']) }}" wire:navigate>
                         <span class="rs-pill-dot"></span>{{ __('staff.sector_short_'.$sector['key']) }}
                     </a>
                     <h1 class="rs-profile-name">{{ $name }}</h1>
@@ -173,7 +173,7 @@
                         <h2 class="rs-side-title">@lang('staff.sector')</h2>
                         <p class="rs-side-sector">{{ $sectorName }}</p>
                         <p class="rs-side-desc">{{ __('staff.sector_desc_'.$sector['key']) }}</p>
-                        <a class="rs-more" href="{{ route('research-staff.index') }}#sector-{{ $sector['slug'] }}" wire:navigate>@lang('staff.all_in_sector') <i class="fa-solid fa-arrow-right"></i></a>
+                        <a class="rs-more" href="{{ route('research-staff.sector', $sector['slug']) }}" wire:navigate>@lang('staff.all_in_sector') <i class="fa-solid fa-arrow-right"></i></a>
                     </section>
 
                     @if ($hasEducation || $hasActivity || $publicationCount > 0)

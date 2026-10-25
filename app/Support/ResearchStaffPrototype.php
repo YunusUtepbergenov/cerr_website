@@ -103,6 +103,16 @@ class ResearchStaffPrototype
     }
 
     /**
+     * A sector by its URL slug, with its head and staff attached.
+     *
+     * @return ?array{key: string, slug: string, accent: string, head: ?Person, staff: Collection<int, Person>}
+     */
+    public static function findSector(string $slug): ?array
+    {
+        return self::sectors()->firstWhere('slug', $slug);
+    }
+
+    /**
      * Full sector name: the centre's structure strings where they exist,
      * otherwise the prototype's own placeholder names.
      */

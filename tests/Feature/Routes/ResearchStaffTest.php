@@ -3,29 +3,45 @@
 use App\Support\ResearchStaffPrototype;
 
 describe('Research staff prototype pages', function () {
-    it('lists every research sector with its head and staff', function () {
+    it('lists every research sector as a card linking to its own page', function () {
         setAppLocale('ru');
 
         $response = $this->get(route('research-staff.index'))->assertOk();
 
         foreach (ResearchStaffPrototype::SECTORS as $sector) {
             $response->assertSee(ResearchStaffPrototype::sectorName($sector['key']))
-                ->assertSee('id="sector-'.$sector['slug'].'"', false)
-                ->assertSee('data-index="'.$sector['slug'].'"', false);
+                ->assertSee(route('research-staff.sector', $sector['slug']), false);
         }
 
         $response->assertSee(__('staff.title'))
-            ->assertSee(__('staff.head_of_sector'))
-            ->assertSee('Абдуллаев Бахтиёр Рустамович')
-            ->assertSee('Макроэкономическое прогнозирование · Бюджетная политика')
-            ->assertSee(route('research-staff.show', 'bakhtiyor-abdullaev'), false)
-            ->assertSee('rs-index-list', false)
-            ->assertSee('rs-search', false);
+            ->assertSee(__('staff.see_more'))
+            ->assertSee('rs-sector-grid', false)
+            ->assertSee('rs-stack-more', false)
+            ->assertSee(__('messages.objectives'))
+            ->assertSee(route('leadership'), false)
+            ->assertDontSee(route('research-staff.show', 'bakhtiyor-abdullaev'), false);
 
-        // Only the first sector pane is visible before Alpine runs; the rest are cloaked.
-        expect(substr_count($response->getContent(), 'role="tabpanel"'))->toBe(count(ResearchStaffPrototype::SECTORS))
-            ->and(substr_count($response->getContent(), 'role="tabpanel" style="--rs-accent: #1b69c4" data-sector="macroeconomic-policy"'))->toBe(1)
-            ->and(preg_match_all('/data-sector="[^"]+"\s+x-show="[^"]+"\s+x-cloak/', $response->getContent()))->toBe(count(ResearchStaffPrototype::SECTORS) - 1);
+        expect(substr_count($response->getContent(), 'data-sector-card="'))->toBe(count(ResearchStaffPrototype::SECTORS));
+    })->group('feature', 'routes');
+
+    it('shows a sector page with its head first, then staff, and the sector list', function () {
+        setAppLocale('ru');
+
+        $response = $this->get(route('research-staff.sector', 'macroeconomic-policy'))->assertOk();
+
+        $response->assertSee(__('structure.macro'))
+            ->assertSee(__('staff.staff_of_sector'))
+            ->assertSee(__('staff.head_of_sector'))
+            ->assertSeeInOrder(['Абдуллаев Бахтиёр Рустамович', 'Каримова Нилуфар Шавкатовна', 'Тошматов Отабек Улугбекович'])
+            ->assertSee(route('research-staff.show', 'bakhtiyor-abdullaev'), false)
+            ->assertSee('mailto:b.abdullaev@cerr.uz', false)
+            ->assertSee(route('research-staff.sector', 'regional-development'), false);
+
+        expect(substr_count($response->getContent(), 'data-person="'))->toBe(5);
+    })->group('feature', 'routes');
+
+    it('returns 404 for an unknown sector', function () {
+        $this->get(route('research-staff.sector', 'no-such-sector'))->assertNotFound();
     })->group('feature', 'routes');
 
     it('renders the listing in every public locale', function (string $locale) {
@@ -58,6 +74,7 @@ describe('Research staff prototype pages', function () {
             ->assertSee(trans_choice('staff.publications_count', 6))
             ->assertSee(__('staff.colleagues'))
             ->assertSee('Nilufar Karimova')
+            ->assertSee(route('research-staff.sector', 'macroeconomic-policy'), false)
             ->assertSee(route('research-staff.index'), false);
     })->group('feature', 'routes');
 
@@ -101,7 +118,9 @@ describe('Research staff prototype pages', function () {
         expect(ResearchStaffPrototype::SECTORS)->toHaveCount(14)
             ->and(ResearchStaffPrototype::sectorName('macro'))->toBe(__('structure.macro'))
             ->and(ResearchStaffPrototype::sectorName('labour'))->toBe(__('staff.sector_name_labour'))
-            ->and(ResearchStaffPrototype::sectorName('labour'))->not->toContain('staff.');
+            ->and(ResearchStaffPrototype::sectorName('labour'))->not->toContain('staff.')
+            ->and(ResearchStaffPrototype::findSector('macroeconomic-policy')['head']['slug'])->toBe('bakhtiyor-abdullaev')
+            ->and(ResearchStaffPrototype::findSector('nope'))->toBeNull();
     })->group('unit');
 
     it('gives every person a unique slug, an email and the questionnaire fields', function () {
