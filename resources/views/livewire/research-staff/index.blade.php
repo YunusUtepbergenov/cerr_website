@@ -75,7 +75,7 @@
                                 @if ($head['degree'])
                                     <span class="rs-degree">{{ __('staff.degree_'.$head['degree']) }}</span>
                                 @endif
-                                <p class="rs-head-about">{{ Proto::text($head['about']) }}</p>
+                                <p class="rs-head-about">{{ implode(' · ', Proto::items($head['research_areas'])) }}</p>
                                 <ul class="rs-contact-row">
                                     <li><i class="fa-regular fa-envelope"></i><a href="mailto:{{ $head['email'] }}">{{ $head['email'] }}</a></li>
                                     @if ($head['phone'])

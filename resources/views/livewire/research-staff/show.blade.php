@@ -8,6 +8,11 @@
 
     @php($position = __('staff.position_'.$person['position']))
     @php($sectorName = __('structure.'.$sector['key']))
+    @php($areas = Proto::items($person['research_areas']))
+    @php($profileLinks = array_filter($person['profiles']))
+    @php($publicationCount = Proto::publicationCount($person))
+    @php($hasEducation = collect(Proto::EDUCATION_FIELDS)->contains(fn ($field) => Proto::text($person[$field]) !== ''))
+    @php($hasActivity = $areas !== [] || collect(Proto::ACTIVITY_FIELDS)->contains(fn ($field) => $person[$field] !== []))
 
     <section class="rs-page rs-profile" style="--rs-accent: {{ $sector['accent'] }}">
         <div class="rs-wrap">
@@ -44,13 +49,33 @@
                             <li><i class="fa-solid fa-phone"></i><a href="tel:{{ preg_replace('/[^+\d]/', '', $person['phone']) }}">{{ $person['phone'] }}</a></li>
                         @endif
                     </ul>
+                    @if ($profileLinks)
+                        <ul class="rs-profiles" aria-label="@lang('staff.profiles')">
+                            @foreach ($profileLinks as $network => $url)
+                                <li>
+                                    <a href="{{ $url }}" target="_blank" rel="noopener" class="rs-profile-link rs-profile-link--{{ $network }}">
+                                        @if ($network === 'orcid')
+                                            <i class="fab fa-orcid"></i>
+                                        @elseif ($network === 'scholar')
+                                            <i class="fas fa-graduation-cap"></i>
+                                        @else
+                                            <i class="fas fa-database"></i>
+                                        @endif
+                                        {{ __('staff.profile_'.$network) }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
                 </div>
                 <dl class="rs-facts">
                     <div><dt>@lang('staff.sector')</dt><dd>{{ $sectorName }}</dd></div>
-                    @if ($person['since'])
-                        <div><dt>CERR</dt><dd>@lang('staff.since', ['year' => $person['since']])</dd></div>
+                    @if (Proto::text($person['degree_title']) !== '')
+                        <div><dt>@lang('staff.degree')</dt><dd>{{ Proto::text($person['degree_title']) }}</dd></div>
                     @endif
-                    <div><dt>@lang('staff.languages')</dt><dd>{{ Proto::text($person['languages']) }}</dd></div>
+                    @if ($publicationCount > 0)
+                        <div><dt>@lang('staff.publications')</dt><dd>{{ trans_choice('staff.publications_count', $publicationCount) }}</dd></div>
+                    @endif
                 </dl>
             </header>
 
@@ -58,49 +83,87 @@
 
             <div class="rs-profile-layout">
                 <div class="rs-profile-body">
-                    @if (Proto::text($person['about']) !== '')
-                        <section class="rs-block">
-                            <h2 class="rs-block-title">@lang('staff.about')</h2>
-                            <p class="rs-prose">{{ Proto::text($person['about']) }}</p>
+                    @if ($hasEducation)
+                        <section class="rs-part" id="education">
+                            <header class="rs-part-head">
+                                <span class="rs-part-num" aria-hidden="true">I</span>
+                                <h2 class="rs-part-title">@lang('staff.part_education')</h2>
+                            </header>
+                            <dl class="rs-edu">
+                                @foreach (Proto::EDUCATION_FIELDS as $field)
+                                    @if (Proto::text($person[$field]) !== '')
+                                        <div class="rs-edu-row">
+                                            <dt>{{ __('staff.'.$field) }}</dt>
+                                            <dd>{{ Proto::text($person[$field]) }}</dd>
+                                        </div>
+                                    @endif
+                                @endforeach
+                            </dl>
                         </section>
                     @endif
 
-                    @php($interests = $person['interests'][app()->getLocale()] ?? $person['interests'][in_array(app()->getLocale(), ['uz', 'en']) ? 'en' : 'ru'] ?? [])
-                    @if ($interests)
-                        <section class="rs-block">
-                            <h2 class="rs-block-title">@lang('staff.interests')</h2>
-                            <ul class="rs-chips">
-                                @foreach ($interests as $interest)
-                                    <li>{{ $interest }}</li>
-                                @endforeach
-                            </ul>
+                    @if ($hasActivity)
+                        <section class="rs-part" id="research">
+                            <header class="rs-part-head">
+                                <span class="rs-part-num" aria-hidden="true">II</span>
+                                <h2 class="rs-part-title">@lang('staff.part_research')</h2>
+                            </header>
+
+                            @if ($areas)
+                                <section class="rs-block">
+                                    <h3 class="rs-block-title">@lang('staff.research_areas')</h3>
+                                    <ul class="rs-chips">
+                                        @foreach ($areas as $area)
+                                            <li>{{ $area }}</li>
+                                        @endforeach
+                                    </ul>
+                                </section>
+                            @endif
+
+                            @foreach (Proto::ACTIVITY_FIELDS as $field)
+                                @if ($person[$field])
+                                    <section class="rs-block">
+                                        <h3 class="rs-block-title">@lang('staff.'.$field)</h3>
+                                        <ol class="rs-timeline">
+                                            @foreach ($person[$field] as $entry)
+                                                <li>
+                                                    <span class="rs-years">{{ $entry['years'] }}</span>
+                                                    <span class="rs-entry">{{ Proto::text($entry['text']) }}</span>
+                                                </li>
+                                            @endforeach
+                                        </ol>
+                                    </section>
+                                @endif
+                            @endforeach
                         </section>
                     @endif
 
-                    @foreach (['education', 'experience'] as $section)
-                        @if ($person[$section])
-                            <section class="rs-block">
-                                <h2 class="rs-block-title">@lang('staff.'.$section)</h2>
-                                <ol class="rs-timeline">
-                                    @foreach ($person[$section] as $entry)
-                                        <li>
-                                            <span class="rs-years">{{ $entry['years'] }}</span>
-                                            <span class="rs-entry">{{ Proto::text($entry['text']) }}</span>
-                                        </li>
-                                    @endforeach
-                                </ol>
-                            </section>
-                        @endif
-                    @endforeach
+                    @if ($publicationCount > 0)
+                        <section class="rs-part" id="publications">
+                            <header class="rs-part-head">
+                                <span class="rs-part-num" aria-hidden="true">III</span>
+                                <h2 class="rs-part-title">@lang('staff.part_publications')</h2>
+                            </header>
 
-                    @if ($person['publications'])
-                        <section class="rs-block">
-                            <h2 class="rs-block-title">@lang('staff.publications')</h2>
-                            <ol class="rs-pubs">
-                                @foreach ($person['publications'] as $publication)
-                                    <li>{{ $publication }}</li>
-                                @endforeach
-                            </ol>
+                            @foreach (Proto::PUBLICATION_FIELDS as $field)
+                                @if ($person[$field])
+                                    <section class="rs-block">
+                                        <h3 class="rs-block-title">{{ __('staff.'.$field) }} <span class="rs-block-count">{{ count($person[$field]) }}</span></h3>
+                                        <ol class="rs-pubs">
+                                            @foreach ($person[$field] as $publication)
+                                                <li>
+                                                    <span class="rs-pub-text">{{ Proto::text($publication['text']) }}</span>
+                                                    @if (! empty($publication['url']))
+                                                        <a class="rs-pub-link" href="{{ $publication['url'] }}" target="_blank" rel="noopener">
+                                                            <i class="fas fa-external-link-alt"></i> {{ str_contains($publication['url'], 'doi.org') ? 'DOI' : __('staff.open_link') }}
+                                                        </a>
+                                                    @endif
+                                                </li>
+                                            @endforeach
+                                        </ol>
+                                    </section>
+                                @endif
+                            @endforeach
                         </section>
                     @endif
                 </div>
@@ -112,6 +175,17 @@
                         <p class="rs-side-desc">{{ __('staff.sector_desc_'.$sector['key']) }}</p>
                         <a class="rs-more" href="{{ route('research-staff.index') }}#sector-{{ $sector['slug'] }}" wire:navigate>@lang('staff.all_in_sector') <i class="fa-solid fa-arrow-right"></i></a>
                     </section>
+
+                    @if ($hasEducation || $hasActivity || $publicationCount > 0)
+                        <nav class="rs-side-card rs-side-nav" aria-label="@lang('staff.contents')">
+                            <h2 class="rs-side-title">@lang('staff.contents')</h2>
+                            <ol>
+                                @if ($hasEducation)<li><a href="#education"><span>I</span>@lang('staff.part_education')</a></li>@endif
+                                @if ($hasActivity)<li><a href="#research"><span>II</span>@lang('staff.part_research')</a></li>@endif
+                                @if ($publicationCount > 0)<li><a href="#publications"><span>III</span>@lang('staff.part_publications')</a></li>@endif
+                            </ol>
+                        </nav>
+                    @endif
 
                     @if ($colleagues->isNotEmpty())
                         <section class="rs-side-card">

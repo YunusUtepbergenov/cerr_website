@@ -16,6 +16,7 @@ describe('Research staff prototype pages', function () {
         $response->assertSee(__('staff.title'))
             ->assertSee(__('staff.head_of_sector'))
             ->assertSee('Абдуллаев Бахтиёр Рустамович')
+            ->assertSee('Макроэкономическое прогнозирование · Бюджетная политика')
             ->assertSee(route('research-staff.show', 'bakhtiyor-abdullaev'), false)
             ->assertSee('rs-search', false);
     })->group('feature', 'routes');
@@ -28,19 +29,41 @@ describe('Research staff prototype pages', function () {
             ->assertSee(__('staff.title', [], $locale));
     })->with(['ru', 'en', 'uz', 'kr'])->group('feature', 'routes');
 
-    it('shows a profile with its provisional sections and sector colleagues', function () {
+    it('shows a profile structured like the staff questionnaire', function () {
         setAppLocale('en');
 
         $this->get(route('research-staff.show', 'bakhtiyor-abdullaev'))
             ->assertOk()
             ->assertSee('Bakhtiyor Abdullaev')
             ->assertSee(__('staff.position_head'))
-            ->assertSee(__('staff.interests'))
-            ->assertSee(__('staff.education'))
-            ->assertSee(__('staff.publications'))
+            ->assertSeeInOrder([
+                __('staff.part_education'),
+                __('staff.bachelor'), __('staff.master'), __('staff.doctorate'), __('staff.degree_title'),
+                __('staff.part_research'),
+                __('staff.research_areas'), __('staff.international'), __('staff.achievements'), __('staff.previous_experience'),
+                __('staff.part_publications'),
+                __('staff.articles'), __('staff.books'), __('staff.reports'),
+            ])
+            ->assertSee('Doctor of Economics (DSc)')
+            ->assertSee('https://orcid.org/0000-0000-0000-0000', false)
+            ->assertSee('rs-profile-link--scholar', false)
+            ->assertSee('</i> DOI', false)
+            ->assertSee(trans_choice('staff.publications_count', 6))
             ->assertSee(__('staff.colleagues'))
             ->assertSee('Nilufar Karimova')
             ->assertSee(route('research-staff.index'), false);
+    })->group('feature', 'routes');
+
+    it('skips questionnaire sections a person left empty', function () {
+        setAppLocale('ru');
+
+        $this->get(route('research-staff.show', 'otabek-toshmatov'))
+            ->assertOk()
+            ->assertSee(__('staff.bachelor'))
+            ->assertSee(__('staff.research_areas'))
+            ->assertDontSee(__('staff.master'))
+            ->assertDontSee(__('staff.part_publications'))
+            ->assertDontSee('rs-profiles', false);
     })->group('feature', 'routes');
 
     it('returns 404 for an unknown person', function () {
@@ -58,15 +81,21 @@ describe('Research staff prototype pages', function () {
             ->and(ResearchStaffPrototype::text(['ru' => 'Р', 'en' => 'E'], 'uz'))->toBe('E')
             ->and(ResearchStaffPrototype::text(['ru' => 'Р'], 'en'))->toBe('Р')
             ->and(ResearchStaffPrototype::text([], 'ru'))->toBe('')
+            ->and(ResearchStaffPrototype::text('As is', 'kr'))->toBe('As is')
+            ->and(ResearchStaffPrototype::items(['ru' => ['а', 'б'], 'en' => ['a']], 'uz'))->toBe(['a'])
+            ->and(ResearchStaffPrototype::items(['ru' => ['а', 'б']], 'en'))->toBe(['а', 'б'])
             ->and(ResearchStaffPrototype::initials('Абдуллаев Бахтиёр Рустамович'))->toBe('АБ')
             ->and(ResearchStaffPrototype::initials('Bakhtiyor Abdullaev'))->toBe('BA');
     })->group('unit');
 
-    it('gives every person a unique slug and email', function () {
+    it('gives every person a unique slug, an email and the questionnaire fields', function () {
         $people = ResearchStaffPrototype::people();
+        $fields = [...ResearchStaffPrototype::EDUCATION_FIELDS, ...ResearchStaffPrototype::ACTIVITY_FIELDS, ...ResearchStaffPrototype::PUBLICATION_FIELDS, 'research_areas', 'profiles'];
 
         expect($people->pluck('slug')->unique())->toHaveCount($people->count())
             ->and($people->pluck('email')->unique())->toHaveCount($people->count())
+            ->and($people->every(fn (array $person) => count(array_diff($fields, array_keys($person))) === 0))->toBeTrue()
+            ->and(ResearchStaffPrototype::publicationCount($people->firstWhere('slug', 'bakhtiyor-abdullaev')))->toBe(6)
             ->and(ResearchStaffPrototype::sectors()->every(fn ($sector) => $sector['head'] !== null))->toBeTrue();
     })->group('unit');
 });

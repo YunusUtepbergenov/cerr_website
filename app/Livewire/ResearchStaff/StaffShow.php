@@ -42,7 +42,7 @@ class StaffShow extends Component
             'name' => $name,
         ])->layout('components.layouts.app', [
             'title' => $name.' — '.__('staff.title').' — CERR',
-            'metaDescription' => ResearchStaffPrototype::text($this->person['about']),
+            'metaDescription' => __('staff.position_'.$this->person['position']).', '.__('structure.'.$this->sector['key']).'. '.implode(', ', ResearchStaffPrototype::items($this->person['research_areas'])),
         ]);
     }
 }
