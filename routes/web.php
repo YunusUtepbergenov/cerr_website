@@ -25,6 +25,8 @@ use App\Livewire\History;
 use App\Livewire\Home;
 use App\Livewire\Leadership;
 use App\Livewire\OpenData\OpenDataIndex;
+use App\Livewire\ResearchStaff\StaffIndex as ResearchStaffIndex;
+use App\Livewire\ResearchStaff\StaffShow as ResearchStaffShow;
 use App\Livewire\Search;
 use App\Livewire\ShowAllCategories;
 use App\Livewire\ShowCategory;
@@ -52,6 +54,9 @@ Route::get('/history', History::class)->name('history');
 Route::get('/about', About::class)->name('about');
 Route::get('/leadership', Leadership::class)->name('leadership');
 Route::get('/structure', Structure::class)->name('structure');
+// Prototype: reachable by URL only, not yet linked from the navigation.
+Route::get('/research-staff', ResearchStaffIndex::class)->name('research-staff.index');
+Route::get('/research-staff/{slug}', ResearchStaffShow::class)->name('research-staff.show');
 Route::get('/contact', Contact::class)->name('contact');
 Route::get('/vacancies', Vacancies::class)->name('vacancies');
 Route::get('/show-news/{slug}', ShowNews::class)->name('show.news');
