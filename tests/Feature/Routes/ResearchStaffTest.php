@@ -9,8 +9,9 @@ describe('Research staff prototype pages', function () {
         $response = $this->get(route('research-staff.index'))->assertOk();
 
         foreach (ResearchStaffPrototype::SECTORS as $sector) {
-            $response->assertSee(__('structure.'.$sector['key']))
-                ->assertSee('id="sector-'.$sector['slug'].'"', false);
+            $response->assertSee(ResearchStaffPrototype::sectorName($sector['key']))
+                ->assertSee('id="sector-'.$sector['slug'].'"', false)
+                ->assertSee('data-index="'.$sector['slug'].'"', false);
         }
 
         $response->assertSee(__('staff.title'))
@@ -18,7 +19,13 @@ describe('Research staff prototype pages', function () {
             ->assertSee('Абдуллаев Бахтиёр Рустамович')
             ->assertSee('Макроэкономическое прогнозирование · Бюджетная политика')
             ->assertSee(route('research-staff.show', 'bakhtiyor-abdullaev'), false)
+            ->assertSee('rs-index-list', false)
             ->assertSee('rs-search', false);
+
+        // Only the first sector pane is visible before Alpine runs; the rest are cloaked.
+        expect(substr_count($response->getContent(), 'role="tabpanel"'))->toBe(count(ResearchStaffPrototype::SECTORS))
+            ->and(substr_count($response->getContent(), 'role="tabpanel" style="--rs-accent: #1b69c4" data-sector="macroeconomic-policy"'))->toBe(1)
+            ->and(preg_match_all('/data-sector="[^"]+"\s+x-show="[^"]+"\s+x-cloak/', $response->getContent()))->toBe(count(ResearchStaffPrototype::SECTORS) - 1);
     })->group('feature', 'routes');
 
     it('renders the listing in every public locale', function (string $locale) {
@@ -86,6 +93,15 @@ describe('Research staff prototype pages', function () {
             ->and(ResearchStaffPrototype::items(['ru' => ['а', 'б']], 'en'))->toBe(['а', 'б'])
             ->and(ResearchStaffPrototype::initials('Абдуллаев Бахтиёр Рустамович'))->toBe('АБ')
             ->and(ResearchStaffPrototype::initials('Bakhtiyor Abdullaev'))->toBe('BA');
+    })->group('unit');
+
+    it('names every sector, from the structure strings or its own placeholders', function () {
+        setAppLocale('ru');
+
+        expect(ResearchStaffPrototype::SECTORS)->toHaveCount(14)
+            ->and(ResearchStaffPrototype::sectorName('macro'))->toBe(__('structure.macro'))
+            ->and(ResearchStaffPrototype::sectorName('labour'))->toBe(__('staff.sector_name_labour'))
+            ->and(ResearchStaffPrototype::sectorName('labour'))->not->toContain('staff.');
     })->group('unit');
 
     it('gives every person a unique slug, an email and the questionnaire fields', function () {

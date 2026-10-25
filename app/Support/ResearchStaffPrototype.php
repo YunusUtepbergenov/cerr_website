@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Str;
 
 /**
@@ -45,6 +46,14 @@ class ResearchStaffPrototype
         ['key' => 'foreign_economic', 'slug' => 'foreign-economic-activity', 'accent' => '#6d28d9'],
         ['key' => 'cluster', 'slug' => 'industrial-clusters', 'accent' => '#be123c'],
         ['key' => 'regions', 'slug' => 'regional-development', 'accent' => '#15803d'],
+        ['key' => 'labour', 'slug' => 'labour-market-and-social-policy', 'accent' => '#0369a1'],
+        ['key' => 'agro', 'slug' => 'agriculture-and-food-security', 'accent' => '#4d7c0f'],
+        ['key' => 'energy', 'slug' => 'energy-and-green-economy', 'accent' => '#c2410c'],
+        ['key' => 'digital', 'slug' => 'digital-economy', 'accent' => '#7c3aed'],
+        ['key' => 'sme', 'slug' => 'entrepreneurship-and-sme', 'accent' => '#0e7490'],
+        ['key' => 'public_finance', 'slug' => 'public-finance-and-taxation', 'accent' => '#9f1239'],
+        ['key' => 'transport', 'slug' => 'transport-and-logistics', 'accent' => '#a16207'],
+        ['key' => 'human_capital', 'slug' => 'human-capital-and-education', 'accent' => '#1d4ed8'],
     ];
 
     /** Questionnaire part I, in form order; each key holds a localised text. */
@@ -91,6 +100,15 @@ class ResearchStaffPrototype
     public static function sector(string $key): ?array
     {
         return collect(self::SECTORS)->firstWhere('key', $key);
+    }
+
+    /**
+     * Full sector name: the centre's structure strings where they exist,
+     * otherwise the prototype's own placeholder names.
+     */
+    public static function sectorName(string $key): string
+    {
+        return Lang::has('structure.'.$key) ? __('structure.'.$key) : __('staff.sector_name_'.$key);
     }
 
     /**
@@ -519,6 +537,178 @@ class ResearchStaffPrototype
             'name' => ['ru' => 'Эшонкулов Жавохир Собирович', 'en' => 'Javokhir Eshonkulov'],
             'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2024', 'en' => 'Tashkent State University of Economics, Economics, 2024'],
             'research_areas' => ['ru' => ['Региональная статистика', 'ГИС-анализ'], 'en' => ['Regional statistics', 'GIS analysis']],
+        ],
+        // ---- Labour market and social policy ---------------------------------------
+        [
+            'sector' => 'labour', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
+            'name' => ['ru' => 'Каримов Улугбек Тахирович', 'en' => 'Ulugbek Karimov'],
+            'phone' => '+998 78 150-02-02',
+            'master' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика труда», 2006', 'en' => 'Tashkent State University of Economics, Labour Economics, 2006'],
+            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2015', 'en' => 'PhD in Economics, 2015'],
+            'research_areas' => ['ru' => ['Занятость', 'Социальная защита', 'Пенсионная система'], 'en' => ['Employment', 'Social protection', 'Pension system']],
+            'reports' => [['text' => ['ru' => 'Рынок труда Узбекистана: обзор 2024 года. — ЦЭИР, 2025.', 'en' => 'The labour market of Uzbekistan: 2024 review. — CERR, 2025.']]],
+        ],
+        [
+            'sector' => 'labour', 'position' => 'senior',
+            'name' => ['ru' => 'Саидова Нигора Баходировна', 'en' => 'Nigora Saidova'],
+            'master' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика труда», 2016', 'en' => 'Tashkent State University of Economics, Labour Economics, 2016'],
+            'research_areas' => ['ru' => ['Неформальная занятость', 'Оплата труда'], 'en' => ['Informal employment', 'Wages']],
+        ],
+        [
+            'sector' => 'labour', 'position' => 'researcher',
+            'name' => ['ru' => 'Абдуразаков Шерзод Олимович', 'en' => 'Sherzod Abdurazakov'],
+            'master' => ['ru' => 'Университет Инха в Ташкенте, «Аналитика данных», 2021', 'en' => 'Inha University in Tashkent, Data Analytics, 2021'],
+            'research_areas' => ['ru' => ['Статистика занятости', 'Опросы домохозяйств'], 'en' => ['Employment statistics', 'Household surveys']],
+        ],
+
+        // ---- Agriculture and food security ------------------------------------------
+        [
+            'sector' => 'agro', 'is_head' => true, 'position' => 'head', 'degree' => 'cand',
+            'name' => ['ru' => 'Хамидов Бахром Абдуллаевич', 'en' => 'Bakhrom Khamidov'],
+            'phone' => '+998 78 150-02-02',
+            'master' => ['ru' => 'Ташкентский государственный аграрный университет, «Экономика АПК», 2001', 'en' => 'Tashkent State Agrarian University, Agricultural Economics, 2001'],
+            'degree_title' => ['ru' => 'Кандидат экономических наук, 08.00.03, 2007', 'en' => 'Candidate of Economic Sciences, 08.00.03, 2007'],
+            'research_areas' => ['ru' => ['Продовольственная безопасность', 'Аграрная политика', 'Водные ресурсы'], 'en' => ['Food security', 'Agricultural policy', 'Water resources']],
+        ],
+        [
+            'sector' => 'agro', 'position' => 'leading', 'degree' => 'phd',
+            'name' => ['ru' => 'Мирзаева Дилфуза Рахимовна', 'en' => 'Dilfuza Mirzaeva'],
+            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2019', 'en' => 'PhD in Economics, 2019'],
+            'research_areas' => ['ru' => ['Цены на продовольствие', 'Экспорт плодоовощной продукции'], 'en' => ['Food prices', 'Horticultural exports']],
+        ],
+        [
+            'sector' => 'agro', 'position' => 'researcher',
+            'name' => ['ru' => 'Рустамов Азиз Шавкатович', 'en' => 'Aziz Rustamov'],
+            'research_areas' => ['ru' => ['Фермерские хозяйства', 'Кредитование АПК'], 'en' => ['Farm enterprises', 'Agricultural credit']],
+        ],
+        [
+            'sector' => 'agro', 'position' => 'junior',
+            'name' => ['ru' => 'Қодирова Лола Собировна', 'en' => 'Lola Kodirova'],
+            'research_areas' => ['ru' => ['Аграрная статистика'], 'en' => ['Agricultural statistics']],
+        ],
+
+        // ---- Energy and green economy -------------------------------------------------
+        [
+            'sector' => 'energy', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
+            'name' => ['ru' => 'Усманов Фаррух Рашидович', 'en' => 'Farrukh Usmanov'],
+            'phone' => '+998 78 150-02-02',
+            'master' => ['ru' => 'Технический университет Берлина, «Энергетическая экономика», 2012', 'en' => 'TU Berlin, Energy Economics, 2012'],
+            'degree_title' => ['ru' => 'PhD по экономике, 2017', 'en' => 'PhD in Economics, 2017'],
+            'research_areas' => ['ru' => ['Энергетические тарифы', 'Возобновляемая энергетика', 'Углеродное регулирование'], 'en' => ['Energy tariffs', 'Renewable energy', 'Carbon regulation']],
+        ],
+        [
+            'sector' => 'energy', 'position' => 'senior',
+            'name' => ['ru' => 'Алимова Мадина Шухратовна', 'en' => 'Madina Alimova'],
+            'research_areas' => ['ru' => ['Энергоэффективность', 'Субсидии'], 'en' => ['Energy efficiency', 'Subsidies']],
+        ],
+        [
+            'sector' => 'energy', 'position' => 'researcher',
+            'name' => ['ru' => 'Норматов Жахонгир Бахтиёрович', 'en' => 'Jakhongir Normatov'],
+            'research_areas' => ['ru' => ['Энергобаланс', 'Моделирование спроса'], 'en' => ['Energy balance', 'Demand modelling']],
+        ],
+
+        // ---- Digital economy -----------------------------------------------------------
+        [
+            'sector' => 'digital', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
+            'name' => ['ru' => 'Тураев Жасур Хамидович', 'en' => 'Jasur Turaev'],
+            'phone' => '+998 78 150-02-02',
+            'master' => ['ru' => 'Университет Инха в Ташкенте, «Информационные системы», 2014', 'en' => 'Inha University in Tashkent, Information Systems, 2014'],
+            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2020', 'en' => 'PhD in Economics, 2020'],
+            'research_areas' => ['ru' => ['Цифровые платформы', 'Электронная коммерция', 'ИИ в госуправлении'], 'en' => ['Digital platforms', 'E-commerce', 'AI in government']],
+        ],
+        [
+            'sector' => 'digital', 'position' => 'senior',
+            'name' => ['ru' => 'Якубова Камила Рустамовна', 'en' => 'Kamila Yakubova'],
+            'research_areas' => ['ru' => ['Цифровые навыки', 'ИТ-экспорт'], 'en' => ['Digital skills', 'IT exports']],
+        ],
+        [
+            'sector' => 'digital', 'position' => 'junior',
+            'name' => ['ru' => 'Мансуров Ботир Алишерович', 'en' => 'Botir Mansurov'],
+            'research_areas' => ['ru' => ['Открытые данные'], 'en' => ['Open data']],
+        ],
+
+        // ---- Entrepreneurship and SMEs -------------------------------------------------
+        [
+            'sector' => 'sme', 'is_head' => true, 'position' => 'head', 'degree' => 'cand',
+            'name' => ['ru' => 'Рахмонов Дилшод Тохирович', 'en' => 'Dilshod Rakhmonov'],
+            'phone' => '+998 78 150-02-02',
+            'degree_title' => ['ru' => 'Кандидат экономических наук, 08.00.05, 2010', 'en' => 'Candidate of Economic Sciences, 08.00.05, 2010'],
+            'research_areas' => ['ru' => ['Деловая среда', 'Регуляторная нагрузка', 'Доступ МСБ к рынкам'], 'en' => ['Business environment', 'Regulatory burden', 'SME market access']],
+        ],
+        [
+            'sector' => 'sme', 'position' => 'leading', 'degree' => 'phd',
+            'name' => ['ru' => 'Ибрагимова Зухра Камиловна', 'en' => 'Zukhra Ibragimova'],
+            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2018', 'en' => 'PhD in Economics, 2018'],
+            'research_areas' => ['ru' => ['Женское предпринимательство', 'Самозанятость'], 'en' => ['Women’s entrepreneurship', 'Self-employment']],
+        ],
+        [
+            'sector' => 'sme', 'position' => 'researcher',
+            'name' => ['ru' => 'Олимов Санжар Фарходович', 'en' => 'Sanjar Olimov'],
+            'research_areas' => ['ru' => ['Опросы бизнеса', 'Административные барьеры'], 'en' => ['Business surveys', 'Administrative barriers']],
+        ],
+
+        // ---- Public finance and taxation ------------------------------------------------
+        [
+            'sector' => 'public_finance', 'is_head' => true, 'position' => 'head', 'degree' => 'doc',
+            'name' => ['ru' => 'Зияев Акмал Бахтиёрович', 'en' => 'Akmal Ziyaev'],
+            'phone' => '+998 78 150-02-02',
+            'degree_title' => ['ru' => 'Доктор экономических наук (DSc), 08.00.07, 2016; профессор', 'en' => 'Doctor of Economics (DSc), 08.00.07, 2016; Professor'],
+            'research_areas' => ['ru' => ['Налоговая политика', 'Межбюджетные отношения', 'Государственный долг'], 'en' => ['Tax policy', 'Intergovernmental fiscal relations', 'Public debt']],
+        ],
+        [
+            'sector' => 'public_finance', 'position' => 'senior', 'degree' => 'phd',
+            'name' => ['ru' => 'Хайдарова Шахло Икромовна', 'en' => 'Shakhlo Khaydarova'],
+            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2021', 'en' => 'PhD in Economics, 2021'],
+            'research_areas' => ['ru' => ['НДС', 'Налоговые льготы'], 'en' => ['VAT', 'Tax expenditures']],
+        ],
+        [
+            'sector' => 'public_finance', 'position' => 'researcher',
+            'name' => ['ru' => 'Бекмуродов Шохжахон Улугбекович', 'en' => 'Shokhjakhon Bekmurodov'],
+            'research_areas' => ['ru' => ['Бюджетная статистика'], 'en' => ['Fiscal statistics']],
+        ],
+
+        // ---- Transport and logistics -------------------------------------------------------
+        [
+            'sector' => 'transport', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
+            'name' => ['ru' => 'Назаров Бобур Шерзодович', 'en' => 'Bobur Nazarov'],
+            'phone' => '+998 78 150-02-02',
+            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2016', 'en' => 'PhD in Economics, 2016'],
+            'research_areas' => ['ru' => ['Транзитный потенциал', 'Логистические издержки', 'Железнодорожные коридоры'], 'en' => ['Transit potential', 'Logistics costs', 'Rail corridors']],
+        ],
+        [
+            'sector' => 'transport', 'position' => 'senior',
+            'name' => ['ru' => 'Эргашев Мурод Анварович', 'en' => 'Murod Ergashev'],
+            'research_areas' => ['ru' => ['Автоперевозки', 'Тарифы'], 'en' => ['Road haulage', 'Tariffs']],
+        ],
+        [
+            'sector' => 'transport', 'position' => 'researcher',
+            'name' => ['ru' => 'Сулаймонова Нилуфар Рустамовна', 'en' => 'Nilufar Sulaymonova'],
+            'research_areas' => ['ru' => ['Мультимодальные перевозки'], 'en' => ['Multimodal transport']],
+        ],
+
+        // ---- Human capital and education ---------------------------------------------------
+        [
+            'sector' => 'human_capital', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
+            'name' => ['ru' => 'Юлдашева Гулноза Акмаловна', 'en' => 'Gulnoza Yuldasheva'],
+            'phone' => '+998 78 150-02-02',
+            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2014', 'en' => 'PhD in Economics, 2014'],
+            'research_areas' => ['ru' => ['Экономика образования', 'Навыки и рынок труда', 'Здравоохранение'], 'en' => ['Economics of education', 'Skills and the labour market', 'Health care']],
+        ],
+        [
+            'sector' => 'human_capital', 'position' => 'leading', 'degree' => 'phd',
+            'name' => ['ru' => 'Собирова Мохира Тулкиновна', 'en' => 'Mokhira Sobirova'],
+            'degree_title' => ['ru' => 'Доктор философии (PhD) по педагогическим наукам, 2017', 'en' => 'PhD in Education, 2017'],
+            'research_areas' => ['ru' => ['Дошкольное образование', 'Финансирование школ'], 'en' => ['Early-childhood education', 'School financing']],
+        ],
+        [
+            'sector' => 'human_capital', 'position' => 'researcher',
+            'name' => ['ru' => 'Каримов Жавлон Бахтиёрович', 'en' => 'Javlon Karimov'],
+            'research_areas' => ['ru' => ['Высшее образование', 'Выпускники и занятость'], 'en' => ['Higher education', 'Graduate employment']],
+        ],
+        [
+            'sector' => 'human_capital', 'position' => 'junior',
+            'name' => ['ru' => 'Тожиева Дилором Шухратовна', 'en' => 'Dilorom Tojieva'],
+            'research_areas' => ['ru' => ['Статистика образования'], 'en' => ['Education statistics']],
         ],
     ];
 }
