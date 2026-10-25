@@ -16,9 +16,13 @@ describe('Research staff prototype pages', function () {
         $response->assertSee(__('staff.title'))
             ->assertSee(__('staff.see_more'))
             ->assertSee('rs-sector-grid', false)
-            ->assertSee('rs-stack-more', false)
-            ->assertSee(__('messages.objectives'))
-            ->assertSee(route('leadership'), false)
+            ->assertSee('rs-stack-item', false)
+            ->assertSee('fa-chart-line', false)
+            ->assertSee(__('staff.sector_short_macro'))
+            ->assertSee(__('staff.sector_desc_macro'))
+            ->assertSee('Абдуллаев Бахтиёр Рустамович')
+            ->assertSee(__('staff.head_of_sector'))
+            ->assertDontSee('rs-side', false)
             ->assertDontSee(route('research-staff.show', 'bakhtiyor-abdullaev'), false);
 
         expect(substr_count($response->getContent(), 'data-sector-card="'))->toBe(count(ResearchStaffPrototype::SECTORS));

@@ -90,32 +90,49 @@
 .rs-cta-btn { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 8px; background: #fff; color: var(--na-navy); font-family: var(--na-font-display); font-size: 13px; font-weight: 700; transition: transform .15s ease; }
 .rs-cta:hover .rs-cta-btn { transform: translateX(3px); }
 
-/* ---- Sector cards grid (index) ------------------------------------------------ */
-.rs-sector-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+/* ---- Sector cards grid (index, full width) ------------------------------------ */
+.rs-sector-grid { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
 .rs-sector-grid li { margin: 0; min-width: 0; }
 .rs-sector-card {
-    position: relative; display: flex; flex-direction: column; gap: 14px; height: 100%; padding: 20px 20px 18px;
-    border: 1px solid var(--na-hair); border-radius: 16px; text-decoration: none; overflow: hidden;
-    background:
-        radial-gradient(420px 180px at 100% 0%, color-mix(in srgb, var(--rs-accent) 10%, transparent), transparent 70%),
-        linear-gradient(180deg, color-mix(in srgb, var(--rs-accent) 5%, var(--na-paper)), var(--na-paper));
+    position: relative; display: flex; flex-direction: column; gap: 12px; height: 100%; padding: 22px 22px 18px;
+    border: 1px solid var(--na-hair); border-radius: 18px; text-decoration: none; overflow: hidden;
+    background: var(--na-paper);
     transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
 }
-.rs-sector-card::before { content: ''; position: absolute; inset: 0 0 auto 0; height: 4px; background: var(--rs-accent); opacity: .9; }
-.rs-sector-card:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--rs-accent) 45%, var(--na-hair)); box-shadow: 0 16px 34px -22px rgba(14, 44, 78, .5); }
-.rs-sector-card-head { display: block; padding-bottom: 14px; border-bottom: 1px solid color-mix(in srgb, var(--rs-accent) 28%, var(--na-hair)); flex: 1; }
-.rs-sector-card-title { font-family: var(--na-font-display); font-size: 17px; font-weight: 700; line-height: 1.3; letter-spacing: -.01em; color: var(--na-navy); margin: 0; text-wrap: balance; }
+.rs-sector-card::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background: radial-gradient(360px 220px at 100% 0%, color-mix(in srgb, var(--rs-accent) 13%, transparent), transparent 70%);
+}
+.rs-sector-card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--rs-accent) 50%, var(--na-hair)); box-shadow: 0 20px 40px -24px color-mix(in srgb, var(--rs-accent) 45%, rgba(14, 44, 78, .5)); }
+.rs-sector-card > * { position: relative; }
+.rs-sector-card-top { display: flex; align-items: center; gap: 14px; }
+.rs-sector-icon {
+    flex: none; width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center;
+    background: linear-gradient(145deg, var(--rs-accent), color-mix(in srgb, var(--rs-accent) 70%, #0e2c4e)); color: #fff; font-size: 21px;
+    box-shadow: 0 8px 18px -10px color-mix(in srgb, var(--rs-accent) 70%, transparent);
+}
+.rs-sector-kicker { display: grid; gap: 2px; min-width: 0; }
+.rs-sector-num { font-family: var(--na-font-display); font-size: 11.5px; font-weight: 700; letter-spacing: .14em; color: var(--na-slate); font-variant-numeric: tabular-nums lining-nums; }
+.rs-sector-short { font-family: var(--na-font-display); font-size: 12.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--rs-ink-accent, var(--rs-accent)); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rs-sector-card-title { font-family: var(--na-font-display); font-size: 18px; font-weight: 700; line-height: 1.3; letter-spacing: -.01em; color: var(--na-navy); margin: 4px 0 0; text-wrap: balance; }
 .rs-sector-card:hover .rs-sector-card-title { color: var(--rs-ink-accent, var(--rs-accent)); }
-.rs-sector-card-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 8px; }
+.rs-sector-card-desc { margin: 0; font-size: 14px; line-height: 1.55; color: var(--na-slate); display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.rs-sector-head { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; align-items: center; margin-top: auto; padding-top: 14px; border-top: 1px dashed color-mix(in srgb, var(--rs-accent) 35%, var(--na-hair)); }
+.rs-sector-head-photo { width: 40px; height: 40px; border-radius: 10px; overflow: hidden; background: var(--na-mist); }
+.rs-sector-head-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+.rs-sector-head-text { display: grid; min-width: 0; }
+.rs-sector-head-name { font-family: var(--na-font-display); font-size: 14px; font-weight: 700; line-height: 1.3; color: var(--na-navy); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.rs-sector-head-role { font-size: 12px; line-height: 1.3; color: var(--na-slate); }
+.rs-sector-card-foot { display: flex; align-items: center; gap: 10px; padding-top: 12px; border-top: 1px solid var(--na-hair); }
 .rs-stack { display: flex; align-items: center; }
 .rs-stack-item {
-    width: 32px; height: 32px; border-radius: 50%; overflow: hidden; flex: none;
-    border: 2px solid var(--na-paper); margin-left: -10px; background: var(--na-mist);
-    box-shadow: 0 1px 2px rgba(14, 44, 78, .12);
+    width: 30px; height: 30px; border-radius: 50%; overflow: hidden; flex: none;
+    border: 2px solid var(--na-paper); margin-left: -9px; background: var(--na-mist);
 }
 .rs-stack-item:first-child { margin-left: 0; }
 .rs-stack-item img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
-.rs-stack-more { display: grid; place-items: center; background: var(--rs-accent); color: #fff; font-family: var(--na-font-display); font-size: 11px; font-weight: 700; letter-spacing: .02em; }
+.rs-stack-more { display: grid; place-items: center; background: var(--rs-accent); color: #fff; font-family: var(--na-font-display); font-size: 10.5px; font-weight: 700; }
+.rs-sector-members { font-size: 12.5px; font-weight: 600; color: var(--na-slate); white-space: nowrap; font-variant-numeric: tabular-nums lining-nums; }
 .rs-see-more { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; font-family: var(--na-font-display); font-size: 13px; font-weight: 700; color: var(--na-navy); white-space: nowrap; }
 .rs-see-more i { font-size: 12px; transition: transform .18s ease; }
 .rs-sector-card:hover .rs-see-more { color: var(--rs-ink-accent, var(--rs-accent)); }
@@ -166,7 +183,7 @@
     font-size: clamp(22px, 6cqw, 44px); user-select: none;
 }
 .rs-avatar--sm { width: 40px; height: 40px; border-radius: 10px; font-size: 14px; }
-.rs-avatar--stack { font-size: 10.5px; letter-spacing: .01em; }
+.rs-avatar--stack { font-size: 10px; letter-spacing: .01em; }
 .rs-degree {
     display: inline-flex; align-items: center; padding: 3px 8px; border-radius: 6px;
     background: color-mix(in srgb, var(--rs-accent) 10%, var(--na-paper));
@@ -388,12 +405,11 @@ html[data-theme=dark] .rs-side-card,
 html[data-theme=dark] .rs-profile-hero,
 html[data-theme=dark] .rs-edu,
 html[data-theme=dark] .rs-profile-link { background: var(--dk-surface); }
-html[data-theme=dark] .rs-sector-card {
-    background:
-        radial-gradient(420px 180px at 100% 0%, color-mix(in srgb, var(--rs-accent) 16%, transparent), transparent 70%),
-        var(--dk-surface);
-}
+html[data-theme=dark] .rs-sector-card { background: var(--dk-surface); }
+html[data-theme=dark] .rs-sector-card::before { background: radial-gradient(360px 220px at 100% 0%, color-mix(in srgb, var(--rs-accent) 20%, transparent), transparent 70%); }
+html[data-theme=dark] .rs-sector-head-name { color: var(--dk-text); }
 html[data-theme=dark] .rs-stack-item { border-color: var(--dk-surface); }
+html[data-theme=dark] .rs-sector-card-foot { border-top-color: var(--dk-border); }
 html[data-theme=dark] .rs-see-more { color: var(--dk-text); }
 html[data-theme=dark] .rs-profile-hero {
     background:

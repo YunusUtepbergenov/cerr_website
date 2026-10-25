@@ -38,22 +38,22 @@ use Illuminate\Support\Str;
  */
 class ResearchStaffPrototype
 {
-    /** @var list<array{key: string, slug: string, accent: string}> */
+    /** @var list<array{key: string, slug: string, accent: string, icon: string}> */
     public const SECTORS = [
-        ['key' => 'macro', 'slug' => 'macroeconomic-policy', 'accent' => '#1b69c4'],
-        ['key' => 'bank', 'slug' => 'banking-and-capital-markets', 'accent' => '#0f766e'],
-        ['key' => 'competitiveness', 'slug' => 'competitiveness-and-investment', 'accent' => '#b45309'],
-        ['key' => 'foreign_economic', 'slug' => 'foreign-economic-activity', 'accent' => '#6d28d9'],
-        ['key' => 'cluster', 'slug' => 'industrial-clusters', 'accent' => '#be123c'],
-        ['key' => 'regions', 'slug' => 'regional-development', 'accent' => '#15803d'],
-        ['key' => 'labour', 'slug' => 'labour-market-and-social-policy', 'accent' => '#0369a1'],
-        ['key' => 'agro', 'slug' => 'agriculture-and-food-security', 'accent' => '#4d7c0f'],
-        ['key' => 'energy', 'slug' => 'energy-and-green-economy', 'accent' => '#c2410c'],
-        ['key' => 'digital', 'slug' => 'digital-economy', 'accent' => '#7c3aed'],
-        ['key' => 'sme', 'slug' => 'entrepreneurship-and-sme', 'accent' => '#0e7490'],
-        ['key' => 'public_finance', 'slug' => 'public-finance-and-taxation', 'accent' => '#9f1239'],
-        ['key' => 'transport', 'slug' => 'transport-and-logistics', 'accent' => '#a16207'],
-        ['key' => 'human_capital', 'slug' => 'human-capital-and-education', 'accent' => '#1d4ed8'],
+        ['key' => 'macro', 'slug' => 'macroeconomic-policy', 'accent' => '#1b69c4', 'icon' => 'fa-chart-line'],
+        ['key' => 'bank', 'slug' => 'banking-and-capital-markets', 'accent' => '#0f766e', 'icon' => 'fa-building-columns'],
+        ['key' => 'competitiveness', 'slug' => 'competitiveness-and-investment', 'accent' => '#b45309', 'icon' => 'fa-industry'],
+        ['key' => 'foreign_economic', 'slug' => 'foreign-economic-activity', 'accent' => '#6d28d9', 'icon' => 'fa-earth-asia'],
+        ['key' => 'cluster', 'slug' => 'industrial-clusters', 'accent' => '#be123c', 'icon' => 'fa-cubes'],
+        ['key' => 'regions', 'slug' => 'regional-development', 'accent' => '#15803d', 'icon' => 'fa-map-location-dot'],
+        ['key' => 'labour', 'slug' => 'labour-market-and-social-policy', 'accent' => '#0369a1', 'icon' => 'fa-people-group'],
+        ['key' => 'agro', 'slug' => 'agriculture-and-food-security', 'accent' => '#4d7c0f', 'icon' => 'fa-wheat-awn'],
+        ['key' => 'energy', 'slug' => 'energy-and-green-economy', 'accent' => '#c2410c', 'icon' => 'fa-bolt'],
+        ['key' => 'digital', 'slug' => 'digital-economy', 'accent' => '#7c3aed', 'icon' => 'fa-microchip'],
+        ['key' => 'sme', 'slug' => 'entrepreneurship-and-sme', 'accent' => '#0e7490', 'icon' => 'fa-store'],
+        ['key' => 'public_finance', 'slug' => 'public-finance-and-taxation', 'accent' => '#9f1239', 'icon' => 'fa-coins'],
+        ['key' => 'transport', 'slug' => 'transport-and-logistics', 'accent' => '#a16207', 'icon' => 'fa-truck-fast'],
+        ['key' => 'human_capital', 'slug' => 'human-capital-and-education', 'accent' => '#1d4ed8', 'icon' => 'fa-graduation-cap'],
     ];
 
     /** Questionnaire part I, in form order; each key holds a localised text. */
@@ -68,7 +68,7 @@ class ResearchStaffPrototype
     /**
      * Research sectors in display order, each with its people attached.
      *
-     * @return Collection<int, array{key: string, slug: string, accent: string, head: ?Person, staff: Collection<int, Person>}>
+     * @return Collection<int, array{key: string, slug: string, accent: string, icon: string, head: ?Person, staff: Collection<int, Person>}>
      */
     public static function sectors(): Collection
     {
@@ -96,7 +96,7 @@ class ResearchStaffPrototype
         return self::people()->firstWhere('slug', $slug);
     }
 
-    /** @return ?array{key: string, slug: string, accent: string} */
+    /** @return ?array{key: string, slug: string, accent: string, icon: string} */
     public static function sector(string $key): ?array
     {
         return collect(self::SECTORS)->firstWhere('key', $key);
@@ -105,7 +105,7 @@ class ResearchStaffPrototype
     /**
      * A sector by its URL slug, with its head and staff attached.
      *
-     * @return ?array{key: string, slug: string, accent: string, head: ?Person, staff: Collection<int, Person>}
+     * @return ?array{key: string, slug: string, accent: string, icon: string, head: ?Person, staff: Collection<int, Person>}
      */
     public static function findSector(string $slug): ?array
     {
