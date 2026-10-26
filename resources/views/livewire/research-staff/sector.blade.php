@@ -8,29 +8,53 @@
 
     @php($members = $sector['staff']->count() + ($sector['head'] ? 1 : 0))
     @php($people = collect([$sector['head']])->filter()->concat($sector['staff']))
+    @php($position = (int) $sectors->search(fn (array $item): bool => $item['key'] === $sector['key']))
 
     <section class="rs-page rs-sector-page" style="--rs-accent: {{ $sector['accent'] }}">
         <div class="rs-wrap">
-            <nav class="article-breadcrumb" aria-label="breadcrumb">
-                <a href="{{ route('home') }}">@lang('messages.main')</a>
-                <span class="sep">/</span>
-                <a href="{{ route('research-staff.index') }}" wire:navigate>@lang('staff.title')</a>
-                <span class="sep">/</span>
-                <span class="current">{{ __('staff.sector_short_'.$sector['key']) }}</span>
-            </nav>
-
             <header class="rs-hero rs-hero--sector">
-                <div class="rs-hero-text">
-                    <p class="rs-eyebrow"><span class="rs-pill-dot"></span>@lang('staff.sector')</p>
-                    <h1 class="rs-title rs-title--sector">{{ $name }}</h1>
-                    <p class="rs-lead">{{ __('staff.sector_desc_'.$sector['key']) }}</p>
+                <nav class="article-breadcrumb" aria-label="breadcrumb">
+                    <a href="{{ route('home') }}">@lang('messages.main')</a>
+                    <span class="sep">/</span>
+                    <a href="{{ route('research-staff.index') }}" wire:navigate>@lang('staff.title')</a>
+                    <span class="sep">/</span>
+                    <span class="current">{{ __('staff.sector_short_'.$sector['key']) }}</span>
+                </nav>
+                <div class="rs-hero-body">
+                    <div class="rs-hero-text rs-hero-text--icon">
+                        <span class="rs-hero-icon" aria-hidden="true"><i class="fa-solid {{ $sector['icon'] }}"></i></span>
+                        <p class="rs-eyebrow">
+                            <span class="rs-pill-dot"></span>@lang('staff.sector')
+                            <span class="rs-hero-num">{{ str_pad((string) ($position + 1), 2, '0', STR_PAD_LEFT) }} / {{ $sectors->count() }}</span>
+                        </p>
+                        <h1 class="rs-title rs-title--sector">{{ $name }}</h1>
+                        <p class="rs-lead">{{ __('staff.sector_desc_'.$sector['key']) }}</p>
+                    </div>
+                    <div class="rs-hero-aside rs-hero-aside--joined">
+                        @if ($sector['head'])
+                            @php($headName = Proto::text($sector['head']['name']))
+                            <a class="rs-hero-head" href="{{ route('research-staff.show', $sector['head']['slug']) }}" wire:navigate>
+                                <span class="rs-hero-head-photo">
+                                    @if ($sector['head']['photo'])
+                                        <img src="{{ asset($sector['head']['photo']) }}" alt="">
+                                    @else
+                                        <span class="rs-avatar rs-avatar--sm" aria-hidden="true">{{ Proto::initials($headName) }}</span>
+                                    @endif
+                                </span>
+                                <span class="rs-hero-head-text">
+                                    <span class="rs-hero-head-label">@lang('staff.head_of_sector')</span>
+                                    <span class="rs-hero-head-name">{{ $headName }}</span>
+                                </span>
+                                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
+                            </a>
+                        @endif
+                        <ul class="rs-stats">
+                            <li><strong>{{ $members }}</strong><span>{{ trans_choice('staff.members', $members, ['count' => '']) }}</span></li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="rs-stats">
-                    <li><strong>{{ $members }}</strong><span>{{ trans_choice('staff.members', $members, ['count' => '']) }}</span></li>
-                </ul>
+                <p class="rs-note"><i class="fa-solid fa-flask"></i> @lang('staff.prototype_note')</p>
             </header>
-
-            <p class="rs-note"><i class="fa-solid fa-flask"></i> @lang('staff.prototype_note')</p>
 
             <div class="rs-layout">
                 <div class="rs-main">

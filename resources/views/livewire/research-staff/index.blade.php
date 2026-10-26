@@ -8,26 +8,28 @@
 
     <section class="rs-page">
         <div class="rs-wrap">
-            <nav class="article-breadcrumb" aria-label="breadcrumb">
-                <a href="{{ route('home') }}">@lang('messages.main')</a>
-                <span class="sep">/</span>
-                <span class="current">@lang('staff.title')</span>
-            </nav>
-
             <header class="rs-hero">
-                <div class="rs-hero-text">
-                    <p class="rs-eyebrow">@lang('staff.eyebrow')</p>
-                    <h1 class="rs-title">@lang('staff.title')</h1>
-                    <p class="rs-lead">@lang('staff.lead')</p>
+                <nav class="article-breadcrumb" aria-label="breadcrumb">
+                    <a href="{{ route('home') }}">@lang('messages.main')</a>
+                    <span class="sep">/</span>
+                    <span class="current">@lang('staff.title')</span>
+                </nav>
+                <div class="rs-hero-body">
+                    <div class="rs-hero-text">
+                        <p class="rs-eyebrow">@lang('staff.eyebrow')</p>
+                        <h1 class="rs-title">@lang('staff.title')</h1>
+                        <p class="rs-lead">@lang('staff.lead')</p>
+                    </div>
+                    <div class="rs-hero-aside">
+                        <ul class="rs-stats" aria-label="@lang('staff.title')">
+                            <li><strong>{{ $sectors->count() }}</strong><span>{{ trans_choice('staff.sectors', $sectors->count(), ['count' => '']) }}</span></li>
+                            <li><strong>{{ $totalPeople }}</strong><span>{{ trans_choice('staff.researchers', $totalPeople, ['count' => '']) }}</span></li>
+                            <li><strong>{{ $withDegree }}</strong><span>{{ trans_choice('staff.with_degree', $withDegree, ['count' => '']) }}</span></li>
+                        </ul>
+                    </div>
                 </div>
-                <ul class="rs-stats" aria-label="@lang('staff.title')">
-                    <li><strong>{{ $sectors->count() }}</strong><span>{{ trans_choice('staff.sectors', $sectors->count(), ['count' => '']) }}</span></li>
-                    <li><strong>{{ $totalPeople }}</strong><span>{{ trans_choice('staff.researchers', $totalPeople, ['count' => '']) }}</span></li>
-                    <li><strong>{{ $withDegree }}</strong><span>{{ trans_choice('staff.with_degree', $withDegree, ['count' => '']) }}</span></li>
-                </ul>
+                <p class="rs-note"><i class="fa-solid fa-flask"></i> @lang('staff.prototype_note')</p>
             </header>
-
-            <p class="rs-note"><i class="fa-solid fa-flask"></i> @lang('staff.prototype_note')</p>
 
             <ul class="rs-sector-grid">
                 @foreach ($sectors as $index => $sector)

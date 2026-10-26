@@ -15,6 +15,8 @@ describe('Research staff prototype pages', function () {
 
         $response->assertSee(__('staff.title'))
             ->assertSee(__('staff.see_more'))
+            ->assertSee('rs-hero', false)
+            ->assertSeeInOrder(['rs-hero', 'article-breadcrumb', 'rs-stats', 'rs-note', 'rs-sector-grid'], false)
             ->assertSee('rs-sector-grid', false)
             ->assertSee('rs-stack-item', false)
             ->assertSee('fa-chart-line', false)
@@ -39,7 +41,10 @@ describe('Research staff prototype pages', function () {
             ->assertSeeInOrder(['Абдуллаев Бахтиёр Рустамович', 'Каримова Нилуфар Шавкатовна', 'Тошматов Отабек Улугбекович'])
             ->assertSee(route('research-staff.show', 'bakhtiyor-abdullaev'), false)
             ->assertSee('mailto:b.abdullaev@cerr.uz', false)
-            ->assertSee(route('research-staff.sector', 'regional-development'), false);
+            ->assertSee(route('research-staff.sector', 'regional-development'), false)
+            ->assertSee('fa-chart-line', false)
+            ->assertSee('01 / 14')
+            ->assertSeeInOrder(['rs-hero-head', 'Абдуллаев Бахтиёр Рустамович', 'rs-stats', 'rs-note', 'rs-people'], false);
 
         expect(substr_count($response->getContent(), 'data-person="'))->toBe(5);
     })->group('feature', 'routes');
