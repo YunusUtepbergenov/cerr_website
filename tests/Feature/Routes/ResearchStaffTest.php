@@ -16,8 +16,8 @@ describe('Research staff prototype pages', function () {
 
         $response->assertSee(__('staff.title'))
             ->assertSee(__('staff.see_more'))
-            ->assertSeeInOrder(['rs-hero', 'article-breadcrumb', 'rs-ring', 'rs-sector-grid'], false)
-            ->assertDontSee('is-current', false)
+            ->assertSeeInOrder(['rs-hero', 'article-breadcrumb', 'rs-hero-text', 'rs-hero-photo', 'images/research-staff/cerr-building.webp', 'rs-hero-stat', 'rs-sector-grid'], false)
+            ->assertDontSee('rs-ring', false)
             ->assertDontSee('rs-note', false)
             ->assertDontSee('rs-stats', false)
             ->assertDontSee('rs-sector-num', false)
@@ -34,8 +34,7 @@ describe('Research staff prototype pages', function () {
             ->assertDontSee('rs-side', false)
             ->assertDontSee(route('research-staff.show', 'fazliddin-nasriddinov'), false);
 
-        expect(substr_count($response->getContent(), 'data-sector-card="'))->toBe(count(ResearchStaffPrototype::SECTORS))
-            ->and(substr_count($response->getContent(), 'data-ring-sector="'))->toBe(count(ResearchStaffPrototype::SECTORS));
+        expect(substr_count($response->getContent(), 'data-sector-card="'))->toBe(count(ResearchStaffPrototype::SECTORS));
     })->group('feature', 'routes');
 
     it('shows a sector page with its head first, then staff, and the sector list', function () {
@@ -54,11 +53,10 @@ describe('Research staff prototype pages', function () {
             ->assertSee('data-icon="trend"', false)
             ->assertDontSee('04 / 14')
             ->assertDontSee('rs-note', false)
-            ->assertSeeInOrder(['rs-hero-head', 'Насриддинов Фазлиддин Файзуллаевич', 'rs-ring--focused', 'is-current', 'data-ring-sector="macro"', 'rs-people'], false);
+            ->assertSeeInOrder(['rs-hero-head', 'Насриддинов Фазлиддин Файзуллаевич', 'rs-hero-photo', 'rs-hero-stat', 'rs-people'], false)
+            ->assertDontSee('rs-ring', false);
 
-        expect(substr_count($response->getContent(), 'data-person="'))->toBe(3)
-            ->and(substr_count($response->getContent(), 'data-ring-sector="'))->toBe(count(ResearchStaffPrototype::SECTORS))
-            ->and(substr_count($response->getContent(), 'is-current'))->toBe(1);
+        expect(substr_count($response->getContent(), 'data-person="'))->toBe(3);
     })->group('feature', 'routes');
 
     it('shows a regional branch with its staff and e-mails from the staff list', function () {

@@ -20,7 +20,7 @@
                         <h1 class="rs-title">@lang('staff.title')</h1>
                         <p class="rs-lead">@lang('staff.lead')</p>
                     </div>
-                    <x-research-staff.sector-ring class="rs-hero-ring" :sectors="$sectors" :value="$totalPeople" :label="trans_choice('staff.researchers', $totalPeople, ['count' => ''])" />
+                    <x-research-staff.hero-photo :value="$totalPeople" :label="trans_choice('staff.researchers', $totalPeople, ['count' => ''])" />
                 </div>
             </header>
 

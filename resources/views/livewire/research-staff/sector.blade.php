@@ -43,7 +43,7 @@
                             </a>
                         @endif
                     </div>
-                    <x-research-staff.sector-ring class="rs-hero-ring" :sectors="$sectors" :current="$sector['key']" :value="$members" :label="trans_choice('staff.members', $members, ['count' => ''])" />
+                    <x-research-staff.hero-photo :value="$members" :label="trans_choice('staff.members', $members, ['count' => ''])" />
                 </div>
             </header>
 
