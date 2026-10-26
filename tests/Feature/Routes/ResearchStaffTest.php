@@ -1,5 +1,6 @@
 <?php
 
+use App\Support\RegionShapes;
 use App\Support\ResearchStaffPrototype;
 
 describe('Research staff prototype pages', function () {
@@ -15,16 +16,21 @@ describe('Research staff prototype pages', function () {
 
         $response->assertSee(__('staff.title'))
             ->assertSee(__('staff.see_more'))
-            ->assertSeeInOrder(['rs-hero', 'article-breadcrumb', 'rs-stats', 'rs-ring', 'rs-note', 'rs-sector-grid'], false)
+            ->assertSeeInOrder(['rs-hero', 'article-breadcrumb', 'rs-ring', 'rs-sector-grid'], false)
             ->assertDontSee('is-current', false)
+            ->assertDontSee('rs-note', false)
+            ->assertDontSee('rs-stats', false)
+            ->assertDontSee('rs-sector-num', false)
+            ->assertSee('data-icon="trend"', false)
+            ->assertSee('data-icon="map:uzbekistan"', false)
+            ->assertSee('data-icon="map:jizzax"', false)
+            ->assertSee('rs-icon--map', false)
             ->assertSee('rs-stack-item', false)
-            ->assertSee('fa-chart-line', false)
             ->assertSee(__('staff.sector_short_macro'))
             ->assertSee(__('staff.sector_desc_macro'))
             ->assertSee('Насриддинов Фазлиддин Файзуллаевич')
             ->assertSee('Бегманов Саламат Сарсенбаевич')
             ->assertSee(__('staff.head_of_sector'))
-            ->assertDontSee(__('staff.with_degree', ['count' => '']))
             ->assertDontSee('rs-side', false)
             ->assertDontSee(route('research-staff.show', 'fazliddin-nasriddinov'), false);
 
@@ -45,9 +51,10 @@ describe('Research staff prototype pages', function () {
             ->assertSee(route('research-staff.show', 'fazliddin-nasriddinov'), false)
             ->assertSee('mailto:f.nasriddinov@cerr.uz', false)
             ->assertSee(route('research-staff.sector', 'regional-development'), false)
-            ->assertSee('fa-chart-line', false)
-            ->assertSee('04 / 15')
-            ->assertSeeInOrder(['rs-hero-head', 'Насриддинов Фазлиддин Файзуллаевич', 'rs-ring--focused', 'is-current', 'data-ring-sector="macro"', 'rs-note', 'rs-people'], false);
+            ->assertSee('data-icon="trend"', false)
+            ->assertDontSee('04 / 15')
+            ->assertDontSee('rs-note', false)
+            ->assertSeeInOrder(['rs-hero-head', 'Насриддинов Фазлиддин Файзуллаевич', 'rs-ring--focused', 'is-current', 'data-ring-sector="macro"', 'rs-people'], false);
 
         expect(substr_count($response->getContent(), 'data-person="'))->toBe(3)
             ->and(substr_count($response->getContent(), 'data-ring-sector="'))->toBe(count(ResearchStaffPrototype::SECTORS))
@@ -75,7 +82,25 @@ describe('Research staff prototype pages', function () {
             ->assertSee(__('structure.karakalpakistan'))
             ->assertSee('Begmanov Salamat Sarsenbayevich')
             ->assertSee('mailto:s.beqmanov@cerr.uz', false)
-            ->assertSee('11 / 15');
+            ->assertSee('data-icon="map:karakalpakistan"', false)
+            ->assertSee('d="'.RegionShapes::PATHS['karakalpakistan'].'"', false)
+            ->assertDontSee('11 / 15');
+    })->group('feature', 'routes');
+
+    it('calls a sector шўъба / sho‘ba in both Uzbek scripts', function () {
+        setAppLocale('kr');
+        $this->get(route('research-staff.sector', 'macroeconomic-policy'))
+            ->assertOk()
+            ->assertSee('Шўъба мудири')
+            ->assertSee('Шўъба ходимлари')
+            ->assertDontSee('Сектор ')
+            ->assertDontSee('>Сектор<', false);
+
+        setAppLocale('uz');
+        $this->get(route('research-staff.index'))
+            ->assertOk()
+            ->assertSee('Sho‘ba mudiri')
+            ->assertDontSee('Sektor');
     })->group('feature', 'routes');
 
     it('returns 404 for an unknown sector', function () {
@@ -100,6 +125,7 @@ describe('Research staff prototype pages', function () {
             ->assertSee('mailto:f.nasriddinov@cerr.uz', false)
             ->assertSee(__('structure.macro'))
             ->assertSee(__('staff.profile_pending'))
+            ->assertDontSee('rs-note', false)
             ->assertSeeInOrder([__('staff.part_education'), __('staff.part_research'), __('staff.part_publications')])
             ->assertDontSee('rs-profiles', false)
             ->assertDontSee('rs-side-nav', false)
@@ -151,6 +177,15 @@ describe('Research staff prototype pages', function () {
             ->and(ResearchStaffPrototype::sectorName('macro'))->not->toContain('structure.')
             ->and(ResearchStaffPrototype::findSector('macroeconomic-policy')['head']['slug'])->toBe('fazliddin-nasriddinov')
             ->and(ResearchStaffPrototype::findSector('nope'))->toBeNull();
+    })->group('unit');
+
+    it('has an outline for every map icon and keeps the shapes small', function () {
+        $mapIcons = collect(ResearchStaffPrototype::SECTORS)->pluck('icon')->filter(fn (string $icon) => str_starts_with($icon, 'map:'))->map(fn (string $icon) => substr($icon, 4))->values();
+
+        expect($mapIcons->all())->toBe(['uzbekistan', 'karakalpakistan', 'jizzax', 'namangan', 'samarkand', 'kashkadarya'])
+            ->and($mapIcons->every(fn (string $key) => RegionShapes::path($key) !== null))->toBeTrue()
+            ->and(RegionShapes::path('atlantis'))->toBeNull()
+            ->and(collect(RegionShapes::PATHS)->every(fn (string $d) => str_starts_with($d, 'M') && str_ends_with($d, 'Z') && strlen($d) < 1200))->toBeTrue();
     })->group('unit');
 
     it('carries the whole staff list with unique slugs and e-mails and the questionnaire fields', function () {

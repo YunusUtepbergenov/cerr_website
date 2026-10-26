@@ -4,7 +4,6 @@ return [
     'title' => 'Research Staff',
     'eyebrow' => 'Sectors and branches of the Center',
     'lead' => 'Staff of CERR’s research sectors, regional branches and editorial office: who works on what and how to reach them.',
-    'prototype_note' => 'Prototype. Sectors, names, positions and e-mails come from the Center’s staff list; the questionnaire sections (education, research areas, publications) are still being collected.',
     'sectors' => '{1} :count sector|[2,*] :count sectors',
     'researchers' => '{1} :count researcher|[2,*] :count researchers',
     'with_degree' => ':count with a doctoral degree',

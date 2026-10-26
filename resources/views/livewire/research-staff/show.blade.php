@@ -79,8 +79,6 @@
                 </dl>
             </header>
 
-            <p class="rs-note"><i class="fa-solid fa-flask"></i> @lang('staff.prototype_note')</p>
-
             <div class="rs-profile-layout">
                 <div class="rs-profile-body">
                     @if (! $hasEducation && ! $hasActivity && $publicationCount === 0)

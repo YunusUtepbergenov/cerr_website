@@ -19,31 +19,21 @@
                         <p class="rs-eyebrow">@lang('staff.eyebrow')</p>
                         <h1 class="rs-title">@lang('staff.title')</h1>
                         <p class="rs-lead">@lang('staff.lead')</p>
-                        <ul class="rs-stats" aria-label="@lang('staff.title')">
-                            <li><strong>{{ $sectors->count() }}</strong><span>{{ trans_choice('staff.sectors', $sectors->count(), ['count' => '']) }}</span></li>
-                            @if ($withDegree > 0)
-                                <li><strong>{{ $withDegree }}</strong><span>{{ trans_choice('staff.with_degree', $withDegree, ['count' => '']) }}</span></li>
-                            @endif
-                        </ul>
                     </div>
                     <x-research-staff.sector-ring class="rs-hero-ring" :sectors="$sectors" :value="$totalPeople" :label="trans_choice('staff.researchers', $totalPeople, ['count' => ''])" />
                 </div>
-                <p class="rs-note"><i class="fa-solid fa-flask"></i> @lang('staff.prototype_note')</p>
             </header>
 
             <ul class="rs-sector-grid">
-                @foreach ($sectors as $index => $sector)
+                @foreach ($sectors as $sector)
                     @php($members = $sector['staff']->count() + ($sector['head'] ? 1 : 0))
                     @php($head = $sector['head'])
                     @php($preview = $sector['staff']->take(4))
                     <li style="--rs-accent: {{ $sector['accent'] }}">
                         <a class="rs-sector-card" href="{{ route('research-staff.sector', $sector['slug']) }}" wire:navigate data-sector-card="{{ $sector['slug'] }}">
                             <span class="rs-sector-card-top">
-                                <span class="rs-sector-icon" aria-hidden="true"><i class="fa-solid {{ $sector['icon'] }}"></i></span>
-                                <span class="rs-sector-kicker">
-                                    <span class="rs-sector-num">{{ str_pad((string) ($index + 1), 2, '0', STR_PAD_LEFT) }}</span>
-                                    <span class="rs-sector-short">{{ __('staff.sector_short_'.$sector['key']) }}</span>
-                                </span>
+                                <span class="rs-sector-icon"><x-research-staff.sector-icon :icon="$sector['icon']" /></span>
+                                <span class="rs-sector-short">{{ __('staff.sector_short_'.$sector['key']) }}</span>
                             </span>
                             <h2 class="rs-sector-card-title">{{ Proto::sectorName($sector['key']) }}</h2>
                             <p class="rs-sector-card-desc">{{ __('staff.sector_desc_'.$sector['key']) }}</p>

@@ -8,7 +8,6 @@
 
     @php($members = $sector['staff']->count() + ($sector['head'] ? 1 : 0))
     @php($people = collect([$sector['head']])->filter()->concat($sector['staff']))
-    @php($position = (int) $sectors->search(fn (array $item): bool => $item['key'] === $sector['key']))
 
     <section class="rs-page rs-sector-page" style="--rs-accent: {{ $sector['accent'] }}">
         <div class="rs-wrap">
@@ -22,11 +21,8 @@
                 </nav>
                 <div class="rs-hero-body">
                     <div class="rs-hero-text rs-hero-text--icon">
-                        <span class="rs-hero-icon" aria-hidden="true"><i class="fa-solid {{ $sector['icon'] }}"></i></span>
-                        <p class="rs-eyebrow">
-                            <span class="rs-pill-dot"></span>@lang('staff.sector')
-                            <span class="rs-hero-num">{{ str_pad((string) ($position + 1), 2, '0', STR_PAD_LEFT) }} / {{ $sectors->count() }}</span>
-                        </p>
+                        <span class="rs-hero-icon"><x-research-staff.sector-icon :icon="$sector['icon']" /></span>
+                        <p class="rs-eyebrow"><span class="rs-pill-dot"></span>@lang('staff.sector')</p>
                         <h1 class="rs-title rs-title--sector">{{ $name }}</h1>
                         <p class="rs-lead">{{ __('staff.sector_desc_'.$sector['key']) }}</p>
                         @if ($sector['head'])
@@ -49,7 +45,6 @@
                     </div>
                     <x-research-staff.sector-ring class="rs-hero-ring" :sectors="$sectors" :current="$sector['key']" :value="$members" :label="trans_choice('staff.members', $members, ['count' => ''])" />
                 </div>
-                <p class="rs-note"><i class="fa-solid fa-flask"></i> @lang('staff.prototype_note')</p>
             </header>
 
             <div class="rs-layout">

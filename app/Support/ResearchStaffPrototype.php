@@ -41,23 +41,29 @@ use Illuminate\Support\Str;
  */
 class ResearchStaffPrototype
 {
-    /** Sectors, branches and the editorial office in staff-list order. @var list<array{key: string, slug: string, accent: string, icon: string}> */
+    /**
+     * Sectors, branches and the editorial office in staff-list order. `icon` is a
+     * name known to <x-research-staff.sector-icon>; `map:{region}` draws the
+     * outline from {@see RegionShapes}.
+     *
+     * @var list<array{key: string, slug: string, accent: string, icon: string}>
+     */
     public const SECTORS = [
-        ['key' => 'competitiveness', 'slug' => 'competitiveness-and-investment', 'accent' => '#b45309', 'icon' => 'fa-industry'],
-        ['key' => 'regions', 'slug' => 'regional-development', 'accent' => '#15803d', 'icon' => 'fa-map-location-dot'],
-        ['key' => 'cluster', 'slug' => 'industrial-clusters', 'accent' => '#be123c', 'icon' => 'fa-cubes'],
-        ['key' => 'macro', 'slug' => 'macroeconomic-policy', 'accent' => '#1b69c4', 'icon' => 'fa-chart-line'],
-        ['key' => 'bank', 'slug' => 'banking-and-capital-markets', 'accent' => '#0f766e', 'icon' => 'fa-building-columns'],
-        ['key' => 'foreign_economic', 'slug' => 'foreign-economic-activity', 'accent' => '#6d28d9', 'icon' => 'fa-earth-asia'],
-        ['key' => 'marketing', 'slug' => 'public-relations-and-marketing', 'accent' => '#c2410c', 'icon' => 'fa-bullhorn'],
-        ['key' => 'information_tech', 'slug' => 'it-and-databases', 'accent' => '#0369a1', 'icon' => 'fa-database'],
-        ['key' => 'accelerator', 'slug' => 'reform-accelerator', 'accent' => '#7c3aed', 'icon' => 'fa-rocket'],
-        ['key' => 'magazine', 'slug' => 'economic-review-editorial', 'accent' => '#9f1239', 'icon' => 'fa-newspaper'],
-        ['key' => 'karakalpakistan', 'slug' => 'karakalpakstan-branch', 'accent' => '#0e7490', 'icon' => 'fa-location-dot'],
-        ['key' => 'jizzax', 'slug' => 'jizzakh-branch', 'accent' => '#4d7c0f', 'icon' => 'fa-location-dot'],
-        ['key' => 'namangan', 'slug' => 'namangan-branch', 'accent' => '#a16207', 'icon' => 'fa-location-dot'],
-        ['key' => 'samarkand', 'slug' => 'samarkand-branch', 'accent' => '#1d4ed8', 'icon' => 'fa-location-dot'],
-        ['key' => 'kashkadarya', 'slug' => 'kashkadarya-branch', 'accent' => '#be185d', 'icon' => 'fa-location-dot'],
+        ['key' => 'competitiveness', 'slug' => 'competitiveness-and-investment', 'accent' => '#b45309', 'icon' => 'factory'],
+        ['key' => 'regions', 'slug' => 'regional-development', 'accent' => '#15803d', 'icon' => 'map:uzbekistan'],
+        ['key' => 'cluster', 'slug' => 'industrial-clusters', 'accent' => '#be123c', 'icon' => 'cluster'],
+        ['key' => 'macro', 'slug' => 'macroeconomic-policy', 'accent' => '#1b69c4', 'icon' => 'trend'],
+        ['key' => 'bank', 'slug' => 'banking-and-capital-markets', 'accent' => '#0f766e', 'icon' => 'bank'],
+        ['key' => 'foreign_economic', 'slug' => 'foreign-economic-activity', 'accent' => '#6d28d9', 'icon' => 'globe'],
+        ['key' => 'marketing', 'slug' => 'public-relations-and-marketing', 'accent' => '#c2410c', 'icon' => 'megaphone'],
+        ['key' => 'information_tech', 'slug' => 'it-and-databases', 'accent' => '#0369a1', 'icon' => 'database'],
+        ['key' => 'accelerator', 'slug' => 'reform-accelerator', 'accent' => '#7c3aed', 'icon' => 'rocket'],
+        ['key' => 'magazine', 'slug' => 'economic-review-editorial', 'accent' => '#9f1239', 'icon' => 'journal'],
+        ['key' => 'karakalpakistan', 'slug' => 'karakalpakstan-branch', 'accent' => '#0e7490', 'icon' => 'map:karakalpakistan'],
+        ['key' => 'jizzax', 'slug' => 'jizzakh-branch', 'accent' => '#4d7c0f', 'icon' => 'map:jizzax'],
+        ['key' => 'namangan', 'slug' => 'namangan-branch', 'accent' => '#a16207', 'icon' => 'map:namangan'],
+        ['key' => 'samarkand', 'slug' => 'samarkand-branch', 'accent' => '#1d4ed8', 'icon' => 'map:samarkand'],
+        ['key' => 'kashkadarya', 'slug' => 'kashkadarya-branch', 'accent' => '#be185d', 'icon' => 'map:kashkadarya'],
     ];
 
     /** Questionnaire part I, in form order; each key holds a localised text. */
