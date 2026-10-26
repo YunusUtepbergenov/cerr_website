@@ -83,6 +83,21 @@
 
             <div class="rs-profile-layout">
                 <div class="rs-profile-body">
+                    @if (! $hasEducation && ! $hasActivity && $publicationCount === 0)
+                        <section class="rs-part rs-part--pending">
+                            <header class="rs-part-head">
+                                <span class="rs-part-num" aria-hidden="true"><i class="fa-regular fa-file-lines"></i></span>
+                                <h2 class="rs-part-title">@lang('staff.profile')</h2>
+                            </header>
+                            <p class="rs-pending">@lang('staff.profile_pending')</p>
+                            <ol class="rs-pending-parts">
+                                <li><span>I</span>@lang('staff.part_education')</li>
+                                <li><span>II</span>@lang('staff.part_research')</li>
+                                <li><span>III</span>@lang('staff.part_publications')</li>
+                            </ol>
+                        </section>
+                    @endif
+
                     @if ($hasEducation)
                         <section class="rs-part" id="education">
                             <header class="rs-part-head">

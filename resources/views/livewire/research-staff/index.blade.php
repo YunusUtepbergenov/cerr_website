@@ -21,7 +21,9 @@
                         <p class="rs-lead">@lang('staff.lead')</p>
                         <ul class="rs-stats" aria-label="@lang('staff.title')">
                             <li><strong>{{ $sectors->count() }}</strong><span>{{ trans_choice('staff.sectors', $sectors->count(), ['count' => '']) }}</span></li>
-                            <li><strong>{{ $withDegree }}</strong><span>{{ trans_choice('staff.with_degree', $withDegree, ['count' => '']) }}</span></li>
+                            @if ($withDegree > 0)
+                                <li><strong>{{ $withDegree }}</strong><span>{{ trans_choice('staff.with_degree', $withDegree, ['count' => '']) }}</span></li>
+                            @endif
                         </ul>
                     </div>
                     <x-research-staff.sector-ring class="rs-hero-ring" :sectors="$sectors" :value="$totalPeople" :label="trans_choice('staff.researchers', $totalPeople, ['count' => ''])" />

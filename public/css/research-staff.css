@@ -466,6 +466,19 @@
 .rs-side-nav a:hover { background: var(--na-mist); }
 .rs-part[id] { scroll-margin-top: 110px; }
 
+/* ---- Profile: questionnaire not yet received ------------------------------ */
+.rs-part--pending .rs-part-title { color: var(--na-slate); }
+.rs-pending { margin: 0 0 14px; font-size: 15px; line-height: 1.55; color: var(--rs-muted-ink, #3d4b5c); max-width: 60ch; }
+.rs-pending-parts { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.rs-pending-parts li {
+    display: flex; align-items: center; gap: 12px; margin: 0;
+    padding: 10px 14px; border: 1px dashed var(--na-hair); border-radius: 12px;
+    font-family: var(--na-font-display); font-size: 14px; font-weight: 600; color: var(--na-slate);
+}
+.rs-pending-parts span { display: grid; place-items: center; min-width: 30px; height: 30px; border-radius: 8px; background: var(--na-mist); font-size: 12.5px; color: var(--na-navy); }
+html[data-theme=dark] .rs-pending-parts li { border-color: var(--dk-border); }
+html[data-theme=dark] .rs-pending-parts span { background: var(--dk-surface-2); }
+
 /* ---- Responsive ----------------------------------------------------------- */
 @media (max-width: 1080px) {
     .rs-layout { grid-template-columns: minmax(0, 1fr) 250px; gap: 24px; }

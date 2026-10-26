@@ -20,9 +20,12 @@ use Illuminate\Support\Str;
  *        analytical reports, scientific profiles (ORCID, Google Scholar, Scopus).
  *
  * The questionnaire is filled in Uzbek (Cyrillic), Russian and English, so
- * localised values carry `kr`, `ru` and `en` keys; Latin Uzbek falls back
- * through {@see self::text()}. Everything here is placeholder content and
- * will be replaced by real models and an admin form.
+ * localised values carry `kr`, `ru` and `en` keys (names also carry `uz`);
+ * Latin Uzbek falls back through {@see self::text()}.
+ *
+ * Sectors, names, positions and e-mails come from the centre's staff list
+ * (xodimlar.xlsx, October 2026). The questionnaire sections stay empty until
+ * each person's анкета arrives; real models and an admin form come next.
  *
  * @phpstan-type Localised array<string, string>
  * @phpstan-type Entry array{years: string, text: Localised}
@@ -38,22 +41,23 @@ use Illuminate\Support\Str;
  */
 class ResearchStaffPrototype
 {
-    /** @var list<array{key: string, slug: string, accent: string, icon: string}> */
+    /** Sectors, branches and the editorial office in staff-list order. @var list<array{key: string, slug: string, accent: string, icon: string}> */
     public const SECTORS = [
+        ['key' => 'competitiveness', 'slug' => 'competitiveness-and-investment', 'accent' => '#b45309', 'icon' => 'fa-industry'],
+        ['key' => 'regions', 'slug' => 'regional-development', 'accent' => '#15803d', 'icon' => 'fa-map-location-dot'],
+        ['key' => 'cluster', 'slug' => 'industrial-clusters', 'accent' => '#be123c', 'icon' => 'fa-cubes'],
         ['key' => 'macro', 'slug' => 'macroeconomic-policy', 'accent' => '#1b69c4', 'icon' => 'fa-chart-line'],
         ['key' => 'bank', 'slug' => 'banking-and-capital-markets', 'accent' => '#0f766e', 'icon' => 'fa-building-columns'],
-        ['key' => 'competitiveness', 'slug' => 'competitiveness-and-investment', 'accent' => '#b45309', 'icon' => 'fa-industry'],
         ['key' => 'foreign_economic', 'slug' => 'foreign-economic-activity', 'accent' => '#6d28d9', 'icon' => 'fa-earth-asia'],
-        ['key' => 'cluster', 'slug' => 'industrial-clusters', 'accent' => '#be123c', 'icon' => 'fa-cubes'],
-        ['key' => 'regions', 'slug' => 'regional-development', 'accent' => '#15803d', 'icon' => 'fa-map-location-dot'],
-        ['key' => 'labour', 'slug' => 'labour-market-and-social-policy', 'accent' => '#0369a1', 'icon' => 'fa-people-group'],
-        ['key' => 'agro', 'slug' => 'agriculture-and-food-security', 'accent' => '#4d7c0f', 'icon' => 'fa-wheat-awn'],
-        ['key' => 'energy', 'slug' => 'energy-and-green-economy', 'accent' => '#c2410c', 'icon' => 'fa-bolt'],
-        ['key' => 'digital', 'slug' => 'digital-economy', 'accent' => '#7c3aed', 'icon' => 'fa-microchip'],
-        ['key' => 'sme', 'slug' => 'entrepreneurship-and-sme', 'accent' => '#0e7490', 'icon' => 'fa-store'],
-        ['key' => 'public_finance', 'slug' => 'public-finance-and-taxation', 'accent' => '#9f1239', 'icon' => 'fa-coins'],
-        ['key' => 'transport', 'slug' => 'transport-and-logistics', 'accent' => '#a16207', 'icon' => 'fa-truck-fast'],
-        ['key' => 'human_capital', 'slug' => 'human-capital-and-education', 'accent' => '#1d4ed8', 'icon' => 'fa-graduation-cap'],
+        ['key' => 'marketing', 'slug' => 'public-relations-and-marketing', 'accent' => '#c2410c', 'icon' => 'fa-bullhorn'],
+        ['key' => 'information_tech', 'slug' => 'it-and-databases', 'accent' => '#0369a1', 'icon' => 'fa-database'],
+        ['key' => 'accelerator', 'slug' => 'reform-accelerator', 'accent' => '#7c3aed', 'icon' => 'fa-rocket'],
+        ['key' => 'magazine', 'slug' => 'economic-review-editorial', 'accent' => '#9f1239', 'icon' => 'fa-newspaper'],
+        ['key' => 'karakalpakistan', 'slug' => 'karakalpakstan-branch', 'accent' => '#0e7490', 'icon' => 'fa-location-dot'],
+        ['key' => 'jizzax', 'slug' => 'jizzakh-branch', 'accent' => '#4d7c0f', 'icon' => 'fa-location-dot'],
+        ['key' => 'namangan', 'slug' => 'namangan-branch', 'accent' => '#a16207', 'icon' => 'fa-location-dot'],
+        ['key' => 'samarkand', 'slug' => 'samarkand-branch', 'accent' => '#1d4ed8', 'icon' => 'fa-location-dot'],
+        ['key' => 'kashkadarya', 'slug' => 'kashkadarya-branch', 'accent' => '#be185d', 'icon' => 'fa-location-dot'],
     ];
 
     /** Questionnaire part I, in form order; each key holds a localised text. */
@@ -231,494 +235,240 @@ class ResearchStaffPrototype
 
     /** @var list<array<string, mixed>> */
     private const DATA = [
-        // ---- Macroeconomic policy ------------------------------------------------
-        [
-            'sector' => 'macro', 'is_head' => true, 'position' => 'head', 'degree' => 'doc',
-            'name' => ['kr' => 'Абдуллаев Бахтиёр Рустамович', 'ru' => 'Абдуллаев Бахтиёр Рустамович', 'en' => 'Bakhtiyor Abdullaev'],
-            'phone' => '+998 78 150-02-02',
-            'bachelor' => ['ru' => 'Университет мировой экономики и дипломатии, «Мировая экономика», бакалавр экономики, 2003', 'en' => 'University of World Economy and Diplomacy, World Economy, BA in Economics, 2003'],
-            'master' => ['ru' => 'Университет мировой экономики и дипломатии, «Макроэкономика», магистр экономики, 2005', 'en' => 'University of World Economy and Diplomacy, Macroeconomics, MA in Economics, 2005'],
-            'doctorate' => ['ru' => 'Ташкентский государственный экономический университет, 08.00.01 — Экономическая теория, 2009–2012', 'en' => 'Tashkent State University of Economics, 08.00.01 — Economic Theory, 2009–2012'],
-            'degree_title' => ['ru' => 'Доктор экономических наук (DSc), 08.00.01 — Экономическая теория, 2013; старший научный сотрудник', 'en' => 'Doctor of Economics (DSc), 08.00.01 — Economic Theory, 2013; Senior Research Fellow'],
-            'research_areas' => [
-                'ru' => ['Макроэкономическое прогнозирование', 'Бюджетная политика', 'Инфляционное таргетирование', 'DSGE-модели', 'Фискально-монетарная координация'],
-                'en' => ['Macroeconomic forecasting', 'Fiscal policy', 'Inflation targeting', 'DSGE models', 'Fiscal–monetary coordination'],
-            ],
-            'international' => [
-                ['years' => '2022', 'text' => ['ru' => 'Программа технической помощи МВФ по среднесрочному бюджетному планированию, Ташкент — Вена', 'en' => 'IMF technical-assistance programme on medium-term fiscal frameworks, Tashkent — Vienna']],
-                ['years' => '2018–2019', 'text' => ['ru' => 'Совместный проект с Азиатским банком развития по моделированию налоговой реформы', 'en' => 'Joint project with the Asian Development Bank on tax-reform modelling']],
-                ['years' => '2016', 'text' => ['ru' => 'Стажировка в Национальном банке Польши (прогнозирование и моделирование)', 'en' => 'Research visit to the National Bank of Poland (forecasting and modelling)']],
-            ],
-            'achievements' => [
-                ['years' => '2023', 'text' => ['ru' => 'Нагрудный знак «Ўзбекистон Республикаси фан арбоби»', 'en' => '“Distinguished Scientist of the Republic of Uzbekistan” badge']],
-                ['years' => '2020', 'text' => ['ru' => 'Грант Фонда поддержки инноваций на разработку квартальной прогнозной модели', 'en' => 'Innovation Fund grant for the quarterly forecasting model']],
-            ],
-            'previous_experience' => [
-                ['years' => '2008–2014', 'text' => ['ru' => 'Главный специалист, Министерство экономики Республики Узбекистан', 'en' => 'Chief Specialist, Ministry of Economy of the Republic of Uzbekistan']],
-                ['years' => '2005–2008', 'text' => ['ru' => 'Экономист, Департамент макроэкономического анализа, Центральный банк', 'en' => 'Economist, Macroeconomic Analysis Department, Central Bank']],
-            ],
-            'articles' => [
-                ['text' => 'Абдуллаев Б. Р. Согласованность бюджетной и денежно-кредитной политики в условиях перехода к инфляционному таргетированию // Экономическое обозрение. — 2024. — № 3. — С. 12–27.', 'url' => 'https://review.uz'],
-                ['text' => 'Abdullaev B., Karimova N. Fiscal multipliers in a small open economy: evidence from Uzbekistan // Central Asian Economic Review. — 2023. — Vol. 8 (2). — P. 45–68.', 'url' => 'https://doi.org/10.0000/example.2023.0045'],
-                ['text' => 'Abdullaev B. Potential output and the output gap in Uzbekistan: a multivariate filter approach // Journal of Asian Economics. — 2021. — Vol. 76.'],
-            ],
-            'books' => [
-                ['text' => ['ru' => 'Абдуллаев Б. Р. Среднесрочный прогноз макроэкономических параметров: методология ЦЭИР. — Ташкент: ЦЭИР, 2022. — 96 с.', 'en' => 'Abdullaev B. Medium-term macroeconomic forecasting: the CERR methodology. — Tashkent: CERR, 2022. — 96 p.']],
-            ],
-            'reports' => [
-                ['text' => ['ru' => 'Макроэкономический обзор Узбекистана за 2024 год. — ЦЭИР, 2025.', 'en' => 'Uzbekistan Macroeconomic Review 2024. — CERR, 2025.'], 'url' => 'https://cerr.uz'],
-                ['text' => ['ru' => 'Сценарии бюджетной консолидации на 2025–2027 годы. — ЦЭИР, 2024.', 'en' => 'Fiscal consolidation scenarios for 2025–2027. — CERR, 2024.']],
-            ],
-            'profiles' => ['orcid' => 'https://orcid.org/0000-0000-0000-0000', 'scholar' => 'https://scholar.google.com/', 'scopus' => 'https://www.scopus.com/'],
-        ],
-        [
-            'sector' => 'macro', 'position' => 'leading', 'degree' => 'phd',
-            'name' => ['ru' => 'Каримова Нилуфар Шавкатовна', 'en' => 'Nilufar Karimova'],
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2011', 'en' => 'Tashkent State University of Economics, Economics, 2011'],
-            'master' => ['ru' => 'Банковско-финансовая академия, «Денежно-кредитная политика», 2013', 'en' => 'Banking and Finance Academy, Monetary Policy, 2013'],
-            'doctorate' => ['ru' => 'Банковско-финансовая академия, 08.00.07 — Финансы, денежное обращение и кредит, 2013–2017', 'en' => 'Banking and Finance Academy, 08.00.07 — Finance, Money and Credit, 2013–2017'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2017', 'en' => 'PhD in Economics, 2017'],
-            'research_areas' => ['ru' => ['Инфляция', 'Трансмиссионный механизм', 'Эконометрика временных рядов'], 'en' => ['Inflation', 'Transmission mechanism', 'Time-series econometrics']],
-            'international' => [['years' => '2021', 'text' => ['ru' => 'Курс Института МВФ «Прогнозирование и анализ денежно-кредитной политики», Вена', 'en' => 'IMF Institute course “Monetary Policy Analysis and Forecasting”, Vienna']]],
-            'articles' => [
-                ['text' => 'Karimova N. Exchange-rate pass-through to consumer prices in Uzbekistan // Journal of Asian Economics. — 2024. — Vol. 91.', 'url' => 'https://doi.org/10.0000/example.2024.0091'],
-                ['text' => 'Каримова Н. Ш. Инфляционные ожидания домохозяйств: результаты опроса ЦЭИР // Экономическое обозрение. — 2023. — № 6.'],
-            ],
-            'profiles' => ['orcid' => 'https://orcid.org/0000-0000-0000-0001', 'scholar' => 'https://scholar.google.com/'],
-        ],
-        [
-            'sector' => 'macro', 'position' => 'senior',
-            'name' => ['ru' => 'Юсупов Жасур Акмалович', 'en' => 'Jasur Yusupov'],
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2014', 'en' => 'Tashkent State University of Economics, Economics, 2014'],
-            'master' => ['ru' => 'Ташкентский государственный экономический университет, «Макроэкономика», 2016', 'en' => 'Tashkent State University of Economics, Macroeconomics, 2016'],
-            'research_areas' => ['ru' => ['Платёжный баланс', 'Внешний долг', 'Сценарное моделирование'], 'en' => ['Balance of payments', 'External debt', 'Scenario modelling']],
-            'reports' => [['text' => ['ru' => 'Устойчивость внешнего долга Узбекистана: стресс-тесты. — ЦЭИР, 2024.', 'en' => 'External-debt sustainability of Uzbekistan: stress tests. — CERR, 2024.']]],
-        ],
-        [
-            'sector' => 'macro', 'position' => 'researcher',
-            'name' => ['ru' => 'Рахимова Дилноза Бахтиёровна', 'en' => 'Dilnoza Rakhimova'],
-            'bachelor' => ['ru' => 'Вестминстерский международный университет в Ташкенте, «Экономика», 2019', 'en' => 'Westminster International University in Tashkent, Economics, 2019'],
-            'master' => ['ru' => 'Вестминстерский международный университет в Ташкенте, «Прикладная экономика», 2021', 'en' => 'Westminster International University in Tashkent, Applied Economics, 2021'],
-            'research_areas' => ['ru' => ['Потенциальный ВВП', 'Фильтрация временных рядов'], 'en' => ['Potential GDP', 'Time-series filtering']],
-        ],
-        [
-            'sector' => 'macro', 'position' => 'junior',
-            'name' => ['ru' => 'Тошматов Отабек Улугбекович', 'en' => 'Otabek Toshmatov'],
-            'bachelor' => ['ru' => 'Университет мировой экономики и дипломатии, «Международная экономика», 2024', 'en' => 'University of World Economy and Diplomacy, International Economics, 2024'],
-            'research_areas' => ['ru' => ['Макроэкономическая статистика', 'Визуализация данных'], 'en' => ['Macroeconomic statistics', 'Data visualisation']],
-        ],
-
-        // ---- Banking, finance and capital markets ---------------------------------
-        [
-            'sector' => 'bank', 'is_head' => true, 'position' => 'head', 'degree' => 'cand',
-            'name' => ['ru' => 'Мирзаев Шерзод Анварович', 'en' => 'Sherzod Mirzaev'],
-            'phone' => '+998 78 150-02-02',
-            'bachelor' => ['ru' => 'Ташкентский финансовый институт, «Банковское дело», 2003', 'en' => 'Tashkent Institute of Finance, Banking, 2003'],
-            'master' => ['ru' => 'Банковско-финансовая академия, «Банковское дело», 2005', 'en' => 'Banking and Finance Academy, Banking, 2005'],
-            'doctorate' => ['ru' => 'Банковско-финансовая академия, 08.00.07, 2006–2009', 'en' => 'Banking and Finance Academy, 08.00.07, 2006–2009'],
-            'degree_title' => ['ru' => 'Кандидат экономических наук, 08.00.07 — Финансы, денежное обращение и кредит, 2009; доцент', 'en' => 'Candidate of Economic Sciences, 08.00.07 — Finance, Money and Credit, 2009; Associate Professor'],
-            'research_areas' => ['ru' => ['Банковское регулирование', 'Рынок капитала', 'Финансовая доступность', 'Финтех'], 'en' => ['Banking regulation', 'Capital markets', 'Financial inclusion', 'Fintech']],
-            'international' => [
-                ['years' => '2023', 'text' => ['ru' => 'Проект Всемирного банка по оценке доступа МСБ к финансированию', 'en' => 'World Bank project on SME access to finance']],
-                ['years' => '2019', 'text' => ['ru' => 'Стажировка в Бундесбанке (надзор и финансовая стабильность), Франкфурт', 'en' => 'Secondment at the Deutsche Bundesbank (supervision and financial stability), Frankfurt']],
-            ],
-            'achievements' => [['years' => '2021', 'text' => ['ru' => 'Почётная грамота Центрального банка за вклад в реформу банковского сектора', 'en' => 'Central Bank certificate of honour for contribution to banking reform']]],
-            'previous_experience' => [
-                ['years' => '2005–2012', 'text' => ['ru' => 'Начальник отдела, Центральный банк Республики Узбекистан', 'en' => 'Head of Division, Central Bank of the Republic of Uzbekistan']],
-            ],
-            'articles' => [
-                ['text' => 'Мирзаев Ш. А. Трансформация банковского сектора Узбекистана: итоги приватизации // Экономическое обозрение. — 2025. — № 1.'],
-                ['text' => 'Mirzaev S., Nazarova G. Credit to SMEs and regional growth in Uzbekistan // Emerging Markets Finance and Trade. — 2023.', 'url' => 'https://doi.org/10.0000/example.2023.emft'],
-            ],
-            'books' => [['text' => ['ru' => 'Мирзаев Ш. А. Банковская система Узбекистана: от реформы к росту. — Ташкент: Iqtisodiyot, 2021. — 212 с.', 'en' => 'Mirzaev S. The banking system of Uzbekistan: from reform to growth. — Tashkent: Iqtisodiyot, 2021. — 212 p.']]],
-            'reports' => [['text' => ['ru' => 'Индекс доступности финансовых услуг в регионах. — ЦЭИР, 2024.', 'en' => 'Financial-services accessibility index by region. — CERR, 2024.'], 'url' => 'https://cerr.uz']],
-            'profiles' => ['orcid' => 'https://orcid.org/0000-0000-0000-0002', 'scopus' => 'https://www.scopus.com/'],
-        ],
-        [
-            'sector' => 'bank', 'position' => 'leading', 'degree' => 'phd',
-            'name' => ['ru' => 'Назарова Гульнора Тохировна', 'en' => 'Gulnora Nazarova'],
-            'bachelor' => ['ru' => 'Ташкентский финансовый институт, «Финансы», 2010', 'en' => 'Tashkent Institute of Finance, Finance, 2010'],
-            'master' => ['ru' => 'Ташкентский финансовый институт, «Рынок ценных бумаг», 2012', 'en' => 'Tashkent Institute of Finance, Securities Markets, 2012'],
-            'doctorate' => ['ru' => 'Ташкентский финансовый институт, 08.00.07, 2012–2016', 'en' => 'Tashkent Institute of Finance, 08.00.07, 2012–2016'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2016', 'en' => 'PhD in Economics, 2016'],
-            'research_areas' => ['ru' => ['Фондовый рынок', 'Корпоративные облигации', 'IPO'], 'en' => ['Stock market', 'Corporate bonds', 'IPOs']],
-            'articles' => [['text' => 'Nazarova G. Determinants of IPO activity in frontier markets // Review of Development Finance. — 2024.', 'url' => 'https://doi.org/10.0000/example.2024.rdf']],
-            'profiles' => ['scholar' => 'https://scholar.google.com/'],
-        ],
-        [
-            'sector' => 'bank', 'position' => 'senior',
-            'name' => ['ru' => 'Хакимов Фаррух Баходирович', 'en' => 'Farrukh Khakimov'],
-            'bachelor' => ['ru' => 'Банковско-финансовая академия, «Банковское дело», 2015', 'en' => 'Banking and Finance Academy, Banking, 2015'],
-            'master' => ['ru' => 'Банковско-финансовая академия, «Банковское дело», 2017', 'en' => 'Banking and Finance Academy, Banking, 2017'],
-            'research_areas' => ['ru' => ['Кредитование МСБ', 'Процентная политика'], 'en' => ['SME lending', 'Interest-rate policy']],
-        ],
-        [
-            'sector' => 'bank', 'position' => 'researcher',
-            'name' => ['ru' => 'Исмоилова Мадина Рустамовна', 'en' => 'Madina Ismoilova'],
-            'bachelor' => ['ru' => 'Ташкентский финансовый институт, «Финансы», 2020', 'en' => 'Tashkent Institute of Finance, Finance, 2020'],
-            'master' => ['ru' => 'Ташкентский финансовый институт, «Цифровые финансы», 2022', 'en' => 'Tashkent Institute of Finance, Digital Finance, 2022'],
-            'research_areas' => ['ru' => ['Цифровые платежи', 'Финтех'], 'en' => ['Digital payments', 'Fintech']],
-        ],
-
         // ---- Competitiveness and investment ----------------------------------------
         [
-            'sector' => 'competitiveness', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
-            'name' => ['ru' => 'Салимов Жамшид Каримович', 'en' => 'Jamshid Salimov'],
-            'phone' => '+998 78 150-02-02',
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2008', 'en' => 'Tashkent State University of Economics, Economics, 2008'],
-            'master' => ['ru' => 'Университет Цукубы (Япония), «Экономическая и государственная политика», 2010', 'en' => 'University of Tsukuba (Japan), Economic and Public Policy, 2010'],
-            'doctorate' => ['ru' => 'Университет Цукубы (Япония), экономика, 2010–2014', 'en' => 'University of Tsukuba (Japan), Economics, 2010–2014'],
-            'degree_title' => ['ru' => 'PhD по экономике, Университет Цукубы, 2014', 'en' => 'PhD in Economics, University of Tsukuba, 2014'],
-            'research_areas' => ['ru' => ['Промышленная политика', 'Производительность', 'Инвестиционный климат', 'Индексы деловой активности'], 'en' => ['Industrial policy', 'Productivity', 'Investment climate', 'Business activity indices']],
-            'international' => [
-                ['years' => '2024', 'text' => ['ru' => 'Совместное исследование с Berlin Economics по конкурентоспособности промышленности', 'en' => 'Joint study with Berlin Economics on industrial competitiveness']],
-                ['years' => '2020–2022', 'text' => ['ru' => 'Проект ЮНИДО по промышленной статистике и диагностике', 'en' => 'UNIDO project on industrial statistics and diagnostics']],
-            ],
-            'achievements' => [['years' => '2022', 'text' => ['ru' => 'Премия JICA за лучшее прикладное исследование выпускника', 'en' => 'JICA alumni award for best applied research']]],
-            'previous_experience' => [['years' => '2014–2015', 'text' => ['ru' => 'Научный сотрудник, Институт прогнозирования и макроэкономических исследований', 'en' => 'Researcher, Institute of Forecasting and Macroeconomic Research']]],
-            'articles' => [
-                ['text' => 'Salimov J. Firm-level productivity and trade liberalisation in Uzbekistan // World Development. — 2024.', 'url' => 'https://doi.org/10.0000/example.2024.wd'],
-                ['text' => 'Салимов Ж. К. Индекс деловой активности: методология и первые результаты // Экономическое обозрение. — 2022. — № 9.'],
-            ],
-            'reports' => [['text' => ['ru' => 'Индекс деловой активности: ежемесячный выпуск. — ЦЭИР, 2022–2025.', 'en' => 'Business Activity Index: monthly release. — CERR, 2022–2025.'], 'url' => 'https://cerr.uz']],
-            'profiles' => ['orcid' => 'https://orcid.org/0000-0000-0000-0003', 'scholar' => 'https://scholar.google.com/', 'scopus' => 'https://www.scopus.com/'],
+            'sector' => 'competitiveness', 'is_head' => true, 'position' => 'head', 'email' => 'b.panjiev@cerr.uz',
+            'name' => ['kr' => 'Панжиев Бекзод Равшан ўғли', 'ru' => 'Панжиев Бекзод Равшан ўғли', 'uz' => 'Panjiyev Bekzod Ravshan o‘g‘li', 'en' => 'Bekzod Panjiev'],
         ],
         [
-            'sector' => 'competitiveness', 'position' => 'senior', 'degree' => 'phd',
-            'name' => ['ru' => 'Эргашева Малика Алишеровна', 'en' => 'Malika Ergasheva'],
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2012', 'en' => 'Tashkent State University of Economics, Economics, 2012'],
-            'master' => ['ru' => 'Университет Варвика (Великобритания), «Экономика», 2014', 'en' => 'University of Warwick (UK), Economics, 2014'],
-            'doctorate' => ['ru' => 'Ташкентский государственный экономический университет, 08.00.03, 2014–2018', 'en' => 'Tashkent State University of Economics, 08.00.03, 2014–2018'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2018', 'en' => 'PhD in Economics, 2018'],
-            'research_areas' => ['ru' => ['Прямые иностранные инвестиции', 'Специальные экономические зоны'], 'en' => ['Foreign direct investment', 'Special economic zones']],
-            'articles' => [['text' => 'Ergasheva M. Do special economic zones attract FDI? Evidence from Uzbekistan // Post-Communist Economies. — 2023.']],
+            'sector' => 'competitiveness', 'position' => 'chief', 'email' => 'r.abdullaev@cerr.uz',
+            'name' => ['kr' => 'Абдуллаев Руслан Раманович', 'ru' => 'Абдуллаев Руслан Раманович', 'uz' => 'Abdullayev Ruslan Ramanovich', 'en' => 'Ruslan Abdullaev'],
         ],
         [
-            'sector' => 'competitiveness', 'position' => 'researcher',
-            'name' => ['ru' => 'Умаров Давлат Шухратович', 'en' => 'Davlat Umarov'],
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2018', 'en' => 'Tashkent State University of Economics, Economics, 2018'],
-            'master' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика промышленности», 2020', 'en' => 'Tashkent State University of Economics, Industrial Economics, 2020'],
-            'research_areas' => ['ru' => ['Отраслевая конкурентоспособность', 'Экспортная диверсификация'], 'en' => ['Sectoral competitiveness', 'Export diversification']],
+            'sector' => 'competitiveness', 'position' => 'chief', 'email' => 'j.usmonov@cerr.uz',
+            'name' => ['kr' => 'Усмонов Жалолиддин Шухрат ўғли', 'ru' => 'Усмонов Жалолиддин Шухрат ўғли', 'uz' => 'Usmonov Jaloliddin Shuxrat o‘g‘li', 'en' => 'Jaloliddin Usmonov'],
         ],
         [
-            'sector' => 'competitiveness', 'position' => 'researcher',
-            'name' => ['ru' => 'Азизова Севара Фарходовна', 'en' => 'Sevara Azizova'],
-            'bachelor' => ['ru' => 'Вестминстерский международный университет в Ташкенте, «Экономика», 2019', 'en' => 'Westminster International University in Tashkent, Economics, 2019'],
-            'master' => ['ru' => 'Университет Инха в Ташкенте, «Бизнес-аналитика», 2021', 'en' => 'Inha University in Tashkent, Business Analytics, 2021'],
-            'research_areas' => ['ru' => ['Опросы предприятий', 'Деловой климат'], 'en' => ['Enterprise surveys', 'Business climate']],
+            'sector' => 'competitiveness', 'position' => 'leading', 'email' => 'z.goyibov@cerr.uz',
+            'name' => ['kr' => 'Ғойибов Зохиджон Араббоевич', 'ru' => 'Ғойибов Зохиджон Араббоевич', 'uz' => 'G‘oyibov Zoxijon Arabboyevich', 'en' => 'Zokhijon Goyibov'],
         ],
-        [
-            'sector' => 'competitiveness', 'position' => 'junior',
-            'name' => ['ru' => 'Нурматов Бекзод Икромович', 'en' => 'Bekzod Nurmatov'],
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2023', 'en' => 'Tashkent State University of Economics, Economics, 2023'],
-            'research_areas' => ['ru' => ['Производительность труда', 'Отраслевая статистика'], 'en' => ['Labour productivity', 'Industry statistics']],
-        ],
-
-        // ---- Foreign economic activity and integration ------------------------------
-        [
-            'sector' => 'foreign_economic', 'is_head' => true, 'position' => 'head', 'degree' => 'doc',
-            'name' => ['ru' => 'Ахмедова Наргиза Абдуллаевна', 'en' => 'Nargiza Akhmedova'],
-            'phone' => '+998 78 150-02-02',
-            'bachelor' => ['ru' => 'Университет мировой экономики и дипломатии, «Международные экономические отношения», 2001', 'en' => 'University of World Economy and Diplomacy, International Economic Relations, 2001'],
-            'master' => ['ru' => 'Университет мировой экономики и дипломатии, «Международная торговля», 2003', 'en' => 'University of World Economy and Diplomacy, International Trade, 2003'],
-            'doctorate' => ['ru' => 'Университет мировой экономики и дипломатии, 08.00.09 — Мировая экономика, 2008–2011', 'en' => 'University of World Economy and Diplomacy, 08.00.09 — World Economy, 2008–2011'],
-            'degree_title' => ['ru' => 'Доктор экономических наук (DSc), 08.00.09 — Мировая экономика, 2012; профессор', 'en' => 'Doctor of Economics (DSc), 08.00.09 — World Economy, 2012; Professor'],
-            'research_areas' => ['ru' => ['Внешняя торговля', 'Присоединение к ВТО', 'Торговые соглашения', 'Региональная интеграция'], 'en' => ['Foreign trade', 'WTO accession', 'Trade agreements', 'Regional integration']],
-            'international' => [
-                ['years' => '2023–2025', 'text' => ['ru' => 'Экспертная поддержка переговоров о присоединении к ВТО (программа ЮСАИД)', 'en' => 'Expert support to WTO accession negotiations (USAID programme)']],
-                ['years' => '2017', 'text' => ['ru' => 'Стажировка в Секретариате ВТО, Женева', 'en' => 'Fellowship at the WTO Secretariat, Geneva']],
-            ],
-            'achievements' => [['years' => '2024', 'text' => ['ru' => 'Орден «Дўстлик»', 'en' => '“Dustlik” Order']]],
-            'previous_experience' => [
-                ['years' => '2011–2013', 'text' => ['ru' => 'Заведующая кафедрой, Университет мировой экономики и дипломатии', 'en' => 'Head of Department, University of World Economy and Diplomacy']],
-                ['years' => '2003–2008', 'text' => ['ru' => 'Главный специалист, Министерство внешних экономических связей', 'en' => 'Chief Specialist, Ministry of Foreign Economic Relations']],
-            ],
-            'articles' => [
-                ['text' => 'Akhmedova N. Trade-cost effects of WTO accession for landlocked economies // The World Economy. — 2024.', 'url' => 'https://doi.org/10.0000/example.2024.twe'],
-                ['text' => 'Ахмедова Н. А. Транспортные коридоры Центральной Азии: оценка выигрыша от снижения торговых издержек // Экономическое обозрение. — 2023. — № 2.'],
-            ],
-            'books' => [['text' => ['ru' => 'Ахмедова Н. А. Узбекистан и ВТО: экономика присоединения. — Ташкент: Fan, 2023. — 180 с.', 'en' => 'Akhmedova N. Uzbekistan and the WTO: the economics of accession. — Tashkent: Fan, 2023. — 180 p.']]],
-            'reports' => [['text' => ['ru' => 'Оценка эффектов соглашения о свободной торговле с ЕАЭС. — ЦЭИР, 2024.', 'en' => 'Impact assessment of a free-trade agreement with the EAEU. — CERR, 2024.']]],
-            'profiles' => ['orcid' => 'https://orcid.org/0000-0000-0000-0004', 'scopus' => 'https://www.scopus.com/'],
-        ],
-        [
-            'sector' => 'foreign_economic', 'position' => 'leading', 'degree' => 'phd',
-            'name' => ['ru' => 'Собиров Улугбек Шерзодович', 'en' => 'Ulugbek Sobirov'],
-            'bachelor' => ['ru' => 'Университет мировой экономики и дипломатии, «Мировая экономика», 2010', 'en' => 'University of World Economy and Diplomacy, World Economy, 2010'],
-            'master' => ['ru' => 'Университет мировой экономики и дипломатии, «Международная торговля», 2012', 'en' => 'University of World Economy and Diplomacy, International Trade, 2012'],
-            'doctorate' => ['ru' => 'Университет мировой экономики и дипломатии, 08.00.09, 2012–2016', 'en' => 'University of World Economy and Diplomacy, 08.00.09, 2012–2016'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2016', 'en' => 'PhD in Economics, 2016'],
-            'research_areas' => ['ru' => ['Гравитационные модели торговли', 'Нетарифные барьеры'], 'en' => ['Gravity models of trade', 'Non-tariff barriers']],
-            'articles' => [['text' => 'Sobirov U. Non-tariff measures and export performance in Central Asia // Journal of Asian Economics. — 2022.']],
-        ],
-        [
-            'sector' => 'foreign_economic', 'position' => 'senior',
-            'name' => ['ru' => 'Жураева Зилола Нодировна', 'en' => 'Zilola Juraeva'],
-            'bachelor' => ['ru' => 'Университет мировой экономики и дипломатии, «Мировая экономика», 2015', 'en' => 'University of World Economy and Diplomacy, World Economy, 2015'],
-            'master' => ['ru' => 'Университет мировой экономики и дипломатии, «Международная экономика», 2017', 'en' => 'University of World Economy and Diplomacy, International Economics, 2017'],
-            'research_areas' => ['ru' => ['Транспортные коридоры', 'Логистика'], 'en' => ['Transport corridors', 'Logistics']],
-        ],
-        [
-            'sector' => 'foreign_economic', 'position' => 'researcher',
-            'name' => ['ru' => 'Кодиров Санжар Муродович', 'en' => 'Sanjar Kodirov'],
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2020', 'en' => 'Tashkent State University of Economics, Economics, 2020'],
-            'master' => ['ru' => 'Университет мировой экономики и дипломатии, «Международная торговля», 2022', 'en' => 'University of World Economy and Diplomacy, International Trade, 2022'],
-            'research_areas' => ['ru' => ['Торговая статистика', 'Экспорт услуг'], 'en' => ['Trade statistics', 'Services exports']],
-        ],
-
-        // ---- Industrial and agricultural clusters -----------------------------------
-        [
-            'sector' => 'cluster', 'is_head' => true, 'position' => 'head', 'degree' => 'cand',
-            'name' => ['ru' => 'Ташкентов Аброр Хамидович', 'en' => 'Abror Tashkentov'],
-            'phone' => '+998 78 150-02-02',
-            'bachelor' => ['ru' => 'Ташкентский государственный аграрный университет, «Экономика АПК», 2002', 'en' => 'Tashkent State Agrarian University, Agricultural Economics, 2002'],
-            'master' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2004', 'en' => 'Tashkent State University of Economics, Economics, 2004'],
-            'doctorate' => ['ru' => 'Ташкентский государственный экономический университет, 08.00.03, 2005–2008', 'en' => 'Tashkent State University of Economics, 08.00.03, 2005–2008'],
-            'degree_title' => ['ru' => 'Кандидат экономических наук, 08.00.03 — Отраслевая экономика, 2008', 'en' => 'Candidate of Economic Sciences, 08.00.03 — Sectoral Economics, 2008'],
-            'research_areas' => ['ru' => ['Агрокластеры', 'Цепочки добавленной стоимости', 'Экспортный потенциал отраслей'], 'en' => ['Agro-clusters', 'Value chains', 'Sectoral export potential']],
-            'international' => [['years' => '2021–2023', 'text' => ['ru' => 'Проект ФАО по развитию цепочек добавленной стоимости в плодоовощной отрасли', 'en' => 'FAO project on horticultural value-chain development']]],
-            'achievements' => [['years' => '2019', 'text' => ['ru' => 'Благодарность Министерства сельского хозяйства', 'en' => 'Letter of appreciation, Ministry of Agriculture']]],
-            'previous_experience' => [['years' => '2008–2016', 'text' => ['ru' => 'Начальник управления, Министерство сельского и водного хозяйства', 'en' => 'Head of Department, Ministry of Agriculture and Water Resources']]],
-            'articles' => [['text' => 'Ташкентов А. Х. Экономическая эффективность хлопково-текстильных кластеров // Экономическое обозрение. — 2024. — № 5.']],
-            'reports' => [['text' => ['ru' => 'Кластеры Узбекистана: карта и показатели. — ЦЭИР, 2023.', 'en' => 'Clusters of Uzbekistan: map and indicators. — CERR, 2023.'], 'url' => 'https://cerr.uz']],
-            'profiles' => ['orcid' => 'https://orcid.org/0000-0000-0000-0005'],
-        ],
-        [
-            'sector' => 'cluster', 'position' => 'senior',
-            'name' => ['ru' => 'Холматова Шахноза Равшановна', 'en' => 'Shakhnoza Kholmatova'],
-            'bachelor' => ['ru' => 'Ташкентский государственный аграрный университет, «Экономика АПК», 2014', 'en' => 'Tashkent State Agrarian University, Agricultural Economics, 2014'],
-            'master' => ['ru' => 'Ташкентский государственный аграрный университет, «Агробизнес», 2016', 'en' => 'Tashkent State Agrarian University, Agribusiness, 2016'],
-            'research_areas' => ['ru' => ['Плодоовощной экспорт', 'Кооперация фермеров'], 'en' => ['Horticultural exports', 'Farmer cooperation']],
-        ],
-        [
-            'sector' => 'cluster', 'position' => 'researcher',
-            'name' => ['ru' => 'Бобоев Комил Турсунович', 'en' => 'Komil Boboev'],
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2019', 'en' => 'Tashkent State University of Economics, Economics, 2019'],
-            'master' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика промышленности», 2021', 'en' => 'Tashkent State University of Economics, Industrial Economics, 2021'],
-            'research_areas' => ['ru' => ['Текстильные кластеры', 'Локализация производства'], 'en' => ['Textile clusters', 'Production localisation']],
-        ],
-
         // ---- Regional development --------------------------------------------------
         [
-            'sector' => 'regions', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
-            'name' => ['ru' => 'Мамадалиев Санжарбек Мухтарович', 'en' => 'Sanjarbek Mamadaliev'],
-            'phone' => '+998 78 150-02-02',
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2007', 'en' => 'Tashkent State University of Economics, Economics, 2007'],
-            'master' => ['ru' => 'Университет Хитоцубаси (Япония), «Государственная политика», 2010', 'en' => 'Hitotsubashi University (Japan), Public Policy, 2010'],
-            'doctorate' => ['ru' => 'Ташкентский государственный экономический университет, 08.00.03, 2011–2014', 'en' => 'Tashkent State University of Economics, 08.00.03, 2011–2014'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2014', 'en' => 'PhD in Economics, 2014'],
-            'research_areas' => ['ru' => ['Региональная экономика', 'Рынок труда', 'Бедность и неравенство', 'Рейтинги регионов'], 'en' => ['Regional economics', 'Labour market', 'Poverty and inequality', 'Regional rankings']],
-            'international' => [['years' => '2022–2024', 'text' => ['ru' => 'Проект ПРООН по многомерному измерению бедности', 'en' => 'UNDP project on multidimensional poverty measurement']]],
-            'achievements' => [['years' => '2023', 'text' => ['ru' => 'Грант Всемирного банка на разработку индекса развития районов', 'en' => 'World Bank grant for the district development index']]],
-            'previous_experience' => [['years' => '2010–2015', 'text' => ['ru' => 'Ведущий специалист, Министерство экономики', 'en' => 'Leading Specialist, Ministry of Economy']]],
-            'articles' => [
-                ['text' => 'Mamadaliev S. Spatial inequality and internal migration in Uzbekistan // Regional Studies. — 2024.', 'url' => 'https://doi.org/10.0000/example.2024.rs'],
-                ['text' => 'Мамадалиев С. М. Рейтинг социально-экономического развития районов: методология // Экономическое обозрение. — 2023. — № 8.'],
-            ],
-            'reports' => [['text' => ['ru' => 'Рейтинг районов и городов Узбекистана за 2024 год. — ЦЭИР, 2025.', 'en' => 'Ranking of districts and cities of Uzbekistan, 2024. — CERR, 2025.'], 'url' => 'https://cerr.uz']],
-            'profiles' => ['orcid' => 'https://orcid.org/0000-0000-0000-0006', 'scholar' => 'https://scholar.google.com/'],
+            'sector' => 'regions', 'is_head' => true, 'position' => 'head', 'email' => 'x.jurayev@cerr.uz',
+            'name' => ['kr' => 'Жураев Хуршид Маматкулович', 'ru' => 'Жураев Хуршид Маматкулович', 'uz' => 'Jurayev Xurshid Mamatkulovich', 'en' => 'Khurshid Juraev'],
         ],
         [
-            'sector' => 'regions', 'position' => 'leading', 'degree' => 'phd',
-            'name' => ['ru' => 'Расулова Феруза Хасановна', 'en' => 'Feruza Rasulova'],
-            'bachelor' => ['ru' => 'Самаркандский институт экономики и сервиса, «Экономика», 2011', 'en' => 'Samarkand Institute of Economics and Service, Economics, 2011'],
-            'master' => ['ru' => 'Ташкентский государственный экономический университет, «Региональная экономика», 2013', 'en' => 'Tashkent State University of Economics, Regional Economics, 2013'],
-            'doctorate' => ['ru' => 'Ташкентский государственный экономический университет, 08.00.03, 2013–2017', 'en' => 'Tashkent State University of Economics, 08.00.03, 2013–2017'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2017', 'en' => 'PhD in Economics, 2017'],
-            'research_areas' => ['ru' => ['Занятость', 'Трудовая миграция'], 'en' => ['Employment', 'Labour migration']],
-            'articles' => [['text' => 'Rasulova F. Remittances and household welfare in rural Uzbekistan // Journal of Development Studies. — 2023.']],
+            'sector' => 'regions', 'position' => 'chief', 'email' => 'b.ismailov@cerr.uz',
+            'name' => ['kr' => 'Исмаилов Бахтиёр Абдухамид ўғли', 'ru' => 'Исмаилов Бахтиёр Абдухамид ўғли', 'uz' => 'Ismailov Baxtiyor Abduxamid o‘g‘li', 'en' => 'Bakhtiyor Ismailov'],
         ],
         [
-            'sector' => 'regions', 'position' => 'senior',
-            'name' => ['ru' => 'Турсунов Шохрух Бахромович', 'en' => 'Shokhrukh Tursunov'],
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2015', 'en' => 'Tashkent State University of Economics, Economics, 2015'],
-            'master' => ['ru' => 'Ташкентский государственный экономический университет, «Экономическая статистика», 2017', 'en' => 'Tashkent State University of Economics, Economic Statistics, 2017'],
-            'research_areas' => ['ru' => ['Муниципальная статистика', 'Индексы развития'], 'en' => ['Municipal statistics', 'Development indices']],
+            'sector' => 'regions', 'position' => 'chief', 'email' => 'y.fayzullaev@cerr.uz',
+            'name' => ['kr' => 'Файзуллаев Ядгар Шукуруллаевич', 'ru' => 'Файзуллаев Ядгар Шукуруллаевич', 'uz' => 'Fayzullayev Yadgar Shukurullayevich', 'en' => 'Yadgar Fayzullaev'],
         ],
         [
-            'sector' => 'regions', 'position' => 'researcher',
-            'name' => ['ru' => 'Хасанова Муниса Азаматовна', 'en' => 'Munisa Khasanova'],
-            'bachelor' => ['ru' => 'Вестминстерский международный университет в Ташкенте, «Экономика», 2020', 'en' => 'Westminster International University in Tashkent, Economics, 2020'],
-            'master' => ['ru' => 'Университет Инха в Ташкенте, «Аналитика данных», 2022', 'en' => 'Inha University in Tashkent, Data Analytics, 2022'],
-            'research_areas' => ['ru' => ['Бедность', 'Социальная защита'], 'en' => ['Poverty', 'Social protection']],
+            'sector' => 'regions', 'position' => 'leading', 'email' => 'z.kosimova@cerr.uz',
+            'name' => ['kr' => 'Косимова Зарина Алижон қизи', 'ru' => 'Косимова Зарина Алижон қизи', 'uz' => 'Kosimova Zarina Alijon qizi', 'en' => 'Zarina Kosimova'],
         ],
         [
-            'sector' => 'regions', 'position' => 'junior',
-            'name' => ['ru' => 'Эшонкулов Жавохир Собирович', 'en' => 'Javokhir Eshonkulov'],
-            'bachelor' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика», 2024', 'en' => 'Tashkent State University of Economics, Economics, 2024'],
-            'research_areas' => ['ru' => ['Региональная статистика', 'ГИС-анализ'], 'en' => ['Regional statistics', 'GIS analysis']],
-        ],
-        // ---- Labour market and social policy ---------------------------------------
-        [
-            'sector' => 'labour', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
-            'name' => ['ru' => 'Каримов Улугбек Тахирович', 'en' => 'Ulugbek Karimov'],
-            'phone' => '+998 78 150-02-02',
-            'master' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика труда», 2006', 'en' => 'Tashkent State University of Economics, Labour Economics, 2006'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2015', 'en' => 'PhD in Economics, 2015'],
-            'research_areas' => ['ru' => ['Занятость', 'Социальная защита', 'Пенсионная система'], 'en' => ['Employment', 'Social protection', 'Pension system']],
-            'reports' => [['text' => ['ru' => 'Рынок труда Узбекистана: обзор 2024 года. — ЦЭИР, 2025.', 'en' => 'The labour market of Uzbekistan: 2024 review. — CERR, 2025.']]],
+            'sector' => 'regions', 'position' => 'leading', 'email' => 'sh.honkulov@cerr.uz',
+            'name' => ['kr' => 'Хонкулов Шухрат Холиқул ўғли', 'ru' => 'Хонкулов Шухрат Холиқул ўғли', 'uz' => 'Xonkulov Shuxrat Xoliqul o‘g‘li', 'en' => 'Shukhrat Khonkulov'],
         ],
         [
-            'sector' => 'labour', 'position' => 'senior',
-            'name' => ['ru' => 'Саидова Нигора Баходировна', 'en' => 'Nigora Saidova'],
-            'master' => ['ru' => 'Ташкентский государственный экономический университет, «Экономика труда», 2016', 'en' => 'Tashkent State University of Economics, Labour Economics, 2016'],
-            'research_areas' => ['ru' => ['Неформальная занятость', 'Оплата труда'], 'en' => ['Informal employment', 'Wages']],
+            'sector' => 'regions', 'position' => 'leading', 'email' => 'i.abdujabbarov@cerr.uz',
+            'name' => ['kr' => 'Абдужаббаров Икром Абдуғани ўғли', 'ru' => 'Абдужаббаров Икром Абдуғани ўғли', 'uz' => 'Abdujabbarov Ikrom Abdug‘ani o‘g‘li', 'en' => 'Ikrom Abdujabbarov'],
+        ],
+        // ---- Industrial clusters ---------------------------------------------------
+        [
+            'sector' => 'cluster', 'is_head' => true, 'position' => 'head', 'email' => 'r.abaturov@cerr.uz',
+            'name' => ['kr' => 'Абатуров Руслан Викторович', 'ru' => 'Абатуров Руслан Викторович', 'uz' => 'Abaturov Ruslan Viktorovich', 'en' => 'Ruslan Abaturov'],
         ],
         [
-            'sector' => 'labour', 'position' => 'researcher',
-            'name' => ['ru' => 'Абдуразаков Шерзод Олимович', 'en' => 'Sherzod Abdurazakov'],
-            'master' => ['ru' => 'Университет Инха в Ташкенте, «Аналитика данных», 2021', 'en' => 'Inha University in Tashkent, Data Analytics, 2021'],
-            'research_areas' => ['ru' => ['Статистика занятости', 'Опросы домохозяйств'], 'en' => ['Employment statistics', 'Household surveys']],
-        ],
-
-        // ---- Agriculture and food security ------------------------------------------
-        [
-            'sector' => 'agro', 'is_head' => true, 'position' => 'head', 'degree' => 'cand',
-            'name' => ['ru' => 'Хамидов Бахром Абдуллаевич', 'en' => 'Bakhrom Khamidov'],
-            'phone' => '+998 78 150-02-02',
-            'master' => ['ru' => 'Ташкентский государственный аграрный университет, «Экономика АПК», 2001', 'en' => 'Tashkent State Agrarian University, Agricultural Economics, 2001'],
-            'degree_title' => ['ru' => 'Кандидат экономических наук, 08.00.03, 2007', 'en' => 'Candidate of Economic Sciences, 08.00.03, 2007'],
-            'research_areas' => ['ru' => ['Продовольственная безопасность', 'Аграрная политика', 'Водные ресурсы'], 'en' => ['Food security', 'Agricultural policy', 'Water resources']],
+            'sector' => 'cluster', 'position' => 'chief', 'email' => 'j.adizov@cerr.uz',
+            'name' => ['kr' => 'Адизов Жахонгир Гайратович', 'ru' => 'Адизов Жахонгир Гайратович', 'uz' => 'Adizov Jaxongir Gayratovich', 'en' => 'Jakhongir Adizov'],
         ],
         [
-            'sector' => 'agro', 'position' => 'leading', 'degree' => 'phd',
-            'name' => ['ru' => 'Мирзаева Дилфуза Рахимовна', 'en' => 'Dilfuza Mirzaeva'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2019', 'en' => 'PhD in Economics, 2019'],
-            'research_areas' => ['ru' => ['Цены на продовольствие', 'Экспорт плодоовощной продукции'], 'en' => ['Food prices', 'Horticultural exports']],
+            'sector' => 'cluster', 'position' => 'leading', 'email' => 'm.mirxoshimova@cerr.uz',
+            'name' => ['kr' => 'Мирхошимова Мохирахон Ботир кизи', 'ru' => 'Мирхошимова Мохирахон Ботир кизи', 'uz' => 'Mirxoshimova Moxiraxon Botir qizi', 'en' => 'Mokhirakhon Mirkhoshimova'],
+        ],
+        // ---- Macroeconomic policy --------------------------------------------------
+        [
+            'sector' => 'macro', 'is_head' => true, 'position' => 'head', 'email' => 'f.nasriddinov@cerr.uz',
+            'name' => ['kr' => 'Насриддинов Фазлиддин Файзуллаевич', 'ru' => 'Насриддинов Фазлиддин Файзуллаевич', 'uz' => 'Nasriddinov Fazliddin Fayzullayevich', 'en' => 'Fazliddin Nasriddinov'],
         ],
         [
-            'sector' => 'agro', 'position' => 'researcher',
-            'name' => ['ru' => 'Рустамов Азиз Шавкатович', 'en' => 'Aziz Rustamov'],
-            'research_areas' => ['ru' => ['Фермерские хозяйства', 'Кредитование АПК'], 'en' => ['Farm enterprises', 'Agricultural credit']],
+            'sector' => 'macro', 'position' => 'chief', 'email' => 'j.axmatov@cerr.uz',
+            'name' => ['kr' => 'Ахматов Жамшид Неъматилла ўғли', 'ru' => 'Ахматов Жамшид Неъматилла ўғли', 'uz' => 'Axmatov Jamshid Ne’matilla o‘g‘li', 'en' => 'Jamshid Akhmatov'],
         ],
         [
-            'sector' => 'agro', 'position' => 'junior',
-            'name' => ['ru' => 'Қодирова Лола Собировна', 'en' => 'Lola Kodirova'],
-            'research_areas' => ['ru' => ['Аграрная статистика'], 'en' => ['Agricultural statistics']],
+            'sector' => 'macro', 'position' => 'leading', 'email' => 'i.saparmatov@cerr.uz',
+            'name' => ['kr' => 'Сапарматов Исломбек Икрамбек угли', 'ru' => 'Сапарматов Исломбек Икрамбек угли', 'uz' => 'Saparmatov Islombek Ikrambek o‘g‘li', 'en' => 'Islombek Saparmatov'],
         ],
-
-        // ---- Energy and green economy -------------------------------------------------
+        // ---- Banking and capital markets -------------------------------------------
         [
-            'sector' => 'energy', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
-            'name' => ['ru' => 'Усманов Фаррух Рашидович', 'en' => 'Farrukh Usmanov'],
-            'phone' => '+998 78 150-02-02',
-            'master' => ['ru' => 'Технический университет Берлина, «Энергетическая экономика», 2012', 'en' => 'TU Berlin, Energy Economics, 2012'],
-            'degree_title' => ['ru' => 'PhD по экономике, 2017', 'en' => 'PhD in Economics, 2017'],
-            'research_areas' => ['ru' => ['Энергетические тарифы', 'Возобновляемая энергетика', 'Углеродное регулирование'], 'en' => ['Energy tariffs', 'Renewable energy', 'Carbon regulation']],
+            'sector' => 'bank', 'is_head' => true, 'position' => 'head', 'email' => 'j.xidirov@cerr.uz',
+            'name' => ['kr' => 'Хидиров Жаъфар Жабборович', 'ru' => 'Хидиров Жаъфар Жабборович', 'uz' => 'Xidirov Ja’far Jabborovich', 'en' => 'Jafar Khidirov'],
         ],
         [
-            'sector' => 'energy', 'position' => 'senior',
-            'name' => ['ru' => 'Алимова Мадина Шухратовна', 'en' => 'Madina Alimova'],
-            'research_areas' => ['ru' => ['Энергоэффективность', 'Субсидии'], 'en' => ['Energy efficiency', 'Subsidies']],
+            'sector' => 'bank', 'position' => 'chief', 'email' => 'i.khudayberganov@cerr.uz',
+            'name' => ['kr' => 'Худайберганов Ислом Неъматуллаевич', 'ru' => 'Худайберганов Ислом Неъматуллаевич', 'uz' => 'Xudayberganov Islom Ne’matullayevich', 'en' => 'Islom Khudayberganov'],
         ],
         [
-            'sector' => 'energy', 'position' => 'researcher',
-            'name' => ['ru' => 'Норматов Жахонгир Бахтиёрович', 'en' => 'Jakhongir Normatov'],
-            'research_areas' => ['ru' => ['Энергобаланс', 'Моделирование спроса'], 'en' => ['Energy balance', 'Demand modelling']],
-        ],
-
-        // ---- Digital economy -----------------------------------------------------------
-        [
-            'sector' => 'digital', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
-            'name' => ['ru' => 'Тураев Жасур Хамидович', 'en' => 'Jasur Turaev'],
-            'phone' => '+998 78 150-02-02',
-            'master' => ['ru' => 'Университет Инха в Ташкенте, «Информационные системы», 2014', 'en' => 'Inha University in Tashkent, Information Systems, 2014'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2020', 'en' => 'PhD in Economics, 2020'],
-            'research_areas' => ['ru' => ['Цифровые платформы', 'Электронная коммерция', 'ИИ в госуправлении'], 'en' => ['Digital platforms', 'E-commerce', 'AI in government']],
+            'sector' => 'bank', 'position' => 'chief', 'email' => 'd.qo\'ldoshov@cerr.uz',
+            'name' => ['kr' => 'Қўлдошов Достонжон Ғани ўғли', 'ru' => 'Қўлдошов Достонжон Ғани ўғли', 'uz' => 'Qo‘ldoshov Dostonjon G‘ani o‘g‘li', 'en' => 'Dostonjon Kuldoshov'],
         ],
         [
-            'sector' => 'digital', 'position' => 'senior',
-            'name' => ['ru' => 'Якубова Камила Рустамовна', 'en' => 'Kamila Yakubova'],
-            'research_areas' => ['ru' => ['Цифровые навыки', 'ИТ-экспорт'], 'en' => ['Digital skills', 'IT exports']],
+            'sector' => 'bank', 'position' => 'leading', 'email' => 'm.arifdjanova@cerr.uz',
+            'name' => ['kr' => 'Арифджанова Мубинахон Анваровна', 'ru' => 'Арифджанова Мубинахон Анваровна', 'uz' => 'Arifjanova Mubinaxon Anvarovna', 'en' => 'Mubinakhon Arifjanova'],
+        ],
+        // ---- Foreign economic activity ---------------------------------------------
+        [
+            'sector' => 'foreign_economic', 'is_head' => true, 'position' => 'head', 'email' => 'a.bozorov@cerr.uz',
+            'name' => ['kr' => 'Бозоров Абдурашид Тойир ўғли', 'ru' => 'Бозоров Абдурашид Тойир ўғли', 'uz' => 'Bozorov Abdurashid Toyir o‘g‘li', 'en' => 'Abdurashid Bozorov'],
         ],
         [
-            'sector' => 'digital', 'position' => 'junior',
-            'name' => ['ru' => 'Мансуров Ботир Алишерович', 'en' => 'Botir Mansurov'],
-            'research_areas' => ['ru' => ['Открытые данные'], 'en' => ['Open data']],
-        ],
-
-        // ---- Entrepreneurship and SMEs -------------------------------------------------
-        [
-            'sector' => 'sme', 'is_head' => true, 'position' => 'head', 'degree' => 'cand',
-            'name' => ['ru' => 'Рахмонов Дилшод Тохирович', 'en' => 'Dilshod Rakhmonov'],
-            'phone' => '+998 78 150-02-02',
-            'degree_title' => ['ru' => 'Кандидат экономических наук, 08.00.05, 2010', 'en' => 'Candidate of Economic Sciences, 08.00.05, 2010'],
-            'research_areas' => ['ru' => ['Деловая среда', 'Регуляторная нагрузка', 'Доступ МСБ к рынкам'], 'en' => ['Business environment', 'Regulatory burden', 'SME market access']],
+            'sector' => 'foreign_economic', 'position' => 'chief', 'email' => 'y.kutbitdinov@cerr.uz',
+            'name' => ['kr' => 'Кутбитдинов Юрий Шахабуддинович', 'ru' => 'Кутбитдинов Юрий Шахабуддинович', 'uz' => 'Kutbitdinov Yuriy Shaxabuddinovich', 'en' => 'Yuriy Kutbitdinov'],
         ],
         [
-            'sector' => 'sme', 'position' => 'leading', 'degree' => 'phd',
-            'name' => ['ru' => 'Ибрагимова Зухра Камиловна', 'en' => 'Zukhra Ibragimova'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2018', 'en' => 'PhD in Economics, 2018'],
-            'research_areas' => ['ru' => ['Женское предпринимательство', 'Самозанятость'], 'en' => ['Women’s entrepreneurship', 'Self-employment']],
+            'sector' => 'foreign_economic', 'position' => 'chief', 'email' => 'a.artikov@cerr.uz',
+            'name' => ['kr' => 'Артиков Афзал Аскарович', 'ru' => 'Артиков Афзал Аскарович', 'uz' => 'Artikov Afzal Askarovich', 'en' => 'Afzal Artikov'],
         ],
         [
-            'sector' => 'sme', 'position' => 'researcher',
-            'name' => ['ru' => 'Олимов Санжар Фарходович', 'en' => 'Sanjar Olimov'],
-            'research_areas' => ['ru' => ['Опросы бизнеса', 'Административные барьеры'], 'en' => ['Business surveys', 'Administrative barriers']],
-        ],
-
-        // ---- Public finance and taxation ------------------------------------------------
-        [
-            'sector' => 'public_finance', 'is_head' => true, 'position' => 'head', 'degree' => 'doc',
-            'name' => ['ru' => 'Зияев Акмал Бахтиёрович', 'en' => 'Akmal Ziyaev'],
-            'phone' => '+998 78 150-02-02',
-            'degree_title' => ['ru' => 'Доктор экономических наук (DSc), 08.00.07, 2016; профессор', 'en' => 'Doctor of Economics (DSc), 08.00.07, 2016; Professor'],
-            'research_areas' => ['ru' => ['Налоговая политика', 'Межбюджетные отношения', 'Государственный долг'], 'en' => ['Tax policy', 'Intergovernmental fiscal relations', 'Public debt']],
+            'sector' => 'foreign_economic', 'position' => 'leading', 'email' => 'k.kuncheraeva@cerr.uz',
+            'name' => ['kr' => 'Кунчераева Камила Илесбаевна', 'ru' => 'Кунчераева Камила Илесбаевна', 'uz' => 'Kuncherayeva Kamila Ilesbayevna', 'en' => 'Kamila Kuncheraeva'],
         ],
         [
-            'sector' => 'public_finance', 'position' => 'senior', 'degree' => 'phd',
-            'name' => ['ru' => 'Хайдарова Шахло Икромовна', 'en' => 'Shakhlo Khaydarova'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2021', 'en' => 'PhD in Economics, 2021'],
-            'research_areas' => ['ru' => ['НДС', 'Налоговые льготы'], 'en' => ['VAT', 'Tax expenditures']],
+            'sector' => 'foreign_economic', 'position' => 'leading', 'email' => 'k.fazliddinov@cerr.uz',
+            'name' => ['kr' => 'Фазлиддинов Камолиддин Фатхиддин угли', 'ru' => 'Фазлиддинов Камолиддин Фатхиддин угли', 'uz' => 'Fazliddinov Kamoliddin Fatxiddin o‘g‘li', 'en' => 'Kamoliddin Fazliddinov'],
+        ],
+        // ---- Public relations and marketing ----------------------------------------
+        [
+            'sector' => 'marketing', 'is_head' => true, 'position' => 'head', 'email' => 'z.rizaeva@cerr.uz',
+            'name' => ['kr' => 'Ризаева Зиёда Арзуевна', 'ru' => 'Ризаева Зиёда Арзуевна', 'uz' => 'Rizayeva Ziyoda Arzuyevna', 'en' => 'Ziyoda Rizaeva'],
         ],
         [
-            'sector' => 'public_finance', 'position' => 'researcher',
-            'name' => ['ru' => 'Бекмуродов Шохжахон Улугбекович', 'en' => 'Shokhjakhon Bekmurodov'],
-            'research_areas' => ['ru' => ['Бюджетная статистика'], 'en' => ['Fiscal statistics']],
-        ],
-
-        // ---- Transport and logistics -------------------------------------------------------
-        [
-            'sector' => 'transport', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
-            'name' => ['ru' => 'Назаров Бобур Шерзодович', 'en' => 'Bobur Nazarov'],
-            'phone' => '+998 78 150-02-02',
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2016', 'en' => 'PhD in Economics, 2016'],
-            'research_areas' => ['ru' => ['Транзитный потенциал', 'Логистические издержки', 'Железнодорожные коридоры'], 'en' => ['Transit potential', 'Logistics costs', 'Rail corridors']],
+            'sector' => 'marketing', 'position' => 'chief', 'email' => 'o.olimjonov@cerr.uz',
+            'name' => ['kr' => 'Олимжонов Одил Олимович', 'ru' => 'Олимжонов Одил Олимович', 'uz' => 'Olimjonov Odil Olimovich', 'en' => 'Odil Olimjonov'],
         ],
         [
-            'sector' => 'transport', 'position' => 'senior',
-            'name' => ['ru' => 'Эргашев Мурод Анварович', 'en' => 'Murod Ergashev'],
-            'research_areas' => ['ru' => ['Автоперевозки', 'Тарифы'], 'en' => ['Road haulage', 'Tariffs']],
+            'sector' => 'marketing', 'position' => 'chief', 'email' => 'e.romanov@cerr.uz',
+            'name' => ['kr' => 'Романов Эдвард Юревич', 'ru' => 'Романов Эдвард Юревич', 'uz' => 'Romanov Edvard Yurevich', 'en' => 'Edvard Romanov'],
         ],
         [
-            'sector' => 'transport', 'position' => 'researcher',
-            'name' => ['ru' => 'Сулаймонова Нилуфар Рустамовна', 'en' => 'Nilufar Sulaymonova'],
-            'research_areas' => ['ru' => ['Мультимодальные перевозки'], 'en' => ['Multimodal transport']],
-        ],
-
-        // ---- Human capital and education ---------------------------------------------------
-        [
-            'sector' => 'human_capital', 'is_head' => true, 'position' => 'head', 'degree' => 'phd',
-            'name' => ['ru' => 'Юлдашева Гулноза Акмаловна', 'en' => 'Gulnoza Yuldasheva'],
-            'phone' => '+998 78 150-02-02',
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по экономическим наукам, 2014', 'en' => 'PhD in Economics, 2014'],
-            'research_areas' => ['ru' => ['Экономика образования', 'Навыки и рынок труда', 'Здравоохранение'], 'en' => ['Economics of education', 'Skills and the labour market', 'Health care']],
+            'sector' => 'marketing', 'position' => 'leading', 'email' => 'l.buriyeva@cerr.uz',
+            'name' => ['kr' => 'Бўриева Латофат Абдуалимовна', 'ru' => 'Бўриева Латофат Абдуалимовна', 'uz' => 'Bo‘riyeva Latofat Abdualimovna', 'en' => 'Latofat Burieva'],
         ],
         [
-            'sector' => 'human_capital', 'position' => 'leading', 'degree' => 'phd',
-            'name' => ['ru' => 'Собирова Мохира Тулкиновна', 'en' => 'Mokhira Sobirova'],
-            'degree_title' => ['ru' => 'Доктор философии (PhD) по педагогическим наукам, 2017', 'en' => 'PhD in Education, 2017'],
-            'research_areas' => ['ru' => ['Дошкольное образование', 'Финансирование школ'], 'en' => ['Early-childhood education', 'School financing']],
+            'sector' => 'marketing', 'position' => 'leading', 'email' => 'a.abduqaxxorov@cerr.uz',
+            'name' => ['kr' => 'Абдуқаххоров Азизбек Абдулло ўғли', 'ru' => 'Абдуқаххоров Азизбек Абдулло ўғли', 'uz' => 'Abduqaxxorov Azizbek Abdullo o‘g‘li', 'en' => 'Azizbek Abdukakhorov'],
         ],
         [
-            'sector' => 'human_capital', 'position' => 'researcher',
-            'name' => ['ru' => 'Каримов Жавлон Бахтиёрович', 'en' => 'Javlon Karimov'],
-            'research_areas' => ['ru' => ['Высшее образование', 'Выпускники и занятость'], 'en' => ['Higher education', 'Graduate employment']],
+            'sector' => 'marketing', 'position' => 'leading', 'email' => 'j.turdimov@cerr.uz',
+            'name' => ['kr' => 'Турдимов Жамолиддин Бекмурзаевич', 'ru' => 'Турдимов Жамолиддин Бекмурзаевич', 'uz' => 'Turdimov Jamoliddin Bekmurzayevich', 'en' => 'Jamoliddin Turdimov'],
+        ],
+        // ---- IT and databases ------------------------------------------------------
+        [
+            'sector' => 'information_tech', 'is_head' => true, 'position' => 'head', 'email' => 'a.gaibullayev@cerr.uz',
+            'name' => ['kr' => 'Гайбуллаев Абдулазиз Ғофиржон ўғли', 'ru' => 'Гайбуллаев Абдулазиз Ғофиржон ўғли', 'uz' => 'Gaybullayev Abdulaziz G‘ofirjon o‘g‘li', 'en' => 'Abdulaziz Gaybullaev'],
         ],
         [
-            'sector' => 'human_capital', 'position' => 'junior',
-            'name' => ['ru' => 'Тожиева Дилором Шухратовна', 'en' => 'Dilorom Tojieva'],
-            'research_areas' => ['ru' => ['Статистика образования'], 'en' => ['Education statistics']],
+            'sector' => 'information_tech', 'position' => 'chief', 'email' => 'i.rabbimov@cerr.uz',
+            'name' => ['kr' => 'Раббимов Илёс Меҳриддинович', 'ru' => 'Раббимов Илёс Меҳриддинович', 'uz' => 'Rabbimov Ilyos Mehriddinovich', 'en' => 'Ilyos Rabbimov'],
+        ],
+        [
+            'sector' => 'information_tech', 'position' => 'chief', 'email' => 'f.tutkabaev@cerr.uz',
+            'name' => ['kr' => 'Туткабаев Фархад Кайратович', 'ru' => 'Туткабаев Фархад Кайратович', 'uz' => 'Tutkabayev Farxad Kayratovich', 'en' => 'Farkhad Tutkabaev'],
+        ],
+        [
+            'sector' => 'information_tech', 'position' => 'leading', 'email' => 'y.utepbergenov@cerr.uz',
+            'name' => ['kr' => 'Утепбергенов Юнус Қутлимуратович', 'ru' => 'Утепбергенов Юнус Қутлимуратович', 'uz' => 'Utepbergenov Yunus Qutlimuratovich', 'en' => 'Yunus Utepbergenov'],
+        ],
+        // ---- Reform accelerator ----------------------------------------------------
+        [
+            'sector' => 'accelerator', 'is_head' => true, 'position' => 'head', 'email' => 'a.halmurzaev@cerr.uz',
+            'name' => ['kr' => 'Халмурзаев Алишер Абдукаимжанович', 'ru' => 'Халмурзаев Алишер Абдукаимжанович', 'uz' => 'Xalmurzayev Alisher Abdukaimjanovich', 'en' => 'Alisher Khalmurzaev'],
+        ],
+        [
+            'sector' => 'accelerator', 'position' => 'chief', 'email' => 'm.maxmudov@cerr.uz',
+            'name' => ['kr' => 'Махмудов Маъруф Мухтор угли', 'ru' => 'Махмудов Маъруф Мухтор угли', 'uz' => 'Maxmudov Ma’ruf Muxtor o‘g‘li', 'en' => 'Maruf Makhmudov'],
+        ],
+        // ---- Economic Review editorial office --------------------------------------
+        [
+            'sector' => 'magazine', 'position' => 'web_editor', 'email' => 'm.yusupov@cerr.uz',
+            'name' => ['kr' => 'Юсупов Маркс Бахтиёрович', 'ru' => 'Юсупов Маркс Бахтиёрович', 'uz' => 'Yusupov Marks Baxtiyorovich', 'en' => 'Marks Yusupov'],
+        ],
+        [
+            'sector' => 'magazine', 'position' => 'senior_editor', 'email' => 'v.abaturov@cerr.uz',
+            'name' => ['kr' => 'Абатуров Виктор Борисович', 'ru' => 'Абатуров Виктор Борисович', 'uz' => 'Abaturov Viktor Borisovich', 'en' => 'Viktor Abaturov'],
+        ],
+        // ---- Karakalpakstan branch -------------------------------------------------
+        [
+            'sector' => 'karakalpakistan', 'is_head' => true, 'position' => 'head', 'email' => 's.beqmanov@cerr.uz',
+            'name' => ['kr' => 'Бегманов Саламат Сарсенбаевич', 'ru' => 'Бегманов Саламат Сарсенбаевич', 'uz' => 'Begmanov Salamat Sarsenbayevich', 'en' => 'Salamat Begmanov'],
+        ],
+        [
+            'sector' => 'karakalpakistan', 'position' => 'chief', 'email' => 's.ilyasov@cerr.uz',
+            'name' => ['kr' => 'Ильясов Салый Пухарбаевич', 'ru' => 'Ильясов Салый Пухарбаевич', 'uz' => 'Ilyasov Saliy Puxarbayevich', 'en' => 'Saliy Ilyasov'],
+        ],
+        [
+            'sector' => 'karakalpakistan', 'position' => 'leading', 'email' => 'y.jumabaev@cerr.uz',
+            'name' => ['kr' => 'Жумабаев Юсуп Жолдасбаевич', 'ru' => 'Жумабаев Юсуп Жолдасбаевич', 'uz' => 'Jumabayev Yusup Joldasbayevich', 'en' => 'Yusup Jumabaev'],
+        ],
+        // ---- Jizzakh branch --------------------------------------------------------
+        [
+            'sector' => 'jizzax', 'is_head' => true, 'position' => 'head', 'email' => 'f.rakhimov@cerr.uz',
+            'name' => ['kr' => 'Рахимов Феруз Уйғунович', 'ru' => 'Рахимов Феруз Уйғунович', 'uz' => 'Raximov Feruz Uyg‘unovich', 'en' => 'Feruz Rakhimov'],
+        ],
+        [
+            'sector' => 'jizzax', 'position' => 'chief', 'email' => 'e.pulatov@cerr.uz',
+            'name' => ['kr' => 'Пулатов Элёр Султанович', 'ru' => 'Пулатов Элёр Султанович', 'uz' => 'Pulatov Elyor Sultanovich', 'en' => 'Elyor Pulatov'],
+        ],
+        [
+            'sector' => 'jizzax', 'position' => 'leading', 'email' => 'f.saibov@cerr.uz',
+            'name' => ['kr' => 'Саибов Фаррух Фарходович', 'ru' => 'Саибов Фаррух Фарходович', 'uz' => 'Saibov Farrux Farxodovich', 'en' => 'Farrukh Saibov'],
+        ],
+        // ---- Namangan branch -------------------------------------------------------
+        [
+            'sector' => 'namangan', 'is_head' => true, 'position' => 'head', 'email' => 'm.abdusamatov@cerr.uz',
+            'name' => ['kr' => 'Абдусаматов Музаффар Джўраевич', 'ru' => 'Абдусаматов Музаффар Джўраевич', 'uz' => 'Abdusamatov Muzaffar Jo‘rayevich', 'en' => 'Muzaffar Abdusamatov'],
+        ],
+        [
+            'sector' => 'namangan', 'position' => 'chief', 'email' => 'b.xolmirzayev@cerr.uz',
+            'name' => ['kr' => 'Холмирзаев Баходир Бахрамжон ўғли', 'ru' => 'Холмирзаев Баходир Бахрамжон ўғли', 'uz' => 'Xolmirzayev Baxodir Baxramjon o‘g‘li', 'en' => 'Bakhodir Kholmirzaev'],
+        ],
+        [
+            'sector' => 'namangan', 'position' => 'chief', 'email' => 'b.nabiev@cerr.uz',
+            'name' => ['kr' => 'Набиев Бобур Мухаммадкосим угли', 'ru' => 'Набиев Бобур Мухаммадкосим угли', 'uz' => 'Nabiyev Bobur Muxammadkosim o‘g‘li', 'en' => 'Bobur Nabiev'],
+        ],
+        [
+            'sector' => 'namangan', 'position' => 'leading', 'email' => 's.ergashev@cerr.uz',
+            'name' => ['kr' => 'Эргашев Санжарбек Салимович', 'ru' => 'Эргашев Санжарбек Салимович', 'uz' => 'Ergashev Sanjarbek Salimovich', 'en' => 'Sanjarbek Ergashev'],
+        ],
+        // ---- Samarkand branch ------------------------------------------------------
+        [
+            'sector' => 'samarkand', 'is_head' => true, 'position' => 'head', 'email' => 'k.nurmurodov@cerr.uz',
+            'name' => ['kr' => 'Нурмуродов Камолиддин Пирмаматович', 'ru' => 'Нурмуродов Камолиддин Пирмаматович', 'uz' => 'Nurmurodov Kamoliddin Pirmamatovich', 'en' => 'Kamoliddin Nurmurodov'],
+        ],
+        [
+            'sector' => 'samarkand', 'position' => 'chief', 'email' => 'a.murtazaev@cerr.uz',
+            'name' => ['kr' => 'Муртазаев Ардашер Зафар ўғли', 'ru' => 'Муртазаев Ардашер Зафар ўғли', 'uz' => 'Murtazayev Ardasher Zafar o‘g‘li', 'en' => 'Ardasher Murtazaev'],
+        ],
+        [
+            'sector' => 'samarkand', 'position' => 'leading', 'email' => 'g.tursunqulov@cerr.uz',
+            'name' => ['kr' => 'Турсункулов Голибжон Шавкат ўғли', 'ru' => 'Турсункулов Голибжон Шавкат ўғли', 'uz' => 'Tursunkulov Golibjon Shavkat o‘g‘li', 'en' => 'Golibjon Tursunkulov'],
+        ],
+        // ---- Kashkadarya branch ----------------------------------------------------
+        [
+            'sector' => 'kashkadarya', 'is_head' => true, 'position' => 'head', 'email' => 'e.zayniddinov@cerr.uz',
+            'name' => ['kr' => 'Зайниддинов Элдор Эркинович', 'ru' => 'Зайниддинов Элдор Эркинович', 'uz' => 'Zayniddinov Eldor Erkinovich', 'en' => 'Eldor Zayniddinov'],
+        ],
+        [
+            'sector' => 'kashkadarya', 'position' => 'chief', 'email' => 'f.islomov@cerr.uz',
+            'name' => ['kr' => 'Исломов Фурқат Усмон ўғли', 'ru' => 'Исломов Фурқат Усмон ўғли', 'uz' => 'Islomov Furqat Usmon o‘g‘li', 'en' => 'Furkat Islomov'],
+        ],
+        [
+            'sector' => 'kashkadarya', 'position' => 'leading', 'email' => 's.saxipov@cerr.uz',
+            'name' => ['kr' => 'Сахипов Саидолим Саидкосимович', 'ru' => 'Сахипов Саидолим Саидкосимович', 'uz' => 'Saxipov Saidolim Saidkosimovich', 'en' => 'Saidolim Sakhipov'],
         ],
     ];
 }

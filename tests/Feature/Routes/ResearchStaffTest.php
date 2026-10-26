@@ -3,7 +3,7 @@
 use App\Support\ResearchStaffPrototype;
 
 describe('Research staff prototype pages', function () {
-    it('lists every research sector as a card linking to its own page', function () {
+    it('lists every sector, branch and the editorial office as a card linking to its own page', function () {
         setAppLocale('ru');
 
         $response = $this->get(route('research-staff.index'))->assertOk();
@@ -15,18 +15,18 @@ describe('Research staff prototype pages', function () {
 
         $response->assertSee(__('staff.title'))
             ->assertSee(__('staff.see_more'))
-            ->assertSee('rs-hero', false)
             ->assertSeeInOrder(['rs-hero', 'article-breadcrumb', 'rs-stats', 'rs-ring', 'rs-note', 'rs-sector-grid'], false)
             ->assertDontSee('is-current', false)
-            ->assertSee('rs-sector-grid', false)
             ->assertSee('rs-stack-item', false)
             ->assertSee('fa-chart-line', false)
             ->assertSee(__('staff.sector_short_macro'))
             ->assertSee(__('staff.sector_desc_macro'))
-            ->assertSee('Абдуллаев Бахтиёр Рустамович')
+            ->assertSee('Насриддинов Фазлиддин Файзуллаевич')
+            ->assertSee('Бегманов Саламат Сарсенбаевич')
             ->assertSee(__('staff.head_of_sector'))
+            ->assertDontSee(__('staff.with_degree', ['count' => '']))
             ->assertDontSee('rs-side', false)
-            ->assertDontSee(route('research-staff.show', 'bakhtiyor-abdullaev'), false);
+            ->assertDontSee(route('research-staff.show', 'fazliddin-nasriddinov'), false);
 
         expect(substr_count($response->getContent(), 'data-sector-card="'))->toBe(count(ResearchStaffPrototype::SECTORS))
             ->and(substr_count($response->getContent(), 'data-ring-sector="'))->toBe(count(ResearchStaffPrototype::SECTORS));
@@ -40,17 +40,42 @@ describe('Research staff prototype pages', function () {
         $response->assertSee(__('structure.macro'))
             ->assertSee(__('staff.staff_of_sector'))
             ->assertSee(__('staff.head_of_sector'))
-            ->assertSeeInOrder(['Абдуллаев Бахтиёр Рустамович', 'Каримова Нилуфар Шавкатовна', 'Тошматов Отабек Улугбекович'])
-            ->assertSee(route('research-staff.show', 'bakhtiyor-abdullaev'), false)
-            ->assertSee('mailto:b.abdullaev@cerr.uz', false)
+            ->assertSeeInOrder(['Насриддинов Фазлиддин Файзуллаевич', 'Ахматов Жамшид Неъматилла ўғли', 'Сапарматов Исломбек Икрамбек угли'])
+            ->assertSeeInOrder([__('staff.position_head'), __('staff.position_chief'), __('staff.position_leading')])
+            ->assertSee(route('research-staff.show', 'fazliddin-nasriddinov'), false)
+            ->assertSee('mailto:f.nasriddinov@cerr.uz', false)
             ->assertSee(route('research-staff.sector', 'regional-development'), false)
             ->assertSee('fa-chart-line', false)
-            ->assertSee('01 / 14')
-            ->assertSeeInOrder(['rs-hero-head', 'Абдуллаев Бахтиёр Рустамович', 'rs-ring--focused', 'is-current', 'data-ring-sector="macro"', 'rs-note', 'rs-people'], false);
+            ->assertSee('04 / 15')
+            ->assertSeeInOrder(['rs-hero-head', 'Насриддинов Фазлиддин Файзуллаевич', 'rs-ring--focused', 'is-current', 'data-ring-sector="macro"', 'rs-note', 'rs-people'], false);
 
-        expect(substr_count($response->getContent(), 'data-person="'))->toBe(5)
+        expect(substr_count($response->getContent(), 'data-person="'))->toBe(3)
             ->and(substr_count($response->getContent(), 'data-ring-sector="'))->toBe(count(ResearchStaffPrototype::SECTORS))
             ->and(substr_count($response->getContent(), 'is-current'))->toBe(1);
+    })->group('feature', 'routes');
+
+    it('shows the editorial office without a head card and with editor positions', function () {
+        setAppLocale('en');
+
+        $this->get(route('research-staff.sector', 'economic-review-editorial'))
+            ->assertOk()
+            ->assertSee(__('structure.magazine'))
+            ->assertSee(__('staff.position_web_editor'))
+            ->assertSee(__('staff.position_senior_editor'))
+            ->assertSee('Viktor Abaturov')
+            ->assertDontSee('rs-hero-head', false)
+            ->assertDontSee(__('staff.head_of_sector'));
+    })->group('feature', 'routes');
+
+    it('shows a regional branch with its staff and e-mails from the staff list', function () {
+        setAppLocale('uz');
+
+        $this->get(route('research-staff.sector', 'karakalpakstan-branch'))
+            ->assertOk()
+            ->assertSee(__('structure.karakalpakistan'))
+            ->assertSee('Begmanov Salamat Sarsenbayevich')
+            ->assertSee('mailto:s.beqmanov@cerr.uz', false)
+            ->assertSee('11 / 15');
     })->group('feature', 'routes');
 
     it('returns 404 for an unknown sector', function () {
@@ -65,42 +90,34 @@ describe('Research staff prototype pages', function () {
             ->assertSee(__('staff.title', [], $locale));
     })->with(['ru', 'en', 'uz', 'kr'])->group('feature', 'routes');
 
-    it('shows a profile structured like the staff questionnaire', function () {
+    it('shows a profile from the staff list and says the questionnaire is pending', function () {
         setAppLocale('en');
 
-        $this->get(route('research-staff.show', 'bakhtiyor-abdullaev'))
+        $this->get(route('research-staff.show', 'fazliddin-nasriddinov'))
             ->assertOk()
-            ->assertSee('Bakhtiyor Abdullaev')
+            ->assertSee('Fazliddin Nasriddinov')
             ->assertSee(__('staff.position_head'))
-            ->assertSeeInOrder([
-                __('staff.part_education'),
-                __('staff.bachelor'), __('staff.master'), __('staff.doctorate'), __('staff.degree_title'),
-                __('staff.part_research'),
-                __('staff.research_areas'), __('staff.international'), __('staff.achievements'), __('staff.previous_experience'),
-                __('staff.part_publications'),
-                __('staff.articles'), __('staff.books'), __('staff.reports'),
-            ])
-            ->assertSee('Doctor of Economics (DSc)')
-            ->assertSee('https://orcid.org/0000-0000-0000-0000', false)
-            ->assertSee('rs-profile-link--scholar', false)
-            ->assertSee('</i> DOI', false)
-            ->assertSee(trans_choice('staff.publications_count', 6))
+            ->assertSee('mailto:f.nasriddinov@cerr.uz', false)
+            ->assertSee(__('structure.macro'))
+            ->assertSee(__('staff.profile_pending'))
+            ->assertSeeInOrder([__('staff.part_education'), __('staff.part_research'), __('staff.part_publications')])
+            ->assertDontSee('rs-profiles', false)
+            ->assertDontSee('rs-side-nav', false)
+            ->assertDontSee(__('staff.bachelor'))
             ->assertSee(__('staff.colleagues'))
-            ->assertSee('Nilufar Karimova')
+            ->assertSee('Jamshid Akhmatov')
             ->assertSee(route('research-staff.sector', 'macroeconomic-policy'), false)
-            ->assertSee(route('research-staff.index'), false);
+            ->assertSee(route('research-staff.index'), false)
+            ->assertSee('<meta name="description" content="'.__('staff.position_head').', '.__('structure.macro').'.">', false);
     })->group('feature', 'routes');
 
-    it('skips questionnaire sections a person left empty', function () {
-        setAppLocale('ru');
+    it('shows names in the Latin Uzbek locale from the uz key, not the English one', function () {
+        setAppLocale('uz');
 
-        $this->get(route('research-staff.show', 'otabek-toshmatov'))
+        $this->get(route('research-staff.show', 'dostonjon-kuldoshov'))
             ->assertOk()
-            ->assertSee(__('staff.bachelor'))
-            ->assertSee(__('staff.research_areas'))
-            ->assertDontSee(__('staff.master'))
-            ->assertDontSee(__('staff.part_publications'))
-            ->assertDontSee('rs-profiles', false);
+            ->assertSee('Qo‘ldoshov Dostonjon G‘ani o‘g‘li')
+            ->assertDontSee('>Dostonjon Kuldoshov<', false);
     })->group('feature', 'routes');
 
     it('returns 404 for an unknown person', function () {
@@ -116,34 +133,40 @@ describe('Research staff prototype pages', function () {
     it('falls back across locales and builds monograms', function () {
         expect(ResearchStaffPrototype::text(['ru' => 'Р', 'en' => 'E'], 'kr'))->toBe('Р')
             ->and(ResearchStaffPrototype::text(['ru' => 'Р', 'en' => 'E'], 'uz'))->toBe('E')
+            ->and(ResearchStaffPrototype::text(['ru' => 'Р', 'uz' => 'U', 'en' => 'E'], 'uz'))->toBe('U')
             ->and(ResearchStaffPrototype::text(['ru' => 'Р'], 'en'))->toBe('Р')
             ->and(ResearchStaffPrototype::text([], 'ru'))->toBe('')
             ->and(ResearchStaffPrototype::text('As is', 'kr'))->toBe('As is')
             ->and(ResearchStaffPrototype::items(['ru' => ['а', 'б'], 'en' => ['a']], 'uz'))->toBe(['a'])
             ->and(ResearchStaffPrototype::items(['ru' => ['а', 'б']], 'en'))->toBe(['а', 'б'])
-            ->and(ResearchStaffPrototype::initials('Абдуллаев Бахтиёр Рустамович'))->toBe('АБ')
-            ->and(ResearchStaffPrototype::initials('Bakhtiyor Abdullaev'))->toBe('BA');
+            ->and(ResearchStaffPrototype::initials('Насриддинов Фазлиддин Файзуллаевич'))->toBe('НФ')
+            ->and(ResearchStaffPrototype::initials('Fazliddin Nasriddinov'))->toBe('FN');
     })->group('unit');
 
-    it('names every sector, from the structure strings or its own placeholders', function () {
+    it('names every unit from the structure strings and finds sectors by slug', function () {
         setAppLocale('ru');
 
-        expect(ResearchStaffPrototype::SECTORS)->toHaveCount(14)
-            ->and(ResearchStaffPrototype::sectorName('macro'))->toBe(__('structure.macro'))
-            ->and(ResearchStaffPrototype::sectorName('labour'))->toBe(__('staff.sector_name_labour'))
-            ->and(ResearchStaffPrototype::sectorName('labour'))->not->toContain('staff.')
-            ->and(ResearchStaffPrototype::findSector('macroeconomic-policy')['head']['slug'])->toBe('bakhtiyor-abdullaev')
+        expect(ResearchStaffPrototype::SECTORS)->toHaveCount(15)
+            ->and(collect(ResearchStaffPrototype::SECTORS)->every(fn (array $sector) => ResearchStaffPrototype::sectorName($sector['key']) === __('structure.'.$sector['key'])))->toBeTrue()
+            ->and(ResearchStaffPrototype::sectorName('macro'))->not->toContain('structure.')
+            ->and(ResearchStaffPrototype::findSector('macroeconomic-policy')['head']['slug'])->toBe('fazliddin-nasriddinov')
             ->and(ResearchStaffPrototype::findSector('nope'))->toBeNull();
     })->group('unit');
 
-    it('gives every person a unique slug, an email and the questionnaire fields', function () {
+    it('carries the whole staff list with unique slugs and e-mails and the questionnaire fields', function () {
         $people = ResearchStaffPrototype::people();
+        $sectors = ResearchStaffPrototype::sectors();
         $fields = [...ResearchStaffPrototype::EDUCATION_FIELDS, ...ResearchStaffPrototype::ACTIVITY_FIELDS, ...ResearchStaffPrototype::PUBLICATION_FIELDS, 'research_areas', 'profiles'];
 
-        expect($people->pluck('slug')->unique())->toHaveCount($people->count())
+        expect($people)->toHaveCount(55)
+            ->and($people->pluck('slug')->unique())->toHaveCount($people->count())
             ->and($people->pluck('email')->unique())->toHaveCount($people->count())
+            ->and($people->every(fn (array $person) => str_ends_with($person['email'], '@cerr.uz')))->toBeTrue()
+            ->and($people->every(fn (array $person) => isset($person['name']['kr'], $person['name']['ru'], $person['name']['uz'], $person['name']['en'])))->toBeTrue()
             ->and($people->every(fn (array $person) => count(array_diff($fields, array_keys($person))) === 0))->toBeTrue()
-            ->and(ResearchStaffPrototype::publicationCount($people->firstWhere('slug', 'bakhtiyor-abdullaev')))->toBe(6)
-            ->and(ResearchStaffPrototype::sectors()->every(fn ($sector) => $sector['head'] !== null))->toBeTrue();
+            ->and($people->sum(fn (array $person) => ResearchStaffPrototype::publicationCount($person)))->toBe(0)
+            ->and($sectors->sum(fn ($sector) => $sector['staff']->count() + ($sector['head'] ? 1 : 0)))->toBe(55)
+            ->and($sectors->reject(fn ($sector) => $sector['head'] !== null)->pluck('key')->all())->toBe(['magazine'])
+            ->and($sectors->firstWhere('key', 'karakalpakistan')['staff'])->toHaveCount(2);
     })->group('unit');
 });
