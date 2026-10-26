@@ -4,7 +4,7 @@ use App\Support\RegionShapes;
 use App\Support\ResearchStaffPrototype;
 
 describe('Research staff prototype pages', function () {
-    it('lists every sector, branch and the editorial office as a card linking to its own page', function () {
+    it('lists every sector and branch as a card linking to its own page', function () {
         setAppLocale('ru');
 
         $response = $this->get(route('research-staff.index'))->assertOk();
@@ -52,26 +52,13 @@ describe('Research staff prototype pages', function () {
             ->assertSee('mailto:f.nasriddinov@cerr.uz', false)
             ->assertSee(route('research-staff.sector', 'regional-development'), false)
             ->assertSee('data-icon="trend"', false)
-            ->assertDontSee('04 / 15')
+            ->assertDontSee('04 / 14')
             ->assertDontSee('rs-note', false)
             ->assertSeeInOrder(['rs-hero-head', 'Насриддинов Фазлиддин Файзуллаевич', 'rs-ring--focused', 'is-current', 'data-ring-sector="macro"', 'rs-people'], false);
 
         expect(substr_count($response->getContent(), 'data-person="'))->toBe(3)
             ->and(substr_count($response->getContent(), 'data-ring-sector="'))->toBe(count(ResearchStaffPrototype::SECTORS))
             ->and(substr_count($response->getContent(), 'is-current'))->toBe(1);
-    })->group('feature', 'routes');
-
-    it('shows the editorial office without a head card and with editor positions', function () {
-        setAppLocale('en');
-
-        $this->get(route('research-staff.sector', 'economic-review-editorial'))
-            ->assertOk()
-            ->assertSee(__('structure.magazine'))
-            ->assertSee(__('staff.position_web_editor'))
-            ->assertSee(__('staff.position_senior_editor'))
-            ->assertSee('Viktor Abaturov')
-            ->assertDontSee('rs-hero-head', false)
-            ->assertDontSee(__('staff.head_of_sector'));
     })->group('feature', 'routes');
 
     it('shows a regional branch with its staff and e-mails from the staff list', function () {
@@ -84,7 +71,7 @@ describe('Research staff prototype pages', function () {
             ->assertSee('mailto:s.beqmanov@cerr.uz', false)
             ->assertSee('data-icon="map:karakalpakistan"', false)
             ->assertSee('d="'.RegionShapes::PATHS['karakalpakistan'].'"', false)
-            ->assertDontSee('11 / 15');
+            ->assertDontSee('10 / 14');
     })->group('feature', 'routes');
 
     it('calls a sector шўъба / sho‘ba in both Uzbek scripts', function () {
@@ -172,7 +159,7 @@ describe('Research staff prototype pages', function () {
     it('names every unit from the structure strings and finds sectors by slug', function () {
         setAppLocale('ru');
 
-        expect(ResearchStaffPrototype::SECTORS)->toHaveCount(15)
+        expect(ResearchStaffPrototype::SECTORS)->toHaveCount(14)
             ->and(collect(ResearchStaffPrototype::SECTORS)->every(fn (array $sector) => ResearchStaffPrototype::sectorName($sector['key']) === __('structure.'.$sector['key'])))->toBeTrue()
             ->and(ResearchStaffPrototype::sectorName('macro'))->not->toContain('structure.')
             ->and(ResearchStaffPrototype::findSector('macroeconomic-policy')['head']['slug'])->toBe('fazliddin-nasriddinov')
@@ -193,15 +180,15 @@ describe('Research staff prototype pages', function () {
         $sectors = ResearchStaffPrototype::sectors();
         $fields = [...ResearchStaffPrototype::EDUCATION_FIELDS, ...ResearchStaffPrototype::ACTIVITY_FIELDS, ...ResearchStaffPrototype::PUBLICATION_FIELDS, 'research_areas', 'profiles'];
 
-        expect($people)->toHaveCount(55)
+        expect($people)->toHaveCount(53)
             ->and($people->pluck('slug')->unique())->toHaveCount($people->count())
             ->and($people->pluck('email')->unique())->toHaveCount($people->count())
             ->and($people->every(fn (array $person) => str_ends_with($person['email'], '@cerr.uz')))->toBeTrue()
             ->and($people->every(fn (array $person) => isset($person['name']['kr'], $person['name']['ru'], $person['name']['uz'], $person['name']['en'])))->toBeTrue()
             ->and($people->every(fn (array $person) => count(array_diff($fields, array_keys($person))) === 0))->toBeTrue()
             ->and($people->sum(fn (array $person) => ResearchStaffPrototype::publicationCount($person)))->toBe(0)
-            ->and($sectors->sum(fn ($sector) => $sector['staff']->count() + ($sector['head'] ? 1 : 0)))->toBe(55)
-            ->and($sectors->reject(fn ($sector) => $sector['head'] !== null)->pluck('key')->all())->toBe(['magazine'])
+            ->and($sectors->sum(fn ($sector) => $sector['staff']->count() + ($sector['head'] ? 1 : 0)))->toBe(53)
+            ->and($sectors->every(fn ($sector) => $sector['head'] !== null))->toBeTrue()
             ->and($sectors->firstWhere('key', 'karakalpakistan')['staff'])->toHaveCount(2);
     })->group('unit');
 });

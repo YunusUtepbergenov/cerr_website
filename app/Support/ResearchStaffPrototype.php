@@ -42,7 +42,7 @@ use Illuminate\Support\Str;
 class ResearchStaffPrototype
 {
     /**
-     * Sectors, branches and the editorial office in staff-list order. `icon` is a
+     * Sectors and regional branches in staff-list order. `icon` is a
      * name known to <x-research-staff.sector-icon>; `map:{region}` draws the
      * outline from {@see RegionShapes}.
      *
@@ -58,7 +58,6 @@ class ResearchStaffPrototype
         ['key' => 'marketing', 'slug' => 'public-relations-and-marketing', 'accent' => '#c2410c', 'icon' => 'megaphone'],
         ['key' => 'information_tech', 'slug' => 'it-and-databases', 'accent' => '#0369a1', 'icon' => 'database'],
         ['key' => 'accelerator', 'slug' => 'reform-accelerator', 'accent' => '#7c3aed', 'icon' => 'rocket'],
-        ['key' => 'magazine', 'slug' => 'economic-review-editorial', 'accent' => '#9f1239', 'icon' => 'journal'],
         ['key' => 'karakalpakistan', 'slug' => 'karakalpakstan-branch', 'accent' => '#0e7490', 'icon' => 'map:karakalpakistan'],
         ['key' => 'jizzax', 'slug' => 'jizzakh-branch', 'accent' => '#4d7c0f', 'icon' => 'map:jizzax'],
         ['key' => 'namangan', 'slug' => 'namangan-branch', 'accent' => '#a16207', 'icon' => 'map:namangan'],
@@ -397,15 +396,6 @@ class ResearchStaffPrototype
         [
             'sector' => 'accelerator', 'position' => 'chief', 'email' => 'm.maxmudov@cerr.uz',
             'name' => ['kr' => 'Махмудов Маъруф Мухтор угли', 'ru' => 'Махмудов Маъруф Мухтор угли', 'uz' => 'Maxmudov Ma’ruf Muxtor o‘g‘li', 'en' => 'Maruf Makhmudov'],
-        ],
-        // ---- Economic Review editorial office --------------------------------------
-        [
-            'sector' => 'magazine', 'position' => 'web_editor', 'email' => 'm.yusupov@cerr.uz',
-            'name' => ['kr' => 'Юсупов Маркс Бахтиёрович', 'ru' => 'Юсупов Маркс Бахтиёрович', 'uz' => 'Yusupov Marks Baxtiyorovich', 'en' => 'Marks Yusupov'],
-        ],
-        [
-            'sector' => 'magazine', 'position' => 'senior_editor', 'email' => 'v.abaturov@cerr.uz',
-            'name' => ['kr' => 'Абатуров Виктор Борисович', 'ru' => 'Абатуров Виктор Борисович', 'uz' => 'Abaturov Viktor Borisovich', 'en' => 'Viktor Abaturov'],
         ],
         // ---- Karakalpakstan branch -------------------------------------------------
         [
