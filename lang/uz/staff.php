@@ -3,7 +3,7 @@
 return [
     'title' => 'Ilmiy xodimlar',
     'eyebrow' => 'Markaz sho‘balari va filiallari',
-    'lead' => 'ITIM tadqiqot sho‘balari va hududiy filiallari xodimlari: kim nima ustida ishlaydi va qanday bog‘lanish mumkin.',
+    'lead' => 'Markazning tadqiqot sho‘balari va hududiy filiallari xodimlari: kim nima ustida ishlaydi va qanday bog‘lanish mumkin.',
     'sectors' => ':count sho‘ba',
     'researchers' => ':count tadqiqotchi',
     'with_degree' => ':count ilmiy darajali',

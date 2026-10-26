@@ -74,7 +74,7 @@ describe('Research staff prototype pages', function () {
             ->assertDontSee('10 / 14');
     })->group('feature', 'routes');
 
-    it('calls a sector шўъба / sho‘ba in both Uzbek scripts', function () {
+    it('calls a sector шўъба / sho‘ba and never abbreviates the Centre as ИТИМ in both Uzbek scripts', function () {
         setAppLocale('kr');
         $this->get(route('research-staff.sector', 'macroeconomic-policy'))
             ->assertOk()
@@ -82,12 +82,18 @@ describe('Research staff prototype pages', function () {
             ->assertSee('Шўъба ходимлари')
             ->assertDontSee('Сектор ')
             ->assertDontSee('>Сектор<', false);
+        $this->get(route('research-staff.index'))
+            ->assertOk()
+            ->assertSee(__('staff.lead'))
+            ->assertDontSee('ИТИМ');
 
         setAppLocale('uz');
         $this->get(route('research-staff.index'))
             ->assertOk()
             ->assertSee('Sho‘ba mudiri')
-            ->assertDontSee('Sektor');
+            ->assertSee(__('staff.lead'))
+            ->assertDontSee('Sektor')
+            ->assertDontSee('ITIM');
     })->group('feature', 'routes');
 
     it('returns 404 for an unknown sector', function () {
