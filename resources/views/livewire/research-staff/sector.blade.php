@@ -29,8 +29,6 @@
                         </p>
                         <h1 class="rs-title rs-title--sector">{{ $name }}</h1>
                         <p class="rs-lead">{{ __('staff.sector_desc_'.$sector['key']) }}</p>
-                    </div>
-                    <div class="rs-hero-aside rs-hero-aside--joined">
                         @if ($sector['head'])
                             @php($headName = Proto::text($sector['head']['name']))
                             <a class="rs-hero-head" href="{{ route('research-staff.show', $sector['head']['slug']) }}" wire:navigate>
@@ -48,10 +46,8 @@
                                 <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
                             </a>
                         @endif
-                        <ul class="rs-stats">
-                            <li><strong>{{ $members }}</strong><span>{{ trans_choice('staff.members', $members, ['count' => '']) }}</span></li>
-                        </ul>
                     </div>
+                    <x-research-staff.sector-ring class="rs-hero-ring" :sectors="$sectors" :current="$sector['key']" :value="$members" :label="trans_choice('staff.members', $members, ['count' => ''])" />
                 </div>
                 <p class="rs-note"><i class="fa-solid fa-flask"></i> @lang('staff.prototype_note')</p>
             </header>

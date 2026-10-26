@@ -16,7 +16,8 @@ describe('Research staff prototype pages', function () {
         $response->assertSee(__('staff.title'))
             ->assertSee(__('staff.see_more'))
             ->assertSee('rs-hero', false)
-            ->assertSeeInOrder(['rs-hero', 'article-breadcrumb', 'rs-stats', 'rs-note', 'rs-sector-grid'], false)
+            ->assertSeeInOrder(['rs-hero', 'article-breadcrumb', 'rs-stats', 'rs-ring', 'rs-note', 'rs-sector-grid'], false)
+            ->assertDontSee('is-current', false)
             ->assertSee('rs-sector-grid', false)
             ->assertSee('rs-stack-item', false)
             ->assertSee('fa-chart-line', false)
@@ -27,7 +28,8 @@ describe('Research staff prototype pages', function () {
             ->assertDontSee('rs-side', false)
             ->assertDontSee(route('research-staff.show', 'bakhtiyor-abdullaev'), false);
 
-        expect(substr_count($response->getContent(), 'data-sector-card="'))->toBe(count(ResearchStaffPrototype::SECTORS));
+        expect(substr_count($response->getContent(), 'data-sector-card="'))->toBe(count(ResearchStaffPrototype::SECTORS))
+            ->and(substr_count($response->getContent(), 'data-ring-sector="'))->toBe(count(ResearchStaffPrototype::SECTORS));
     })->group('feature', 'routes');
 
     it('shows a sector page with its head first, then staff, and the sector list', function () {
@@ -44,9 +46,11 @@ describe('Research staff prototype pages', function () {
             ->assertSee(route('research-staff.sector', 'regional-development'), false)
             ->assertSee('fa-chart-line', false)
             ->assertSee('01 / 14')
-            ->assertSeeInOrder(['rs-hero-head', 'Абдуллаев Бахтиёр Рустамович', 'rs-stats', 'rs-note', 'rs-people'], false);
+            ->assertSeeInOrder(['rs-hero-head', 'Абдуллаев Бахтиёр Рустамович', 'rs-ring--focused', 'is-current', 'data-ring-sector="macro"', 'rs-note', 'rs-people'], false);
 
-        expect(substr_count($response->getContent(), 'data-person="'))->toBe(5);
+        expect(substr_count($response->getContent(), 'data-person="'))->toBe(5)
+            ->and(substr_count($response->getContent(), 'data-ring-sector="'))->toBe(count(ResearchStaffPrototype::SECTORS))
+            ->and(substr_count($response->getContent(), 'is-current'))->toBe(1);
     })->group('feature', 'routes');
 
     it('returns 404 for an unknown sector', function () {

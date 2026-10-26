@@ -19,14 +19,12 @@
                         <p class="rs-eyebrow">@lang('staff.eyebrow')</p>
                         <h1 class="rs-title">@lang('staff.title')</h1>
                         <p class="rs-lead">@lang('staff.lead')</p>
-                    </div>
-                    <div class="rs-hero-aside">
                         <ul class="rs-stats" aria-label="@lang('staff.title')">
                             <li><strong>{{ $sectors->count() }}</strong><span>{{ trans_choice('staff.sectors', $sectors->count(), ['count' => '']) }}</span></li>
-                            <li><strong>{{ $totalPeople }}</strong><span>{{ trans_choice('staff.researchers', $totalPeople, ['count' => '']) }}</span></li>
                             <li><strong>{{ $withDegree }}</strong><span>{{ trans_choice('staff.with_degree', $withDegree, ['count' => '']) }}</span></li>
                         </ul>
                     </div>
+                    <x-research-staff.sector-ring class="rs-hero-ring" :sectors="$sectors" :value="$totalPeople" :label="trans_choice('staff.researchers', $totalPeople, ['count' => ''])" />
                 </div>
                 <p class="rs-note"><i class="fa-solid fa-flask"></i> @lang('staff.prototype_note')</p>
             </header>
