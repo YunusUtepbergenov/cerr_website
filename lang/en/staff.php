@@ -5,7 +5,6 @@ return [
     'eyebrow' => 'Sectors and branches of the Center',
     'lead' => 'Staff of CERR’s research sectors and regional branches: who works on what and how to reach them.',
     'sectors' => '{1} :count sector|[2,*] :count sectors',
-    'researchers' => '{1} :count researcher|[2,*] :count researchers',
     'with_degree' => ':count with a doctoral degree',
     'members' => '{1} :count member|[2,*] :count members',
     'sector' => 'Sector',

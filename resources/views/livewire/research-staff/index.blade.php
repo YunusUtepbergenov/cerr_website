@@ -16,11 +16,9 @@
                 </nav>
                 <div class="rs-hero-body">
                     <div class="rs-hero-text">
-                        <p class="rs-eyebrow">@lang('staff.eyebrow')</p>
-                        <h1 class="rs-title">@lang('staff.title')</h1>
-                        <p class="rs-lead">@lang('staff.lead')</p>
+                        <h1 class="rs-title">@lang('staff.eyebrow')</h1>
                     </div>
-                    <x-research-staff.hero-photo :value="$totalPeople" :label="trans_choice('staff.researchers', $totalPeople, ['count' => ''])" />
+                    <x-research-staff.hero-photo />
                 </div>
             </header>
 

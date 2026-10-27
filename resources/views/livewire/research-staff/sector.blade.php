@@ -43,7 +43,7 @@
                             </a>
                         @endif
                     </div>
-                    <x-research-staff.hero-photo :value="$members" :label="trans_choice('staff.members', $members, ['count' => ''])" />
+                    <x-research-staff.hero-photo />
                 </div>
             </header>
 

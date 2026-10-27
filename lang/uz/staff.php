@@ -5,7 +5,6 @@ return [
     'eyebrow' => 'Markaz sho‘balari va filiallari',
     'lead' => 'Markazning tadqiqot sho‘balari va hududiy filiallari xodimlari: kim nima ustida ishlaydi va qanday bog‘lanish mumkin.',
     'sectors' => ':count sho‘ba',
-    'researchers' => ':count tadqiqotchi',
     'with_degree' => ':count ilmiy darajali',
     'members' => ':count xodim',
     'sector' => 'Sho‘ba',

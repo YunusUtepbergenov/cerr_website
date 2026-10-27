@@ -16,8 +16,12 @@ describe('Research staff prototype pages', function () {
 
         $response->assertSee(__('staff.title'))
             ->assertSee(__('staff.see_more'))
-            ->assertSeeInOrder(['rs-hero', 'article-breadcrumb', 'rs-hero-text', 'rs-hero-photo', 'images/research-staff/cerr-building.webp', 'rs-hero-stat', 'rs-sector-grid'], false)
+            ->assertSeeInOrder(['rs-hero', 'article-breadcrumb', 'rs-hero-text', 'rs-hero-photo', 'images/research-staff/cerr-building.webp', 'rs-sector-grid'], false)
+            ->assertSee('<h1 class="rs-title">'.__('staff.eyebrow').'</h1>', false)
             ->assertDontSee('rs-ring', false)
+            ->assertDontSee('rs-hero-stat', false)
+            ->assertDontSee('rs-lead', false)
+            ->assertDontSee('rs-eyebrow', false)
             ->assertDontSee('rs-note', false)
             ->assertDontSee('rs-stats', false)
             ->assertDontSee('rs-sector-num', false)
@@ -53,7 +57,8 @@ describe('Research staff prototype pages', function () {
             ->assertSee('data-icon="trend"', false)
             ->assertDontSee('04 / 14')
             ->assertDontSee('rs-note', false)
-            ->assertSeeInOrder(['rs-hero-head', 'Насриддинов Фазлиддин Файзуллаевич', 'rs-hero-photo', 'rs-hero-stat', 'rs-people'], false)
+            ->assertSeeInOrder(['rs-hero-head', 'Насриддинов Фазлиддин Файзуллаевич', 'rs-hero-photo', 'rs-people'], false)
+            ->assertDontSee('rs-hero-stat', false)
             ->assertDontSee('rs-ring', false);
 
         expect(substr_count($response->getContent(), 'data-person="'))->toBe(3);
@@ -82,14 +87,14 @@ describe('Research staff prototype pages', function () {
             ->assertDontSee('>Сектор<', false);
         $this->get(route('research-staff.index'))
             ->assertOk()
-            ->assertSee(__('staff.lead'))
+            ->assertSee(__('staff.eyebrow'))
             ->assertDontSee('ИТИМ');
 
         setAppLocale('uz');
         $this->get(route('research-staff.index'))
             ->assertOk()
             ->assertSee('Sho‘ba mudiri')
-            ->assertSee(__('staff.lead'))
+            ->assertSee(__('staff.eyebrow'))
             ->assertDontSee('Sektor')
             ->assertDontSee('ITIM');
     })->group('feature', 'routes');

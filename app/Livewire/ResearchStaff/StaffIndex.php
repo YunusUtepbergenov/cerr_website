@@ -9,12 +9,8 @@ class StaffIndex extends Component
 {
     public function render()
     {
-        $sectors = ResearchStaffPrototype::sectors();
-        $people = ResearchStaffPrototype::people();
-
         return view('livewire.research-staff.index', [
-            'sectors' => $sectors,
-            'totalPeople' => $people->count(),
+            'sectors' => ResearchStaffPrototype::sectors(),
         ])->layout('components.layouts.app', [
             'title' => __('staff.title').' — CERR',
             'metaDescription' => __('staff.lead'),
