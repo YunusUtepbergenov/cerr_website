@@ -57,8 +57,11 @@ describe('Research staff prototype pages', function () {
             ->assertSee('data-icon="trend"', false)
             ->assertDontSee('04 / 14')
             ->assertDontSee('rs-note', false)
-            ->assertSeeInOrder(['rs-hero-head', 'Насриддинов Фазлиддин Файзуллаевич', 'rs-hero-photo', 'rs-people'], false)
+            ->assertSeeInOrder(['rs-hero-text--icon', 'data-icon="trend"', 'rs-title--sector', __('structure.macro'), 'rs-hero-photo', 'rs-people', 'Насриддинов Фазлиддин Файзуллаевич'], false)
             ->assertDontSee('rs-hero-stat', false)
+            ->assertDontSee('rs-hero-head', false)
+            ->assertDontSee('rs-lead', false)
+            ->assertDontSee('rs-eyebrow', false)
             ->assertDontSee('rs-ring', false);
 
         expect(substr_count($response->getContent(), 'data-person="'))->toBe(3);

@@ -47,7 +47,7 @@
 .rs-hero .article-breadcrumb .current { color: rgba(255, 255, 255, .92); }
 .rs-hero-body { display: grid; grid-template-columns: minmax(0, 1fr); align-items: center; min-height: 212px; padding: 0 46% 22px 0; }
 .rs-hero-text { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0 18px; max-width: 760px; min-width: 0; align-items: start; }
-.rs-hero-text--icon { grid-template-columns: 52px minmax(0, 1fr); }
+.rs-hero-text--icon { grid-template-columns: 52px minmax(0, 1fr); gap: 0 18px; align-items: center; }
 .rs-hero-text--icon > :not(.rs-hero-icon) { grid-column: 2; }
 .rs-hero-icon {
     grid-row: 1 / span 3;
@@ -57,17 +57,6 @@
     background: linear-gradient(145deg, color-mix(in srgb, var(--rs-accent) 80%, #fff) 0%, var(--rs-accent) 100%);
     box-shadow: 0 10px 24px color-mix(in srgb, var(--rs-accent) 40%, transparent), inset 0 1px 0 rgba(255, 255, 255, .35);
 }
-.rs-eyebrow {
-    display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
-    font-family: var(--na-font-display);
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: .14em;
-    text-transform: uppercase;
-    color: color-mix(in srgb, var(--rs-accent) 42%, #fff);
-    margin: 0 0 8px;
-}
-.rs-hero .rs-pill-dot { background: currentColor; }
 .rs-title {
     font-family: var(--na-font-display);
     font-size: clamp(28px, 3vw, 36px);
@@ -75,43 +64,10 @@
     line-height: 1.08;
     letter-spacing: -.015em;
     color: var(--rs-hero-ink);
-    margin: 0 0 8px;
+    margin: 0;
     text-wrap: balance;
 }
-.rs-title--sector { font-size: clamp(22px, 2.2vw, 28px); line-height: 1.15; }
-.rs-lead { font-size: 15px; line-height: 1.45; color: var(--rs-hero-muted); margin: 0; max-width: 640px; }
-.rs-stats { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
-.rs-stats li {
-    display: inline-flex; align-items: baseline; gap: 7px; margin: 0;
-    padding: 7px 14px; border-radius: 999px;
-    border: 1px solid var(--rs-hero-line); background: var(--rs-hero-glass);
-    -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-}
-.rs-stats strong {
-    font-family: var(--na-font-display);
-    font-size: 18px;
-    font-weight: 700;
-    line-height: 1;
-    color: var(--rs-hero-ink);
-    font-variant-numeric: tabular-nums lining-nums;
-    letter-spacing: -.02em;
-}
-.rs-stats span { font-size: 13px; color: var(--rs-hero-muted); white-space: nowrap; }
-.rs-hero-head {
-    display: inline-flex; align-items: center; gap: 12px; margin-top: 16px; justify-self: start;
-    padding: 9px 14px 9px 9px; border-radius: 14px;
-    border: 1px solid var(--rs-hero-line); background: var(--rs-hero-glass);
-    color: var(--rs-hero-ink); text-decoration: none;
-    transition: background-color .18s ease, border-color .18s ease;
-}
-.rs-hero-head:hover { background: rgba(255, 255, 255, .14); border-color: rgba(255, 255, 255, .3); color: #fff; }
-.rs-hero-head-photo { width: 44px; height: 44px; border-radius: 11px; overflow: hidden; flex: none; background: var(--na-mist); }
-.rs-hero-head-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.rs-hero-head-photo .rs-avatar--sm { width: 44px; height: 44px; border-radius: 11px; }
-.rs-hero-head-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.rs-hero-head-label { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: color-mix(in srgb, var(--rs-accent) 42%, #fff); }
-.rs-hero-head-name { font-family: var(--na-font-display); font-size: 14.5px; font-weight: 700; line-height: 1.25; }
-.rs-hero-head i { margin-left: 6px; font-size: 12px; color: var(--rs-hero-muted); }
+.rs-title--sector { font-size: clamp(24px, 2.6vw, 32px); line-height: 1.15; margin: 0; }
 
 /* ---- Hero photo: the Centre's building, fading into the banner ------------- */
 .rs-hero-photo {
@@ -472,7 +428,6 @@ html[data-theme=dark] .rs-pending-parts span { background: var(--dk-surface-2); 
     .rs-hero-icon { width: 44px; height: 44px; border-radius: 12px; }
     .rs-hero-icon .rs-icon { width: 22px; height: 22px; }
     .rs-hero-icon .rs-icon--map { width: 32px; height: 32px; }
-    .rs-hero-head { display: flex; justify-self: stretch; }
     .rs-hero-photo { height: 160px; margin: 4px -18px -18px; }
     .rs-sector-grid { grid-template-columns: 1fr; gap: 12px; }
     .rs-sector-card { padding: 16px 16px 14px; }
@@ -492,7 +447,7 @@ html[data-theme=dark] .rs-pending-parts span { background: var(--dk-surface-2); 
     .rs-part-num { min-width: 34px; height: 34px; font-size: 13.5px; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .rs-sector-card, .rs-person, .rs-see-more i, .rs-cta-btn, .rs-more i, .rs-hero-head, .rs-icon { transition: none; }
+    .rs-sector-card, .rs-person, .rs-see-more i, .rs-cta-btn, .rs-more i, .rs-icon { transition: none; }
 }
 
 /* ---- Dark theme (tokens come from dark.css; these are the hard-coded bits) -- */

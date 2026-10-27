@@ -6,7 +6,6 @@
         <link rel="stylesheet" href="{{ asset('css/research-staff.css') }}?v={{ filemtime(public_path('css/research-staff.css')) }}">
     @endpush
 
-    @php($members = $sector['staff']->count() + ($sector['head'] ? 1 : 0))
     @php($people = collect([$sector['head']])->filter()->concat($sector['staff']))
 
     <section class="rs-page rs-sector-page" style="--rs-accent: {{ $sector['accent'] }}">
@@ -22,26 +21,7 @@
                 <div class="rs-hero-body">
                     <div class="rs-hero-text rs-hero-text--icon">
                         <span class="rs-hero-icon"><x-research-staff.sector-icon :icon="$sector['icon']" /></span>
-                        <p class="rs-eyebrow"><span class="rs-pill-dot"></span>@lang('staff.sector')</p>
                         <h1 class="rs-title rs-title--sector">{{ $name }}</h1>
-                        <p class="rs-lead">{{ __('staff.sector_desc_'.$sector['key']) }}</p>
-                        @if ($sector['head'])
-                            @php($headName = Proto::text($sector['head']['name']))
-                            <a class="rs-hero-head" href="{{ route('research-staff.show', $sector['head']['slug']) }}" wire:navigate>
-                                <span class="rs-hero-head-photo">
-                                    @if ($sector['head']['photo'])
-                                        <img src="{{ asset($sector['head']['photo']) }}" alt="">
-                                    @else
-                                        <span class="rs-avatar rs-avatar--sm" aria-hidden="true">{{ Proto::initials($headName) }}</span>
-                                    @endif
-                                </span>
-                                <span class="rs-hero-head-text">
-                                    <span class="rs-hero-head-label">@lang('staff.head_of_sector')</span>
-                                    <span class="rs-hero-head-name">{{ $headName }}</span>
-                                </span>
-                                <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
-                            </a>
-                        @endif
                     </div>
                     <x-research-staff.hero-photo />
                 </div>
