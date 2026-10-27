@@ -27,47 +27,58 @@
                 </div>
             </header>
 
-            <div class="rs-layout">
-                <div class="rs-main">
-                    <h2 class="rs-section-title">@lang('staff.staff_of_sector')</h2>
+            <div class="rs-sector-body">
+                <h2 class="rs-section-title">@lang('staff.staff_of_sector')</h2>
 
-                    <ul class="rs-people">
-                        @foreach ($people as $person)
-                            @php($personName = Proto::text($person['name']))
-                            <li class="rs-person" data-person="{{ $person['slug'] }}">
-                                <a class="rs-person-photo" href="{{ route('research-staff.show', $person['slug']) }}" wire:navigate tabindex="-1" aria-hidden="true">
-                                    @if ($person['photo'])
-                                        <img src="{{ asset($person['photo']) }}" alt="">
-                                    @else
-                                        <span class="rs-avatar">{{ Proto::initials($personName) }}</span>
+                <ul class="rs-people">
+                    @foreach ($people as $person)
+                        @php($personName = Proto::text($person['name']))
+                        <li class="rs-person" data-person="{{ $person['slug'] }}">
+                            <a class="rs-person-photo" href="{{ route('research-staff.show', $person['slug']) }}" wire:navigate tabindex="-1" aria-hidden="true">
+                                @if ($person['photo'])
+                                    <img src="{{ asset($person['photo']) }}" alt="">
+                                @else
+                                    <span class="rs-avatar">{{ Proto::initials($personName) }}</span>
+                                @endif
+                            </a>
+                            <div class="rs-person-body">
+                                @if ($person['is_head'])
+                                    <span class="rs-role-tag">@lang('staff.head_of_sector')</span>
+                                @endif
+                                <h3 class="rs-person-name"><a href="{{ route('research-staff.show', $person['slug']) }}" wire:navigate>{{ $personName }}</a></h3>
+                                <span class="rs-person-rule"></span>
+                                <p class="rs-person-pos">
+                                    {{ __('staff.position_'.$person['position']) }}
+                                    @if ($person['degree'])
+                                        <span class="rs-degree">{{ __('staff.degree_'.$person['degree']) }}</span>
                                     @endif
-                                </a>
-                                <div class="rs-person-body">
-                                    @if ($person['is_head'])
-                                        <span class="rs-role-tag">@lang('staff.head_of_sector')</span>
-                                    @endif
-                                    <h3 class="rs-person-name"><a href="{{ route('research-staff.show', $person['slug']) }}" wire:navigate>{{ $personName }}</a></h3>
-                                    <span class="rs-person-rule"></span>
-                                    <p class="rs-person-pos">
-                                        {{ __('staff.position_'.$person['position']) }}
-                                        @if ($person['degree'])
-                                            <span class="rs-degree">{{ __('staff.degree_'.$person['degree']) }}</span>
-                                        @endif
-                                    </p>
-                                    @if ($areas = Proto::items($person['research_areas']))
-                                        <p class="rs-person-areas">{{ implode(' · ', $areas) }}</p>
-                                    @endif
-                                    <div class="rs-person-foot">
-                                        <a class="rs-chip-link" href="mailto:{{ $person['email'] }}"><i class="fa-regular fa-envelope"></i>{{ $person['email'] }}</a>
-                                        <a class="rs-btn" href="{{ route('research-staff.show', $person['slug']) }}" wire:navigate>@lang('staff.see_more') <i class="fa-solid fa-arrow-right"></i></a>
-                                    </div>
+                                </p>
+                                @if ($areas = Proto::items($person['research_areas']))
+                                    <p class="rs-person-areas">{{ implode(' · ', $areas) }}</p>
+                                @endif
+                                <div class="rs-person-foot">
+                                    <a class="rs-chip-link" href="mailto:{{ $person['email'] }}"><i class="fa-regular fa-envelope"></i>{{ $person['email'] }}</a>
+                                    <a class="rs-btn" href="{{ route('research-staff.show', $person['slug']) }}" wire:navigate>@lang('staff.see_more') <i class="fa-solid fa-arrow-right"></i></a>
                                 </div>
+                            </div>
+                        </li>
+                    @endforeach
+                </ul>
+
+                <nav class="rs-units" aria-label="@lang('staff.other_sectors')">
+                    <h2 class="rs-section-title rs-section-title--sm">@lang('staff.other_sectors')</h2>
+                    <ul class="rs-unit-chips">
+                        @foreach ($sectors as $unit)
+                            @continue($unit['key'] === $sector['key'])
+                            <li style="--rs-accent: {{ $unit['accent'] }}">
+                                <a class="rs-unit-chip" href="{{ route('research-staff.sector', $unit['slug']) }}" wire:navigate data-sector-chip="{{ $unit['slug'] }}">
+                                    <span class="rs-unit-chip-icon"><x-research-staff.sector-icon :icon="$unit['icon']" /></span>
+                                    {{ __('staff.sector_short_'.$unit['key']) }}
+                                </a>
                             </li>
                         @endforeach
                     </ul>
-                </div>
-
-                <x-research-staff.about-nav active="staff" :sectors="$sectors" :current-sector="$sector['slug']" />
+                </nav>
             </div>
         </div>
     </section>

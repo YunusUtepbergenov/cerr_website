@@ -41,7 +41,7 @@ describe('Research staff prototype pages', function () {
         expect(substr_count($response->getContent(), 'data-sector-card="'))->toBe(count(ResearchStaffPrototype::SECTORS));
     })->group('feature', 'routes');
 
-    it('shows a sector page with its head first, then staff, and the sector list', function () {
+    it('shows a sector page with its head first, then staff, then chips to the other units', function () {
         setAppLocale('ru');
 
         $response = $this->get(route('research-staff.sector', 'macroeconomic-policy'))->assertOk();
@@ -58,13 +58,18 @@ describe('Research staff prototype pages', function () {
             ->assertDontSee('04 / 14')
             ->assertDontSee('rs-note', false)
             ->assertSeeInOrder(['rs-hero-text--icon', 'data-icon="trend"', 'rs-title--sector', __('structure.macro'), 'rs-hero-photo', 'rs-people', 'Насриддинов Фазлиддин Файзуллаевич'], false)
+            ->assertSeeInOrder(['rs-people', 'rs-units', 'data-sector-chip="regional-development"', 'data-icon="map:uzbekistan"'], false)
+            ->assertDontSee('rs-side', false)
+            ->assertDontSee('rs-nav-card', false)
+            ->assertDontSee('data-sector-chip="macroeconomic-policy"', false)
             ->assertDontSee('rs-hero-stat', false)
             ->assertDontSee('rs-hero-head', false)
             ->assertDontSee('rs-lead', false)
             ->assertDontSee('rs-eyebrow', false)
             ->assertDontSee('rs-ring', false);
 
-        expect(substr_count($response->getContent(), 'data-person="'))->toBe(3);
+        expect(substr_count($response->getContent(), 'data-person="'))->toBe(3)
+            ->and(substr_count($response->getContent(), 'data-sector-chip="'))->toBe(count(ResearchStaffPrototype::SECTORS) - 1);
     })->group('feature', 'routes');
 
     it('shows a regional branch with its staff and e-mails from the staff list', function () {

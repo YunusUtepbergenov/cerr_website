@@ -95,32 +95,26 @@
         linear-gradient(90deg, rgba(10, 35, 64, .5) 0%, transparent 55%);
 }
 
-/* ---- Page layout: content + about sidebar (newuu-style) --------------------- */
-.rs-layout { display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: 32px; margin-top: 28px; align-items: start; }
-.rs-main { min-width: 0; }
-.rs-side { display: grid; gap: 16px; }
-.rs-nav-card { border: 1px solid var(--na-hair); border-radius: 14px; background: var(--na-paper); overflow: hidden; }
-.rs-nav-title { font-family: var(--na-font-display); font-size: 16px; font-weight: 700; color: var(--na-navy); margin: 0; padding: 16px 18px 14px; border-bottom: 1px solid var(--na-hair); }
-.rs-nav-list { list-style: none; margin: 0; padding: 6px 0; }
-.rs-nav-list li { margin: 0; }
-.rs-nav-list a {
-    display: flex; align-items: center; gap: 10px; padding: 10px 18px; font-size: 14.5px; font-weight: 500; line-height: 1.35;
-    color: var(--na-ink); text-decoration: none; box-shadow: inset 3px 0 0 transparent; transition: color .15s ease, background .15s ease, box-shadow .15s ease;
+/* ---- Sector page: full-width staff grid, then the other units as chips ------ */
+.rs-sector-body { margin-top: 28px; }
+.rs-units { margin-top: 36px; padding-top: 22px; border-top: 1px solid var(--na-hair); }
+.rs-section-title--sm { font-size: 15px; margin-bottom: 12px; }
+.rs-unit-chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.rs-unit-chips li { margin: 0; }
+.rs-unit-chip {
+    display: inline-flex; align-items: center; gap: 9px; padding: 6px 13px 6px 6px; border-radius: 999px;
+    border: 1px solid var(--na-hair); background: var(--na-paper); color: var(--na-navy);
+    font-size: 13.5px; font-weight: 500; line-height: 1.2; text-decoration: none;
+    transition: border-color .15s ease, color .15s ease, background .15s ease;
 }
-.rs-nav-list a:hover { color: var(--na-azure); background: var(--na-mist); }
-.rs-nav-list a.is-active { color: var(--na-azure); font-weight: 600; box-shadow: inset 3px 0 0 var(--na-azure); }
-.rs-nav-list--sectors a { font-size: 13.5px; padding: 8px 18px; }
-.rs-nav-list--sectors a.is-active { color: var(--rs-ink-accent, var(--rs-accent)); box-shadow: inset 3px 0 0 var(--rs-accent); }
+.rs-unit-chip:hover { border-color: color-mix(in srgb, var(--rs-accent) 60%, var(--na-hair)); color: var(--rs-ink-accent, var(--rs-accent)); background: color-mix(in srgb, var(--rs-accent) 7%, var(--na-paper)); }
+.rs-unit-chip-icon {
+    display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%; flex: none;
+    background: color-mix(in srgb, var(--rs-accent) 14%, var(--na-paper)); color: var(--rs-ink-accent, var(--rs-accent));
+}
+.rs-unit-chip-icon .rs-icon { width: 14px; height: 14px; stroke-width: 2; }
+.rs-unit-chip-icon .rs-icon--map { width: 16px; height: 16px; filter: none; }
 .rs-pill-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--rs-accent); flex: none; }
-.rs-cta {
-    display: grid; gap: 14px; padding: 18px; border-radius: 14px; text-decoration: none;
-    background: linear-gradient(135deg, var(--na-navy) 0%, var(--na-navy-deep, #0b2240) 100%); color: #fff;
-}
-.rs-cta-text { display: grid; gap: 4px; }
-.rs-cta-text strong { font-family: var(--na-font-display); font-size: 16px; font-weight: 700; line-height: 1.3; }
-.rs-cta-text span { font-size: 13.5px; line-height: 1.45; color: rgba(255, 255, 255, .72); }
-.rs-cta-btn { justify-self: start; display: inline-flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 8px; background: #fff; color: var(--na-navy); font-family: var(--na-font-display); font-size: 13px; font-weight: 700; transition: transform .15s ease; }
-.rs-cta:hover .rs-cta-btn { transform: translateX(3px); }
 
 /* ---- Sector cards grid (index, full width) ------------------------------------ */
 .rs-sector-grid { list-style: none; margin: 28px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
@@ -178,17 +172,17 @@
 
 /* ---- Sector page: people cards ---------------------------------------------------- */
 .rs-section-title { font-family: var(--na-font-display); font-size: 21px; font-weight: 700; letter-spacing: -.01em; color: var(--na-navy); margin: 0 0 18px; }
-.rs-people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.rs-people { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
 .rs-people li { margin: 0; min-width: 0; }
 .rs-person {
-    display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 0;
+    display: grid; grid-template-columns: 124px minmax(0, 1fr); gap: 0;
     border: 1px solid var(--na-hair); border-radius: 16px; background: var(--na-paper); overflow: hidden;
     transition: border-color .2s ease, box-shadow .2s ease;
 }
 .rs-person:hover { border-color: color-mix(in srgb, var(--rs-accent) 40%, var(--na-hair)); box-shadow: 0 16px 34px -24px rgba(14, 44, 78, .5); }
-.rs-person-photo { container-type: inline-size; display: block; min-height: 190px; overflow: hidden; background: var(--na-mist); }
+.rs-person-photo { container-type: inline-size; display: block; min-height: 170px; overflow: hidden; background: var(--na-mist); }
 .rs-person-photo img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
-.rs-person-body { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 18px 18px 16px; min-width: 0; }
+.rs-person-body { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; padding: 16px 16px 14px; min-width: 0; }
 .rs-person-name { font-family: var(--na-font-display); font-size: 17px; font-weight: 700; line-height: 1.3; letter-spacing: -.01em; margin: 0; }
 .rs-person-name a { color: var(--na-navy); text-decoration: none; }
 .rs-person-name a:hover { color: var(--rs-ink-accent, var(--rs-accent)); }
@@ -397,9 +391,8 @@ html[data-theme=dark] .rs-pending-parts span { background: var(--dk-surface-2); 
 
 /* ---- Responsive ----------------------------------------------------------- */
 @media (max-width: 1080px) {
-    .rs-layout { grid-template-columns: minmax(0, 1fr) 250px; gap: 24px; }
     .rs-sector-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-    .rs-people { grid-template-columns: 1fr; }
+    .rs-people { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .rs-profile-hero { grid-template-columns: 200px minmax(0, 1fr); }
     .rs-facts { grid-column: 1 / -1; grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
@@ -411,10 +404,6 @@ html[data-theme=dark] .rs-pending-parts span { background: var(--dk-surface-2); 
         mask-image: linear-gradient(180deg, transparent 0%, #000 38%);
     }
     .rs-hero-photo img { object-position: 50% 62%; }
-    .rs-layout { grid-template-columns: 1fr; gap: 24px; }
-    .rs-side { grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; }
-    .rs-nav-card--sectors { grid-column: 1 / -1; }
-    .rs-nav-list--sectors { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .rs-profile-layout { grid-template-columns: 1fr; gap: 28px; }
     .rs-profile-side { position: static; }
     .rs-edu-row { grid-template-columns: 160px minmax(0, 1fr); }
@@ -431,8 +420,7 @@ html[data-theme=dark] .rs-pending-parts span { background: var(--dk-surface-2); 
     .rs-hero-photo { height: 160px; margin: 4px -18px -18px; }
     .rs-sector-grid { grid-template-columns: 1fr; gap: 12px; }
     .rs-sector-card { padding: 16px 16px 14px; }
-    .rs-side { grid-template-columns: 1fr; }
-    .rs-nav-list--sectors { grid-template-columns: 1fr; }
+    .rs-people { grid-template-columns: 1fr; }
     .rs-person { grid-template-columns: 110px minmax(0, 1fr); }
     .rs-person-photo { min-height: 150px; }
     .rs-person-body { padding: 14px; }
@@ -447,13 +435,13 @@ html[data-theme=dark] .rs-pending-parts span { background: var(--dk-surface-2); 
     .rs-part-num { min-width: 34px; height: 34px; font-size: 13.5px; }
 }
 @media (prefers-reduced-motion: reduce) {
-    .rs-sector-card, .rs-person, .rs-see-more i, .rs-cta-btn, .rs-more i, .rs-icon { transition: none; }
+    .rs-sector-card, .rs-person, .rs-see-more i, .rs-more i, .rs-icon, .rs-unit-chip { transition: none; }
 }
 
 /* ---- Dark theme (tokens come from dark.css; these are the hard-coded bits) -- */
 html[data-theme=dark] .rs-page { --rs-muted-ink: var(--dk-text-muted); }
 html[data-theme=dark] .rs-sector-grid li,
-html[data-theme=dark] .rs-nav-list--sectors li,
+html[data-theme=dark] .rs-unit-chips li,
 html[data-theme=dark] .rs-sector-page,
 html[data-theme=dark] .rs-profile {
     --rs-ink-accent: color-mix(in srgb, var(--rs-accent) 55%, #fff);
@@ -463,7 +451,7 @@ html[data-theme=dark] .rs-hero { border: 1px solid var(--dk-border); background:
         radial-gradient(720px 360px at 92% -30%, color-mix(in srgb, var(--rs-accent) 38%, transparent), transparent 70%),
         linear-gradient(135deg, #132b4a 0%, var(--dk-surface) 100%); }
 
-html[data-theme=dark] .rs-nav-card,
+html[data-theme=dark] .rs-unit-chip,
 html[data-theme=dark] .rs-person,
 html[data-theme=dark] .rs-side-card,
 html[data-theme=dark] .rs-profile-hero,
@@ -482,12 +470,10 @@ html[data-theme=dark] .rs-profile-hero {
 }
 html[data-theme=dark] .rs-facts,
 html[data-theme=dark] .rs-chips li,
-html[data-theme=dark] .rs-chip-link,
-html[data-theme=dark] .rs-nav-list a:hover { background: var(--dk-surface-2); }
-html[data-theme=dark] .rs-nav-list a.is-active { color: var(--dk-accent); box-shadow: inset 3px 0 0 var(--dk-accent); }
-html[data-theme=dark] .rs-nav-list--sectors a.is-active { color: var(--rs-ink-accent); box-shadow: inset 3px 0 0 var(--rs-accent); }
-html[data-theme=dark] .rs-cta { background: linear-gradient(135deg, var(--dk-surface-2) 0%, var(--dk-surface) 100%); border: 1px solid var(--dk-border); }
-html[data-theme=dark] .rs-cta-btn { background: var(--dk-accent); color: var(--dk-bg); }
+html[data-theme=dark] .rs-chip-link { background: var(--dk-surface-2); }
+html[data-theme=dark] .rs-unit-chip { border-color: var(--dk-border); color: var(--dk-text); }
+html[data-theme=dark] .rs-unit-chip:hover { background: var(--dk-surface-2); color: var(--rs-ink-accent); }
+html[data-theme=dark] .rs-unit-chip-icon { background: color-mix(in srgb, var(--rs-accent) 22%, var(--dk-surface)); }
 html[data-theme=dark] .rs-btn { background: var(--dk-accent); color: var(--dk-bg); }
 html[data-theme=dark] .rs-btn:hover { background: var(--rs-ink-accent); color: var(--dk-bg); }
 html[data-theme=dark] .rs-edu-row:nth-child(even) { background: color-mix(in srgb, var(--dk-surface-2) 70%, transparent); }
