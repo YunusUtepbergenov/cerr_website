@@ -27,15 +27,7 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label">{{ __('admin.videos.image') }}</label>
-                            @php
-                                $videoPreviewUrl = null;
-                                if ($imageUpload) {
-                                    try { $videoPreviewUrl = $imageUpload->temporaryUrl(); } catch (\Throwable $e) { $videoPreviewUrl = null; }
-                                }
-                                if (! $videoPreviewUrl && $image) {
-                                    $videoPreviewUrl = \Illuminate\Support\Facades\Storage::disk('public')->url($image);
-                                }
-                            @endphp
+                            @php($videoPreviewUrl = $this->previewUrl())
                             @if ($videoPreviewUrl)
                                 <div class="mb-2"><img src="{{ $videoPreviewUrl }}" alt="" style="width: 140px; height: 96px; object-fit: cover; border-radius: 6px; border: 1px solid var(--admin-border);"></div>
                             @endif
@@ -71,7 +63,7 @@
                     @forelse ($videos as $v)
                         <tr wire:key="video-{{ $v->id }}">
                             <td class="text-muted small">#{{ $v->id }}</td>
-                            <td>@if ($v->image)<img src="{{ \Illuminate\Support\Facades\Storage::disk('public')->url($v->image) }}" alt="" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;">@endif</td>
+                            <td>@if ($thumb = $v->thumbnailUrl())<img src="{{ $thumb }}" alt="" style="width: 60px; height: 40px; object-fit: cover; border-radius: 4px;">@endif</td>
                             <td class="fw-semibold">{{ $v->title }}</td>
                             <td><a href="{{ $v->url }}" target="_blank" class="text-truncate d-inline-block" style="max-width: 240px;">{{ $v->url }}</a></td>
                             <td class="text-end">

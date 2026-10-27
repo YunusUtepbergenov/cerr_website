@@ -37,6 +37,23 @@ class VideoIndex extends Component
         ];
     }
 
+    /**
+     * The image shown above the upload field: the staged upload if there is
+     * one, otherwise whatever the stored value resolves to.
+     */
+    public function previewUrl(): ?string
+    {
+        if ($this->imageUpload) {
+            try {
+                return $this->imageUpload->temporaryUrl();
+            } catch (\Throwable) {
+                // Fall through to the stored image.
+            }
+        }
+
+        return (new Video(['image' => $this->image, 'url' => $this->url]))->thumbnailUrl();
+    }
+
     public function startCreate(): void
     {
         $this->resetForm();

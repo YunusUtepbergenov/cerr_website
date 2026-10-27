@@ -4,6 +4,7 @@ use App\Models\Video;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 describe('Video Model', function () {
     it('has fillable attributes', function () {
@@ -93,6 +94,28 @@ describe('Video thumbnails', function () {
         } finally {
             unlink(public_path('images/video/'.$filename));
         }
+    })->group('unit', 'models');
+
+    it('serves an admin upload from the public disk before the YouTube thumbnail', function () {
+        Http::fake();
+        Storage::fake('public');
+        Storage::disk('public')->put('videos/thumb.jpg', 'stub');
+
+        $video = Video::factory()->make(['image' => 'videos/thumb.jpg', 'url' => 'https://www.youtube.com/watch?v=YlytocIqHxo']);
+
+        expect($video->thumbnailUrl())->toBe(Storage::disk('public')->url('videos/thumb.jpg'));
+        Http::assertNothingSent();
+    })->group('unit', 'models');
+
+    it('never prefixes an absolute image URL with the storage path', function () {
+        Http::fake(['img.youtube.com/*' => Http::response('', 200)]);
+
+        $fromYoutube = Video::factory()->make(['image' => 'https://i.ytimg.com/vi/YlytocIqHxo/mqdefault.jpg', 'url' => 'https://www.youtube.com/embed/YlytocIqHxo']);
+        $external = Video::factory()->make(['image' => 'https://cdn.example.com/poster.jpg', 'url' => 'https://example.com/video.mp4']);
+
+        expect($fromYoutube->thumbnailUrl())->toBe('https://img.youtube.com/vi/YlytocIqHxo/maxresdefault.jpg')
+            ->and($external->thumbnailUrl())->toBe('https://cdn.example.com/poster.jpg')
+            ->and($fromYoutube->thumbnailUrl())->not->toContain('/storage/');
     })->group('unit', 'models');
 
     it('extracts the YouTube id from common URL shapes', function (string $url) {

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class Video extends Model
 {
@@ -21,12 +22,20 @@ class Video extends Model
 
     /**
      * Resolve a thumbnail: an uploaded image if one exists, otherwise the
-     * video's own YouTube thumbnail derived from its URL, otherwise null.
+     * video's own YouTube thumbnail derived from its URL, otherwise the
+     * stored image when it is an absolute URL, otherwise null.
+     *
+     * Legacy values are bare filenames under public/images/video/; uploads
+     * made in the admin live on the public storage disk under videos/.
      */
     public function thumbnailUrl(): ?string
     {
         if ($this->image && file_exists(public_path('images/video/'.$this->image))) {
             return asset('images/video/'.$this->image);
+        }
+
+        if ($this->image && str_starts_with($this->image, 'videos/')) {
+            return Storage::disk('public')->url($this->image);
         }
 
         if ($id = $this->youtubeId()) {
