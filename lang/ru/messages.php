@@ -62,5 +62,6 @@ return [
     'related_news' => 'Похожие новости',
     'min_read' => 'мин чтения',
     'views_label' => 'просмотров',
+    'on_this_page' => 'Содержание',
 
 ];

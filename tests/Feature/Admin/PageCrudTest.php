@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Admin\Pages\PageForm;
+use App\Livewire\Admin\Pages\PageIndex;
 use App\Models\Page;
 use App\Models\User;
 use Illuminate\Http\UploadedFile;
@@ -43,5 +44,53 @@ describe('Page CRUD', function () {
             ->set('translations.kr.content', '<p>c</p>')
             ->call('save')
             ->assertHasErrors(['slug']);
+    })->group('feature', 'admin');
+});
+
+describe('Page list and system pages', function () {
+    it('shows the title and the public link of pages bound to site routes', function () {
+        $page = Page::factory()->create(['slug' => 'objectives']);
+        $page->translations()->create(['language' => 'kr', 'title' => 'Марказ вазифалари', 'content' => '<p>x</p>', 'image' => '']);
+        $free = Page::factory()->create(['slug' => 'free-form']);
+        $free->translations()->create(['language' => 'kr', 'title' => 'Эркин саҳифа', 'content' => '<p>y</p>', 'image' => '']);
+
+        $html = $this->get(route('admin.pages.index'))->assertOk()->getContent();
+
+        expect($html)->toContain('Марказ вазифалари')
+            ->and($html)->toContain('data-public-url="objectives"')
+            ->and($html)->toContain('href="'.route('about').'"')
+            ->and($html)->toContain('data-system-page="objectives"')
+            ->and($html)->toContain('Эркин саҳифа')
+            ->and($html)->not->toContain('data-public-url="free-form"')
+            ->and($html)->not->toContain('data-system-page="free-form"');
+    })->group('feature', 'admin');
+
+    it('refuses to delete a page bound to a site route', function () {
+        $page = Page::factory()->create(['slug' => 'history']);
+
+        Livewire::test(PageIndex::class)
+            ->call('delete', $page->id);
+
+        expect(Page::find($page->id))->not->toBeNull();
+    })->group('feature', 'admin');
+
+    it('still deletes free-form pages', function () {
+        $page = Page::factory()->create(['slug' => 'free-form']);
+
+        Livewire::test(PageIndex::class)
+            ->call('delete', $page->id);
+
+        expect(Page::find($page->id))->toBeNull();
+    })->group('feature', 'admin');
+
+    it('offers an open-on-site button when editing a system page', function () {
+        $page = Page::factory()->create(['slug' => 'history']);
+        $page->translations()->create(['language' => 'kr', 'title' => 'Тарих', 'content' => '<p>x</p>', 'image' => '']);
+
+        $html = $this->get(route('admin.pages.edit', $page))->assertOk()->getContent();
+
+        expect($html)->toContain('href="'.route('history').'"')
+            ->and($html)->toContain(__('admin.pages.open_on_site'))
+            ->and($html)->toContain(__('admin.pages.system_page_help'));
     })->group('feature', 'admin');
 });

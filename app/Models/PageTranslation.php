@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Support\HtmlSanitizer;
+use App\Support\PlainTextFormatter;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
@@ -23,6 +25,24 @@ class PageTranslation extends Model
     public function page()
     {
         return $this->belongsTo(Page::class);
+    }
+
+    /**
+     * The body as safe HTML. Rows imported before the rich-text editor hold
+     * plain text, which is given paragraph, heading and list structure first.
+     */
+    public function bodyHtml(): string
+    {
+        $content = (string) $this->content;
+
+        if (trim($content) === '') {
+            return '';
+        }
+        if (! PlainTextFormatter::looksLikeHtml($content)) {
+            $content = PlainTextFormatter::toHtml($content);
+        }
+
+        return HtmlSanitizer::sanitize($content);
     }
 
     /**

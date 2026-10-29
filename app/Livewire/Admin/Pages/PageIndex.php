@@ -19,6 +19,12 @@ class PageIndex extends Component
     {
         $page = Page::with('translations')->findOrFail($id);
 
+        if ($page->isSystemPage()) {
+            session()->flash('status', __('admin.pages.system_page_kept'));
+
+            return;
+        }
+
         $page->logActivity('deleted', ['slug' => $page->slug]);
 
         if ($page->image) {

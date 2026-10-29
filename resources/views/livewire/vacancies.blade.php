@@ -20,7 +20,7 @@
             @endif
 
             <div class="news-article-body">
-                @sanitized($page->translation->content)
+                {!! $page->translation->bodyHtml() !!}
             </div>
         </article>
     </section>

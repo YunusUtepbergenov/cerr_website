@@ -61,5 +61,6 @@ return [
     'related_news' => 'O‘xshash yangiliklar',
     'min_read' => 'daqiqa o‘qish',
     'views_label' => 'ko‘rishlar',
+    'on_this_page' => 'Sahifa mundarijasi',
 
 ];

@@ -250,6 +250,10 @@ return [
         'confirm_delete' => '',
         'saved_flash' => '',
         'deleted_flash' => '',
+        'open_on_site' => '',
+        'system_page' => '',
+        'system_page_help' => '',
+        'system_page_kept' => '',
     ],
     'videos' => [
         'title_section' => '',

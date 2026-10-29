@@ -60,5 +60,6 @@ return [
     'related_news' => 'Related news',
     'min_read' => 'min read',
     'views_label' => 'views',
+    'on_this_page' => 'Contents',
 
 ];

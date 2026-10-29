@@ -4,6 +4,11 @@
     <x-admin.page-header
         :title="$page?->exists ? __('admin.pages.edit_page') : __('admin.pages.create_page')"
         :subtitle="$page?->exists ? '#'.$page->id : __('admin.pages.create_page')">
+        @if ($publicUrl = $page?->publicUrl())
+            <a href="{{ $publicUrl }}" target="_blank" rel="noopener" class="btn btn-outline-secondary" data-public-url="{{ $page->slug }}">
+                <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> {{ __('admin.pages.open_on_site') }}
+            </a>
+        @endif
         <a href="{{ route('admin.pages.index') }}" class="btn btn-outline-secondary">
             <i class="fa-solid fa-arrow-left me-1"></i> {{ __('admin.common.back') }}
         </a>
@@ -71,6 +76,9 @@
                             <input type="text" wire:model="slug" class="form-control @error('slug') is-invalid @enderror">
                             @error('slug') <div class="invalid-feedback">{{ $message }}</div> @enderror
                             <div class="form-text small">{{ __('admin.pages.slug_help') }}</div>
+                            @if ($page?->isSystemPage())
+                                <div class="form-text small text-warning"><i class="fa-solid fa-lock me-1"></i>{{ __('admin.pages.system_page_help') }}</div>
+                            @endif
                         </div>
 
                         <div class="mb-3">
