@@ -40,9 +40,9 @@
                 </div>
 
                 <div class="leader-card">
-                    <img class="ld-photo" src="{{ asset('images/leadership/ortiqov.jpg') }}" alt="@lang('leadership.nozimjon_kozimjonovich')">
+                    <img class="ld-photo" src="{{ asset('images/leadership/rahmatov.jpg') }}" alt="@lang('leadership.feruz_kasimovich')">
                     <div class="ld-body">
-                        <div class="ld-name">@lang('leadership.nozimjon_kozimjonovich')</div>
+                        <div class="ld-name">@lang('leadership.feruz_kasimovich')</div>
                         <div class="ld-role">@lang('leadership.deputy')</div>
                         <div class="ld-contacts">
                             <span><i class="fa-solid fa-phone"></i><a href="tel:+998781500202">+998 78 150-02-02</a></span>
