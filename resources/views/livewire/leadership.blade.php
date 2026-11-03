@@ -40,7 +40,7 @@
                 </div>
 
                 <div class="leader-card">
-                    <img class="ld-photo" src="{{ asset('images/leadership/rahmatov.jpg') }}" alt="@lang('leadership.feruz_kasimovich')">
+                    <img class="ld-photo" src="{{ asset('images/leadership/feruz-kasimovich.png') }}" alt="@lang('leadership.feruz_kasimovich')">
                     <div class="ld-body">
                         <div class="ld-name">@lang('leadership.feruz_kasimovich')</div>
                         <div class="ld-role">@lang('leadership.deputy')</div>
